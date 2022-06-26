@@ -3,7 +3,7 @@ import PostMessage from "../Models/PostMessage.js"
 export const  getPosts= async(req,res) => {
     try {
         const postMessages=await PostMessage.find();
-        console.log(postMessages);
+   
         res.status(200).json(postMessages)
     } catch (error) {
         res.status(404).json({message :message.error})
@@ -47,6 +47,7 @@ export const likePost=async (req,res)=>{
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
    
     const post =await PostMessage.findById(id)
+    console.log(post.likes)
     const index=post.likes.findIndex((id)=> id ===String(req.userId));
     if(index===-1){
         post.likes.push(req.userId)
@@ -57,4 +58,14 @@ export const likePost=async (req,res)=>{
     const updatedPost= await PostMessage.findByIdAndUpdate(id,post,{new: true});
     res.json(updatedPost);
 
+}
+export const getPostsBySearch= async(req,res)=>{
+    const {searchQuery,tags}=req.query
+    try {
+        const title= new RegExp(searchQuery,'i');
+        const posts=await PostMessage.find({$or:[{title},{tags:{$in:tags.split(',')}}]})
+        res.json({data:posts});
+    } catch (error) {
+        res.status(404).json({message:error.message})
+    }
 }
