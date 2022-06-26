@@ -21,31 +21,33 @@ const Form = ({currentId,setCurrentId}) => {
           clear();
         }
         else{
+
         dispatch(createPost({...postData,name:user?.result?.name}));
+            
         clear();
+        }}
+        useEffect(()=> {
+          if(post) setPostData(post)
+          if (!post?.title) clear();
+      
+        },[post])
+        const clear =() =>{
+          setCurrentId(0); 
+          setPostData({ title: '', message: '', tags: '', selectedFile: '' });
         }
-        if(!user?.result?.name){
-          return (
-            <Paper className={classes.paper}>
-              <Typography variant='h6' align='center'>
-                Please Sign In to create Your memories 
-              </Typography>
-    
-            </Paper>
-          )
-    
-        }
+    if(!user?.result?.name){
+      return (
+        <Paper className={classes.paper}>
+          <Typography variant='h6' align='center'>
+            Please Sign In to create Your memories 
+          </Typography>
+
+        </Paper>
+      )
+
     }
+    
    
-    const clear =() =>{
-      setCurrentId(0); 
-      setPostData({ title: '', message: '', tags: '', selectedFile: '' });
-    }
-    useEffect(()=> {
-      if(post) setPostData(post)
-      if (!post?.title) clear();
-  
-    },[post])
 
   return (
     <Paper className={classes.paper}>
