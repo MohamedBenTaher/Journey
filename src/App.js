@@ -11,18 +11,18 @@ import PostDetails from './Components/PostDetails/PostDetails.js';
 const App= ()=> {
   const user=JSON.parse(localStorage.getItem('profile'));
   return (
-    <BrowserRouter>
-    <Container maxWidth='lg'>
-    <Navbar />
-    <Switch>
-      <Route path='/' exact component={()=><Redirect to="/posts"/>} />
-      <Route path='/posts' exact component={Home} />
-      <Route path='/posts/search' exact component={Home} />
-      <Route path='/posts/:id' exact component={PostDetails} />
-      <Route path='/auth' exact component={()=> !user ? <Auth /> :<Redirect to="/posts" />} />
-    </Switch>
-    </Container>
-    </BrowserRouter>
+    <><link href="http://fonts.cdnfonts.com/css/fjalla-one" rel="stylesheet" /><BrowserRouter>
+      <Container maxWidth='lg'>
+        <Navbar />
+        <Switch>
+          <Route path='/' exact component={() => <Redirect to="/posts" />} />
+          <Route path='/posts' exact component={Home} />
+          <Route path='/posts/search' exact component={Home} />
+          <Route path='/posts/:id' exact component={PostDetails} />
+          <Route path='/auth' exact component={() => !user ? <Auth /> : <Redirect to="/posts" />} />
+        </Switch>
+      </Container>
+    </BrowserRouter></>
   );
 }
 
