@@ -1,12 +1,28 @@
 import mongoose from "mongoose";
 import PostMessage from "../Models/PostMessage.js"
 export const  getPosts= async(req,res) => {
+    const {page}=req.query;
     try {
-        const postMessages=await PostMessage.find();
-   
-        res.status(200).json(postMessages)
+        const Limit=8;
+        const startIndex=(Number(page)-1)*Limit;
+        const total=await PostMessage.countDocuments({});
+
+        const posts=await PostMessage.find().sort({_id:-1}).limit(Limit).skip(startIndex);
+      
+        res.status(200).json({data:posts,currentPage:Number(page),NumberOfPages:Math.ceil(total/Limit)})
     } catch (error) {
-        res.status(404).json({message :message.error})
+        res.status(404).json({message :error.essage})
+    }
+}
+export const  getPost= async(req,res) => {
+    const {id}=req.params;
+    try {
+
+        const post=await PostMessage.findById(id);
+      
+        res.status(200).json(post);
+    } catch (error) {
+        res.status(404).json({message :error.essage})
     }
 }
 export const createPost=async(req,res) => {
@@ -52,13 +68,25 @@ export const likePost=async (req,res)=>{
     if(index===-1){
         post.likes.push(req.userId)
     }else {
-            post.likes=post.likes.fliter((id)=>id!==String(req.userId ))
+            post.likes=post?.likes?.fliter((id)=>id!==String(req.userId ))
     }
 
     const updatedPost= await PostMessage.findByIdAndUpdate(id,post,{new: true});
     res.json(updatedPost);
 
 }
+export const commentPost=async (req,res)=>{
+    const { id }=req.params;
+    const {value}=req.body; 
+   
+    const post =await PostMessage.findById(id);
+    post.comments.push(value);
+
+    const updatedPost= await PostMessage.findByIdAndUpdate(id,post,{new: true});
+    res.json(updatedPost);
+
+}
+
 export const getPostsBySearch= async(req,res)=>{
     const {searchQuery,tags}=req.query
     try {
