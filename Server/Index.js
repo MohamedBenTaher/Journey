@@ -16,7 +16,9 @@ app.use(cors());
 
 app.use('/posts',postRoutes);
 app.use('/user',userRoutes)
-
+app.get('/',(req,res) =>{ 
+    res.send("app is running");
+})
 const CONNECTION_URL=process.env.CONNECTION_URL
 const Port=process.env.port || 5000
 
