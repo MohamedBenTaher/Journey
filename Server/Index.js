@@ -19,7 +19,7 @@ app.use('/user',userRoutes)
 app.get('/',(req,res)=>res.send('yess'))
 
 const CONNECTION_URL=process.env.CONNECTION_URL
-const Port=process.env.port 
+const Port=process.env.port||5000 
 
 mongoose.connect(CONNECTION_URL)
     .then(app.listen(Port,()=>console.log('server Running on Port :'+Port)))
