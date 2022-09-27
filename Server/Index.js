@@ -4,8 +4,8 @@ import mongoose from "mongoose";
 import cors from 'cors';
 import postRoutes from './Routes/posts.js'
 import userRoutes from './Routes/user.js'
-import * as dotenv from 'dotenv' 
-dotenv.config()
+// import * as dotenv from 'dotenv' 
+// dotenv.config()
 const app =express();
 const Port=process.env.port || 5000 
 
@@ -18,7 +18,7 @@ app.use('/posts',postRoutes);
 app.use('/user',userRoutes)
 app.get('/',(req,res)=>{res.send('yess')})
 app.set( 'port', Port);
-const CONNECTION_URL=process.env.CONNECTION_URL
+const CONNECTION_URL="mongodb+srv://Medben:medben45@memories.urmfk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
 console.log(Port)
 mongoose.connect(CONNECTION_URL)
