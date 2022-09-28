@@ -19,8 +19,6 @@ app.use('/user',userRoutes)
 app.get('/',(req,res)=>{res.send('yess')})
 app.set( 'port', Port);
 const CONNECTION_URL="mongodb+srv://Medben:medben45@memories.urmfk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-
-console.log(Port)
 mongoose.connect(CONNECTION_URL,{useUnifiedTopology:true,useNewUrlParser:true})
     .then(app.listen(Port,()=>console.log('server Running on Port :'+Port)))
      .catch((error)=>console.log(error.message));
