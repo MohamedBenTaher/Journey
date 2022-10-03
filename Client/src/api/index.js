@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API=axios.create({ baseURL: 'https://journeybackend.onrender.com',timeout: 100000,  });
+const API=axios.create({ baseURL: 'https://journeybackend.onrender.com',timeout: 100000 });
 
 axios.interceptors.request.use(function (config) {
   if (localStorage.getItem('profile')) {
@@ -11,14 +11,14 @@ axios.interceptors.request.use(function (config) {
   return config;
 });
 
-export const fetchPosts = (page) => axios.get(`/posts?page=${page}`);
-export const fetchPost = (id) => axios.get(`/posts/${id}`);
-export const createPost=(newPost)=>axios.post('/posts',newPost)
-export const updatePost = (id, updatedPost) => axios.patch(`/posts/${id}`, updatedPost);
-export const deletePost=(id)=>axios.delete(`/posts/${id}`);
-export const likePost = (id) => axios.patch(`/posts/${id}/likePost`);
-export const comment = (value,id) => axios.post(`/posts/${id}/commentPost`,{value});
-export const fetchPostsBySearch=(searchQuery)=>axios.get(`/posts/search?searchQuery=${searchQuery.search||'none'}&tags=${searchQuery.tags}`)
+export const fetchPosts = (page) => APIxios.get(`/posts?page=${page}`);
+export const fetchPost = (id) => API.get(`/posts/${id}`);
+export const createPost=(newPost)=>API.post('/posts',newPost)
+export const updatePost = (id, updatedPost) => API.patch(`/posts/${id}`, updatedPost);
+export const deletePost=(id)=>API.delete(`/posts/${id}`);
+export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
+export const comment = (value,id) => API.post(`/posts/${id}/commentPost`,{value});
+export const fetchPostsBySearch=(searchQuery)=>API.get(`/posts/search?searchQuery=${searchQuery.search||'none'}&tags=${searchQuery.tags}`)
 
 export const signIn=(formData) =>API.post('/user/signin',formData)
 export const signUp=(formData) =>API.post('/user/signup',formData)
