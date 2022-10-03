@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API=axios.create({ baseURL: 'https://journeybackend.onrender.com',timeout: 100000 });
 
-axios.interceptors.request.use(function (config) {
+API.interceptors.request.use(function (config) {
   if (localStorage.getItem('profile')) {
     const user=JSON.parse(localStorage.getItem('profile'))
     config.headers.Authorization = `Bearer ${user.token}`;
