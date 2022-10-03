@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API=axios.create({ baseURL: 'https://journeybackend.onrender.com' });
+const API=axios.create({ baseURL: 'https://journeybackend.onrender.com',timeout: 100000,  });
 
 axios.interceptors.request.use(function (config) {
   if (localStorage.getItem('profile')) {
