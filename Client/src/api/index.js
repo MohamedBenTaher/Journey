@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API=axios.create({ baseURL: 'https://journeybackend.onrender.com',timeout: 100000 });
+const API=axios.create({ baseURL: 'https://journeybackend.onrender.com'});
 
 API.interceptors.request.use(function (config) {
   if (localStorage.getItem('profile')) {
@@ -19,6 +19,5 @@ export const deletePost=(id)=>API.delete(`/posts/${id}`);
 export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
 export const comment = (value,id) => API.post(`/posts/${id}/commentPost`,{value});
 export const fetchPostsBySearch=(searchQuery)=>API.get(`/posts/search?searchQuery=${searchQuery.search||'none'}&tags=${searchQuery.tags}`)
-
 export const signIn=(formData) =>API.post('/user/signin',formData)
 export const signUp=(formData) =>API.post('/user/signup',formData)
