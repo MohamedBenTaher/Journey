@@ -9,7 +9,10 @@ const Posts = ({ setCurrentId }) => {
   const  {posts,isLoading} = useSelector((state) => state.posts);
   console.log(posts)
   const classes = useStyles();
-  if(!posts.length && !isLoading) return 'No Posts'
+  console.log(typeof posts)
+  console.log(posts)
+  if(!posts.length && !isLoading) return ('No Posts')
+  console.log('after',posts)
   return (
     isLoading ? <CircularProgress/> :  (
       <Grid className={classes.container} container alignItems="stretch" spacing={3}>
