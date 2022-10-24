@@ -59,4 +59,13 @@ export default makeStyles((theme) => ({
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
   },
+  links:{
+    textDecoration:'none',
+    color:'white',
+    '&:hover':{
+      backgroundColor:'red',
+      textDecoration: "underline #000000"
+    }
+  },
+ 
 }));
