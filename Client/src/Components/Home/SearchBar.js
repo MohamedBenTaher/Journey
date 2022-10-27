@@ -1,17 +1,16 @@
 import React ,{useState,useEffect} from 'react'
 import { useDispatch } from 'react-redux'
-import { Grid,Container,Grow, Paper,AppBar,TextField,Button } from '@material-ui/core'
+import { Grid,Container,Grow, Paper,AppBar,TextField,Button, Typography } from '@material-ui/core'
+import { getPosts ,getPostsBySearch } from '../../actions/posts.js'
 import { useHistory,useLocation } from 'react-router-dom'
-import Form from '../Form/Form.js'
 import ChipInput from "material-ui-chip-input";
 import Posts from '../Posts/Posts.js'
-import { getPosts ,getPostsBySearch } from '../../actions/posts.js'
 import  Pagination from '../Pagination'
 import useStyles from './styles.js'
 function useQuery(){
-  return new URLSearchParams(useLocation().search)
-}
-const Home = () => {
+    return new URLSearchParams(useLocation().search)
+  }
+function SearchBar() {
     const classes=useStyles();
     const [currentId,setCurrentId]=useState(0);
     const [search,setSearch]=useState('');
@@ -45,40 +44,49 @@ const Home = () => {
     }
   return (
     <Grow in>
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" elevation={24}>
      <Grid className={classes.gridContainer} container justifyContent="space-between" alignItems="stretch" spacing={3}>
-                <Grid item xs={12} sm={6} md={9}>
+                {/* <Grid item xs={12} sm={6} md={9}>
                   <Posts setCurrentId={setCurrentId}/>
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                  {/* <AppBar className={classes.appBarSearch} position='static' color='inherit'>
+                </Grid> */}
+                <Grid item xs={12} sm={12} md={12}>
+                  <AppBar className={classes.appBarSearch} position='static' color='inherit'>
+                    <Grid container   direction={{ xs: 'column', sm: 'column' ,md:'row',lg:'row'}} className={classes.search} spacing={2}>
+                    <Grid item xs={12} md={4}>
+                    <Typography>Destination</Typography>
                     <TextField name='search'
                     variant="outlined"
-                    label="Search Memories"
+                    label="Search Destinations"
                     fullWidth
                     value={search}
                     onKeyPress={handleKeyPress}
                     onChange={(e)=>{setSearch(e.target.value)}}
+
+                   
                     />
+                    </Grid >
+                    <Grid item xs={12} md={4}>
+                    <Typography>Tags</Typography>
                     <ChipInput
-                    style={{ margin: '10px 0' }}
                     value={tags}
                     onAdd={handleAdd}
                     onDelete={handleDelete}
                     label="Search Tags"
                     variant="outlined"
+                    fullWidth
+                  
                 />
-                <Button onClick={searchPost} className={classes.searchButton} variant='contained' color="primary">Search</Button>
-                  </AppBar> */}
-                  <Form  currentId={currentId} setCurrentId={setCurrentId} />
-                  {(!searchQuery && !tags.length) && (<Paper elevation={6}>
-                    <Pagination page={page} />
-                  </Paper>)}
                 </Grid>
-     </Grid>
-     </Container>
-  </Grow>
+                <Grid item xs={12} md={4}>
+                <Button onClick={searchPost} className={classes.searchButton} variant='contained' color="primary" fullWidth>Search</Button>
+                </Grid>
+                </Grid>
+                  </AppBar>
+                  </Grid>
+                </Grid>
+                </Container>
+                </Grow>
   )
 }
 
-export default Home
+export default SearchBar

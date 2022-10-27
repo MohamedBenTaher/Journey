@@ -9,7 +9,7 @@ export default makeStyles((theme) => ({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '10px 50px',
+    padding: '10px 0px',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
     },
@@ -63,8 +63,8 @@ export default makeStyles((theme) => ({
     textDecoration:'none',
     color:'white',
     '&:hover':{
-      backgroundColor:'red',
-      textDecoration: "underline #000000"
+      //textDecoration: "underline blue ",
+      borderBottom: '2px solid #3F95EC'
     }
   },
  

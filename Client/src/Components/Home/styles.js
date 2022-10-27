@@ -6,6 +6,9 @@ export default makeStyles((theme) => ({
     marginBottom: '1rem',
     display: 'flex',
     padding: '16px',
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-evenly',
   },
   pagination: {
     borderRadius: 4,
@@ -17,4 +20,11 @@ export default makeStyles((theme) => ({
       flexDirection: 'column-reverse',
     },
   },
+  search:{
+    alignItems:'center',
+    justifyContent:'space-evenly',
+  },
+  searchButton:{
+    marginTop:'2em'
+  }
 }));
