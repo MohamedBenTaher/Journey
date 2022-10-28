@@ -46,9 +46,9 @@ function SearchBar() {
     <Grow in>
     <Container maxWidth="xl" elevation={24}>
      <Grid className={classes.gridContainer} container justifyContent="space-between" alignItems="stretch" spacing={3}>
-                {/* <Grid item xs={12} sm={6} md={9}>
+                 <Grid item xs={12} sm={6} md={9}>
                   <Posts setCurrentId={setCurrentId}/>
-                </Grid> */}
+                </Grid> 
                 <Grid item xs={12} sm={12} md={12}>
                   <AppBar className={classes.appBarSearch} position='static' color='inherit'>
                     <Grid container   direction={{ xs: 'column', sm: 'column' ,md:'row',lg:'row'}} className={classes.search} spacing={2}>
