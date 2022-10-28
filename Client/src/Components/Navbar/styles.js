@@ -68,7 +68,12 @@ export default makeStyles((theme) => ({
     }
   },
   Drawer:{
-    width:'40vh'
+    width:'30vh',
+    height:'40vh',
+    display:'flex',
+    flexDirection:"column",
+    alignItems:"center",
+    justifyContent:'space-evenly'
   },
   linksDrawer:{
     textDecoration:'none',
@@ -78,6 +83,11 @@ export default makeStyles((theme) => ({
       //textDecoration: "underline blue ",
       
     }
+  },
+  navLinks:{
+    backgroundColor:'red',
+    justifyContent :'space-evenly',
+    alignItems:'center'
   }
  
 }));

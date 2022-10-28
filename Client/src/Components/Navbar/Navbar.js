@@ -1,5 +1,5 @@
 import React ,{useState,useEffect} from 'react'
-import { AppBar,Avatar,Button,Toolbar,Typography,Drawer,IconButton,useTheme,useMediaQuery, Box  } from '@material-ui/core'
+import { AppBar,Avatar,Button,Toolbar,Typography,Drawer,IconButton,useTheme,useMediaQuery, Box, Grid  } from '@material-ui/core'
 import useStyles from './styles.js'
 import memories from "../../Images/journey.png";
 import title from "../../Images/title.png";
@@ -12,7 +12,7 @@ const Navbar = () => {
   const history=useHistory();
   const location=useLocation();
     const [user, setUser]=useState(JSON.parse(localStorage.getItem('profile')))
-    const [isOpen,setIsOpen]=useState(true)
+    const [isOpen,setIsOpen]=useState(false)
     const classes=useStyles();
     useEffect(()=>{
       const token=user?.token;
@@ -32,28 +32,13 @@ const Navbar = () => {
   return (
 
     <AppBar className={classes.appBar} position='static'  style={{ background: 'transparent', boxShadow: 'none'}}>
-     <div className={classes.brandContainer} >
+     <Grid className={classes.brandContainer} >
      <Link to="/">
      <img className={classes.image} src={memories} alt="Journey" height="60" />
 
      <img  src={title} alt="Journey" height="50"/>
      </Link>
-   
-     </div>
-     {!isMobile ? (
-     <><Link to="/" className={classes.links}>
-          <Typography variant='h6'>
-            Home
-          </Typography>
-        </Link><Link to="/" className={classes.links}>
-            <Typography variant='h6'>
-              Community
-            </Typography>
-          </Link><Link to="/" className={classes.links}>
-            <Typography variant='h6'>
-              About us
-            </Typography>
-          </Link></>):(
+     {isMobile &&(
      <><Drawer
             anchor="right"
             className={classes.Drawer}
@@ -77,10 +62,30 @@ const Navbar = () => {
               </Typography>
             </Link>
             </Box>
-          </Drawer><IconButton onClick={() => setIsOpen(!isOpen)}>
-              <MenuIcon />
+          </Drawer><IconButton  onClick={() => setIsOpen(!isOpen)}>
+              <MenuIcon style={{ 
+                color: 'rgb(255, 255, 255)',
+                height:'2em',
+                width:'2em'
+            }} />
             </IconButton></>
      )}
+     </Grid>
+     {!isMobile && (
+     <><Link to="/" className={classes.links}>
+          <Typography variant='h6'>
+            Home
+          </Typography>
+        </Link><Link to="/" className={classes.links}>
+            <Typography variant='h6'>
+              Community
+            </Typography>
+          </Link><Link to="/" className={classes.links}>
+            <Typography variant='h6'>
+              About us
+            </Typography>
+          </Link></>)
+    }
      <Toolbar className={classes.toolbar}>
         {user ?(
             <div className={classes.profile}>
