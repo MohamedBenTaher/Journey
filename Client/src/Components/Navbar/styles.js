@@ -67,5 +67,17 @@ export default makeStyles((theme) => ({
       borderBottom: '2px solid #3F95EC'
     }
   },
+  Drawer:{
+    width:'40vh'
+  },
+  linksDrawer:{
+    textDecoration:'none',
+    color:'black',
+    '&:hover':{
+      borderBottom: '2px solid #3F95EC',
+      //textDecoration: "underline blue ",
+      
+    }
+  }
  
 }));

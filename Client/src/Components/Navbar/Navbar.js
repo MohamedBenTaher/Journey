@@ -1,5 +1,5 @@
 import React ,{useState,useEffect} from 'react'
-import { AppBar,Avatar,Button,Toolbar,Typography,Drawer,IconButton,useTheme,useMediaQuery  } from '@material-ui/core'
+import { AppBar,Avatar,Button,Toolbar,Typography,Drawer,IconButton,useTheme,useMediaQuery, Box  } from '@material-ui/core'
 import useStyles from './styles.js'
 import memories from "../../Images/journey.png";
 import title from "../../Images/title.png";
@@ -56,24 +56,27 @@ const Navbar = () => {
           </Link></>):(
      <><Drawer
             anchor="right"
+            className={classes.Drawer}
             open={isOpen}
             onClose={() => setIsOpen(false)}
           >
-            <Link to="/" className={classes.links} onClick={() => setIsOpen(false)}>
+            <Box className={classes.Drawer}>
+            <Link to="/" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
               <Typography variant='h6'>
                 Home
               </Typography>
             </Link>
-            <Link to="/" className={classes.links} onClick={() => setIsOpen(false)}>
+            <Link to="/" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
               <Typography variant='h6'>
                 Community
               </Typography>
             </Link>
-            <Link to="/" className={classes.links} onClick={() => setIsOpen(false)}>
+            <Link to="/" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
               <Typography variant='h6'>
                 About us
               </Typography>
             </Link>
+            </Box>
           </Drawer><IconButton onClick={() => setIsOpen(!isOpen)}>
               <MenuIcon />
             </IconButton></>
