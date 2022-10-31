@@ -11,44 +11,46 @@ function useQuery(){
     return new URLSearchParams(useLocation().search)
   }
 function SearchBar() {
-    const classes=useStyles();
-    const [currentId,setCurrentId]=useState(0);
-    const [search,setSearch]=useState('');
-    const [tags,setTags]=useState([]);
-  
-    const  query =useQuery(); 
-    const history=useHistory()
-    const dispatch =useDispatch();
-    const page= query.get('page')||1;
-    const searchQuery=query.get('searchQuery');
-    const handleAdd=(tag)=>{
-        setTags([...tags,tag]);
-    }
-    const handleDelete=(tagToDelete)=>{
-      setTags(tags.filter((tag)=>tag!==tagToDelete));
-    }
-    const searchPost=()=>{
-      if(search.trim() || tags){
-        dispatch(getPostsBySearch({search,tags:tags.join(',')}));
-        history.push(`/posts/search?searchQuery=${search ||'none'}&tags=${tags.join(',')}`);
-      }
-      else {
-        history.push('/')
-      }
-    }
+  const classes=useStyles();
+  const [currentId,setCurrentId]=useState(0);
+  const [search,setSearch]=useState('');
+  const [tags,setTags]=useState([]);
 
-    const handleKeyPress=(e)=>{
-       if(e.keyCode===13){
-        searchPost();
-       }
+  const  query =useQuery(); 
+  const history=useHistory()
+  const dispatch =useDispatch();
+  const page= query.get('page')||1;
+  const searchQuery=query.get('searchQuery');
+  const handleAdd=(tag)=>{
+      setTags([...tags,tag]);
+  }
+  const handleDelete=(tagToDelete)=>{
+    setTags(tags.filter((tag)=>tag!==tagToDelete));
+  }
+  const searchPost=()=>{
+    if(search.trim() || tags.length>0){
+      console.log('values',search.trim(),tags)
+      dispatch(getPostsBySearch({search,tags:tags.join(',')}));
+      console.log('tags',tags)
+      history.push(`/posts/search?searchQuery=${search ||'none'}&tags=${tags.join(',')}`);
     }
+    else {
+      history.push('/posts')
+    }
+  }
+
+  const handleKeyPress=(e)=>{
+     if(e.keyCode===13){
+      searchPost();
+     }
+  }
   return (
     <Grow in>
     <Container maxWidth="xl" elevation={24}>
      <Grid className={classes.gridContainer} container justifyContent="space-between" alignItems="stretch" spacing={3}>
-                 <Grid item xs={12} sm={6} md={9}>
+                 {/* <Grid item xs={12} sm={6} md={9}>
                   <Posts setCurrentId={setCurrentId}/>
-                </Grid> 
+                </Grid>  */}
                 <Grid item xs={12} sm={12} md={12}>
                   <AppBar className={classes.appBarSearch} position='static' color='inherit'>
                     <Grid container   direction={{ xs: 'column', sm: 'column' ,md:'row',lg:'row'}} className={classes.search} spacing={2}>
@@ -85,7 +87,11 @@ function SearchBar() {
                   </Grid>
                 </Grid>
                 </Container>
+
+                
                 </Grow>
+                
+                
   )
 }
 

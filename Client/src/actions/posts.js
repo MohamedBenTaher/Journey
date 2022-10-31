@@ -1,5 +1,5 @@
 import * as api from '../api/index.js';
-import { LIKE,UPDATE,CREATE,FETCH_BY_SEARCH,DELETE, FETCH_ALL,START_LOADING,END_LOADING,FETCH_POST,COMMENT } from '../constants/actionTypes.js';
+import { LIKE,UPDATE,CREATE,FETCH_BY_SEARCH,DELETE, FETCH_ALL,START_LOADING,END_LOADING,FETCH_POST,COMMENT,FETCH_BY_CREATOR } from '../constants/actionTypes.js';
 
 //Action Creators
 
@@ -29,8 +29,8 @@ export const getPostsBySearch  = (searchQuery) => async (dispatch) => {
   try {
     dispatch({type:START_LOADING })
     const { data:{data} } = await api.fetchPostsBySearch(searchQuery);
-    console.log(data)
-   dispatch({ type:FETCH_BY_SEARCH, payload:{ data}});
+    console.log('searchedPosts',data)
+   dispatch({ type:FETCH_BY_SEARCH, payload:{data}});
    dispatch({type:END_LOADING});
   } catch (error) {
     console.log(error.message);
@@ -85,3 +85,14 @@ export const likePost=(id)=>async (dispatch)=>{
       console.log(error)
     }
   }
+  export const getPostsByCreator = (name) => async (dispatch) => {
+    try {
+      dispatch({ type: START_LOADING });
+      const { data: { data } } = await api.fetchPostsByCreator(name);
+  
+      dispatch({ type: FETCH_BY_CREATOR, payload: { data } });
+      dispatch({ type: END_LOADING });
+    } catch (error) {
+      console.log(error);
+    }
+  };
