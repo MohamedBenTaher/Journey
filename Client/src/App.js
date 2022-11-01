@@ -41,8 +41,9 @@ const App= ()=> {
         </Switch>
       </Container>
       </Container>
+      <Footer/>
     </BrowserRouter>
-    <Footer/>
+  
     </CssBaseline>
     </ThemeProvider>
   );
