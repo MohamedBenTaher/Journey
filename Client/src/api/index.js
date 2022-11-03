@@ -20,5 +20,12 @@ export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
 export const comment = (value,id) => API.post(`/posts/${id}/commentPost`,{value});
 export const fetchPostsByCreator = (name) => API.get(`/posts/creator?name=${name}`);
 export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`);
+/*=============================================================*/
 export const signIn=(formData) =>API.post('/user/signin',formData)
 export const signUp=(formData) =>API.post('/user/signup',formData)
+/*===============================================================*/
+export const fetchEvents=(page)=>API.get(`/events?page=${page}`);
+export const fetchEvent=(id)=>API.get(`/events/${id}`);
+export const createEvent=(newEvent)=>API.post('/events',newEvent);
+export const commentEvent=(value,id)=>API.post(`/events/${id}/commentEvent`,{value});
+export const deleteEvent=(id)=>API.delete(`/events/${id}`);

@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cors from 'cors';
 import postRoutes from './Routes/posts.js'
 import userRoutes from './Routes/user.js'
+import eventRoutes from './Routes/events.js'
 // import * as dotenv from 'dotenv' 
 // dotenv.config()
 const app =express();
@@ -16,7 +17,8 @@ app.use(bodyParser.urlencoded({limit:'30mb',extended:true}));
 app.use(cors());
 
 app.use('/posts',postRoutes);
-app.use('/user',userRoutes)
+app.use('/user',userRoutes);
+app.use('/events',eventRoutes)
 app.get('/',(req,res)=>{res.send('yess')})
 app.set( 'port', Port);
 const CONNECTION_URL="mongodb+srv://Medben:medben45@memories.urmfk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"

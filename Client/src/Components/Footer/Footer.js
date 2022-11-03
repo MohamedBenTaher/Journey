@@ -67,6 +67,18 @@ function Footer() {
         <Grid>
             <Divider className={classes.Divider}/>
         </Grid>
+        <Grid container className={classes.gutter} >
+            {/* <Grid item xs={12} sm={6} md={6} > */}
+            <Typography  className={classes.gutterText}>
+                Journey
+           </Typography>
+           {/* </Grid> */}
+           {/* <Grid item xs={12} sm={6} md={6}> */}
+           <Typography className={classes.gutterText}>
+            copyright@2022
+           </Typography>
+           {/* </Grid> */}
+        </Grid>
     </Container>
   )
 }

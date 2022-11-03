@@ -56,6 +56,14 @@ export default makeStyles((theme) => ({
     backgroundColor:'white',
     color:'white',
     width:"1200x"
+  },
+  gutter:{
+    alignItems:'center',
+    display:"flex",
+    justifyContent:"space-between"
+  },
+  gutterText:{
+    color:'white'
   }
 
 }));
