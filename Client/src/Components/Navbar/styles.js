@@ -88,6 +88,11 @@ export default makeStyles((theme) => ({
     backgroundColor:'red',
     justifyContent :'space-evenly',
     alignItems:'center'
+  },
+  title:{
+    textDecoration:'none',
+    fontWeight:'bold',
+    color:'white'
   }
  
 }));

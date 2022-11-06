@@ -13,6 +13,7 @@ import PostDetails from './Components/PostDetails/PostDetails.js';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import SearchBar from './Components/Home/SearchBar.js';
 import CreatorOrTag from './Components/CreatorOrTag/CreatorOrTag'
+import Events from './Components/Event/Event'
 const theme = createTheme({
   typography: {
     fontFamily: [
@@ -34,6 +35,7 @@ const App= ()=> {
         <Switch>
           <Route path='/' exact component={() => <Redirect to="/posts" />} />
           <Route path='/posts' exact component={Home} />
+          <Route path='/events' exact component={Events} />
           <Route path="/posts/search" exact component={Home} />
           <Route path='/posts/:id' exact component={PostDetails} />
           <Route path={['/creators/:name', '/tags/:name']} component={CreatorOrTag} />

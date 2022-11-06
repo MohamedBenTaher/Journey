@@ -34,9 +34,9 @@ const Navbar = () => {
     <AppBar className={classes.appBar} position='static'  style={{ background: 'transparent', boxShadow: 'none'}}>
      <Grid className={classes.brandContainer} >
      <Link to="/">
-     <img className={classes.image} src={memories} alt="Journey" height="60" />
-
-     <img  src={title} alt="Journey" height="50"/>
+     {/* <img className={classes.image} src={memories} alt="Journey" height="60" /> */}
+     <Typography variant='h2' className={classes.title}>Journey</Typography>
+     {/* <img  src={title} alt="Journey" height="50"/> */}
      </Link>
      {isMobile &&(
      <><Drawer
@@ -51,11 +51,16 @@ const Navbar = () => {
                 Home
               </Typography>
             </Link>
-            <Link to="/" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
+            <Link to="/events" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
               <Typography variant='h6'>
-                Community
+                Top Destinations
               </Typography>
             </Link>
+            <Link to="/" className={classes.linksDrawer}>
+            <Typography variant='h6'>
+              Blog
+            </Typography>
+          </Link>
             <Link to="/" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
               <Typography variant='h6'>
                 About us
@@ -74,17 +79,23 @@ const Navbar = () => {
      {!isMobile && (
      <><Link to="/" className={classes.links}>
           <Typography variant='h6'>
-            Home
+             Explore
           </Typography>
-        </Link><Link to="/" className={classes.links}>
+        </Link><Link to="/events" className={classes.links}>
             <Typography variant='h6'>
-              Community
+            Top Destinations
             </Typography>
           </Link><Link to="/" className={classes.links}>
             <Typography variant='h6'>
+              Blog
+            </Typography>
+          </Link>
+          <Link to="/" className={classes.links}>
+            <Typography variant='h6'>
               About us
             </Typography>
-          </Link></>)
+          </Link>
+          </>)
     }
      <Toolbar className={classes.toolbar}>
         {user ?(
