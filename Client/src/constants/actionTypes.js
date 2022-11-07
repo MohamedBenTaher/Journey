@@ -14,6 +14,7 @@ export const FETCH_BY_CREATOR='FETCH_BY_CREATOR'
 /*=====================================*/
 export const FETCH_EVENTS='FETCH_EVENTS'
 export const FETCH_EVENTS_BY_SEARCH='FETCH_EVENTS_BY_SEARCH'
+export const FETCH_EVENTS_BY_CREATOR='FETCH_EVENTS_BY_CREATOR'
 export const CREATE_EVENT='CREATE_EVENT'
 export const UPDATE_EVENT='UPDATE_EVENT'
 export const DELETE_EVENT='DELETE_EVENT'

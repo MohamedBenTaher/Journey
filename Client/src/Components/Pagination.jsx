@@ -13,7 +13,6 @@ const Paginate =({page})=>{
   },[page])
   return(
     <Pagination 
-    style={{backgroundColor:'transparent'}}
     classes={{ul:classes.ul,backgroundColor:'red'}}
     count={numberOfPages}
     page={Number(page)||1}

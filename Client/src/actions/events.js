@@ -37,9 +37,9 @@ export const getEventsBySearch  = (searchQuery) => async (dispatch) => {
   }
 };
 
-export const createEvent = (post)=> async (dispatch) =>{
+export const createEvent = (event)=> async (dispatch) =>{
   try {
-      const {data}=await api.createPost(post);
+      const {data}=await api.createEvent(event);
       dispatch({type:START_LOADING })
       dispatch({type:CREATE_EVENT,payload:data})
       dispatch({type:END_LOADING});
@@ -48,9 +48,9 @@ export const createEvent = (post)=> async (dispatch) =>{
   }
 }
 
-export const updateEvent =(id,post )=> async (dispatch)=>{
+export const updateEvent =(id,event )=> async (dispatch)=>{
     try {
-      const {data}=await api.updatePost(id,post);
+      const {data}=await api.updateEvent(id,event);
       dispatch({type:UPDATE_EVENT,payload:data});
       
     } catch (error) {
@@ -69,7 +69,7 @@ export const DELETE_EVENT=(id)=> async(dispatch) =>{
 }
 export const attendEvent=(id)=>async (dispatch)=>{
   try {
-    const {data}=await api.likePost(id);
+    const {data}=await api.attendEvent(id);
     dispatch({type:ATTEND_EVENT,payload:data});
     
   } catch (error) {
@@ -78,7 +78,7 @@ export const attendEvent=(id)=>async (dispatch)=>{
   }
   export const commentEvent=(value,id)=> async(dispatch)=>{
     try {
-     const {data}= await api.comment(value,id);
+     const {data}= await api.commentEvent(value,id);
      dispatch({type:COMMENT_EVENT,payload:data});
      return data.comments;
     } catch (error) {
