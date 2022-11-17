@@ -163,6 +163,18 @@ function Event() {
                     />
                   </Grid>
                   <Grid item md={12} lg={12} sm={12}>
+                    <TextField
+                      fullWidth
+                      variant="outlined"
+                      id="tags"
+                      name="tags"
+                      label="Tags"
+                      value={formik.values.tags}
+                      onChange={formik.handleChange}
+                      error={formik.touched.tags && Boolean(formik.errors.tags)}
+                    />
+                  </Grid>
+                  <Grid item md={12} lg={12} sm={12}>
                     <Button fullWidth type="submit" disabled={isSubmitting} variant="contained">
                       Submit
                     </Button>
