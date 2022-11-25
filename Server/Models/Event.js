@@ -5,7 +5,7 @@ const eventSchema = mongoose.Schema({
     description: { type: String, required: true },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
-    locations: [String],
+    location: [String],
     creator: { type: String, required: true },
     tags: [String],
     selectedFile: String,
