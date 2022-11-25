@@ -6,7 +6,7 @@ import auth from '../Middleware/auth.js'
 router.get('/search',getEventsBySearch );
 router.get('/', getEvents);
 router.get('/:id', getEvent);
-router.post('/', auth,createEvent);
+router.post('/',createEvent);
 router.patch('/:id',auth,updateEvent)
 router.delete('/:id',auth,deleteEvent);
 router.patch('/:id/likePost',auth,attendEvent)
