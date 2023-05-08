@@ -11,7 +11,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import ChipInput from "material-ui-chip-input";
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import { createEvent } from '../../actions/events';
+import { createEvent } from '../../../actions/events';
+import FileBase64 from 'react-file-base64';
 function Event() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -56,16 +57,14 @@ function Event() {
   return (
 
     <>
-      <div>{events}</div>
+
       <div>Event</div>
-      <Button variant="outlined" color="primary" onClick={handleOpen}> Add a new Event </Button>
 
 
       <Typography variant='h4' sx={{ fontWeight: '700' }} gutterBottom> New Event</Typography>
 
 
       <Formik
-
         initialValues={{
           title: 'Meet Up at Sicily ',
           description: 'This Our first meetup at sicily we will be having activities and enjoy our time ',
@@ -76,7 +75,7 @@ function Event() {
           location: 'Italy',
           discountRate: 5,
           tags: '',
-          file: {},
+          selectedFile: '',
           creator: user?.result?.name,
         }}
         // validate={values => {
@@ -237,13 +236,12 @@ function Event() {
               </Grid>
               <Grid item md={12} lg={12} sm={12}>
                 <Grid direction="row" alignItems="center" spacing={2}>
-                  <input id="file" name="file" type="file" onChange={(event) => {
-                    console.log(event.currentTarget.files[0])
-                    setFieldValue('file', event?.currentTarget?.files[0])
-                    console.log('helo', values.file)
-                  }} />
+                  {/* <Field type="file" name="file" /> */}
+                  <FileBase64
+                    multiple={false}
+                    onDone={(base64) => setFieldValue('selectedFile', base64)}
+                  />
                 </Grid>
-
               </Grid>
               <Grid item md={12} lg={12} sm={12}>
                 <Button fullWidth type="submit"

@@ -42,7 +42,7 @@ export const createEvent = (event) => async (dispatch) => {
     console.log(event);
     const { data } = await api.createEvent(event);
     dispatch({ type: START_LOADING })
-    dispatch({ type: CREATE_EVENT, payload: data })
+    dispatch({ type: CREATE_EVENT, payload: [data] })
     dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error.message)

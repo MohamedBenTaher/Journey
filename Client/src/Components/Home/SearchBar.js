@@ -1,6 +1,6 @@
 import React ,{useState,useEffect} from 'react'
 import { useDispatch } from 'react-redux'
-import { Grid,Container,Grow, Paper,AppBar,TextField,Button, Typography } from '@material-ui/core'
+import { Grid,Container,Grow, Paper,AppBar,TextField,Button, Typography,Select,MenuItem,InputLabel } from '@material-ui/core'
 import { getPosts ,getPostsBySearch } from '../../actions/posts.js'
 import { useHistory,useLocation } from 'react-router-dom'
 import ChipInput from "material-ui-chip-input";
@@ -15,6 +15,8 @@ function SearchBar() {
   const [currentId,setCurrentId]=useState(0);
   const [search,setSearch]=useState('');
   const [tags,setTags]=useState([]);
+  const [season,setSeason]=useState([]);
+
 
   const  query =useQuery(); 
   const history=useHistory()
@@ -30,9 +32,9 @@ function SearchBar() {
   const searchPost=()=>{
     if(search.trim() || tags.length>0){
       console.log('values',search.trim(),tags)
-      dispatch(getPostsBySearch({search,tags:tags.join(',')}));
+      dispatch(getPostsBySearch({search,tags:tags.join(','),season}));
       console.log('tags',tags)
-      history.push(`/posts/search?searchQuery=${search ||'none'}&tags=${tags.join(',')}`);
+      history.push(`/posts/search?searchQuery=${search ||'none'}&tags=${tags.join(',')}&season=${season ||'none'}`);
     }
     else {
       history.push('/posts')
@@ -51,11 +53,10 @@ function SearchBar() {
                  {/* <Grid item xs={12} sm={6} md={9}>
                   <Posts setCurrentId={setCurrentId}/>
                 </Grid>  */}
-                <Grid item xs={12} sm={12} md={12}>
+                <Grid item xs={12} sm={12} md={12} >
                   <AppBar className={classes.appBarSearch} position='static' color='inherit'>
                     <Grid container   direction={{ xs: 'column', sm: 'column' ,md:'row',lg:'row'}} className={classes.search} spacing={2}>
-                    <Grid item xs={12} md={4}>
-                    <Typography>Destination</Typography>
+                    <Grid item xs={12} md={3}>
                     <TextField name='search'
                     variant="outlined"
                     label="Search Destinations"
@@ -63,12 +64,25 @@ function SearchBar() {
                     value={search}
                     onKeyPress={handleKeyPress}
                     onChange={(e)=>{setSearch(e.target.value)}}
-
-                   
                     />
                     </Grid >
-                    <Grid item xs={12} md={4}>
-                    <Typography>Tags</Typography>
+                    <Grid item xs={12} md={3}>
+                    {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+                    <Select
+                      name='season'
+                      label="Select Season"
+                      value={season}
+                      onChange={(e)=>setSeason(e.target.value)}
+                      fullWidth
+                      variant='outlined'
+                    >    
+                    <MenuItem value={'Spring'}>Spring</MenuItem>
+                    <MenuItem value={'Winter'}>Winter</MenuItem>
+                    <MenuItem value={'Summer'}>Summer</MenuItem>
+                    <MenuItem value={'Automn'}>Automn</MenuItem>
+                  </Select>
+                    </Grid >
+                    <Grid item xs={12} md={3}>
                     <ChipInput
                     value={tags}
                     onAdd={handleAdd}
@@ -79,8 +93,8 @@ function SearchBar() {
                   
                 />
                 </Grid>
-                <Grid item xs={12} md={4}>
-                <Button onClick={searchPost} className={classes.searchButton} variant='contained' color="primary" fullWidth>Search</Button>
+                <Grid item xs={12} md={3}>
+                <Button onClick={searchPost} className={classes.searchButton} variant='contained' color="blue" fullWidth>Search</Button>
                 </Grid>
                 </Grid>
                   </AppBar>

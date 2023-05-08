@@ -8,6 +8,7 @@ export default makeStyles((theme) => ({
     padding: '16px',
     flexDirection:'row',
     alignItems:'center',
+    height:'9rem',
     justifyContent:'space-evenly',
   },
   pagination: {
@@ -22,9 +23,17 @@ export default makeStyles((theme) => ({
   },
   search:{
     alignItems:'center',
-    justifyContent:'space-evenly',
+    justifyContent:'start',
   },
   searchButton:{
-    marginTop:'2em'
-  }
+   backgroundColor:'#3f95ec',
+   fontWeight:'bold',
+   color:'white',
+   height:'3.2rem',
+   "&:hover": {
+    color: 'gray',
+    backgroundColor: 'lightblue'
+  },
+  },
+  
 }));
