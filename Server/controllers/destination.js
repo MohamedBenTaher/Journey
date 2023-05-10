@@ -1,5 +1,14 @@
 import mongoose from "mongoose";
 import Destination from "../Models/Destination.js"
+export const  getTopDestinations= async(req,res) => {
+    try {
+        const destinations=await Destination.find().sort((a,b)=>(a.upvotes-a.downvotes)>(b.upvotes-b.downvotes)).limit(10);
+      
+        res.status(200).json({data:destinations})
+    } catch (error) {
+        res.status(404).json({message :error.essage})
+    }
+}
 export const  getDestinations= async(req,res) => {
     const {page}=req.query;
     try {
@@ -25,7 +34,7 @@ export const  getDestination= async(req,res) => {
         res.status(404).json({message :error.essage})
     }
 }
-export const createEvent=async(req,res) => {
+export const createDestination=async(req,res) => {
     const destination = req.body;
 
     const newEvent = new Destination({ ...destination, creator:req.userId,createdAt:new Date().toISOString() })

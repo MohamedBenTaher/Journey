@@ -1,5 +1,18 @@
 import mongoose from "mongoose";
 import Event from "../Models/Event.js"
+export const  getTopEvents= async(req,res) => {
+          Destination.find()
+            .sort({ upvotes: -1, downvotes: 1 })
+            .limit(10)
+            .exec(function(err, destinations) {
+              if (err) {
+                res.status(500).json({ error: err.message });
+              } else {
+                res.json(destinations);
+              }
+            });
+    }
+
 export const  getEvents= async(req,res) => {
     const {page}=req.query;
     try {

@@ -3,10 +3,22 @@ import { LIKE, UPDATE_DESTINATION, CREATE_DESTINATION, FETCH_DESTINATION_BY_SEAR
 
 //Action Creators
 
+
+export const getTopDestinations = () => async (dispatch) => {
+    try {
+      dispatch({ type: START_LOADING_DESTINATIONS })
+      const { data: { data } } = await api.fetchTopDestinations();
+  
+      dispatch({ type: FETCH_DESTINATIONS, payload: { data } });
+      dispatch({ type: END_LOADING_DESTINATIONS });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 export const getDestinations = (page) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_DESTINATIONS })
-    const { data: { data, currentPage, numberOfPages } } = await api.fetchEvents(page);
+    const { data: { data, currentPage, numberOfPages } } = await api.fetchDestinatons(page);
 
     dispatch({ type: FETCH_DESTINATIONS, payload: { data, currentPage, numberOfPages } });
     dispatch({ type: END_LOADING_DESTINATIONS });
@@ -17,7 +29,7 @@ export const getDestinations = (page) => async (dispatch) => {
 export const getDestination = (id) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_DESTINATIONS })
-    const { data } = await api.fetchEvent(id);
+    const { data } = await api.fetchDestination(id);
 
     dispatch({ type: FETCH_DESTINATION, payload: data });
     dispatch({ type: END_LOADING_DESTINATIONS });
@@ -28,7 +40,7 @@ export const getDestination = (id) => async (dispatch) => {
 export const getDestinationssBySearch = (searchQuery) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_DESTINATIONS })
-    const { data: { data } } = await api.fetchPostsBySearch(searchQuery);
+    const { data: { data } } = await api.fetchDestinationsBySearch(searchQuery);
     console.log('searchedDseyinations', data)
     dispatch({ type: FETCH_DESTINATION_BY_SEARCH, payload: { data } });
     dispatch({ type: END_LOADING_DESTINATIONS });
@@ -40,7 +52,7 @@ export const getDestinationssBySearch = (searchQuery) => async (dispatch) => {
 export const createDestination = (event) => async (dispatch) => {
   try {
     console.log(event);
-    const { data } = await api.createEvent(event);
+    const { data } = await api.createDestionation(event);
     dispatch({ type: START_LOADING_DESTINATIONS })
     dispatch({ type: CREATE_DESTINATION, payload: [data] })
     dispatch({ type: END_LOADING_DESTINATIONS});
@@ -51,7 +63,7 @@ export const createDestination = (event) => async (dispatch) => {
 
 export const updateEvent = (id, destination) => async (dispatch) => {
   try {
-    const { data } = await api.updateEvent(id, destination);
+    const { data } = await api.updateDestinations(id, destination);
     dispatch({ type: UPDATE_DESTINATION, payload: data });
 
   } catch (error) {
@@ -61,7 +73,7 @@ export const updateEvent = (id, destination) => async (dispatch) => {
 
 export const DELETE_DESTINATION = (id) => async (dispatch) => {
   try {
-    await api.deleteEvent(id);
+    await api.deleteDestination(id);
     dispatch({ type: DELETE_DESTINATION, payload: id });
 
   } catch (error) {
@@ -70,7 +82,7 @@ export const DELETE_DESTINATION = (id) => async (dispatch) => {
 }
 export const upVoteDestination = (id) => async (dispatch) => {
   try {
-    const { data } = await api.attendEvent(id);
+    const { data } = await api.updateDestinations(id);
     dispatch({ type: UPVOTE_DESTINATION, payload: data });
 
   } catch (error) {
@@ -79,7 +91,7 @@ export const upVoteDestination = (id) => async (dispatch) => {
 }
 export const commentDestination = (value, id) => async (dispatch) => {
   try {
-    const { data } = await api.commentEvent(value, id);
+    const { data } = await api.commentDestination(value, id);
     dispatch({ type: COMMENT_DESTINATION, payload: data });
     return data.comments;
   } catch (error) {

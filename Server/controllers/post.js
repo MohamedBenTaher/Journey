@@ -1,5 +1,16 @@
 import mongoose from "mongoose";
 import PostMessage from "../Models/PostMessage.js"
+export const  getTopPosts= async(req,res) => {
+    PostMessage.find()
+    .sort({ likes: -1 })
+    .exec(function(err, posts) {
+      if (err) {
+        res.status(500).json({ error: err.message });
+      } else {
+        res.json(posts);
+      }
+    });
+}
 export const  getPosts= async(req,res) => {
     const {page}=req.query;
     try {

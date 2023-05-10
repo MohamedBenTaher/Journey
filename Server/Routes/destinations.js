@@ -1,15 +1,18 @@
 import express from "express"
-import { getEventsBySearch, getEvents, getEvent, createEvent, updateEvent, deleteEvent, commentEvent, attendEvent } from "../controllers/event.js";
+import { getDestination,getTopDestinations, getDestinations,getDestinationsBySearch, createDestination, upvoteDestination,updateDestination,deleteDestination,commentDestination } from "../controllers/destination.js";
 const router = express.Router();
 import auth from '../Middleware/auth.js'
 
-router.get('/search', getEventsBySearch);
-router.get('/', getEvents);
-router.get('/:id', getEvent);
-router.post('/', auth, createEvent);
-router.patch('/:id', auth, updateEvent)
-router.delete('/:id', auth, deleteEvent);
-router.patch('/:id/upvoteDestination', auth, attendEvent)
-router.post('/:id/commentDestination', auth, commentEvent)
+
+router.get('/search', getDestinationsBySearch);
+router.get('/', getDestinations);
+router.get('/top', getTopDestinations);
+router.get('/:id', getDestination);
+router.post('/', auth, createDestination);
+router.patch('/:id', auth, updateDestination)
+router.delete('/:id', auth, deleteDestination);
+router.patch('/:id/upvote', auth, upvoteDestination)
+router.patch('/:id/downvote', auth, upvoteDestination)
+router.post('/:id/comment', auth, commentDestination)
 
 export default router;

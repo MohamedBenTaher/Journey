@@ -5,6 +5,7 @@ import cors from 'cors';
 import postRoutes from './Routes/posts.js'
 import userRoutes from './Routes/user.js'
 import eventRoutes from './Routes/events.js'
+import destinationRoutes from './Routes/destinations.js'
 // import * as dotenv from 'dotenv' 
 // dotenv.config()
 const app = express();
@@ -20,10 +21,11 @@ const corsOptions = {
 }
 app.use(cors(corsOptions));
 
-app.use('/posts', postRoutes);
+app.use('/post', postRoutes);
 app.use('/user', userRoutes);
-app.use('/events', eventRoutes)
-app.get('/', (req, res) => { res.send('yess') })
+app.use('/event', eventRoutes)
+app.use('/destination',destinationRoutes)
+app.get('/', (req, res) => { res.send('test works') })
 app.set('port', Port);
 const CONNECTION_URL = "mongodb+srv://Medben:medben45@memories.urmfk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 mongoose.connect(CONNECTION_URL, { useUnifiedTopology: true, useNewUrlParser: true })
