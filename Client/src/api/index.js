@@ -32,3 +32,11 @@ export const updateEvent = (id, updatedEvent) => API.patch(`/events/${id}`, upda
 export const commentEvent = (value, id) => API.post(`/events/${id}/commentEvent`, { value });
 export const deleteEvent = (id) => API.delete(`/events/${id}`);
 export const attendEvent = (id) => API.post(`/events/${id}`)
+/*=====================================================================*/
+export const fetchDestinatons = (page) => API.get(`/destinations?page=${page}`);
+export const fetchDestination = (id) => API.get(`/destinations/${id}`);
+export const createDestionation = (newEvent) => API.post('/destinations', newEvent);
+export const updateDestinations = (id, updatedEvent) => API.patch(`/destinations/${id}`, updatedEvent);
+export const commentDestination = (value, id) => API.post(`/destinations/${id}/commentDestination`, { value });
+export const deleteDestination = (id) => API.delete(`/destinations/${id}`);
+export const upvoteDestination = (id) => API.post(`/destinations/${id}`)

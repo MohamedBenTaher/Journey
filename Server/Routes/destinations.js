@@ -9,7 +9,7 @@ router.get('/:id', getEvent);
 router.post('/', auth, createEvent);
 router.patch('/:id', auth, updateEvent)
 router.delete('/:id', auth, deleteEvent);
-router.patch('/:id/attendEvent', auth, attendEvent)
-router.post('/:id/commentEvent', auth, commentEvent)
+router.patch('/:id/upvoteDestination', auth, attendEvent)
+router.post('/:id/commentDestination', auth, commentEvent)
 
 export default router;

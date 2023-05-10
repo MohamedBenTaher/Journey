@@ -9,6 +9,7 @@ import { getPosts ,getPostsBySearch } from '../../actions/posts.js'
 import  Pagination from '../Pagination'
 import useStyles from './styles.js'
 import Destination from '../Destination/Destination.js'
+import DestinationCard from '../Destination/DestinationCard/Destination.js'
 function useQuery(){
   return new URLSearchParams(useLocation().search)
 }
@@ -59,7 +60,7 @@ const Home = () => {
                 </Grid>
 
      </Grid>
-     <Destination title={'Tokyo'} description={'Welcome to Japan and tokyo explore the magic of the city of a 1000 years and more'}/>
+     <DestinationCard title={'Tokyo'} description={'Welcome to Japan and tokyo explore the magic of the city of a 1000 years and more'}/>
      </Container>
   </Grow>
   )

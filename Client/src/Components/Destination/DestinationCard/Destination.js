@@ -3,14 +3,13 @@ import { Card,CardMedia,CardContent,Typography, Button } from '@material-ui/core
 import React from 'react'
 import useStyles from "./styles.js"
 import  image from '../../Images/tokyo.jpg'
-const Destination = ({title,description}) => {
+const DestinationCard = ({title,description}) => {
     const classes = useStyles();
 
     return (
       <Card className={classes.card}>
         <CardMedia className={classes.media} image={image} />
         <CardContent className={classes.content}>
-        <div className={classes.textContainer}>
           <Typography gutterBottom variant="h5" component="h2">
             {title}
           </Typography>
@@ -20,10 +19,9 @@ const Destination = ({title,description}) => {
           <Button className={classes.button}>
             Read More
           </Button>
-          </div>
         </CardContent>
       </Card>
   )
 }
 
-export default Destination
+export default DestinationCard
