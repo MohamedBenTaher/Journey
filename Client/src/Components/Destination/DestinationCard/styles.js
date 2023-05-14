@@ -3,7 +3,7 @@ const useStyles = makeStyles((theme) => ({
 
     card: {
       position: 'relative',
-      width: 300,
+      width: 500,
       height: 400,
       margin: 'auto',
       transition: 'all 0.5s',

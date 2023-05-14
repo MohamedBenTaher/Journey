@@ -8,8 +8,8 @@ import Posts from '../Posts/Posts.js'
 import { getPosts ,getPostsBySearch } from '../../actions/posts.js'
 import  Pagination from '../Pagination'
 import useStyles from './styles.js'
-import Destination from '../Destination/Destination.js'
 import DestinationCard from '../Destination/DestinationCard/Destination.js'
+
 function useQuery(){
   return new URLSearchParams(useLocation().search)
 }

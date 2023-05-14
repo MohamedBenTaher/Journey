@@ -81,7 +81,7 @@ const Navbar = () => {
           <Typography variant='h6'>
              Explore
           </Typography>
-        </Link><Link to="/events" className={classes.links}>
+        </Link><Link to="/destinations" className={classes.links}>
             <Typography variant='h6'>
             Top Destinations
             </Typography>

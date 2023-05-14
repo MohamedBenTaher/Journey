@@ -1,6 +1,10 @@
+import { useDropzone } from "react-dropzone";
 import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
-
+import "./styles";
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -51,4 +55,25 @@ const useStyles = makeStyles((theme) => ({
       cursor: 'pointer',
     },
   }));
-export default useStyles;
+const FileInput = ({ field, form: { setFieldValue,values } }) => {
+    const classes=useStyles()
+    const { getRootProps, getInputProps } = useDropzone({
+      accept: 'image/*',
+      multiple: true,
+      onDrop: (acceptedFiles) => {
+        const filesArray = [...values[field.name], ...acceptedFiles]
+        console.log('accepted files',filesArray)
+        setFieldValue(field.name, filesArray);
+      },
+    });
+  
+    return (
+      <Paper>
+      <div {...getRootProps()} className={classes.dropzone}>
+        <input {...getInputProps()} />
+        <Typography>Drag 'n' drop your photos here, or click to select photos</Typography>
+      </div>
+      </Paper>
+    );
+  };
+  export default FileInput;

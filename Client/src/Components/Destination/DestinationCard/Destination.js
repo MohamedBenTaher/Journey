@@ -2,7 +2,7 @@
 import { Card,CardMedia,CardContent,Typography, Button } from '@material-ui/core'
 import React from 'react'
 import useStyles from "./styles.js"
-import  image from '../../Images/tokyo.jpg'
+import  image from '../../../Images/tokyo.jpg'
 const DestinationCard = ({title,description}) => {
     const classes = useStyles();
 

@@ -1,6 +1,10 @@
+import { useDropzone } from "react-dropzone";
 import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
-
+import "./styles";
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -51,4 +55,24 @@ const useStyles = makeStyles((theme) => ({
       cursor: 'pointer',
     },
   }));
-export default useStyles;
+const CoverImageInput = ({ field, form: { setFieldValue,values } }) => {
+    const classes=useStyles()
+    const { getRootProps, getInputProps } = useDropzone({
+      accept: 'image/*',
+      multiple: true,
+      onDrop: (acceptedFiles) => {
+        console.log('accepted cover',acceptedFiles)
+        setFieldValue(field.name, acceptedFiles);
+      },
+    });
+  
+    return (
+        <Paper>
+      <div {...getRootProps()} className={classes.dropzone}>
+        <input {...getInputProps()} />
+        <Typography>Drag 'n' drop your cover Image</Typography>
+      </div>
+      </Paper>
+    );
+  };
+  export default CoverImageInput;
