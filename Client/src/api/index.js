@@ -38,7 +38,10 @@ export const attendEvent = (id) => API.post(`/event/${id}`)
 export const fetchTopDestinations=()=>API.get(`/destination/top`)
 export const fetchDestinatons = (page) => API.get(`/destination?page=${page}`);
 export const fetchDestination = (id) => API.get(`/destination/${id}`);
-export const createDestionation = (newDestination) => API.post('/destination', newDestination);
+export const createDestionation = (newDestination) => API.post('/destination', newDestination,{
+  headers: {
+    'Content-Type':'multipart/form-data',
+}});
 export const updateDestinations = (id, updatedDestination) => API.patch(`/destination/${id}`, updatedDestination);
 export const commentDestination = (value, id) => API.post(`/destination/${id}/commentDestination`, { value });
 export const deleteDestination = (id) => API.delete(`/destination/${id}`);

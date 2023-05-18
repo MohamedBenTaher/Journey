@@ -49,10 +49,10 @@ export const getDestinationssBySearch = (searchQuery) => async (dispatch) => {
   }
 };
 
-export const createDestination = (event) => async (dispatch) => {
+export const createDestination = (destination) => async (dispatch) => {
   try {
-    console.log(event);
-    const { data } = await api.createDestionation(event);
+    console.log(destination);
+    const { data } = await api.createDestionation(destination);
     dispatch({ type: START_LOADING_DESTINATIONS })
     dispatch({ type: CREATE_DESTINATION, payload: [data] })
     dispatch({ type: END_LOADING_DESTINATIONS});
@@ -61,7 +61,7 @@ export const createDestination = (event) => async (dispatch) => {
   }
 }
 
-export const updateEvent = (id, destination) => async (dispatch) => {
+export const updateDestination = (id, destination) => async (dispatch) => {
   try {
     const { data } = await api.updateDestinations(id, destination);
     dispatch({ type: UPDATE_DESTINATION, payload: data });
@@ -71,7 +71,7 @@ export const updateEvent = (id, destination) => async (dispatch) => {
   }
 }
 
-export const DELETE_DESTINATION = (id) => async (dispatch) => {
+export const deleteDestination = (id) => async (dispatch) => {
   try {
     await api.deleteDestination(id);
     dispatch({ type: DELETE_DESTINATION, payload: id });

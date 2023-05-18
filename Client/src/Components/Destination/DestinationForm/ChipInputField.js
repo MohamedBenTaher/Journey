@@ -1,42 +1,51 @@
-import { Chip, TextField } from '@material-ui/core';
+import React from 'react';
+import { Chip, TextField, Box } from '@mui/material';
 import { useField } from 'formik';
 
 const ChipInputField = ({ label, ...props }) => {
-  const [field, meta, helpers] = useField(props);
-
-  const handleDelete = (value) => {
-    const currentValues = field.value.filter((v) => v !== value);
-    helpers.setValue(currentValues);
+    const [field, meta, helpers] = useField(props.name);
+    console.log(field,helpers)
+    const handleAddChip = (chip) => {
+      const tags = field.value.tags;
+      console.log('field value',field.value.tags,chip)
+      helpers.setValue('tags',[...tags, chip]);
+    };
+  
+    const handleDeleteChip = (tagToDelete) => {
+      const tags = field.value || [];
+      helpers.setValue(tags.filter((tag) => tag !== tagToDelete));
+    };
+  
+    return (
+      <Box>
+        <TextField
+          label={label}
+          fullWidth
+          variant="outlined"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onKeyDown={(e) => {
+            if (e.key === ' ') {
+              e.preventDefault();
+              handleAddChip(e.target.value);
+              e.target.value = '';
+            }
+          }}
+        />
+        <Box>
+          {field.value.tags && field?.value.tags?.map((tag) => (
+            <Chip
+              key={tag}
+              label={tag}
+              onDelete={() => handleDeleteChip(tag)}
+              variant="outlined"
+              size="small"
+              sx={{ marginRight: '4px', marginBottom: '4px' }}
+            />
+          ))}
+        </Box>
+      </Box>
+    );
   };
-
-  const handleAdd = (event) => {
-    const inputValue = event.target.value.trim();
-    if (event.key === ' ' && inputValue !== '') {
-      const currentValues = [...field.value, inputValue];
-      helpers.setValue(currentValues);
-      event.target.value = '';
-    }
-  };
-
-  return (
-    <TextField
-      label={label}
-      variant="outlined"
-      fullWidth
-      onKeyDown={handleAdd}
-      InputProps={{
-        value: '',
-        startAdornment: field.value.map((tag, index) => (
-          <Chip
-            key={index}
-            label={tag}
-            onDelete={() => handleDelete(tag)}
-            style={{ margin: '4px' }}
-          />
-        )),
-      }}
-    />
-  );
-};
-
-export default ChipInputField;
+  export default ChipInputField;

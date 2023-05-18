@@ -6,14 +6,16 @@ import postRoutes from './Routes/posts.js'
 import userRoutes from './Routes/user.js'
 import eventRoutes from './Routes/events.js'
 import destinationRoutes from './Routes/destinations.js'
+import fileUpload from 'express-fileupload';
 // import * as dotenv from 'dotenv' 
 // dotenv.config()
 const app = express();
 const Port = process.env.port || 5000
 
+app.use(fileUpload());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use(bodyParser.json({ limit: '30mb', extended: true }))
-app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 const corsOptions = {
     origin: 'http://localhost:3000',
     credentials: true,            //access-control-allow-credentials:true

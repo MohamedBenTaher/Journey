@@ -1,6 +1,6 @@
 
 import { UPDATE_DESTINATION, CREATE_DESTINATION, FETCH_DESTINATIONS, DELETE_DESTINATION, FETCH_DESTINATION, FETCH_DESTINATION_BY_SEARCH, START_LOADING_DESTINATIONS, END_LOADING_DESTINATIONS, COMMENT_DESTINATION, UPVOTE_DESTINATION,DOWNVOTE_DESTINATION } from '../constants/actionTypes.js';
-const DestinationReducer = (state = { isLoading: true, destinations: [] }, action) => {
+export default (state = { isLoading: true, destinations: [] }, action) => {
   switch (action.type) {
     case START_LOADING_DESTINATIONS:
       return { ...state, isLoading: true };
@@ -26,8 +26,6 @@ const DestinationReducer = (state = { isLoading: true, destinations: [] }, actio
 
     case DELETE_DESTINATION:
       return { ...state, destinations: state.destinations.filter((event) => event._id !== action.payload) };
-
-// still needs work
     case UPVOTE_DESTINATION:
       const upvotedIndex = state.destinations.findIndex(dest => dest._id === action.payload._id);
       return {
@@ -48,12 +46,8 @@ const DestinationReducer = (state = { isLoading: true, destinations: [] }, actio
           ...state.destinations.slice(downvotedIndex + 1)
         ]
       };
-
-
     default:
       return state;
 
   }
 }
-
-export default DestinationReducer;

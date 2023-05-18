@@ -1,16 +1,17 @@
 
-import React ,{useState}from 'react';
+import React ,{useEffect, useState}from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Grid, Typography } from '@material-ui/core';
 import { Formik, Form, Field,FieldArray } from 'formik';
 import * as Yup from 'yup';
 import AddRounded  from '@material-ui/icons/AddRounded'
-import { useSelector } from 'react-redux';
-import { s3 } from '../../../awsConfig';
+import { useDispatch, useSelector } from 'react-redux';
 import FileInput from './FileInput';
 import './styles'
 import CoverImageInput from './CoverImageInput';
-import ChipInputField from './ChipInputField'
+import ChipInput from 'material-ui-chip-input';
+import ChipInputField from './ChipInputField';
+import { createDestination } from '../../../actions/destinations';
 const useStyles = makeStyles((theme) =>
   createStyles({
     formControl: {
@@ -111,53 +112,50 @@ const useStyles = makeStyles((theme) =>
   }),
 );
 
+
 const DestinationForm= () => {
-  const user=useSelector((state)=>state.user)
+  
+  const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const userId=user.result._id
+  console.log('userId',userId)
+  console.log('user',user)
   const classes = useStyles();
-  const [images, setImages] = useState([]);
-  const handleAddChip = (chip) => {
-    const chips = [...field.value, chip];
-    form.setFieldValue(field.name, chips);
-  };
+  const dispatch =useDispatch();
+useEffect(()=>{
 
-  const handleDeleteChip = (chip, index) => {
-    const chips = [...field.value];
-    chips.splice(index, 1);
-    form.setFieldValue(field.name, chips);
-  };
-
-  const onSubmit = async (values, { setSubmitting }) => {
+    setUser(
+      JSON.parse(localStorage.getItem('profile'))
+    )
+  
+},[])
+  
+  const handleSubmit = async (values, { setSubmitting,setFieldValue,resetForm }) => {
     setSubmitting(true);
- 
-    const promises = [];
+    console.log(values)
 
-    for (const image of values.images) {
-      const params = {
-        Bucket: '<your bucket name>',
-        Key: image.name,
-        Body: image,
-        ACL: 'public-read',
-      };
+    const formData = new FormData();
+    formData.append('title', values.title);
+    formData.append('description', values.description);
+    formData.append('Country', values.Country);
+    formData.append('type', values.type);
+    formData.append('creator', user?.result?._id);
+    formData.append('coverImage', values.coverImage[0]); // Assuming only one file is selected
+    values.images.forEach((image) => {
+      formData.append('images', image);
+    });
+    values.tags.forEach((tag) => {
+      formData.append('tags', tag);
+    });
+  
+    dispatch(createDestination(formData))
+    resetForm()
 
-      const promise = new Promise((resolve, reject) => {
-        s3.putObject(params, (error, data) => {
-          if (error) {
-            reject(error);
-          } else {
-            resolve(data);
-          }
-        });
-      });
-  
-      promises.push(promise);
-    }
-  
-    await Promise.all(promises);
-  
-    // ...save other form data to the database...
-  
     setSubmitting(false);
   }
+  if (!user) {
+    return; // `user` is null in the first render
+}
+
   return (
     <><Typography variant='h2'  className={classes.heading}>
         Add a new destination
@@ -168,33 +166,32 @@ const DestinationForm= () => {
               description: '',
               Country: '',
               type: '',
-              creator: user?._id?.toString(),
+              creator: user?.result?._id,
               coverImage: '',
               images: [],
-              tags: [''],
+              tags: [],
           }}
-          validationSchema={Yup.object().shape({
-              title: Yup.string().required('Title is required'),
-              description: Yup.string().required('Description is required'),
-              Country: Yup.string().required('Country is required'),
-              type: Yup.string().oneOf(['Location', 'city', 'country']).required('Type is required'),
-              creator: Yup.string().required('Creator is required'),
-              // coverImage: Yup.Object().required('Cover image is required'),
-              images: Yup.array().min(1, 'At least one image is required'),
-              tags: Yup.array(),
-          })}
-          onSubmit={(values, { setSubmitting }) => {
-              onSubmit(values);
+          // validationSchema={Yup.object().shape({
+          //     title: Yup.string().required('Title is required'),
+          //     description: Yup.string().required('Description is required'),
+          //     Country: Yup.string().required('Country is required'),
+          //     type: Yup.string().oneOf(['Location', 'city', 'country']).required('Type is required'),
+          //     creator: Yup.string().required('Creator is required'),
+          //     // coverImageInput: Yup.Object().required('Cover image is required'),
+          //     images: Yup.array().min(1, 'At least one image is required'),
+          //     tags: Yup.array(),
+          // })}
+          onSubmit={(values, { setSubmitting,setFieldValue,resetForm }) => {
+             handleSubmit(values, { setSubmitting,setFieldValue,resetForm });
               setSubmitting(false);
           } }
       >
           {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting,setFieldValue }) => (
-              <Form className={classes.form}>
+              <Form className={classes.form} encType='multipart/form-data'>
                   <Grid container spacing={3}>
                   <Grid item xs={12}>
                       {values.coverImage && (
                         <div className={classes.preview}>
-                          
                             <div  className={classes.coverImageWrapper}>
                                <img src={URL.createObjectURL(values.coverImage[0])} alt={`cover Image`} className={classes.coverImage} />
                               <div
@@ -206,11 +203,9 @@ const DestinationForm= () => {
                                 <Typography variant="caption">x</Typography>
                               </div>
                             </div>
-                          
                         </div>
                       )}
                       </Grid>
-                       
                         {
                           !values.coverImage && (
                             <Grid item xs={12}>
@@ -272,44 +267,31 @@ const DestinationForm= () => {
                           </FormControl>
                       </Grid>
                       <Grid item xs={12}>
-                      <Field name="tags">
-                        {({ field }) => (
-                          <ChipInputField
-                            {...field}
-                            label="Tags"
-                            variant="outlined"
-                            fullWidth
-                            onBlur={handleBlur}
-                            error={touched.tags && Boolean(errors.tags)}
-                            helperText={touched.tags && errors.tags}
-                            fullWidthInput
-                            chipRenderer={({ value, handleDelete }) => (
-                              <Chip key={value} label={value} onDelete={handleDelete} />
-                            )}
-                          />
-                        )}
-                      </Field>
+                        <ChipInput
+                        label="Tags"
+                        variant='outlined'
+                        value={values.tags}
+                        onAdd={(chip) => {
+                          console.log(values.tags)
+                          setFieldValue('tags',[...values.tags, chip])}}
+                        onDelete={(chip, index) => {
+                          const newTags = [...values.tags];
+                          newTags.splice(index, 1);
+                          setFieldValue('tags',newTags);
+                        }}
+                        fullWidth
+                      />
                       </Grid>
                       <Grid item xs={12}>
-                          <Field
-                              name="creator"
-                              label="Creator"
-                              variant="outlined"
-                              fullWidth
-                              as={TextField}
-                              error={touched.creator && Boolean(errors.creator)}
-                              helperText={touched.creator && errors.creator} />
-                      </Grid>
-                      <Grid item xs={12}>
-                      {values.images.length > 0 && (
+                      {values?.images?.length > 0 && (
                         <div className={classes.preview}>
-                          {values.images.map((image, index) => (
+                          {values.images?.map((image, index) => (
                             <div key={index} className={classes.imageWrapper}>
                                <img src={URL.createObjectURL(image)} alt={`Image ${index + 1}`} className={classes.image} />
                               <div
                                 className={classes.removeButton}
                                 onClick={() => {
-                                  setFieldValue('images',values.images.filter((_, i) => i !== index));
+                                  setFieldValue('images',values.images?.filter((_, i) => i !== index));
                                 }}
                               >
                                 <Typography variant="caption">x</Typography>
@@ -320,7 +302,7 @@ const DestinationForm= () => {
                       )}
                       </Grid>
                   
-                      {values.images.length<5?(
+                      {values.images?.length<5?(
                       <Grid item xs={12}>
                         <InputLabel className={classes.InputLabel}>Destination Images</InputLabel>
                       <Field name="images"  fullWidth component={FileInput} />

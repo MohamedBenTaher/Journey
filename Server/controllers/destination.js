@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import Destination from "../Models/Destination.js"
+import s3 from '../awsConfig.js'
+import { v4 as uuidv4 } from 'uuid';
 export const  getTopDestinations= async(req,res) => {
     try {
         const destinations=await Destination.find().sort((a,b)=>(a.upvotes-a.downvotes)>(b.upvotes-b.downvotes)).limit(10);
@@ -35,12 +37,45 @@ export const  getDestination= async(req,res) => {
     }
 }
 export const createDestination=async(req,res) => {
-    const destination = req.body;
+    const destinations = req.body;
+    const files=req.files
+//s3  
+    // console.log('files',req.files)
 
-    const newEvent = new Destination({ ...destination, creator:req.userId,createdAt:new Date().toISOString() })
+    console.log(destinations)
+    const uploadedFiles = [];
+  
+    for (let i = 0; i < files.images; i++) {
+      const file = files.images[i];
+      const fileKey = uuidv4(); // Generate a unique file key or name
+      const uploadParams = {
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: fileKey,
+        Body: file ,
+        ACL: 'public-read',
+      };
+
+      const uploadResult = await s3.upload(uploadParams).promise();
+      const fileUrl = uploadResult.Location;
+      console.log('image upload',fileUrl)
+      uploadedFiles.push(fileUrl);
+    }
+    const fileKey=uuidv4
+    const uploadParams = {
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: fileKey,
+        Body: files.coverImage ,
+        ACL: 'public-read',
+      };
+      const uploadResult = await s3.upload(uploadParams).promise();
+      const coverFileurl = uploadResult.Location;
+      destinations.images=uploadedFiles;
+      destinations.coverFileurl=coverFileurl
+      console.log(destinations)
+    const newEDestination = new Destination({ ...destinations,createdAt:Date.now })
 try {
-    await newEvent.save();
-    res.status(201).json(newEvent );
+     await newEDestination.save();
+    res.status(201).json(newEDestination);
 } catch (error) {
     res.status(401).json({message :error.message})
 }
