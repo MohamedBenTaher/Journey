@@ -171,16 +171,18 @@ useEffect(()=>{
               images: [],
               tags: [],
           }}
-          // validationSchema={Yup.object().shape({
-          //     title: Yup.string().required('Title is required'),
-          //     description: Yup.string().required('Description is required'),
-          //     Country: Yup.string().required('Country is required'),
-          //     type: Yup.string().oneOf(['Location', 'city', 'country']).required('Type is required'),
-          //     creator: Yup.string().required('Creator is required'),
-          //     // coverImageInput: Yup.Object().required('Cover image is required'),
-          //     images: Yup.array().min(1, 'At least one image is required'),
-          //     tags: Yup.array(),
-          // })}
+          validationSchema={Yup.object().shape({
+              title: Yup.string().required('Title is required'),
+              description: Yup.string().required('Description is required'),
+              Country: Yup.string().required('Country is required'),
+              type: Yup.string().oneOf(['Location', 'city', 'country']).required('Type is required'),
+              creator: Yup.string().required('Creator is required'),
+              coverImage: Yup.mixed().required('Cover Image is required'),
+              images: Yup.array().of(
+                Yup.mixed().required('Image is required')
+              ).min(1, 'At least one image is required'),
+              tags: Yup.array(),
+          })}
           onSubmit={(values, { setSubmitting,setFieldValue,resetForm }) => {
              handleSubmit(values, { setSubmitting,setFieldValue,resetForm });
               setSubmitting(false);
