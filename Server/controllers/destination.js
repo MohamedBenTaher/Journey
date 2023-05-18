@@ -42,37 +42,49 @@ export const createDestination=async(req,res) => {
 //s3  
     // console.log('files',req.files)
 
-    console.log(destinations)
     const uploadedFiles = [];
   
-    for (let i = 0; i < files.images; i++) {
+    for (let i = 0; i < files.images.length; i++) {
+        
       const file = files.images[i];
+    //   console.log('image stucture',file)
       const fileKey = uuidv4(); // Generate a unique file key or name
       const uploadParams = {
         Bucket: process.env.S3_BUCKET_NAME,
-        Key: fileKey,
-        Body: file ,
-        ACL: 'public-read',
+        Key: fileKey.toString(),
+        Body: file.data ,
+        // ACL: 'public-read',
       };
-
-      const uploadResult = await s3.upload(uploadParams).promise();
-      const fileUrl = uploadResult.Location;
-      console.log('image upload',fileUrl)
-      uploadedFiles.push(fileUrl);
+      try {
+        const uploadResult = await s3.upload(uploadParams).promise();
+        const fileUrl = uploadResult?.Location;
+        // console.log('image upload',fileUrl)
+        uploadedFiles.push(fileUrl);
+      } catch (error) {
+        console.log(error)
+      }
+    
     }
-    const fileKey=uuidv4
+    const fileKey=uuidv4()
     const uploadParams = {
         Bucket: process.env.S3_BUCKET_NAME,
-        Key: fileKey,
-        Body: files.coverImage ,
-        ACL: 'public-read',
+        Key: fileKey.toString(),
+        Body: files.coverImage.data ,
+        // ACL: 'public-read',
       };
-      const uploadResult = await s3.upload(uploadParams).promise();
-      const coverFileurl = uploadResult.Location;
+      let uploadResult ;
+      try{
+       uploadResult = await s3.upload(uploadParams).promise();
+     
+      }
+      catch(err){
+        console.log(err)
+      }
+      const coverFileurl = uploadResult?.Location||'';
       destinations.images=uploadedFiles;
-      destinations.coverFileurl=coverFileurl
-      console.log(destinations)
-    const newEDestination = new Destination({ ...destinations,createdAt:Date.now })
+      destinations.coverImage=coverFileurl
+      console.log('finale version',destinations)
+    const newEDestination = new Destination({ ...destinations,createdAt:new Date() })
 try {
      await newEDestination.save();
     res.status(201).json(newEDestination);

@@ -136,7 +136,7 @@ useEffect(()=>{
     const formData = new FormData();
     formData.append('title', values.title);
     formData.append('description', values.description);
-    formData.append('Country', values.Country);
+    formData.append('country', values.country);
     formData.append('type', values.type);
     formData.append('creator', user?.result?._id);
     formData.append('coverImage', values.coverImage[0]); // Assuming only one file is selected
@@ -164,7 +164,7 @@ useEffect(()=>{
           initialValues={{
               title: '',
               description: '',
-              Country: '',
+              country: '',
               type: '',
               creator: user?.result?._id,
               coverImage: '',
@@ -247,13 +247,13 @@ useEffect(()=>{
                       </Grid>
                       <Grid item xs={12}>
                           <Field
-                              name="Country"
-                              label="Country"
+                              name="country"
+                              label="country"
                               variant="outlined"
                               fullWidth
                               as={TextField}
-                              error={touched.Country && Boolean(errors.Country)}
-                              helperText={touched.Country && errors.Country} />
+                              error={touched.Country && Boolean(errors.country)}
+                              helperText={touched.Country && errors.country} />
                       </Grid>
                       <Grid item xs={12}>
                           <FormControl fullWidth className={classes.formControl}>
