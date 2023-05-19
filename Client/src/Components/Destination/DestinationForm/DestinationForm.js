@@ -174,13 +174,13 @@ useEffect(()=>{
           validationSchema={Yup.object().shape({
               title: Yup.string().required('Title is required'),
               description: Yup.string().required('Description is required'),
-              Country: Yup.string().required('Country is required'),
-              type: Yup.string().oneOf(['Location', 'city', 'country']).required('Type is required'),
+              country: Yup.string().required('country is required'),
+              type: Yup.string().oneOf(['location', 'city', 'country']).required('Type is required'),
               creator: Yup.string().required('Creator is required'),
-              coverImage: Yup.mixed().required('Cover Image is required'),
-              images: Yup.array().of(
-                Yup.mixed().required('Image is required')
-              ).min(1, 'At least one image is required'),
+              // coverImage: Yup.mixed().required('Cover Image is required'),
+              // images: Yup.array().of(
+              //   Yup.mixed().required('Image is required')
+              // ).min(1, 'At least one image is required'),
               tags: Yup.array(),
           })}
           onSubmit={(values, { setSubmitting,setFieldValue,resetForm }) => {
@@ -261,7 +261,7 @@ useEffect(()=>{
                           <FormControl fullWidth className={classes.formControl}>
                               <InputLabel className={classes.Select}>Type</InputLabel>
                               <Field name="type" as={Select} label="Type" onBlur={handleBlur} variant="outlined" onChange={handleChange} value={values.type} >
-                                  <MenuItem value="Location">Location</MenuItem>
+                                  <MenuItem value="location">Location</MenuItem>
                                   <MenuItem value="city">City</MenuItem>
                                   <MenuItem value="country">Country</MenuItem>
                               </Field>

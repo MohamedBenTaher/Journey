@@ -19,7 +19,7 @@ export const getDestinations = (page) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_DESTINATIONS })
     const { data: { data, currentPage, numberOfPages } } = await api.fetchDestinatons(page);
-
+    console.log('actions',data)
     dispatch({ type: FETCH_DESTINATIONS, payload: { data, currentPage, numberOfPages } });
     dispatch({ type: END_LOADING_DESTINATIONS });
   } catch (error) {
@@ -37,6 +37,7 @@ export const getDestination = (id) => async (dispatch) => {
     console.log(error.message);
   }
 };
+
 export const getDestinationssBySearch = (searchQuery) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_DESTINATIONS })

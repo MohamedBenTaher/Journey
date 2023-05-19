@@ -3,24 +3,26 @@ import {Pagination,PaginationItem} from '@material-ui/lab';
 import useStyles from "./styles.js"
 import { Link } from "react-router-dom";
 import { useDispatch,useSelector } from "react-redux";
-import { getPosts } from "../actions/posts.js";
+import { getDestinations } from "../../../actions/destinations.js";
+
 const Paginate =({page})=>{
-  console.log('posts rd')
-  const {numberOfPages}=useSelector((state)=>state.posts)
+ console.log('rendered')
+  const {numberOfPages}=useSelector((state)=>state.destinations)
   const classes=useStyles();
   const dispatch=useDispatch();
   useEffect(()=>{
-    if(page) dispatch(getPosts(page))
+    console.log('rached ue')
+    if(page) dispatch(getDestinations(page))
   },[page])
   return(
     <Pagination 
-    classes={{ul:classes.ul}}
+    classes={{ul:classes.ul,backgroundColor:'red'}}
     count={numberOfPages}
     page={Number(page)||1}
     variant="outlined"
     color='primary'
     renderItem={(item)=>(
-        <PaginationItem {...item} component={Link} to={`/posts?page=${item.page}`} />
+        <PaginationItem {...item} component={Link} to={`/destinations?page=${item.page}`} />
   )}
     />
       );

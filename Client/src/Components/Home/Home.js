@@ -60,7 +60,7 @@ const Home = () => {
                 </Grid>
 
      </Grid>
-     <DestinationCard title={'Tokyo'} description={'Welcome to Japan and tokyo explore the magic of the city of a 1000 years and more'}/>
+     <DestinationCard destination={{title:'Tokyo', description:'Welcome to Japan and tokyo explore the magic of the city of a 1000 years and more'}}/>
      </Container>
   </Grow>
   )
