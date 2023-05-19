@@ -18,6 +18,7 @@ import EventCard from './Components/Event/Display/EventCard.jsx';
 import Events from './Components/Event/Events.js';
 import Destinations from './Components/Destination/Destinations/Destinations.js';
 import DestinationForm from './Components/Destination/DestinationForm/DestinationForm.js';
+import DestinationDetails from './Components/Destination/DestinationDetails/DestinationDetails.jsx';
 const theme = createTheme({
   typography: {
     fontFamily: [
@@ -47,6 +48,7 @@ const App = () => {
                 <Route path={['/creators/:name', '/tags/:name']} component={CreatorOrTag} />
                 <Route path={'/destinations'} exact component={Destinations} />
                 <Route path={'/destinations/new/'} exact component={DestinationForm} />
+                <Route path={'/destinations/:id/'} exact component={DestinationDetails} />
                 <Route path='/auth' exact component={() => !user ? <Auth /> : <Redirect to="/posts" />} />
               </Switch>
             </Container>

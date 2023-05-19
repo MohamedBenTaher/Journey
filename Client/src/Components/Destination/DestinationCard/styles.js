@@ -3,9 +3,9 @@ const useStyles = makeStyles((theme) => ({
 
     card: {
       position: 'relative',
-      width: 500,
+      width: '100%',
       height: 400,
-      margin: 'auto',
+      margin: 20,
       transition: 'all 0.5s',
       borderRadius:'15px',
       '&:hover': {
@@ -48,6 +48,11 @@ const useStyles = makeStyles((theme) => ({
     textContainer: {
       padding: theme.spacing(0, 2),
     },
+    title:{
+      color:'#fff',
+      fontSize:'30px',
+      fontWeight:'bold',
+    }
   
 }));
   export default useStyles;

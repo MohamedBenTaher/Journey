@@ -1,5 +1,5 @@
 import * as api from '../api/index.js';
-import { LIKE, UPDATE_DESTINATION, CREATE_DESTINATION, FETCH_DESTINATION_BY_SEARCH, DELETE_DESTINATION, FETCH_DESTINATIONS, START_LOADING_DESTINATIONS, END_LOADING_DESTINATIONS, FETCH_DESTINATION, COMMENT_DESTINATION, UPVOTE_DESTINATION } from '../constants/actionTypes.js';
+import { LIKE, UPDATE_DESTINATION, CREATE_DESTINATION, FETCH_DESTINATION_BY_SEARCH, DELETE_DESTINATION, FETCH_DESTINATIONS, START_LOADING_DESTINATIONS, END_LOADING_DESTINATIONS, FETCH_DESTINATION, COMMENT_DESTINATION, UPVOTE_DESTINATION,DOWNVOTE_DESTINATION } from '../constants/actionTypes.js';
 
 //Action Creators
 
@@ -81,10 +81,21 @@ export const deleteDestination = (id) => async (dispatch) => {
     console.log(error.message)
   }
 }
-export const upVoteDestination = (id) => async (dispatch) => {
+export const upvoteDestination = (destinationId,userId) => async (dispatch) => {
   try {
-    const { data } = await api.updateDestinations(id);
+    const { data } = await api.upVoteDestination(destinationId,userId);
+    console.log('after upvote ',data)
     dispatch({ type: UPVOTE_DESTINATION, payload: data });
+
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+export const downvoteDestination = (destinationId,userId) => async (dispatch) => {
+  try {
+    const { data } = await api.downVoteDestination(destinationId,userId);
+    console.log('after downvote ',data)
+    dispatch({ type: DOWNVOTE_DESTINATION, payload: data });
 
   } catch (error) {
     console.log(error.message)

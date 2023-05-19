@@ -25,11 +25,11 @@ const Destinations = ({ setCurrentId }) => {
   }
 
   return (
-    <div>
+    <><div className={classes.mainContainer}>
       {isLoading ? (
         <CircularProgress />
       ) : (
-        <Grid className={classes.container} container alignItems="stretch" spacing={3}>
+        <Grid container spacing={3} justifyContent="start">
           {destinations?.map((destination) => (
             <Grid key={destination._id} item xs={12} sm={6} md={6} lg={4}>
               <DestinationCard destination={destination} setCurrentId={setCurrentId} />
@@ -37,10 +37,11 @@ const Destinations = ({ setCurrentId }) => {
           ))}
         </Grid>
       )}
-      <Grid>
-        <Paginate page={page} />
-      </Grid>
     </div>
+    <Grid item xs={12} alignItems='center' justifyContent='center' className={classes.actionDiv}>
+        <Paginate page={page} />
+     </Grid></>
+
   );
 };
 

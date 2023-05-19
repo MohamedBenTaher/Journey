@@ -26,26 +26,32 @@ export default (state = { isLoading: true, destinations: [] }, action) => {
 
     case DELETE_DESTINATION:
       return { ...state, destinations: state.destinations.filter((event) => event._id !== action.payload) };
-    case UPVOTE_DESTINATION:
-      const upvotedIndex = state.destinations.findIndex(dest => dest._id === action.payload._id);
-      return {
-        ...state,
-        destinations: [
-          ...state.destinations.slice(0, upvotedIndex),
-          action.payload,
-          ...state.destinations.slice(upvotedIndex + 1)
-        ]
-      };
-    case DOWNVOTE_DESTINATION:
-      const downvotedIndex = state.destinations.findIndex(dest => dest._id === action.payload._id);
-      return {
-        ...state,
-        destinations: [
-          ...state.destinations.slice(0, downvotedIndex),
-          action.payload,
-          ...state.destinations.slice(downvotedIndex + 1)
-        ]
-      };
+      case UPVOTE_DESTINATION:
+        return {
+          ...state,
+          destinations: state.destinations.map((destination) =>
+            destination.id === action.payload
+              ? {
+                  ...destination,
+                  upvotes: [...destination.upvotes, action.userId],
+                  downvotes: destination.downvotes.filter((id) => id !== action.userId),
+                }
+              : destination
+          ),
+        };
+      case DOWNVOTE_DESTINATION:
+        return {
+          ...state,
+          destinations: state.destinations.map((destination) =>
+            destination.id === action.payload
+              ? {
+                  ...destination,
+                  downvotes: [...destination.downvotes, action.userId],
+                  upvotes: destination.upvotes.filter((id) => id !== action.userId),
+                }
+              : destination
+          ),
+        };
     default:
       return state;
 

@@ -45,5 +45,6 @@ export const createDestionation = (newDestination) => API.post('/destination', n
 export const updateDestinations = (id, updatedDestination) => API.patch(`/destination/${id}`, updatedDestination);
 export const commentDestination = (value, id) => API.post(`/destination/${id}/commentDestination`, { value });
 export const deleteDestination = (id) => API.delete(`/destination/${id}`);
-export const upvoteDestination = (id) => API.post(`/destination/${id}`)
+export const upVoteDestination = (destinationId,userId) => API.patch(`/destination/${destinationId}/upvote`,{userId:userId})
+export const downVoteDestination = (destinationId,userId) => API.patch(`/destination/${destinationId}/downvote`,{userId:userId})
 export const fetchDestinationsBySearch = (searchQuery) => API.get(`/destination/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}&season=${searchQuery.season}`);

@@ -114,46 +114,49 @@ export const deleteDestination = async (req, res) => {
 } 
 
 export const upvoteDestination=async (req,res)=>{
+    console.log(req.body,req.params)
     const { id }=req.params
+    const {userId}=req?.body
     if(!req.userId ) return res.json({mesage:'Unauthenticated'})
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No destination with id: ${id}`);
-   
-    const destination =await destination.findById(id)
-    const index=destination.upvotes.findIndex((id)=> id ===String(req.userId));
+    const destination =await Destination.findById(id)
+    const index=destination.upvotes.findIndex((id)=> id ===String(id));
+    let updatedDestination=destination
     if(index===-1){
-        destination.upvotes.push(req.userId)
-    }else {
-        destination.attendants=destination?.upvotes?.fliter((id)=>id!==String(req.userId ))
+        destination.upvotes.push(userId)
+        const downvoteIndex=destination.downvotes.findIndex((id)=> id ===String(userId));
+        if(downvoteIndex!==-1){
+            destination.downvotes.splice(downvoteIndex,1)
+        }
     }
-
-    const updatedDestination= await destination.findByIdAndUpdate(id,destination,{new: true});
+    updatedDestination= await Destination.findByIdAndUpdate(id,destination,{new: true});
     res.status(200).json(updatedDestination);
 
 }
 export const downvoteDestination=async (req,res)=>{
     const { id }=req.params
-    if(!req.userId ) return res.json({mesage:'Unauthenticated'})
+    const userId=req.userId
+    console.log(req.userId)
+    if(!userId) return res.json({mesage:'Unauthenticated'})
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No destination with id: ${id}`);
-   
-    const destination =await destination.findById(id)
-    const index=destination.downvotes.findIndex((id)=> id ===String(req.userId));
+    const destination =await Destination.findById(id)
+    const index=destination.downvotes.findIndex((id)=> id ===String(userId));
+    let updatedDestination=destination;
     if(index===-1){
-        destination.downvotes.push(req.userId)
-    }else {
-        destination.attendants=destination?.downvotes?.fliter((id)=>id!==String(req.userId ))
+        destination.downvotes.push(userId)
+        const upvoteIndex=destination.upvotes.findIndex((id)=> id ===String(userId));
+        if(upvoteIndex!==-1){
+            destination.upvotes.splice(upvoteIndex,1)
+        }
+         updatedDestination= await Destination.findByIdAndUpdate(id,destination,{new: true});
     }
-
-    const updatedDestination= await destination.findByIdAndUpdate(id,destination,{new: true});
     res.status(200).json(updatedDestination);
-
 }
 export const commentDestination=async (req,res)=>{
     const { id }=req.params;
     const {value}=req.body; 
-   
     const destination =await Destination.findById(id);
     destination.comments.push(value);
-
     const updatedDestination= await Destination.findByIdAndUpdate(id,destination,{new: true});
     res.json(updatedDestination);
 
