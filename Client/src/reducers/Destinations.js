@@ -27,14 +27,15 @@ export default (state = { isLoading: true, destinations: [] }, action) => {
     case DELETE_DESTINATION:
       return { ...state, destinations: state.destinations.filter((event) => event._id !== action.payload) };
       case UPVOTE_DESTINATION:
+        console.log('upvote payload',action.payload)
         return {
           ...state,
           destinations: state.destinations.map((destination) =>
-            destination.id === action.payload
+            destination._id === action.payload._id
               ? {
                   ...destination,
-                  upvotes: [...destination.upvotes, action.userId],
-                  downvotes: destination.downvotes.filter((id) => id !== action.userId),
+                  upvotes: [...action.payload.upvotes],
+                  downvotes: [...action.payload.downvotes],
                 }
               : destination
           ),
@@ -43,11 +44,11 @@ export default (state = { isLoading: true, destinations: [] }, action) => {
         return {
           ...state,
           destinations: state.destinations.map((destination) =>
-            destination.id === action.payload
+            destination._id === action.payload._id
               ? {
                   ...destination,
-                  downvotes: [...destination.downvotes, action.userId],
-                  upvotes: destination.upvotes.filter((id) => id !== action.userId),
+                  upvotes: [...action.payload.upvotes],
+                  downvotes: [...action.payload.downvotes],
                 }
               : destination
           ),

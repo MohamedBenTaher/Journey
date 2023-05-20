@@ -116,11 +116,11 @@ export const deleteDestination = async (req, res) => {
 export const upvoteDestination=async (req,res)=>{
     console.log(req.body,req.params)
     const { id }=req.params
-    const {userId}=req?.body
+    const userId=req.userId
     if(!req.userId ) return res.json({mesage:'Unauthenticated'})
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No destination with id: ${id}`);
     const destination =await Destination.findById(id)
-    const index=destination.upvotes.findIndex((id)=> id ===String(id));
+    const index=destination.upvotes.findIndex((id)=> id ===String(userId));
     let updatedDestination=destination
     if(index===-1){
         destination.upvotes.push(userId)

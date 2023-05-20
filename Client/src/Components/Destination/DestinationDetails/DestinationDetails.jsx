@@ -52,7 +52,7 @@ const DestinationDetails = () => {
   const {id}=useParams()
   useEffect(()=>{
     dispatch(getDestination(id))
-  },[id])
+  },[id,destination])
   if (!user) {
     return; // `user` is null in the first render
 }
@@ -63,7 +63,7 @@ const handleUpvote = () => {
   const handleDownvote = () => {
     dispatch(downvoteDestination(destination?._id, user?._id));
   };
-  console.log('destination',destination)
+
   return (
     <Card>
       <CardMedia className={classes.coverImage} image={destination?.coverImage} />

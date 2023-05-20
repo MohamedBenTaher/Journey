@@ -29,8 +29,8 @@ app.use('/event', eventRoutes)
 app.use('/destination',destinationRoutes)
 app.get('/', (req, res) => { res.send('test works') })
 app.set('port', Port);
-const CONNECTION_URL = "mongodb+srv://Medben:medben45@memories.urmfk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-mongoose.connect(CONNECTION_URL, { useUnifiedTopology: true, useNewUrlParser: true })
+
+mongoose.connect(process.env.CONNECTION_URL, { useUnifiedTopology: true, useNewUrlParser: true ,useFindAndModify:false})
     .then(app.listen(Port, () => console.log('server Running on Port :' + Port)))
     .catch((error) => console.log(error.message));
 
