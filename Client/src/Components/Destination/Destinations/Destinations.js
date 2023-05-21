@@ -3,7 +3,7 @@ import { Grid, CircularProgress } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import useStyles from './styles';
 import DestinationCard from '../DestinationCard/Destination.js';
-import Paginate from './Pagination';
+import  Paginate from './Pagination.jsx';
 import { useLocation } from 'react-router-dom';
 
 function useQuery() {
@@ -20,10 +20,10 @@ const Destinations = ({ setCurrentId }) => {
   const searchQuery = query.get('searchQuery');
   const classes = useStyles();
 
-  if (!isLoading && destinations.length === 0) {
+  if (isLoading && destinations.length === 0) {
     return <div>No Destinations</div>;
   }
-
+console.log('test')
   return (
     <><div className={classes.mainContainer}>
       {isLoading ? (

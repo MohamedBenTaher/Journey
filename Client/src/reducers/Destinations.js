@@ -1,6 +1,6 @@
 
 import { UPDATE_DESTINATION, CREATE_DESTINATION, FETCH_DESTINATIONS, DELETE_DESTINATION, FETCH_DESTINATION, FETCH_DESTINATION_BY_SEARCH, START_LOADING_DESTINATIONS, END_LOADING_DESTINATIONS, COMMENT_DESTINATION, UPVOTE_DESTINATION,DOWNVOTE_DESTINATION } from '../constants/actionTypes.js';
-export default (state = { isLoading: true, destinations: [] }, action) => {
+export default (state = { isLoading: false, destinations: [] }, action) => {
   switch (action.type) {
     case START_LOADING_DESTINATIONS:
       return { ...state, isLoading: true };

@@ -11,9 +11,8 @@ const Paginate =({page})=>{
   const classes=useStyles();
   const dispatch=useDispatch();
   useEffect(()=>{
-    console.log('rached ue')
     if(page) dispatch(getDestinations(page))
-  },[page])
+  },[page,dispatch])
   return(
     <Pagination 
     classes={{ul:classes.ul}}

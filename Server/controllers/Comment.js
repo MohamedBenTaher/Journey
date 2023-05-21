@@ -10,7 +10,7 @@ export const getEntityComments=async (req,res)=>{
         res.status(200).json(entityComments)
     }
     else{
-        res.status(404).json({message:'No comments found'})
+        res.status(200).json([])
         }
     } catch (error) {
         res.status(500).json({message:"something went wrong in the getEntityComments controller"})
@@ -19,10 +19,10 @@ export const getEntityComments=async (req,res)=>{
 export const commentEntity=async (req,res)=>{
     try {
     const { id }=req.params;
-    const {content,userId,entityName}=req.body;
+    const {content,userId,entityType}=req.body;
     if(!userId ) return res.json({mesage:'Unauthenticated'})
-    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No ${entityName} with id: ${id}`);
-    const createdComment=new Comment({entity:{type:entityName,entityId:id},user:userId,content,createdAt:new Date()})
+    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No ${entityType} with id: ${id}`);
+    const createdComment=new Comment({entity:{type:entityType,entityId:id},user:userId,content,createdAt:new Date()})
     try {
         await createdComment.save();
        res.status(201).json(createdComment);

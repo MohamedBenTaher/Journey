@@ -2,8 +2,6 @@ import * as api from '../api/index.js';
 import { LIKE, UPDATE_DESTINATION, CREATE_DESTINATION, FETCH_DESTINATION_BY_SEARCH, DELETE_DESTINATION, FETCH_DESTINATIONS, START_LOADING_DESTINATIONS, END_LOADING_DESTINATIONS, FETCH_DESTINATION, COMMENT_DESTINATION, UPVOTE_DESTINATION,DOWNVOTE_DESTINATION } from '../constants/actionTypes.js';
 
 //Action Creators
-
-
 export const getTopDestinations = () => async (dispatch) => {
     try {
       dispatch({ type: START_LOADING_DESTINATIONS })
@@ -17,6 +15,7 @@ export const getTopDestinations = () => async (dispatch) => {
   };
 export const getDestinations = (page) => async (dispatch) => {
   try {
+    console.log('called action')
     dispatch({ type: START_LOADING_DESTINATIONS })
     const { data: { data, currentPage, numberOfPages } } = await api.fetchDestinatons(page);
     console.log('actions',data)
@@ -101,12 +100,4 @@ export const downvoteDestination = (destinationId,userId) => async (dispatch) =>
     console.log(error.message)
   }
 }
-export const commentDestination = (value, id) => async (dispatch) => {
-  try {
-    const { data } = await api.commentEntity(value, id);
-    dispatch({ type: COMMENT_DESTINATION, payload: data });
-    return data.comments;
-  } catch (error) {
-    console.log(error)
-  }
-}
+

@@ -53,8 +53,8 @@ const DestinationDetails = () => {
   const dispatch=useDispatch()
   const {id}=useParams()
   useEffect(()=>{
-    dispatch(getDestination(id))
-  },[id,destination])
+   dispatch(getDestination(id))
+  },[dispatch,id])
   if (!user) {
     return; // `user` is null in the first render
 }
@@ -109,10 +109,10 @@ const handleUpvote = () => {
           </CardContent>
       </Card>
       {
-        destination??(
+        destination&&(
           <Card>
             <CardContent>
-                <Comments entityId={id} entityType={'Destination'}/>
+                <Comments entityId={id} entityType={'Destination'} userId={user._id}/>
             </CardContent>
           </Card>
         )

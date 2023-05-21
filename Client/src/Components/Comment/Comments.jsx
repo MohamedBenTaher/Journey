@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Comments = ({ entityId, entityType }) => {
+const Comments = ({ entityId, entityType,userId }) => {
   const classes = useStyles();
   const comments = useSelector(state => state.comments);
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const Comments = ({ entityId, entityType }) => {
   }, [ entityId, entityType,dispatch]);
 
   const handleAddComment = values => {
-    dispatch(createComment(entityId, entityType, values.comment));
+    dispatch(createComment(entityId, entityType, userId,values.comment));
   };
 
   return (
@@ -43,7 +43,7 @@ const Comments = ({ entityId, entityType }) => {
               Comments
             </Typography><List>
                 {
-                  comments?.comments.map((comment) => (
+                  comments?.comments?.map((comment) => (
                     <React.Fragment key={comment?._id}>
                       <ListItem alignItems="flex-start">
                         <ListItemText primary={comment?.content} secondary={`Author: ${comment?.author}`} />

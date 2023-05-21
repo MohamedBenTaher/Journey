@@ -14,9 +14,9 @@ export const getDestinationComments = (id,entityType) => async (dispatch) => {
   }
 };
 
-export const createComment = (comment)=> async (dispatch) =>{
+export const createComment = (entityId,entityType,userId,content)=> async (dispatch) =>{
   try {
-      const {data}=await api.commentEntity(comment);
+      const {data}=await api.commentEntity(entityId,entityType,userId,content);
       dispatch({type:START_LOADING_DESTINATION_COMMENTS })
       dispatch({type:COMMENT_DESTINATION,payload:data})
       dispatch({type:START_LOADING_DESTINATION_COMMENTS});
