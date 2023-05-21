@@ -6,6 +6,7 @@ import postRoutes from './Routes/posts.js'
 import userRoutes from './Routes/user.js'
 import eventRoutes from './Routes/events.js'
 import destinationRoutes from './Routes/destinations.js'
+import commentRoutes from'./Routes/Comments.js'
 import fileUpload from 'express-fileupload';
 // import * as dotenv from 'dotenv' 
 // dotenv.config()
@@ -27,6 +28,7 @@ app.use('/post', postRoutes);
 app.use('/user', userRoutes);
 app.use('/event', eventRoutes)
 app.use('/destination',destinationRoutes)
+app.use('/comment',commentRoutes)
 app.get('/', (req, res) => { res.send('test works') })
 app.set('port', Port);
 

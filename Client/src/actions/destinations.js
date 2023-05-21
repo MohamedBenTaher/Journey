@@ -103,7 +103,7 @@ export const downvoteDestination = (destinationId,userId) => async (dispatch) =>
 }
 export const commentDestination = (value, id) => async (dispatch) => {
   try {
-    const { data } = await api.commentDestination(value, id);
+    const { data } = await api.commentEntity(value, id);
     dispatch({ type: COMMENT_DESTINATION, payload: data });
     return data.comments;
   } catch (error) {

@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { downvoteDestination, getDestination, upvoteDestination } from '../../../actions/destinations';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { useSelector,useDispatch } from 'react-redux';
-
+import  Comments  from '../../Comment/Comments.jsx';
 const useStyles = makeStyles((theme) => ({
   coverImage: {
     height: 400,
@@ -67,51 +67,57 @@ const handleUpvote = () => {
   };
 
   return (
-    <Card>
-      <CardMedia className={classes.coverImage} image={destination?.coverImage} />
-      <CardContent>
-        <Typography variant="h5" className={classes.title}>
-          {destination?.title}
-        </Typography>
-        <Typography variant="body2" component="p">
-          Created: {new Date(destination?.createdAt).toLocaleString()}
-        </Typography>
-        <div className={classes.voteSection}>
-            {
-                user&&(
-                    <div className={classes.voteButton} onClick={()=>handleUpvote()}>Upvote</div>
-                )
-            }
-         
-          <Typography variant="body2" className={classes.voteCount}>
-            Upvotes:  {destination?.upvotes?.length}
-          </Typography>
-          {
-                user&&(
-                    <div className={classes.voteButton} onClick={()=>handleDownvote()}>Downvote</div>
-                )
-            }
-          <Typography variant="body2" className={classes.voteCount}>
-            Downvotes:   {destination?.downvotes?.length}
-          </Typography>
-        </div>
-        <div>
-        {destination?.description.split('\n').map((paragraph, index) => (
-          <p key={index} style={{ textAlign: 'justify' }}>{paragraph}</p>
-        ))}
-      </div>
+    <><Card>
+          <CardMedia className={classes.coverImage} image={destination?.coverImage} />
+          <CardContent>
+              <Typography variant="h5" className={classes.title}>
+                  {destination?.title}
+              </Typography>
+              <Typography variant="body2" component="p">
+                  Created: {new Date(destination?.createdAt).toLocaleString()}
+              </Typography>
+              <div className={classes.voteSection}>
+                  {user && (
+                      <div className={classes.voteButton} onClick={() => handleUpvote()}>Upvote</div>
+                  )}
 
-        <div className={classes.imagesSection}>
-          <Grid container spacing={2}>
-            {destination?.images.map((image, index) => (
-              <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
-                <div className={classes.image} style={{ backgroundImage: `url(${image})` }} />
-              </Grid>
-            ))}
-          </Grid>
-        </div>
-      </CardContent>
-    </Card>
+                  <Typography variant="body2" className={classes.voteCount}>
+                      Upvotes:  {destination?.upvotes?.length}
+                  </Typography>
+                  {user && (
+                      <div className={classes.voteButton} onClick={() => handleDownvote()}>Downvote</div>
+                  )}
+                  <Typography variant="body2" className={classes.voteCount}>
+                      Downvotes:   {destination?.downvotes?.length}
+                  </Typography>
+              </div>
+              <div>
+                  {destination?.description.split('\n').map((paragraph, index) => (
+                      <p key={index} style={{ textAlign: 'justify' }}>{paragraph}</p>
+                  ))}
+              </div>
+
+              <div className={classes.imagesSection}>
+                  <Grid container spacing={2}>
+                      {destination?.images.map((image, index) => (
+                          <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
+                              <div className={classes.image} style={{ backgroundImage: `url(${image})` }} />
+                          </Grid>
+                      ))}
+                  </Grid>
+              </div>
+          </CardContent>
+      </Card>
+      {
+        destination??(
+          <Card>
+            <CardContent>
+                <Comments entityId={id} entityType={'Destination'}/>
+            </CardContent>
+          </Card>
+        )
+    }      
+          </>
   );
 };
 
