@@ -1,4 +1,4 @@
-/server/.env
+/Server/.env
 # dependencies
 /node_modules
 /.pnp
