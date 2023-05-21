@@ -20,8 +20,10 @@ const useStyles = makeStyles((theme) => ({
   },
   voteSection: {
     marginTop: theme.spacing(2),
+    width:'50%',
     display: 'flex',
     alignItems: 'center',
+    justifyContent:'space-evenly'
   },
   voteButton: {
     marginRight: theme.spacing(1),
@@ -76,18 +78,18 @@ const handleUpvote = () => {
         </Typography>
         <div className={classes.voteSection}>
             {
-                user?(
+                user&&(
                     <div className={classes.voteButton} onClick={()=>handleUpvote()}>Upvote</div>
-                ):null
+                )
             }
          
           <Typography variant="body2" className={classes.voteCount}>
             Upvotes:  {destination?.upvotes?.length}
           </Typography>
           {
-                user?(
+                user&&(
                     <div className={classes.voteButton} onClick={()=>handleDownvote()}>Downvote</div>
-                ):null
+                )
             }
           <Typography variant="body2" className={classes.voteCount}>
             Downvotes:   {destination?.downvotes?.length}

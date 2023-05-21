@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Destination from "../Models/Destination.js"
+import Comment from "../Models/Comment.js"
 import s3 from '../awsConfig.js'
 import { v4 as uuidv4 } from 'uuid';
 export const  getTopDestinations= async(req,res) => {
@@ -152,14 +153,30 @@ export const downvoteDestination=async (req,res)=>{
     }
     res.status(200).json(updatedDestination);
 }
+
+export const getDestinationComments=async (req,res)=>{
+    const { id }=req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No destination with id: ${id}`);
+    const destinationComments= await Comment.find({destination:id}).exec() 
+    if(destinationComments.length){
+        res.status(200).json(destinationComments)
+    }
+    else{
+        res.status(404).json({message:'No comments found'})
+        }
+}
 export const commentDestination=async (req,res)=>{
     const { id }=req.params;
-    const {value}=req.body; 
-    const destination =await Destination.findById(id);
-    destination.comments.push(value);
-    const updatedDestination= await Destination.findByIdAndUpdate(id,destination,{new: true});
-    res.json(updatedDestination);
-
+    const {content,userId}=req.body; 
+    if(!userId ) return res.json({mesage:'Unauthenticated'})
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No destination with id: ${id}`);  
+    const createdComment=new Comment({destination:id,user:userId,content,createdAt:new Date()})
+    try {
+        await createdComment.save();
+       res.status(201).json(createdComment);
+   } catch (error) {
+       res.status(401).json({message :error.message})
+   }
 }
 
 export const getDestinationsBySearch= async(req,res)=>{
