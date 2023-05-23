@@ -7,6 +7,7 @@ export const getDestinationComments = (id,entityType) => async (dispatch) => {
   try {
     dispatch({type:START_LOADING_DESTINATION_COMMENTS })
     const { data } = await api.getEntityComments(id,entityType);
+    console.log('fetched comments',data)
     dispatch({ type:FETCH_DESTINATION_COMMENT, payload:data});
     dispatch({type:END_LOADING_DESTINATION_COMMENTS});
   } catch (error) {
@@ -19,17 +20,20 @@ export const createComment = (entityId,entityType,userId,content)=> async (dispa
       const {data}=await api.commentEntity(entityId,entityType,userId,content);
       dispatch({type:START_LOADING_DESTINATION_COMMENTS })
       dispatch({type:COMMENT_DESTINATION,payload:data})
-      dispatch({type:START_LOADING_DESTINATION_COMMENTS});
+      dispatch({type:END_LOADING_DESTINATION_COMMENTS});
   } catch (error) {
     console.log(error.message)
   }
 }
 
-export const updateComment=(id,comment )=> async (dispatch)=>{
+export const updateMyComment=(id,userId,content )=> async (dispatch)=>{
     try {
-      const {data}=await api.updateEntityComments(id,comment);
+     
+      const {data}=api.updateEntityComments(id,userId,content)
+      console.log('pdated data',data)
+      dispatch({type:START_LOADING_DESTINATION_COMMENTS })
       dispatch({type:UPDATE_DESTINATION_COMMENT,payload:data});
-      
+      dispatch({type:END_LOADING_DESTINATION_COMMENTS});
     } catch (error) {
       console.log(error.message)
     }

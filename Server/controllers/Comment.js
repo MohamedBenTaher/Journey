@@ -1,30 +1,39 @@
 import mongoose from "mongoose";
 import Comment from "../Models/Comment.js"
 
-export const getEntityComments=async (req,res)=>{
+export const getEntityComments = async (req, res) => {
     try {
-    const { id ,entityType}=req.params;
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No ${entityType} with id: ${id}`);
-    const entityComments= await Comment.find({entity:{entityId:id,type:entityType}}).exec() 
-    if(entityComments?.length){
-        res.status(200).json(entityComments)
-    }
-    else{
-        res.status(200).json([])
-        }
+      const { id } = req.params;
+      const entityType = req.query.entityType;
+  
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).send(`No ${entityType} with id: ${id}`);
+      }
+      console.log('test get')
+      const entityComments = await Comment.find({ entity: {type: entityType , entityId: mongoose.Types.ObjectId(id) } }).
+      populate("user")
+      .exec();
+      console.log('found comments',entityComments)
+      if (entityComments.length > 0) {
+        res.status(200).json(entityComments);
+      } else {
+        res.status(200).json([]);
+      }
     } catch (error) {
-        res.status(500).json({message:"something went wrong in the getEntityComments controller"})
+      res.status(500).json({ message: "Error retrieving entity comments" });
     }
-}
+  };
 export const commentEntity=async (req,res)=>{
     try {
     const { id }=req.params;
-    const {content,userId,entityType}=req.body;
-    if(!userId ) return res.json({mesage:'Unauthenticated'})
+    const {userId,entityType,content}=req.body.body
+    console.log('my req',userId,entityType,content)
+    if(!mongoose.Types.ObjectId.isValid(req.userId))return res.json({mesage:'Unauthenticated'})
     if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No ${entityType} with id: ${id}`);
-    const createdComment=new Comment({entity:{type:entityType,entityId:id},user:userId,content,createdAt:new Date()})
+    const createdComment=new Comment({entity:{type:entityType,entityId:id},user:userId,content:content,createdAt:new Date()})
     try {
         await createdComment.save();
+        await createdComment.populate('user').execPopulate();
        res.status(201).json(createdComment);
    } catch (error) {
        res.status(401).json({message :error.message})
@@ -36,11 +45,16 @@ export const commentEntity=async (req,res)=>{
 export const updateCommentEntity=async (req,res)=>{
     try {
         const {id}=req.params
-        const {content,userId,entityName}=req.body
+        const {content,userId}=req.body
+        console.log('content req',content,userId,id)
         if(!userId ) return res.json({mesage:'Unauthenticated'})
-        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No ${entityName} with id: ${id}`);
-        const updatedComment= await Comment.findByIdAndUpdate(id,{content},{new: true});
-        res.status(200).json(updatedDestination);
+        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No Object with id: ${id}`);
+        const comment =await Comment.findById(id)
+        comment.content=content;
+        const updatedComment= await Comment.findByIdAndUpdate(id,comment,{new: true});
+        console.log('my comment',updatedComment)
+        console.log('updated',updatedComment)
+        res.status(200).json(updatedComment);
     } catch (error) {
         console.log(error)
     }
@@ -48,8 +62,7 @@ export const updateCommentEntity=async (req,res)=>{
 export const deleteCommentEntity=async(req,res)=>{
     try {
         const {id}=req.params
-        const {entityName}=req.body
-        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No ${entityName} with id: ${id}`);
+        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No Object with id: ${id}`);
         const deletedComment=await Comment.findByIdAndDelete(id);
         res.status(200).json(deletedComment);
         } catch (error) {

@@ -49,7 +49,7 @@ export const downVoteDestination = (destinationId,userId) => API.patch(`/destina
 export const fetchDestinationsBySearch = (searchQuery) => API.get(`/destination/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}&season=${searchQuery.season}`);
 /*===================================Comments===============================================*/
 /*==============Destination============*/
-export const commentEntity = (entityId,entityType,userId ,content) => API.post(`/comment/${entityId}/comment`, { body:{entityType:entityType,content:content,userId:userId} });
+export const commentEntity = (entityId,entityType,userId,content) => API.post(`/comment/${entityId}/comment`, { body:{userId:userId,entityType:entityType,content:content} });
 export const getEntityComments=(id,entityType)=>API.get(`/comment/${id}`,{ params: { entityType } })
-export const updateEntityComments=(value,id)=>API.patch(`/comment/${id}`,{body:value})
+export const updateEntityComments=(id,userId,content)=>API.patch(`/comment/${id}`,{userId:userId,content:content})
 export const deleteEntityComments=(id)=>API.delete(`/comment/${id}`)

@@ -55,9 +55,9 @@ const DestinationDetails = () => {
   useEffect(()=>{
    dispatch(getDestination(id))
   },[dispatch,id])
-  if (!user) {
-    return; // `user` is null in the first render
-}
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, []);
 const handleUpvote = () => {
     dispatch(upvoteDestination(destination?._id, user?._id));
   };
@@ -112,7 +112,7 @@ const handleUpvote = () => {
         destination&&(
           <Card>
             <CardContent>
-                <Comments entityId={id} entityType={'Destination'} userId={user._id}/>
+                <Comments entityId={id} entityType={'Destination'} user={user||{}}/>
             </CardContent>
           </Card>
         )
