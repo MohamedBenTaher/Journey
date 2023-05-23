@@ -43,7 +43,16 @@ const Comments = ({ entityId, entityType,user }) => {
   const handleSubmitEditComment=(values)=>{
     console.log('values',values)
     if (userId && entityId && values.commenttoupdate) {
-      dispatch(updateMyComment(values.id, userId , values.commenttoupdate));
+      dispatch(updateMyComment(values.id, userId , values.commenttoupdate))
+      .then(() => {
+        // Update the state with the updated comments
+        dispatch(getDestinationComments(entityId, entityType));
+        // Reset the edit state for all comments
+        setEdit(new Array(comments.length).fill(false));
+      })
+      .catch((error) => {
+        console.log('Error updating comment:', error.message);
+      });
     }
   }
   const handleDeleteComment = (id) => {

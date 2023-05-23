@@ -9,11 +9,9 @@ export const getEntityComments = async (req, res) => {
       if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).send(`No ${entityType} with id: ${id}`);
       }
-      console.log('test get')
       const entityComments = await Comment.find({ entity: {type: entityType , entityId: mongoose.Types.ObjectId(id) } }).
       populate("user")
       .exec();
-      console.log('found comments',entityComments)
       if (entityComments.length > 0) {
         res.status(200).json(entityComments);
       } else {
@@ -52,8 +50,7 @@ export const updateCommentEntity=async (req,res)=>{
         const comment =await Comment.findById(id)
         comment.content=content;
         const updatedComment= await Comment.findByIdAndUpdate(id,comment,{new: true});
-        console.log('my comment',updatedComment)
-        console.log('updated',updatedComment)
+        updatedComment.populate('user').execPopulate();
         res.status(200).json(updatedComment);
     } catch (error) {
         console.log(error)

@@ -28,8 +28,7 @@ export const createComment = (entityId,entityType,userId,content)=> async (dispa
 
 export const updateMyComment=(id,userId,content )=> async (dispatch)=>{
     try {
-     
-      const {data}=api.updateEntityComments(id,userId,content)
+      const {data}= await api.updateEntityComments(id,userId,content)
       console.log('pdated data',data)
       dispatch({type:START_LOADING_DESTINATION_COMMENTS })
       dispatch({type:UPDATE_DESTINATION_COMMENT,payload:data});
