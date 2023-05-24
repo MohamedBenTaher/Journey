@@ -3,10 +3,14 @@ import mongoose from "mongoose";
 const locationSchema = mongoose.Schema({
     title: { type: String, required: true, unique: true },
     description: { type: String, required: true },
-    city: { type: String, required: true },
+    destination:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Destination',
+        required: true,
+      },
     Country: { type: String, required: true },
     selectedFile: String,
-    avgRating: { type: String, default: 0 },
+    avgRating: { type: [{id:String,rating:Number}], default: 0 },
     tags: {
         type: [String],
         default: []
