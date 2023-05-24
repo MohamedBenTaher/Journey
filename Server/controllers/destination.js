@@ -112,19 +112,16 @@ const uploadedFiles = [];
     for (let i = 0; i < files?.images?.length; i++) {
         
       const file = files.images[i];
-    //   console.log('image stucture',file)
-      const fileKey = uuidv4(); // Generate a unique file key or name
+      const fileKey = uuidv4();
       const uploadParams = {
         Bucket: process.env.S3_BUCKET_NAME,
         Key: fileKey.toString(),
         Body: file?.data ,
-        ContentType: 'image/jpeg', 
-        // ACL: 'public-read',
+        ContentType: 'image/jpeg',
       };
       try {
         const uploadResult = await s3.upload(uploadParams).promise();
         const fileUrl = uploadResult?.Location;
-        // console.log('image upload',fileUrl)
         uploadedFiles.push(fileUrl);
       } catch (error) {
         console.log(error)
@@ -132,7 +129,6 @@ const uploadedFiles = [];
     
     }
 }
-
     let coverFileurl
     if(files.coverImage){
         const fileKey=uuidv4()
@@ -150,7 +146,6 @@ const uploadedFiles = [];
           catch(err){
             console.log(err)
           }
-       
     }
     destination.images=[...destination.images,...uploadedFiles];
     destination.coverImage=coverFileurl
@@ -164,9 +159,35 @@ export const deleteDestination = async (req, res) => {
 
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
 
-    await Destination.findByIdAndRemove(id);
+    const destinationToDelete=await Destination.findById(id);
+    for(el in destinationToDelete.images){
+        const key= destinationToDelete.images[el].split('/').pop();
+        const params = {
+            Bucket: process.env.S3_BUCKET_NAME,
+            Key:key
+            };
+        try{
+            await s3.deleteObject(params).promise();
+            }
+            catch(err){
+            console.log(err)
+            }
+    }
 
-    res.json({ message: "Destination Removed successfully." });
+    const coverImageKey=destinationToDelete.coverImage.split('/').pop()
+    const params = {
+    Bucket: process.env.S3_BUCKET_NAME,
+    Key:coverImageKey
+    };
+    try{
+        await s3.deleteObject(params).promise();
+        }
+        catch(err){
+            console.log(err)
+        }
+    
+    const destiationDeleted= await Destination.findByIdAndRemove(id)
+    res.status(200).json({ message: destiationDeleted });
 } 
 
 export const upvoteDestination=async (req,res)=>{
