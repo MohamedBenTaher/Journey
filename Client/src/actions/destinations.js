@@ -27,9 +27,9 @@ export const getDestinations = (page) => async (dispatch) => {
 };
 export const getDestination = (id) => async (dispatch) => {
   try {
-    dispatch({ type: START_LOADING_DESTINATIONS })
+    
     const { data } = await api.fetchDestination(id);
-
+    dispatch({ type: START_LOADING_DESTINATIONS })
     dispatch({ type: FETCH_DESTINATION, payload: data });
     dispatch({ type: END_LOADING_DESTINATIONS });
   } catch (error) {

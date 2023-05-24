@@ -54,6 +54,7 @@ export const createDestination=async(req,res) => {
         Bucket: process.env.S3_BUCKET_NAME,
         Key: fileKey.toString(),
         Body: file.data ,
+        ContentType: 'image/jpeg', 
         // ACL: 'public-read',
       };
       try {
@@ -71,6 +72,7 @@ export const createDestination=async(req,res) => {
         Bucket: process.env.S3_BUCKET_NAME,
         Key: fileKey.toString(),
         Body: files.coverImage.data ,
+        ContentType: 'image/jpeg', 
         // ACL: 'public-read',
       };
       let uploadResult ;
@@ -95,14 +97,67 @@ try {
 }
 
 export const updateDestination=async (req,res)=>{
- const {id:_id}=req.params;
+ const {id}=req.params;
  const destination =req.body; 
- if(!mongoose.Types.ObjectId.isValid(_id)){
+ const files=req.files
+ if(!mongoose.Types.ObjectId.isValid(id)){
    return  res.status(404).send('No Posts with this Id');
  }
-const updatedEvent= await Destination.findByIdAndUpdate(_id,destination,{new:true})
-res.json(updatedEvent);
+ const destinationToUpdate=await Destination.findById(id)
+ if(!destinationToUpdate){
+    return res.status(404).json({message:'No Posts with this Id'})
+    }
+const uploadedFiles = [];
+  if(files.images){
+    for (let i = 0; i < files?.images?.length; i++) {
+        
+      const file = files.images[i];
+    //   console.log('image stucture',file)
+      const fileKey = uuidv4(); // Generate a unique file key or name
+      const uploadParams = {
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: fileKey.toString(),
+        Body: file?.data ,
+        ContentType: 'image/jpeg', 
+        // ACL: 'public-read',
+      };
+      try {
+        const uploadResult = await s3.upload(uploadParams).promise();
+        const fileUrl = uploadResult?.Location;
+        // console.log('image upload',fileUrl)
+        uploadedFiles.push(fileUrl);
+      } catch (error) {
+        console.log(error)
+      }
+    
+    }
 }
+
+    let coverFileurl
+    if(files.coverImage){
+        const fileKey=uuidv4()
+        const uploadParams = {
+            Bucket: process.env.S3_BUCKET_NAME,
+            Key: fileKey.toString(),
+            Body: files.coverImage.data ,
+            ContentType: 'image/jpeg', 
+          };
+          let uploadResult ;
+          try{
+           uploadResult = await s3.upload(uploadParams).promise();
+           coverFileurl = uploadResult?.Location||'';
+          }
+          catch(err){
+            console.log(err)
+          }
+       
+    }
+    destination.images=[...destination.images,...uploadedFiles];
+    destination.coverImage=coverFileurl
+    const updatedDestination= await Destination.findByIdAndUpdate(id,destination,{new:true})
+    res.json(updatedDestination);
+    }
+
 
 export const deleteDestination = async (req, res) => {
     const { id } = req.params;
@@ -130,6 +185,7 @@ export const upvoteDestination=async (req,res)=>{
             destination.downvotes.splice(downvoteIndex,1)
         }
     }
+
     updatedDestination= await Destination.findByIdAndUpdate(id,destination,{new: true});
     res.status(200).json(updatedDestination);
 
@@ -165,4 +221,38 @@ export const getDestinationsBySearch= async(req,res)=>{
     } catch (error) {
         res.status(404).json({message:error.message})
     }
+}
+
+export const deleteS3Image=async(req,res)=>{
+    const {id}=req.params
+    const {url}=req.body
+    const key = url.split('/').pop();
+    console.log('image url',url,key)
+    const destination =await Destination.findById(id)
+        if(destination.coverImage!==url && destination.images.indexOf(url)===-1){
+             return res.status(400).json({message:'Image not found'})
+    }
+    else if(destination.coverImage==url){
+        destination.coverImage=''
+    }
+       
+        else if(destination.images.indexOf(url)!==-1){
+            destination.images.splice(destination.images.indexOf(url),1)
+            console.log('images left',destination.images)
+    }
+    const params = {
+      Bucket: process.env.S3_BUCKET_NAME,
+      Key: key,
+    };
+  
+    // Delete the image from S3
+    s3.deleteObject(params, (err, data) => {
+      if (err) {
+        console.log('Error deleting image from S3:', err);
+      } else {
+        console.log('Image deleted from S3:', data);
+      }
+    });
+    await Destination.findByIdAndUpdate(id,destination,{new: true});
+    res.status(200).json(destination)
 }

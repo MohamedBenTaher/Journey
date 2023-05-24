@@ -2,16 +2,17 @@
 import React ,{useEffect, useState}from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Grid, Typography } from '@material-ui/core';
-import { Formik, Form, Field,FieldArray } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import AddRounded  from '@material-ui/icons/AddRounded'
-import { useDispatch, useSelector } from 'react-redux';
 import FileInput from './FileInput';
 import './styles'
 import CoverImageInput from './CoverImageInput';
 import ChipInput from 'material-ui-chip-input';
-import ChipInputField from './ChipInputField';
-import { createDestination } from '../../../actions/destinations';
+import { useParams } from 'react-router-dom';
+import { createDestination, getDestination, updateDestination } from '../../../actions/destinations';
+import { useDispatch,useSelector } from "react-redux";
+import { deleteS3Image } from '../../../api';
 const useStyles = makeStyles((theme) =>
   createStyles({
     formControl: {
@@ -114,21 +115,22 @@ const useStyles = makeStyles((theme) =>
 
 
 const DestinationForm= () => {
-  
+  const {id}=useParams()
+  const {destination,isLoading}=useSelector((state)=>state.destinations);
   const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const userId=user.result._id
-  console.log('userId',userId)
-  console.log('user',user)
   const classes = useStyles();
   const dispatch =useDispatch();
-useEffect(()=>{
-
-    setUser(
-      JSON.parse(localStorage.getItem('profile'))
-    )
-  
-},[])
-  
+  useEffect(()=>{
+      setUser(
+        JSON.parse(localStorage.getItem('profile'))
+      )
+  },[])
+  useEffect(()=>{
+    if(id){ 
+      dispatch(getDestination(id))
+    }},[id,dispatch])
+    console.log('my destination',destination)
   const handleSubmit = async (values, { setSubmitting,setFieldValue,resetForm }) => {
     setSubmitting(true);
     console.log(values)
@@ -146,30 +148,36 @@ useEffect(()=>{
     values.tags.forEach((tag) => {
       formData.append('tags', tag);
     });
-  
+   if(destination){
+    dispatch(updateDestination(destination?._id,formData))
+   }else{
     dispatch(createDestination(formData))
+   }
     resetForm()
 
     setSubmitting(false);
   }
-  if (!user) {
+  
+
+  if (!user ) {
     return; // `user` is null in the first render
 }
 
   return (
     <><Typography variant='h2'  className={classes.heading}>
-        Add a new destination
+        { destination ?('Add a new destination'):('Update this destioanion')}
       </Typography>
         <Formik
+        enableReinitialize
           initialValues={{
-              title: '',
-              description: '',
-              country: '',
-              type: '',
-              creator: user?.result?._id,
-              coverImage: '',
-              images: [],
-              tags: [],
+              title:destination?destination?.title: '',
+              description: destination?destination?.description:'',
+              country: destination?destination?.country:'',
+              type: destination?destination?.type:'',
+              creator: destination?user?.result?._id:destination?.creator,
+              coverImage: destination?destination?.coverImage:'',
+              images: destination?destination?.images:[],
+              tags: destination?destination?.tags:[],
           }}
           validationSchema={Yup.object().shape({
               title: Yup.string().required('Title is required'),
@@ -195,10 +203,14 @@ useEffect(()=>{
                       {values.coverImage && (
                         <div className={classes.preview}>
                             <div  className={classes.coverImageWrapper}>
-                               <img src={URL.createObjectURL(values.coverImage[0])} alt={`cover Image`} className={classes.coverImage} />
+                               <img src={destination.coverImage?values.coverImage:URL.createObjectURL(values.coverImage[0])} alt={`cover Image`} className={classes.coverImage} />
                               <div
                                 className={classes.removeButton}
-                                onClick={() => {
+                                onClick={ async (e) => {
+                                  e.preventDefault()
+                                  if(destination.coverImage && typeof values.coverImage==='string'){
+                                    const deleteImage= await deleteS3Image(destination._id,values.coverImage)
+                                  }
                                   setFieldValue('coverImage','');
                                 }}
                               >
@@ -254,8 +266,8 @@ useEffect(()=>{
                               variant="outlined"
                               fullWidth
                               as={TextField}
-                              error={touched.Country && Boolean(errors.country)}
-                              helperText={touched.Country && errors.country} />
+                              error={touched.country && Boolean(errors.country)}
+                              helperText={touched.country && errors.country} />
                       </Grid>
                       <Grid item xs={12}>
                           <FormControl fullWidth className={classes.formControl}>
@@ -289,10 +301,18 @@ useEffect(()=>{
                         <div className={classes.preview}>
                           {values.images?.map((image, index) => (
                             <div key={index} className={classes.imageWrapper}>
-                               <img src={URL.createObjectURL(image)} alt={`Image ${index + 1}`} className={classes.image} />
+                               <img src={destination?.images?.indexOf(image)!==-1?image:URL.createObjectURL(image)} alt={`Image ${index + 1}`} className={classes.image} />
                               <div
                                 className={classes.removeButton}
-                                onClick={() => {
+                                onClick={ async (e) => {
+                                  e.preventDefault()
+                                  if(destination && typeof image==="string"){
+                                    console.log('reached deletion')
+                                     await deleteS3Image(destination._id,image)
+                                     .then(()=>{
+                                      console.log('image deleted successfully')
+                                     })
+                                  }
                                   setFieldValue('images',values.images?.filter((_, i) => i !== index));
                                 }}
                               >

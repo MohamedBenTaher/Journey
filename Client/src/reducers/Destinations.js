@@ -22,10 +22,10 @@ export default (state = { isLoading: false, destinations: [] }, action) => {
       return { ...state, destinations: action.payload };
 
     case UPDATE_DESTINATION:
-      return { ...state, destinations: state.destinations.map((event) => (event._id === action.payload._id ? action.payload : event)) };
+      return { ...state, destinations: state.destinations.map((destination) => (destination._id === action.payload._id ? action.payload : destination)) };
 
     case DELETE_DESTINATION:
-      return { ...state, destinations: state.destinations.filter((event) => event._id !== action.payload) };
+      return { ...state, destinations: state.destinations.filter((destination) => destination._id !== action.payload) };
       case UPVOTE_DESTINATION:
         console.log('upvote payload',action.payload)
         return {

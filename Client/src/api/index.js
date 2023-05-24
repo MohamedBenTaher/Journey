@@ -53,3 +53,7 @@ export const commentEntity = (entityId,entityType,userId,content) => API.post(`/
 export const getEntityComments=(id,entityType)=>API.get(`/comment/${id}`,{ params: { entityType } })
 export const updateEntityComments=(id,userId,content)=>API.patch(`/comment/${id}`,{userId:userId,content:content})
 export const deleteEntityComments=(id)=>API.delete(`/comment/${id}`)
+
+
+/*=====================================Images============================================*/
+export const deleteS3Image=(id,url)=>API.post(`/destination/image/delete/${id}`,{url:url})
