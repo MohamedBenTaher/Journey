@@ -5,6 +5,7 @@ import Morocco from '../../../Images/Morooco.jpg'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import { useHistory } from 'react-router-dom';
+import zIndex from '@material-ui/core/styles/zIndex';
 const useStyles = makeStyles((theme) =>
   createStyles({
     card: {
@@ -48,7 +49,8 @@ const useStyles = makeStyles((theme) =>
         '&:hover':{
             color:'#fff',
             backgroundColor: 'rgba(10, 10, 10, 0.5)'
-            }
+            },
+        zIndex:99
     },
     title: {
       fontWeight: 'bold',
@@ -68,8 +70,8 @@ const CountryCard = ({ country, continent, backgroundImage }) => {
   const [liked,setLiked]=useState(false)
   return (
     //to be added
-    <Card className={classes.card} onClick={()=>history.push('/countries/id')}>
-      <CardMedia image={Morocco} alt={country} className={classes.backgroundImage} />
+    <Card className={classes.card} >
+      <CardMedia image={Morocco} alt={country} className={classes.backgroundImage} onClick={()=>history.push('/countries/id')} />
       <IconButton className={classes.likeButton} onClick={()=>setLiked((prev)=>!prev)}>
         {liked ?( <FavoriteOutlinedIcon style={{color:'white'}}/>):
         (<FavoriteBorderOutlinedIcon style={{color:'white'}} />)

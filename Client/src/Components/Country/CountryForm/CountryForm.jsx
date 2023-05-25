@@ -116,7 +116,7 @@ const useStyles = makeStyles((theme) =>
 
 const CountryForm= () => {
   const {id}=useParams()
-  const {country,isLoading}=useSelector((state)=>state.countrys);
+  const {country,isLoading}=useSelector((state)=>state.countries);
   const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const userId=user.result._id
   const classes = useStyles();
