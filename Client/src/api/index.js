@@ -42,7 +42,10 @@ export const createDestionation = (newDestination) => API.post('/destination', n
   headers: {
     'Content-Type':'multipart/form-data',
 }});
-export const updateDestinations = (id, updatedDestination) => API.patch(`/destination/${id}`, updatedDestination);
+export const updateDestinations = (id, updatedDestination) => API.patch(`/destination/${id}`, updatedDestination,{
+  headers: {
+    'Content-Type':'multipart/form-data',
+}});
 export const deleteDestination = (id) => API.delete(`/destination/${id}`);
 export const upVoteDestination = (destinationId,userId) => API.patch(`/destination/${destinationId}/upvote`,{userId:userId})
 export const downVoteDestination = (destinationId,userId) => API.patch(`/destination/${destinationId}/downvote`,{userId:userId})
@@ -57,3 +60,20 @@ export const deleteEntityComments=(id)=>API.delete(`/comment/${id}`)
 
 /*=====================================Images============================================*/
 export const deleteS3Image=(id,url)=>API.post(`/destination/image/delete/${id}`,{url:url})
+
+/*=====================================Country==========================*/
+export const createCountry=(newCountry)=>API.post('/country',newCountry,{
+  headers: {
+    'Content-Type':'multipart/form-data',
+}})
+export const fetchCountries = (page) => API.get(`/country?page=${page}`);
+export const fetchCountry= (id)=>API.get(`/country/${id}`);
+export const updateCountry= (id,updatedCountry) => API.patch(`/country/${id}`,updatedCountry,{
+  headers: {
+    'Content-Type':'multipart/form-data',
+    }});
+export const deleteCountry= (id) => API.delete(`/country/${id}`);
+export const fetchCountryBySearch = (searchQuery) => API.get(`/country/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}&season=${searchQuery.season}`);
+export const likeCountry=(countryId,id)=>API.post(`/country/${countryId}/like`,{userId:id})
+export const dislikeCountry=(countryId,id)=>API.post(`/country/${countryId}/dislike`,{userId:id})
+export const fetchCountryByLikes=(id)=>API.get(`/country/likes/${id}`)

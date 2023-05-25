@@ -9,7 +9,8 @@ import { getPosts ,getPostsBySearch } from '../../actions/posts.js'
 import  Pagination from '../Pagination'
 import useStyles from './styles.js'
 import DestinationCard from '../Destination/DestinationCard/Destination.js'
-
+import CountryCard from '../Country/CountryCard/CountryCard.jsx'
+import Morocco from '../../Images/Morooco.jpg'
 function useQuery(){
   return new URLSearchParams(useLocation().search)
 }
@@ -58,6 +59,7 @@ const Home = () => {
                 <Grid item >
                   <Form  currentId={currentId} setCurrentId={setCurrentId} />
                 </Grid>
+                <CountryCard continent={'Africa'} country={'Morocco'} backgroundImage={Morocco}/>
 
      </Grid>
      </Container>
