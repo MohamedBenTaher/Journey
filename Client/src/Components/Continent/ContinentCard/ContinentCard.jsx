@@ -79,7 +79,7 @@ const ContinentCard = (continent) => {
       </IconButton>
       <CardContent className={classes.content}>
         <Typography variant="h6" className={classes.title}>
-          {continent.name}
+          {continent?.name}
         </Typography>
       </CardContent>
     </Card>

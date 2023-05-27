@@ -279,7 +279,7 @@ const CountryForm= () => {
                               {
                                 continents??(
                                     continents?.map((continent)=>(
-                                        <MenuItem value={continent._id}>{continent.name}</MenuItem>
+                                        <MenuItem value={continent?._id}>{continent.name}</MenuItem>
                                     ))
                                 )
                               }

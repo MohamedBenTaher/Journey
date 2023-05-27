@@ -78,8 +78,8 @@ export const createContinent=async(req,res) => {
         console.log(err)
       }
       const coverFileurl = uploadResult?.Location||'';
-      continents.images=uploadedFiles;
-      continents.coverImage=coverFileurl
+      continent.images=uploadedFiles;
+      continent.coverImage=coverFileurl
       console.log('finale version',continents)
     const newContinent = new Country({ ...continent,createdAt:new Date() })
 try {

@@ -7,6 +7,8 @@ import userRoutes from './Routes/user.js'
 import eventRoutes from './Routes/events.js'
 import destinationRoutes from './Routes/destinations.js'
 import commentRoutes from'./Routes/Comments.js'
+import continentRoutes from './Routes/continents.js'
+import countryRoutes from './Routes/continents.js'
 import fileUpload from 'express-fileupload';
 // import * as dotenv from 'dotenv' 
 // dotenv.config()
@@ -29,6 +31,8 @@ app.use('/user', userRoutes);
 app.use('/event', eventRoutes)
 app.use('/destination',destinationRoutes)
 app.use('/comment',commentRoutes)
+app.use('/continent',continentRoutes)
+app.use('/country',countryRoutes)
 app.get('/', (req, res) => { res.send('test works') })
 app.set('port', Port);
 

@@ -82,7 +82,7 @@ const CountryCard = (country) => {
           {country.name}
         </Typography>
         <Typography variant="subtitle1" className={classes.subtitle}>
-          {continent.continet}
+          {country.continet}
         </Typography>
       </CardContent>
     </Card>
