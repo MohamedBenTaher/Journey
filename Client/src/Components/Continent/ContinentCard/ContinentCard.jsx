@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const CountryCard = (country) => {
+const ContinentCard = (continent) => {
   const history=useHistory()
   const classes = useStyles();
   const [liked,setLiked]=useState(false)
@@ -79,14 +79,11 @@ const CountryCard = (country) => {
       </IconButton>
       <CardContent className={classes.content}>
         <Typography variant="h6" className={classes.title}>
-          {country.name}
-        </Typography>
-        <Typography variant="subtitle1" className={classes.subtitle}>
-          {continent.continet}
+          {continent.name}
         </Typography>
       </CardContent>
     </Card>
   );
 };
 
-export default CountryCard;
+export default ContinentCard;

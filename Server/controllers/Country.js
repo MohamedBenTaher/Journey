@@ -4,7 +4,7 @@ import s3 from '../awsConfig.js'
 import { v4 as uuidv4 } from 'uuid';
 
 
-export const  getTopCountrys= async(req,res) => {
+export const  getTopCountries= async(req,res) => {
     try {
         const countrys=await Country.find().sort((a,b)=>(a.upvotes-a.downvotes)>(b.upvotes-b.downvotes)).limit(10);
         res.status(200).json({data:countrys})
@@ -14,7 +14,7 @@ export const  getTopCountrys= async(req,res) => {
 }
 
 
-export const  getCountrys= async(req,res) => {
+export const  getCountries= async(req,res) => {
     const {page}=req.query;
     try {
         const Limit=8;
@@ -182,7 +182,7 @@ export const deleteCountry = async (req, res) => {
     res.status(200).json({ message: destiationDeleted });
 } 
 
-export const upvoteCountry=async (req,res)=>{
+export const likeCountry=async (req,res)=>{
     console.log(req.body,req.params)
     const { id }=req.params
     const userId=req.userId
@@ -192,36 +192,34 @@ export const upvoteCountry=async (req,res)=>{
     const index=country.upvotes.findIndex((id)=> id ===String(userId));
     let updatedCountry=country
     if(index===-1){
-        country.upvotes.push(userId)
-        const downvoteIndex=country.downvotes.findIndex((id)=> id ===String(userId));
-        if(downvoteIndex!==-1){
-            country.downvotes.splice(downvoteIndex,1)
-        }
+        country.likes.push(userId)
+    }
+    else{
+        country.downvotes.splice(downvoteIndex,1)
     }
 
     updatedCountry= await Country.findByIdAndUpdate(id,country,{new: true});
     res.status(200).json(updatedCountry);
-
 }
-export const downvoteCountry=async (req,res)=>{
-    const { id }=req.params
-    const userId=req.userId
-    console.log(req.userId)
-    if(!userId) return res.json({mesage:'Unauthenticated'})
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No country with id: ${id}`);
-    const country =await Country.findById(id)
-    const index=country.downvotes.findIndex((id)=> id ===String(userId));
-    let updatedCountry=country;
-    if(index===-1){
-        country.downvotes.push(userId)
-        const upvoteIndex=country.upvotes.findIndex((id)=> id ===String(userId));
-        if(upvoteIndex!==-1){
-            country.upvotes.splice(upvoteIndex,1)
-        }
-         updatedCountry= await Country.findByIdAndUpdate(id,country,{new: true});
-    }
-    res.status(200).json(updatedCountry);
-}
+// export const downvoteCountry=async (req,res)=>{
+//     const { id }=req.params
+//     const userId=req.userId
+//     console.log(req.userId)
+//     if(!userId) return res.json({mesage:'Unauthenticated'})
+//     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No country with id: ${id}`);
+//     const country =await Country.findById(id)
+//     const index=country.downvotes.findIndex((id)=> id ===String(userId));
+//     let updatedCountry=country;
+//     if(index===-1){
+//         country.downvotes.push(userId)
+//         const upvoteIndex=country.upvotes.findIndex((id)=> id ===String(userId));
+//         if(upvoteIndex!==-1){
+//             country.upvotes.splice(upvoteIndex,1)
+//         }
+//          updatedCountry= await Country.findByIdAndUpdate(id,country,{new: true});
+//     }
+//     res.status(200).json(updatedCountry);
+// }
 
 
 

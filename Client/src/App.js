@@ -20,6 +20,12 @@ import Destinations from './Components/Destination/Destinations/Destinations.js'
 import DestinationForm from './Components/Destination/DestinationForm/DestinationForm.js';
 import DestinationDetails from './Components/Destination/DestinationDetails/DestinationDetails.jsx';
 import { useParams } from 'react-router-dom';
+import ContinentLayout from './Components/Continent/ContinentLayout/ContinentLayout.jsx';
+import ContinentDetails from './Components/Continent/ContinentDetails/ContinentDetails.jsx';
+import ContinentForm from './Components/Continent/ContinentFrom/ContinentForm.jsx';
+import CountryLayout from './Components/Country/CountryLayout/CountryLayout.jsx';
+import CountryDetail from './Components/Country/CountryDetails/CountryDetails.jsx';
+import CountryForm from './Components/Country/CountryForm/CountryForm.jsx';
 
 const theme = createTheme({
   typography: {
@@ -51,6 +57,12 @@ const App = () => {
                 <Route path={'/destinations'} exact component={Destinations} />
                 <Route path={'/destinations/new/:id?'} exact component={DestinationForm} />
                 <Route path={'/destinations/:id/'} exact component={DestinationDetails} />
+                <Route path={'/continents'} exact component={ContinentLayout} />
+                <Route path={'/continents/new/:id?'} exact component={ContinentForm} />
+                <Route path={'/continents/:id'} exact component={ContinentDetails} />
+                <Route path={'/countries'} exact component={CountryLayout}/>
+                <Route path={'/countries/:id'} exact component={CountryDetail}/>
+                <Route path={'/countries/new/:id?'} exact component={CountryForm} />
                 <Route path='/auth' exact component={() => !user ? <Auth /> : <Redirect to="/posts" />} />
               </Switch>
             </Container>

@@ -1,46 +1,46 @@
 import mongoose from "mongoose";
-import Country from "../Models/Country.js"
 import s3 from '../awsConfig.js'
 import { v4 as uuidv4 } from 'uuid';
+import Continent from "../Models/Continent.js";
 
 
-export const  getTopCountrys= async(req,res) => {
+export const  getTopContinents= async(req,res) => {
     try {
-        const countrys=await Country.find().sort((a,b)=>(a.upvotes-a.downvotes)>(b.upvotes-b.downvotes)).limit(10);
-        res.status(200).json({data:countrys})
+        const continents=await Continent.find().sort((a,b)=>a.likes-b.likes).limit(10);
+        res.status(200).json({data:continents})
     } catch (error) {
         res.status(404).json({message :error.essage})
     }
 }
 
 
-export const  getCountrys= async(req,res) => {
+export const  getContinents= async(req,res) => {
     const {page}=req.query;
     try {
         const Limit=8;
         const startIndex=(Number(page)-1)*Limit;
-        const total=await Country.countDocuments({});
-        const countries=await Country.find().sort({_id:-1}).limit(Limit).skip(startIndex);
-        res.status(200).json({data:countries,currentPage:Number(page),NumberOfPages:Math.ceil(total/Limit)})
+        const total=await Continent.countDocuments({});
+        const continents=await Continent.find().sort({_id:-1}).limit(Limit).skip(startIndex);
+        res.status(200).json({data:continents,currentPage:Number(page),NumberOfPages:Math.ceil(total/Limit)})
     } catch (error) {
         res.status(404).json({message :error.essage})
     }
 }
 
 
-export const  getCountry= async(req,res) => {
+export const  getContinent= async(req,res) => {
     const {id}=req.params;
     try {
-        const country=await Country.findById(id);
-        res.status(200).json(country);
+        const continent=await Continent.findById(id);
+        res.status(200).json(continent);
     } catch (error) {
         res.status(404).json({message :error.essage})
     }
 }
 
 
-export const createCountry=async(req,res) => {
-    const countries = req.body;
+export const createContinent=async(req,res) => {
+    const continent = req.body;
     const files=req.files
     const uploadedFiles = [];
     for (let i = 0; i < files.images.length; i++) {
@@ -78,13 +78,13 @@ export const createCountry=async(req,res) => {
         console.log(err)
       }
       const coverFileurl = uploadResult?.Location||'';
-      countries.images=uploadedFiles;
-      countries.coverImage=coverFileurl
-      console.log('finale version',countries)
-    const newECountry = new Country({ ...countries,createdAt:new Date() })
+      continents.images=uploadedFiles;
+      continents.coverImage=coverFileurl
+      console.log('finale version',continents)
+    const newContinent = new Country({ ...continent,createdAt:new Date() })
 try {
      await newECountry.save();
-    res.status(201).json(newECountry);
+    res.status(201).json(newContinent);
 } catch (error) {
     res.status(401).json({message :error.message})
 }
@@ -92,16 +92,16 @@ try {
 
 
 
-export const updateCountry=async (req,res)=>{
+export const updateContinent=async (req,res)=>{
  const {id}=req.params;
- const country =req.body; 
+ const continent =req.body; 
  const files=req.files
  if(!mongoose.Types.ObjectId.isValid(id)){
    return  res.status(404).send('No Posts with this Id');
  }
- const countryToUpdate=await Country.findById(id)
- if(!countryToUpdate){
-    return res.status(404).json({message:'No Posts with this Id'})
+ const continentToUpdate=await Continent.findById(id)
+ if(!continentToUpdate){
+    return res.status(404).json({message:'No Continent with this Id'})
     }
 const uploadedFiles = [];
   if(files.images){
@@ -142,21 +142,21 @@ const uploadedFiles = [];
             console.log(err)
           }
     }
-    country.images=[...country.images,...uploadedFiles];
-    country.coverImage=coverFileurl
-    const updatedCountry= await Country.findByIdAndUpdate(id,country,{new:true})
+    continent.images=[...continent.images,...uploadedFiles];
+    continent.coverImage=coverFileurl
+    const updatedCountry= await Country.findByIdAndUpdate(id,continent,{new:true})
     res.json(updatedCountry);
     }
 
 
-export const deleteCountry = async (req, res) => {
+export const deleteContinents = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
 
-    const countryToDelete=await Country.findById(id);
-    for(el in countryToDelete.images){
-        const key= countryToDelete.images[el].split('/').pop();
+    const continentToDelete=await Continent.findById(id);
+    for(el in continentToDelete.images){
+        const key= continentToDelete.images[el].split('/').pop();
         const params = {
             Bucket: process.env.S3_BUCKET_NAME,
             Key:key
@@ -169,7 +169,7 @@ export const deleteCountry = async (req, res) => {
             }
     }
 
-    const coverImageKey=countryToDelete.coverImage.split('/').pop()
+    const coverImageKey=continentToDelete.coverImage.split('/').pop()
     const params = {
     Bucket: process.env.S3_BUCKET_NAME,
     Key:coverImageKey
@@ -181,59 +181,41 @@ export const deleteCountry = async (req, res) => {
             console.log(err)
         }
     
-    const destiationDeleted= await Country.findByIdAndRemove(id)
-    res.status(200).json({ message: destiationDeleted });
+    const continentDeleted= await Continent.findByIdAndRemove(id)
+    res.status(200).json({ message: continentDeleted });
 } 
 
-export const upvoteCountry=async (req,res)=>{
-    console.log(req.body,req.params)
-    const { id }=req.params
-    const userId=req.userId
-    if(!req.userId ) return res.json({mesage:'Unauthenticated'})
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No country with id: ${id}`);
-    const country =await Country.findById(id)
-    const index=country.upvotes.findIndex((id)=> id ===String(userId));
-    let updatedCountry=country
-    if(index===-1){
-        country.upvotes.push(userId)
-        const downvoteIndex=country.downvotes.findIndex((id)=> id ===String(userId));
-        if(downvoteIndex!==-1){
-            country.downvotes.splice(downvoteIndex,1)
-        }
-    }
-
-    updatedCountry= await Country.findByIdAndUpdate(id,country,{new: true});
-    res.status(200).json(updatedCountry);
-
-}
-export const downvoteCountry=async (req,res)=>{
-    const { id }=req.params
-    const userId=req.userId
-    console.log(req.userId)
-    if(!userId) return res.json({mesage:'Unauthenticated'})
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No country with id: ${id}`);
-    const country =await Country.findById(id)
-    const index=country.downvotes.findIndex((id)=> id ===String(userId));
-    let updatedCountry=country;
-    if(index===-1){
-        country.downvotes.push(userId)
-        const upvoteIndex=country.upvotes.findIndex((id)=> id ===String(userId));
-        if(upvoteIndex!==-1){
-            country.upvotes.splice(upvoteIndex,1)
-        }
-         updatedCountry= await Country.findByIdAndUpdate(id,country,{new: true});
-    }
-    res.status(200).json(updatedCountry);
-}
 
 
 
-export const getCountrysBySearch= async(req,res)=>{
+// export const downvoteCountry=async (req,res)=>{
+//     const { id }=req.params
+//     const userId=req.userId
+//     console.log(req.userId)
+//     if(!userId) return res.json({mesage:'Unauthenticated'})
+//     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No country with id: ${id}`);
+//     const country =await Country.findById(id)
+//     const index=country.downvotes.findIndex((id)=> id ===String(userId));
+//     let updatedCountry=country;
+//     if(index===-1){
+//         country.downvotes.push(userId)
+//         const upvoteIndex=country.upvotes.findIndex((id)=> id ===String(userId));
+//         if(upvoteIndex!==-1){
+//             country.upvotes.splice(upvoteIndex,1)
+//         }
+//          updatedCountry= await Continent.findByIdAndUpdate(id,country,{new: true});
+//     }
+//     res.status(200).json(updatedCountry);
+// }
+
+
+
+export const getContinentsBySearch= async(req,res)=>{
     const {searchQuery,tags}=req.query
     try {
         const title= new RegExp(searchQuery,'i');
-        const countries=await Event.find({$or:[{title},{tags:{$in:tags?.split(',')}}]})
-        res.json({data:countries});
+        const continents=await Continent.find({$or:[{title},{tags:{$in:tags?.split(',')}}]})
+        res.json({data:continents});
     } catch (error) {
         res.status(404).json({message:error.message})
     }
@@ -244,16 +226,16 @@ export const deleteS3Image=async(req,res)=>{
     const {url}=req.body
     const key = url.split('/').pop();
     console.log('image url',url,key)
-    const country =await Country.findById(id)
-        if(country.coverImage!==url && country.images.indexOf(url)===-1){
+    const continent =await Continent.findById(id)
+        if(continent.coverImage!==url && continent.images.indexOf(url)===-1){
              return res.status(400).json({message:'Image not found'})
     }
-    else if(country.coverImage==url){
-        country.coverImage=''
+    else if(continent.coverImage==url){
+        continent.coverImage=''
     }
-        else if(country.images.indexOf(url)!==-1){
-            country.images.splice(country.images.indexOf(url),1)
-            console.log('images left',country.images)
+        else if(continent.images.indexOf(url)!==-1){
+            continent.images.splice(continent.images.indexOf(url),1)
+            console.log('images left',continent.images)
     }
     const params = {
       Bucket: process.env.S3_BUCKET_NAME,
@@ -266,6 +248,6 @@ export const deleteS3Image=async(req,res)=>{
         console.log('Image deleted from S3:', data);
       }
     });
-    await Country.findByIdAndUpdate(id,country,{new: true});
-    res.status(200).json(country)
+    await Continent.findByIdAndUpdate(id,continent,{new: true});
+    res.status(200).json(continent)
 }

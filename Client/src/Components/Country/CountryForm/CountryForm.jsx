@@ -5,14 +5,16 @@ import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Grid, Typ
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import AddRounded  from '@material-ui/icons/AddRounded'
-import FileInput from './FileInput';
+import FileInput from '../../Destination/DestinationForm/FileInput';
 import './styles'
-import CoverImageInput from './CoverImageInput';
+import CoverImageInput from '../../Destination/DestinationForm/CoverImageInput';
+
 import ChipInput from 'material-ui-chip-input';
 import { useParams } from 'react-router-dom';
-import { createDestination, getDestination, updateDestination } from '../../../actions/destinations';
+import { createCountry, getCountry, updateCountry } from '../../../actions/country.js';
 import { useDispatch,useSelector } from "react-redux";
 import { deleteS3Image } from '../../../api';
+import { getContinents } from '../../../actions/continent';
 const useStyles = makeStyles((theme) =>
   createStyles({
     formControl: {
@@ -117,6 +119,7 @@ const useStyles = makeStyles((theme) =>
 const CountryForm= () => {
   const {id}=useParams()
   const {country,isLoading}=useSelector((state)=>state.countries);
+  const {continents}=useSelector((state)=>state.continents)
   const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const userId=user.result._id
   const classes = useStyles();
@@ -125,10 +128,11 @@ const CountryForm= () => {
       setUser(
         JSON.parse(localStorage.getItem('profile'))
       )
+      dispatch(getContinents())
   },[])
   useEffect(()=>{
     if(id){ 
-      dispatch(getDestination(id))
+      dispatch(getCountry(id))
     }},[id,dispatch])
     console.log('my country',country)
   const handleSubmit = async (values, { setSubmitting,setFieldValue,resetForm }) => {
@@ -149,9 +153,9 @@ const CountryForm= () => {
       formData.append('tags', tag);
     });
    if(country){
-    dispatch(updateDestination(country?._id,formData))
+    dispatch(updateCountry(country?._id,formData))
    }else{
-    dispatch(createDestination(formData))
+    dispatch(createCountry(formData))
    }
     resetForm()
 
@@ -270,11 +274,15 @@ const CountryForm= () => {
                       </Grid>
                       <Grid item xs={12}>
                           <FormControl fullWidth className={classes.formControl}>
-                              <InputLabel className={classes.Select}>Type</InputLabel>
-                              <Field name="type" as={Select} label="Type" onBlur={handleBlur} variant="outlined" onChange={handleChange} value={values.type} >
-                                  <MenuItem value="location">Location</MenuItem>
-                                  <MenuItem value="city">City</MenuItem>
-                                  <MenuItem value="country">Country</MenuItem>
+                              <InputLabel className={classes.Select}>Continent</InputLabel>
+                              <Field name="continent" as={Select} label="Continent" onBlur={handleBlur} variant="outlined" onChange={handleChange} value={values.continent} >
+                              {
+                                continents??(
+                                    continents?.map((continent)=>(
+                                        <MenuItem value={continent._id}>{continent.name}</MenuItem>
+                                    ))
+                                )
+                              }
                               </Field>
                               {touched.type && Boolean(errors.type) && <div>{errors.type}</div>}
                           </FormControl>
@@ -325,7 +333,7 @@ const CountryForm= () => {
                   
                       {values.images?.length<5?(
                       <Grid item xs={12}>
-                        <InputLabel className={classes.InputLabel}>Destination Images</InputLabel>
+                        <InputLabel className={classes.InputLabel}>Country Images Images</InputLabel>
                       <Field name="images"  fullWidth component={FileInput} />
                        {touched.images && errors.images && (
                        <div className="error">{errors.images}</div>

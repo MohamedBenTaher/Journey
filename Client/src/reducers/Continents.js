@@ -1,57 +1,31 @@
 
-import { CREATE_COUNTRY,UPDATE_COUNTRY,DELETE_COUNTRY,LIKE_COUNTRY,DISLIKE_COUNTRY,FETCH_COUNTRY_BY_SEARCH,FETCH_COUNTRY,FETCH_COUNTRIES,START_LOADING_COUNTRIES,END_LOADING_COUNTRIES } from '../constants/actionTypes.js';
-export default (state = { isLoading: false, destinations: [] }, action) => {
+import { CREATE_CONTINENT,UPDATE_COUNTINENT,DELETE_COUNTINENT,FETCH_CONTINENT_BY_SEARCH,FETCH_CONTINENT,FETCH_CONTINENTS,START_LOADING_CONTINENTS,END_LOADING_CONTINENTS } from '../constants/actionTypes.js';
+export default (state = { isLoading: false, continents: [] }, action) => {
   switch (action.type) {
-    case START_LOADING_COUNTRIES:
+    case START_LOADING_CONTINENTS:
       return { ...state, isLoading: true };
-    case END_LOADING_COUNTRIES:
+    case END_LOADING_CONTINENTS:
       return { ...state, isLoading: false }
-    case FETCH_COUNTRIES:
+    case FETCH_CONTINENTS:
       return {
         ...state,
         countries: action.payload.data,
         currentPage: action.payload.currentPage,
         NumberOfPages: action.payload.numrOfPages,
       };
-    case FETCH_COUNTRY:
-      return { ...state, countries: action.payload };
+    case FETCH_CONTINENT:
+      return { ...state, continents: action.payload };
 
-    case FETCH_COUNTRY_BY_SEARCH:
-      return { ...state, countries: action.payload.data };
-    case CREATE_COUNTRY:
-      return { ...state, countries: action.payload };
+    case FETCH_CONTINENT_BY_SEARCH:
+      return { ...state, continents: action.payload.data };
+    case CREATE_CONTINENT:
+      return { ...state, continents: action.payload };
 
-    case UPDATE_COUNTRY:
-      return { ...state, countries: state.countries.map((country) => (country._id === action.payload._id ? action.payload : country)) };
+    case UPDATE_COUNTINENT:
+      return { ...state, continents: state.continents.map((continent) => (continent._id === action.payload._id ? action.payload : continent)) };
 
-    case DELETE_COUNTRY:
-      return { ...state, countries: state.countries.filter((country) => country._id !== action.payload) };
-      case LIKE_COUNTRY:
-        console.log('upvote payload',action.payload)
-        return {
-          ...state,
-          countries: state.countries.map((country) =>
-          countries._id === action.payload._id
-              ? {
-                  ...countries,
-                  likes: [...action.payload.likes],
-                }
-              : country
-          ),
-        };
-      case DISLIKE_COUNTRY:
-        return {
-          ...state,
-          destinations: state.destinations.map((destination) =>
-            destination._id === action.payload._id
-              ? {
-                  ...destination,
-                  upvotes: [...action.payload.upvotes],
-                  downvotes: [...action.payload.downvotes],
-                }
-              : destination
-          ),
-        };
+    case DELETE_COUNTINENT:
+      return { ...state, continents: state.continents.filter((continent) => continent._id !== action.payload) };
     default:
       return state;
 

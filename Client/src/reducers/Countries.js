@@ -1,6 +1,6 @@
 
 import { CREATE_COUNTRY,UPDATE_COUNTRY,DELETE_COUNTRY,LIKE_COUNTRY,DISLIKE_COUNTRY,FETCH_COUNTRY_BY_SEARCH,FETCH_COUNTRY,FETCH_COUNTRIES,START_LOADING_COUNTRIES,END_LOADING_COUNTRIES } from '../constants/actionTypes.js';
-export default (state = { isLoading: false, destinations: [] }, action) => {
+export default (state = { isLoading: false, countries: [] }, action) => {
   switch (action.type) {
     case START_LOADING_COUNTRIES:
       return { ...state, isLoading: true };

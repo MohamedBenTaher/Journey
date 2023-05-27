@@ -77,3 +77,19 @@ export const fetchCountriesBySearch = (searchQuery) => API.get(`/country/search?
 export const likeCountry=(countryId,id)=>API.post(`/country/${countryId}/like`,{userId:id})
 export const dislikeCountry=(countryId,id)=>API.post(`/country/${countryId}/dislike`,{userId:id})
 export const fetchCountryByLikes=(id)=>API.get(`/country/likes/${id}`)
+/*=====================================Continent=====================*/
+export const createContinent=(newContinent)=>API.post('/continent',newContinent,{
+  headers: {
+    'Content-Type':'multipart/form-data',
+}})
+export const fetchContinents = (page) => API.get(`/continent?page=${page}`);
+export const fetchContinent= (id)=>API.get(`/continent/${id}`);
+export const updateContinent= (id,updatedContinent) => API.patch(`/continent/${id}`,updatedContinent,{
+  headers: {
+    'Content-Type':'multipart/form-data',
+    }});
+export const deleteContinent= (id) => API.delete(`/continent/${id}`);
+export const fetchContinentBySearch = (searchQuery) => API.get(`/continent/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}&season=${searchQuery.season}`);
+// export const likeCountry=(countryId,id)=>API.post(`/country/${countryId}/like`,{userId:id})
+// export const dislikeCountry=(countryId,id)=>API.post(`/country/${countryId}/dislike`,{userId:id})
+// export const fetchCountryByLikes=(id)=>API.get(`/country/likes/${id}`)
