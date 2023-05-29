@@ -26,6 +26,7 @@ import ContinentForm from './Components/Continent/ContinentFrom/ContinentForm.js
 import CountryLayout from './Components/Country/CountryLayout/CountryLayout.jsx';
 import CountryDetail from './Components/Country/CountryDetails/CountryDetails.jsx';
 import CountryForm from './Components/Country/CountryForm/CountryForm.jsx';
+import PostForm from './Components/Posts/PostForm.js/PostForm.jsx';
 
 const theme = createTheme({
   typography: {
@@ -47,12 +48,13 @@ const App = () => {
             <Container maxWidth='lg'>
 
               <Switch>
-                <Route path='/' exact component={() => <Redirect to="/posts" />} />
-                <Route path='/posts' exact component={Home} />
+                <Route path='/' exact component={() => <Redirect to="/stories" />} />
+                <Route path='/stories' exact component={Home} />
                 <Route path='/events/create' exact component={EventForm} />
                 <Route path='/events' exact component={Events} />
-                <Route path="/posts/search" exact component={Home} />
-                <Route path='/posts/:id' exact component={PostDetails} />
+                <Route path="/stories/search" exact component={Home} />
+                <Route path='/stories/new/:id?' exact component={PostForm} />
+                <Route path='/stories/:id' exact component={PostDetails} />
                 <Route path={['/creators/:name', '/tags/:name']} component={CreatorOrTag} />
                 <Route path={'/destinations'} exact component={Destinations} />
                 <Route path={'/destinations/new/:id?'} exact component={DestinationForm} />
@@ -63,7 +65,7 @@ const App = () => {
                 <Route path={'/countries'} exact component={CountryLayout}/>
                 <Route path={'/countries/new/:id?'} exact component={CountryForm} />
                 <Route path={'/countries/:id'} exact component={CountryDetail}/>
-                <Route path='/auth' exact component={() => !user ? <Auth /> : <Redirect to="/posts" />} />
+                <Route path='/auth' exact component={() => !user ? <Auth /> : <Redirect to="/stories" />} />
               </Switch>
             </Container>
           </Container>

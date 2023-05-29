@@ -30,7 +30,7 @@ export const getCountry = (id) => async (dispatch) => {
     
     const { data } = await api.fetchCountry(id);
     dispatch({ type: START_LOADING_COUNTRIES })
-    dispatch({ type: FETCH_DESTINATION, payload: data });
+    dispatch({ type: FETCH_COUNTRY, payload: data });
     dispatch({ type: END_LOADING_COUNTRIES });
   } catch (error) {
     console.log(error.message);

@@ -1,0 +1,195 @@
+import React, { useState, useEffect } from 'react'
+import useStyles from "./styles.js"
+import { TextField, Typography, Button, Paper, Modal, Fade,TextareaAutosize,FormControl,InputLabel,Select,MenuItem } from '@material-ui/core';
+import { useDropzone } from 'react-dropzone';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+
+import { createPost, updatePost } from '../../../actions/posts.js';
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min.js';
+import { getCountries } from '../../../actions/country.js';
+import { getDestinations ,getDestinationByCountry } from '../../../actions/destinations.js';
+const user = JSON.parse(localStorage.getItem('profile'))
+const PostForm = ({ currentId, setCurrentId }) => {
+  const [postData, setPostData] = useState({
+    title: '', message: '', tags: '', selectedFile: ''
+  });
+  const {id}=useParams()
+  const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
+  const dispatch = useDispatch();
+  const countries=useSelector((state)=>state.countries)
+  console.log('feteched countires',countries)
+  const destinations=useSelector((state)=>state.destinations)
+  console.log('fetched',destinations)
+  const location=useSelector((state)=>state.loations)
+  const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const handleCountryChange = (e) => {
+    setPostData({...postData,country:e.target.value});
+  };
+  const handleCityChange = (e) => {
+    console.log('city',e.target.value)
+    setPostData({...postData,city:e.target.value});
+  };
+  const userId=user.result._id
+  const classes = useStyles();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (currentId !== 0) {
+      dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }))
+      clear();
+    }
+    else {
+
+      dispatch(createPost({ ...postData, name: user?.result?.name }));
+
+      clear();
+    }
+  }
+  useEffect(()=>{
+    dispatch(getCountries())
+    dispatch(getDestinations())
+  },[])
+  useEffect(() => {
+    if (post) setPostData(post)
+    if (!post?.title) clear();
+
+  }, [post])
+  const clear = () => {
+    // setCurrentId(0);
+    setPostData({ title: '', message: '', tags: '', selectedFile: '',country:'',city:'',location:'' });
+  }
+  if (!user?.result?.name) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant='h6' align='center'>
+          Please Sign In to create Your memories
+        </Typography>
+
+      </Paper>
+    )
+
+  }
+
+  const onDrop = (acceptedFiles) => {
+    const file = acceptedFiles[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const base64String = reader.result.split(',')[1];
+      console.log('uploaded file',base64String)
+      setPostData({  ...postData, selectedFile: reader.result })} 
+    reader.readAsDataURL(file);
+  };
+  useEffect(() => {
+    return () => {
+      if (postData.selectedFile) {
+        URL.revokeObjectURL(postData.selectedFile);
+      }
+    };
+  }, [postData.selectedFile]);
+  useEffect(()=>{
+    setUser(
+      JSON.parse(localStorage.getItem('profile'))
+    )
+},[])
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
+  return (
+    
+          <div className={classes.paper} elevation={6}>
+            <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
+              <Typography variant='h6'>{ id? 'Update your Memory' : 'create A Memory'}</Typography>
+
+              <TextField
+                name='title'
+                variant='outlined'
+                label='Title'
+                fullWidth
+                value={postData.title}
+                onChange={(e) => setPostData({ ...postData, title: e.target.value })} />
+
+              <TextField
+                name='message' 
+                variant='outlined'
+                label='Message  '
+                fullWidth
+                multiline
+                InputProps={{
+                    style: {
+                        width: '100%',
+                        minHeight: '100px',
+                        resize: 'vertical',
+                        padding: 5,
+                        // borderRadius: '16px',
+                        fontFamily: 'inherit',
+                        fontSize: 'inherit',
+                        boxSizing: 'border-box',
+                        outline: 'none',
+                    },
+                  }}
+                value={postData.message}
+                onChange={(e) => setPostData({ ...postData, message: e.target.value })} />
+                       <FormControl variant="outlined" className={classes.select}>
+                    <InputLabel>Select Country</InputLabel>
+                    <Select value={postData.country} onChange={(e)=>{
+                        dispatch(getDestinationByCountry(id))
+                        setPostData({...postData,country:e.target.value})
+                        
+                }} label="Select Country">
+                        {countries?.countries?.map((country) => (
+                        <MenuItem key={country._id} value={country._id}>
+                            {country.title}
+                        </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                <FormControl variant="outlined" className={classes.select}>
+                    <InputLabel>Select a city</InputLabel>
+                    <Select value={postData.city} onChange={(e)=>{setPostData({...postData,city:e.target.value})}} label="Select a city          ">
+                        {destinations?.destinations?.map((city) => (
+                        <MenuItem key={city._id} value={city._id}>
+                            {city.title}
+                        </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+         
+              <TextField
+                name='tags'
+                variant='outlined'
+                label='tags'
+                fullWidth
+                value={postData.tags}
+                onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
+
+                <div {...getRootProps()} className={classes.dropZone}>
+                    <input {...getInputProps()} />
+                    {isDragActive ? (
+                        <p>Drop the file here...</p>
+                    ) : (
+                        <p>Drag 'n' drop a file here, or click to select a file</p>
+                    )}
+                    </div>
+                    {postData?.selectedFile && (
+                        <><p>Selected file</p><img src={postData.selectedFile} alt="Dropped" className={classes.droppedImage} loading='lazy' /></>
+                    )}
+                    
+
+              <Button className={classes.buttonSubmit} variant='contained' color='primary' size='large' type="submit" fullWidth>Submit</Button>
+              <Button className={classes.buttonSubmit} variant='contained' color='secondary' size='small' onClick={clear} fullWidth>Clear</Button>
+            </form>
+
+          </div>
+
+
+  );
+}
+export default PostForm

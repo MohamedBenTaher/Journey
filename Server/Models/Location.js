@@ -6,9 +6,18 @@ const locationSchema = mongoose.Schema({
     destination:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Destination',
+        required: false,
+      },
+    country:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Country',
+        required: false,
+      },
+      user:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
         required: true,
       },
-    Country: { type: String, required: true },
     selectedFile: String,
     avgRating: { type: [{id:String,rating:Number}], default: 0 },
     tags: {

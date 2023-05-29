@@ -30,7 +30,7 @@ const Post = ({post,setCurrentId}) => {
     return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
   };
   const openPost=()=>{
-   history.push(`/posts/${post._id}`);
+   history.push(`/stories/${post._id}`);
   }
 
   const classes=useStyles();

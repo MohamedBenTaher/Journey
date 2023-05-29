@@ -37,6 +37,17 @@ export const  getDestination= async(req,res) => {
         res.status(404).json({message :error.essage})
     }
 }
+export const  getDestinationByCountry= async(req,res) => {
+  const {id}=req.params;
+  try {
+
+      const destinations = await Destination.find({ country: id });
+    
+      res.status(200).json(destinations);
+  } catch (error) {
+      res.status(404).json({message :error.essage})
+  }
+}
 export const createDestination=async(req,res) => {
     const destinations = req.body;
     const files=req.files

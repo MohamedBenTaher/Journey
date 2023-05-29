@@ -1,42 +1,123 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardMedia, CardContent, Typography } from '@material-ui/core';
+import { Card, CardMedia, CardContent, Typography ,Grid} from '@material-ui/core';
+import { useDispatch,useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
+import { getCountry } from '../../../actions/country';
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 400,
-    margin: 'auto',
+  coverImage: {
+    height: 400,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
   },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9 aspect ratio
+  title: {
+    marginTop: theme.spacing(2),
+    fontWeight: 'bold',
+  },
+  subTitle: {
+    marginTop: theme.spacing(2),
+    fontWeight:'normal'
+  },
+  description: {
+    marginTop: theme.spacing(2),
+  },
+  voteSection: {
+    marginTop: theme.spacing(2),
+    width:'50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent:'space-evenly'
+  },
+  voteButton: {
+    marginRight: theme.spacing(1),
+    backgroundColor: '#f5f5f5',
+    padding: theme.spacing(1),
+    borderRadius: theme.spacing(1),
+    cursor: 'pointer',
+  },
+  voteCount: {
+    fontWeight: 'bold',
+  },
+  imagesSection: {
+    marginTop: theme.spacing(2),
+  },
+  image: {
+    height: 200,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    marginBottom: theme.spacing(2),
+    borderRadius:'16px'
   },
 }));
 
-const CountryDetail = ({ country }) => {
+const CountryDetails = () => {
+  const {countries,isLoading}=useSelector((state)=>state.countries);
+  const value=useSelector((state)=>state)
+  console.log('continent details',countries,value)
+  const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const classes = useStyles();
+  const dispatch=useDispatch()
+  const {id}=useParams()
+  useEffect(()=>{
+   dispatch(getCountry(id))
+  },[dispatch,id])
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, []);
+  const formatParagraph = (paragraph) => {
+    const titleRegex = /^(\d+):(.*)$/; // Regex to match the title pattern with number and colon
+    const matches = paragraph.match(titleRegex);
+  
+    if (matches && matches.length === 3) {
+      const titleNumber = matches[1].trim();
+      const titleText = matches[2].trim();
+      return (
+        <p style={{ textAlign: 'justify' }}>
+          <strong>{titleNumber}:</strong> {titleText}
+        </p>
+      );
+    }
+  
+    return (
+      <p style={{ textAlign: 'justify' }}>
+        {paragraph}
+      </p>
+    );
+  };
+
+
+
 
   return (
-    <Card className={classes.root}>
-      <CardMedia className={classes.media} image={country?.coverImage} title={country?.name} />
+    <Card >
+      <CardMedia className={classes.coverImage} image={countries?.coverImage} title={countries?.title} />
       <CardContent>
-        <Typography variant="h5" component="h2">
-          {country?.name}
+        <Typography variant="h3" component="h2" className={classes.title}>
+          {countries?.title}
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {country?.description}
+        <Typography variant="h5" component="h5" className={classes.subTitle}>
+          {countries?.continent?.name}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="div">
+           {countries?.description?.split('\n').map((paragraph, index) => formatParagraph(paragraph))}
         </Typography>
         <Typography variant="h6" component="h3">
           Images
         </Typography>
-        <div>
-          {country?.images.map((image, index) => (
-            <img key={index} src={image} alt={`Image ${index + 1}`} />
-          ))}
+        <div className={classes.imagesSection}>
+        <Grid container spacing={2}>
+          {countries?.images?.map((image, index) => (
+          <Grid key={index} item xs={12} sm={6} md={4} lg={6}>
+            <div className={classes.image} style={{ backgroundImage: `url(${image})` }} />
+          </Grid>
+      ))}
+        </Grid>
         </div>
+        
       </CardContent>
     </Card>
   );
 };
 
-export default CountryDetail;
+export default CountryDetails;

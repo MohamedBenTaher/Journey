@@ -34,10 +34,10 @@ function SearchBar() {
       console.log('values',search.trim(),tags)
       dispatch(getPostsBySearch({search,tags:tags.join(','),season}));
       console.log('tags',tags)
-      history.push(`/posts/search?searchQuery=${search ||'none'}&tags=${tags.join(',')}&season=${season ||'none'}`);
+      history.push(`/stories/search?searchQuery=${search ||'none'}&tags=${tags.join(',')}&season=${season ||'none'}`);
     }
     else {
-      history.push('/posts')
+      history.push('/stories')
     }
   }
 

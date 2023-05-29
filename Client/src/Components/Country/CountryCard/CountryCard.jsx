@@ -64,14 +64,16 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const CountryCard = (country) => {
+const CountryCard = ({country}) => {
   const history=useHistory()
   const classes = useStyles();
   const [liked,setLiked]=useState(false)
+  console.log('country in card',country)
   return (
     //to be added
+
     <Card className={classes.card} >
-      <CardMedia image={Morocco} alt={country?.name} className={classes.backgroundImage} onClick={()=>history.push('/countries/id')} />
+      <CardMedia image={Morocco} alt={country?.name} className={classes.backgroundImage} onClick={()=>history.push(`/countries/${country?._id}`)} />
       <IconButton className={classes.likeButton} onClick={()=>setLiked((prev)=>!prev)}>
         {liked ?( <FavoriteOutlinedIcon style={{color:'white'}}/>):
         (<FavoriteBorderOutlinedIcon style={{color:'white'}} />)
@@ -79,10 +81,10 @@ const CountryCard = (country) => {
       </IconButton>
       <CardContent className={classes.content}>
         <Typography variant="h6" className={classes.title}>
-          {country?.name}
+          {country?.title}
         </Typography>
         <Typography variant="subtitle1" className={classes.subtitle}>
-          {country?.continent}
+          {country?.continent?.name}
         </Typography>
       </CardContent>
     </Card>

@@ -26,12 +26,12 @@ export const getLocation = async (req, res) => {
     }
 }
 export const createLocation = async (req, res) => {
-    const event = req.body;
+    const location = req.body;
 
-    const newEvent = new Location({ ...event, creator: req.userId, createdAt: new Date().toISOString() })
+    const newlocation = new Location({ ...location, createdAt: new Date().toISOString() })
     try {
-        await newEvent.save();
-        res.status(201).json(newEvent);
+        await newlocation.save();
+        res.status(201).json(newlocation);
     } catch (error) {
         res.status(401).json({ message: error.message })
     }

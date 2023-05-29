@@ -34,7 +34,7 @@ const Home = () => {
     const searchPost=()=>{
       if(search.trim() || tags){
         dispatch(getPostsBySearch({search,tags:tags.join(',')}));
-        history.push(`/posts/search?searchQuery=${search ||'none'}&tags=${tags.join(',')}`);
+        history.push(`/stories/search?searchQuery=${search ||'none'}&tags=${tags.join(',')}`);
       }
       else {
         history.push('/')
@@ -59,7 +59,6 @@ const Home = () => {
                 <Grid item >
                   <Form  currentId={currentId} setCurrentId={setCurrentId} />
                 </Grid>
-                <CountryCard continent={'Africa'} country={'Morocco'} backgroundImage={Morocco}/>
 
      </Grid>
      </Container>

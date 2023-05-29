@@ -3,7 +3,11 @@ import mongoose from "mongoose";
 const destinationSchema = mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
-    country :{type:String,required:true},
+    country: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Country',
+        required: true,
+      },
     type: {type:String,Enumerator:['Location','city','country']},
     creator: { type: String, required: true },
     coverImage:{type:String,required:true},
