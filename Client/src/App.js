@@ -61,8 +61,8 @@ const App = () => {
                 <Route path={'/continents/new/:id?'} exact component={ContinentForm} />
                 <Route path={'/continents/:id'} exact component={ContinentDetails} />
                 <Route path={'/countries'} exact component={CountryLayout}/>
-                <Route path={'/countries/:id'} exact component={CountryDetail}/>
                 <Route path={'/countries/new/:id?'} exact component={CountryForm} />
+                <Route path={'/countries/:id'} exact component={CountryDetail}/>
                 <Route path='/auth' exact component={() => !user ? <Auth /> : <Redirect to="/posts" />} />
               </Switch>
             </Container>

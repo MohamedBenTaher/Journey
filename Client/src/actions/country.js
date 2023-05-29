@@ -5,7 +5,7 @@ import { LIKE_COUNTRY,DISLIKE_COUNTRY,FETCH_COUNTRIES,FETCH_COUNTRY,FETCH_COUNTR
 export const getTopCountries = () => async (dispatch) => {
     try {
       dispatch({ type: START_LOADING_COUNTRIES })
-      const { data: { data } } = await api.fetchTopDestinations();
+      const { data: { data } } = await api.fetchTopCountries();
   
       dispatch({ type: FETCH_COUNTRIES, payload: { data } });
       dispatch({ type: END_LOADING_COUNTRIES });
@@ -52,7 +52,7 @@ export const getCountriesBySearch = (searchQuery) => async (dispatch) => {
 export const createCountry = (destination) => async (dispatch) => {
   try {
     console.log(destination);
-    const { data } = await api.createDestionation(destination);
+    const { data } = await api.createCountry(destination);
     dispatch({ type: START_LOADING_COUNTRIES })
     dispatch({ type: CREATE_COUNTRY, payload: [data] })
     dispatch({ type: END_LOADING_COUNTRIES});
@@ -63,7 +63,7 @@ export const createCountry = (destination) => async (dispatch) => {
 
 export const updateCountry = (id, destination) => async (dispatch) => {
   try {
-    const { data } = await api.updateDestinations(id, destination);
+    const { data } = await api.updateCountry(id, destination);
     dispatch({ type: UPDATE_COUNTRY, payload: data });
 
   } catch (error) {
@@ -73,7 +73,7 @@ export const updateCountry = (id, destination) => async (dispatch) => {
 
 export const deleteCountry = (id) => async (dispatch) => {
   try {
-    await api.deleteDestination(id);
+    await api.deleteCountry(id);
     dispatch({ type: DELETE_COUNTRY, payload: id });
 
   } catch (error) {

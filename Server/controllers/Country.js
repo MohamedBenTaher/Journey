@@ -78,13 +78,14 @@ export const createCountry=async(req,res) => {
       const coverFileurl = uploadResult?.Location||'';
       countries.images=uploadedFiles;
       countries.coverImage=coverFileurl
-      console.log('finale version',countries)
-    const newECountry = new Country({ ...countries,createdAt:new Date() })
+      console.log('finale version country',countries)
+    const newCountry = new Country({ ...countries,createdAt:new Date() })
 try {
-     await newECountry.save();
-    res.status(201).json(newECountry);
+     await newCountry.save();
+    res.status(201).json(newCountry);
 } catch (error) {
-    res.status(401).json({message :error.message})
+  console.log(error)
+    res.status(401).json({message :error})
 }
 }
 

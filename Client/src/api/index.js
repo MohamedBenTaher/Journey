@@ -66,6 +66,7 @@ export const createCountry=(newCountry)=>API.post('/country',newCountry,{
   headers: {
     'Content-Type':'multipart/form-data',
 }})
+export const fetchTopCountries=() => API.get(`/country/top`)
 export const fetchCountries = (page) => API.get(`/country?page=${page}`);
 export const fetchCountry= (id)=>API.get(`/country/${id}`);
 export const updateCountry= (id,updatedCountry) => API.patch(`/country/${id}`,updatedCountry,{

@@ -28,9 +28,11 @@ console.log('test')
         <CircularProgress />
       ) : (
         <Grid container spacing={3} justifyContent="start">
-          {continents?.map((cotinent) => (
-            <Grid key={destination._id} item xs={12} sm={6} md={6} lg={4}>
-              <ContinentCard destination={cotinent} setCurrentId={setCurrentId} />
+          {continents?.map((continent) => (
+            <Grid key={continent._id} item xs={12} sm={6} md={6} lg={4}>
+              <ContinentCard continent={continent}
+              //  setCurrentId={setCurrentId} 
+               />
             </Grid>
           ))}
         </Grid>

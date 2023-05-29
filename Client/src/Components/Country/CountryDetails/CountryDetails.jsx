@@ -18,19 +18,19 @@ const CountryDetail = ({ country }) => {
 
   return (
     <Card className={classes.root}>
-      <CardMedia className={classes.media} image={country.coverImage} title={country.name} />
+      <CardMedia className={classes.media} image={country?.coverImage} title={country?.name} />
       <CardContent>
         <Typography variant="h5" component="h2">
-          {country.name}
+          {country?.name}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          {country.description}
+          {country?.description}
         </Typography>
         <Typography variant="h6" component="h3">
           Images
         </Typography>
         <div>
-          {country.images.map((image, index) => (
+          {country?.images.map((image, index) => (
             <img key={index} src={image} alt={`Image ${index + 1}`} />
           ))}
         </div>

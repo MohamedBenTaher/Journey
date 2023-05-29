@@ -7,12 +7,16 @@ import { getContinents } from "../../../actions/continent.js";
 
 const Paginate =({page})=>{
  console.log('rendered')
+  const dispatch=useDispatch();
   const {numberOfPages}=useSelector((state)=>state.continents)
   const classes=useStyles();
-  const dispatch=useDispatch();
-  useEffect(()=>{
-    if(page) dispatch(getContinents(page))
-  },[page,dispatch])
+  
+  useEffect(() => {
+    console.log("useEffect called");
+    if (page) {
+      dispatch(getContinents(page));
+    }
+  }, [page, dispatch]);
   return(
     <Pagination 
     classes={{ul:classes.ul}}
@@ -21,7 +25,7 @@ const Paginate =({page})=>{
     variant="outlined"
     color='primary'
     renderItem={(item)=>(
-        <PaginationItem {...item} component={Link} to={`/destinations?page=${item.page}`} />
+        <PaginationItem {...item} component={Link} to={`/continents?page=${item.page}`} />
   )}
     />
       );

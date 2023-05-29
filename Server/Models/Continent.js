@@ -17,6 +17,7 @@ const continentSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
+  tags:[String],
   countries: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Country',

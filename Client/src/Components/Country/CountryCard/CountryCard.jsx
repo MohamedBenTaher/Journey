@@ -71,7 +71,7 @@ const CountryCard = (country) => {
   return (
     //to be added
     <Card className={classes.card} >
-      <CardMedia image={Morocco} alt={country} className={classes.backgroundImage} onClick={()=>history.push('/countries/id')} />
+      <CardMedia image={Morocco} alt={country?.name} className={classes.backgroundImage} onClick={()=>history.push('/countries/id')} />
       <IconButton className={classes.likeButton} onClick={()=>setLiked((prev)=>!prev)}>
         {liked ?( <FavoriteOutlinedIcon style={{color:'white'}}/>):
         (<FavoriteBorderOutlinedIcon style={{color:'white'}} />)
@@ -79,10 +79,10 @@ const CountryCard = (country) => {
       </IconButton>
       <CardContent className={classes.content}>
         <Typography variant="h6" className={classes.title}>
-          {country.name}
+          {country?.name}
         </Typography>
         <Typography variant="subtitle1" className={classes.subtitle}>
-          {country.continet}
+          {country?.continent}
         </Typography>
       </CardContent>
     </Card>

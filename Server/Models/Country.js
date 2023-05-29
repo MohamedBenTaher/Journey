@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const countrySchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: true,
   },
@@ -9,7 +9,7 @@ const countrySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  tripExperienceRating: {
+  likes: {
     type: Number,
     default: 0,
   },
@@ -17,9 +17,19 @@ const countrySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  continent: {
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'Continent',
+    required: true,
+  },
   images: {
     type: [String],
     default: [],
+  },
+  user: {
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'User',
+    required: true,
   },
   destinations: [{
     type: mongoose.Schema.Types.ObjectId,

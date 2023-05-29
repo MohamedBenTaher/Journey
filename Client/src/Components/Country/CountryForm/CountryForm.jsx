@@ -120,6 +120,7 @@ const CountryForm= () => {
   const {id}=useParams()
   const {country,isLoading}=useSelector((state)=>state.countries);
   const {continents}=useSelector((state)=>state.continents)
+  console.log('my continents',continents)
   const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const userId=user.result._id
   const classes = useStyles();
@@ -142,9 +143,8 @@ const CountryForm= () => {
     const formData = new FormData();
     formData.append('title', values.title);
     formData.append('description', values.description);
-    formData.append('country', values.country);
-    formData.append('type', values.type);
-    formData.append('creator', user?.result?._id);
+    formData.append('continent', values.continent);
+    formData.append('user', user?.result?._id);
     formData.append('coverImage', values.coverImage[0]); // Assuming only one file is selected
     values.images.forEach((image) => {
       formData.append('images', image);
@@ -169,7 +169,7 @@ const CountryForm= () => {
 
   return (
     <><Typography variant='h2'  className={classes.heading}>
-        { country ?('Add a new country'):('Update this country')}
+        { !country ?('Add a new country'):('Update this country')}
       </Typography>
         <Formik
         enableReinitialize
@@ -177,17 +177,16 @@ const CountryForm= () => {
               title:country?country?.title: '',
               description: country?country?.description:'',
               continent: country?country?.country:'',
-              creator: country?user?.result?._id:country?.creator,
+              user: country?user?.result?._id:country?.user,
               coverImage: country?country?.coverImage:'',
               images: country?country?.images:[],
               tags: country?country?.tags:[],
           }}
           validationSchema={Yup.object().shape({
-              title: Yup.string().required('Title is required'),
-              description: Yup.string().required('Description is required'),
-              country: Yup.string().required('country is required'),
-              type: Yup.string().oneOf(['location', 'city', 'country']).required('Type is required'),
-              creator: Yup.string().required('Creator is required'),
+              // name: Yup.string().required('name is required'),
+              // description: Yup.string().required('Description is required'),
+              // continent: Yup.string().required('Type is required'),
+              // user: Yup.string().required('user is required'),
               // coverImage: Yup.mixed().required('Cover Image is required'),
               // images: Yup.array().of(
               //   Yup.mixed().required('Image is required')
@@ -206,13 +205,13 @@ const CountryForm= () => {
                       {values.coverImage && (
                         <div className={classes.preview}>
                             <div  className={classes.coverImageWrapper}>
-                               <img src={country.coverImage?values.coverImage:URL.createObjectURL(values.coverImage[0])} alt={`cover Image`} className={classes.coverImage} />
+                               <img src={country?.coverImage?values.coverImage:URL.createObjectURL(values.coverImage[0])} alt={`cover Image`} className={classes.coverImage} />
                               <div
                                 className={classes.removeButton}
                                 onClick={ async (e) => {
                                   e.preventDefault()
-                                  if(country.coverImage && typeof values.coverImage==='string'){
-                                    const deleteImage= await deleteS3Image(country._id,values.coverImage)
+                                  if(country?.coverImage && typeof values.coverImage==='string'){
+                                    const deleteImage= await deleteS3Image(country?._id,values.coverImage)
                                   }
                                   setFieldValue('coverImage','');
                                 }}
@@ -263,21 +262,11 @@ const CountryForm= () => {
                               helperText={touched.description && errors.description} />
                       </Grid>
                       <Grid item xs={12}>
-                          <Field
-                              name="country"
-                              label="country"
-                              variant="outlined"
-                              fullWidth
-                              as={TextField}
-                              error={touched.country && Boolean(errors.country)}
-                              helperText={touched.country && errors.country} />
-                      </Grid>
-                      <Grid item xs={12}>
                           <FormControl fullWidth className={classes.formControl}>
                               <InputLabel className={classes.Select}>Continent</InputLabel>
                               <Field name="continent" as={Select} label="Continent" onBlur={handleBlur} variant="outlined" onChange={handleChange} value={values.continent} >
                               {
-                                continents??(
+                                continents&&(
                                     continents?.map((continent)=>(
                                         <MenuItem value={continent?._id}>{continent.name}</MenuItem>
                                     ))
@@ -308,7 +297,7 @@ const CountryForm= () => {
                         <div className={classes.preview}>
                           {values.images?.map((image, index) => (
                             <div key={index} className={classes.imageWrapper}>
-                               <img src={country?.images?.indexOf(image)!==-1?image:URL.createObjectURL(image)} alt={`Image ${index + 1}`} className={classes.image} />
+                               <img src={country?.images?.indexOf(image)===-1?image:URL.createObjectURL(image)} alt={`Image ${index + 1}`} className={classes.image} />
                               <div
                                 className={classes.removeButton}
                                 onClick={ async (e) => {
@@ -333,7 +322,7 @@ const CountryForm= () => {
                   
                       {values.images?.length<5?(
                       <Grid item xs={12}>
-                        <InputLabel className={classes.InputLabel}>Country Images Images</InputLabel>
+                            <InputLabel className={classes.InputLabel}>Country Images</InputLabel>
                       <Field name="images"  fullWidth component={FileInput} />
                        {touched.images && errors.images && (
                        <div className="error">{errors.images}</div>

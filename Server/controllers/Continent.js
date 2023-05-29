@@ -80,17 +80,14 @@ export const createContinent=async(req,res) => {
       const coverFileurl = uploadResult?.Location||'';
       continent.images=uploadedFiles;
       continent.coverImage=coverFileurl
-      console.log('finale version',continents)
-    const newContinent = new Country({ ...continent,createdAt:new Date() })
+
+    const newContinent = new Continent({ ...continent,createdAt:new Date() })
 try {
-     await newECountry.save();
+     await newContinent.save();
     res.status(201).json(newContinent);
 } catch (error) {
     res.status(401).json({message :error.message})
-}
-}
-
-
+}}
 
 export const updateContinent=async (req,res)=>{
  const {id}=req.params;

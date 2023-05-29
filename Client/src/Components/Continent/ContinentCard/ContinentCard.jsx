@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme) =>
         position: 'relative',
         width: '100%',
         height: 400,
-        width:300,
-        margin: 20,
+
+        margin: 'auto',
         transition: 'all 0.5s',
         borderRadius:'15px',
         // '&:hover': {
@@ -68,10 +68,10 @@ const ContinentCard = (continent) => {
   const history=useHistory()
   const classes = useStyles();
   const [liked,setLiked]=useState(false)
+  console.log('contient car',continent)
   return (
-    //to be added
     <Card className={classes.card} >
-      <CardMedia image={Morocco} alt={country} className={classes.backgroundImage} onClick={()=>history.push('/countries/id')} />
+      <CardMedia image={continent?.continent.coverImage} alt={continent?.continent.name} className={classes.backgroundImage} onClick={()=>history.push(`/continents/${continent.continent._id}`)} />
       <IconButton className={classes.likeButton} onClick={()=>setLiked((prev)=>!prev)}>
         {liked ?( <FavoriteOutlinedIcon style={{color:'white'}}/>):
         (<FavoriteBorderOutlinedIcon style={{color:'white'}} />)
@@ -79,7 +79,7 @@ const ContinentCard = (continent) => {
       </IconButton>
       <CardContent className={classes.content}>
         <Typography variant="h6" className={classes.title}>
-          {continent?.name}
+          {continent?.continent.name}
         </Typography>
       </CardContent>
     </Card>

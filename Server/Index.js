@@ -8,7 +8,7 @@ import eventRoutes from './Routes/events.js'
 import destinationRoutes from './Routes/destinations.js'
 import commentRoutes from'./Routes/Comments.js'
 import continentRoutes from './Routes/continents.js'
-import countryRoutes from './Routes/continents.js'
+import countryRoutes from './Routes/countries.js'
 import fileUpload from 'express-fileupload';
 // import * as dotenv from 'dotenv' 
 // dotenv.config()
