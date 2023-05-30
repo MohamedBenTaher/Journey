@@ -1,5 +1,9 @@
 import mongoose from "mongoose";
-import PostMessage from "../Models/PostMessage.js"
+import PostMessage from "../Models/PostMessage.js";
+import s3 from '../awsConfig.js'
+import { v4 as uuidv4 } from 'uuid';
+
+
 export const  getTopPosts= async(req,res) => {
     PostMessage.find()
     .sort({ likes: -1 })
@@ -17,9 +21,7 @@ export const  getPosts= async(req,res) => {
         const Limit=8;
         const startIndex=(Number(page)-1)*Limit;
         const total=await PostMessage.countDocuments({});
-
         const posts=await PostMessage.find().sort({_id:-1}).limit(Limit).skip(startIndex);
-      
         res.status(200).json({data:posts,currentPage:Number(page),NumberOfPages:Math.ceil(total/Limit)})
     } catch (error) {
         res.status(404).json({message :error.essage})
@@ -29,8 +31,7 @@ export const  getPost= async(req,res) => {
     const {id}=req.params;
     try {
 
-        const post=await PostMessage.findById(id);
-      
+        const post=await PostMessage.findById(id).populate('creator');
         res.status(200).json(post);
     } catch (error) {
         res.status(404).json({message :error.essage})
@@ -38,8 +39,26 @@ export const  getPost= async(req,res) => {
 }
 export const createPost=async(req,res) => {
     const post = req.body;
-
-    const newPostMessage = new PostMessage({ ...post, creator:req.userId,createdAt:new Date().toISOString() })
+    const files=req.files;
+    console.log('req',req,'files',files)
+    const fileKey=uuidv4()
+    const uploadParams = {
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: fileKey.toString(),
+        Body: files.image.data ,
+        ContentType: 'image/jpeg', 
+      };
+      let uploadResult ;
+      try{
+       uploadResult = await s3.upload(uploadParams).promise();
+      }
+      catch(err){
+        console.log(err)
+      }
+    const Fileurl = uploadResult?.Location||'';
+    post.selectedFile=Fileurl;
+    post.creator=mongoose.Types.ObjectId(post?.creator)
+    const newPostMessage = new PostMessage({ ...post,createdAt:new Date().toISOString() })
 try {
     await newPostMessage.save();
     res.status(201).json(newPostMessage );

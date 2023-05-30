@@ -15,9 +15,13 @@ import fileUpload from 'express-fileupload';
 const app = express();
 const Port = process.env.port || 5000
 
-app.use(fileUpload());
+app.use(fileUpload({
+    limits: { fileSize: 10 * 1024 * 1024 }, // Set the desired limit for the file size (e.g., 10MB)
+  }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
 const corsOptions = {
     origin: 'http://localhost:3000',

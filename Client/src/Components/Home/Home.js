@@ -50,15 +50,15 @@ const Home = () => {
     <Grow in>
     <Container maxWidth="xl">
      <Grid className={classes.gridContainer} container justifyContent="space-between" alignItems="stretch" spacing={3}>
-                <Grid item xs={12} sm={6} md={12}>
+                <Grid item xs={12} sm={12} md={12}>
                   <Posts setCurrentId={setCurrentId}/>
                   {(!searchQuery && !tags.length) && (<Grid>
                     <Pagination page={page} />
                   </Grid>)}
                 </Grid>
-                <Grid item >
+                {/* <Grid item >
                   <Form  currentId={currentId} setCurrentId={setCurrentId} />
-                </Grid>
+                </Grid> */}
 
      </Grid>
      </Container>

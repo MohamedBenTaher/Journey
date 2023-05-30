@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom';
 import { createDestination, getDestination, updateDestination } from '../../../actions/destinations';
 import { useDispatch,useSelector } from "react-redux";
 import { deleteS3Image } from '../../../api';
+import { getCountries } from '../../../actions/country';
 const useStyles = makeStyles((theme) =>
   createStyles({
     formControl: {
@@ -34,7 +35,8 @@ const useStyles = makeStyles((theme) =>
         marginBottom: theme.spacing(2),
     },
     Select:{
-       paddingLeft:12
+       paddingLeft:18,
+       paddingBottom:15
     },
     input: {
       display: 'none',
@@ -120,15 +122,19 @@ const DestinationForm= () => {
   const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const userId=user.result._id
   const classes = useStyles();
+  const countries=useSelector((state)=>state.countries)
+  console.log('countires',countries)
   const dispatch =useDispatch();
   useEffect(()=>{
       setUser(
         JSON.parse(localStorage.getItem('profile'))
       )
+      dispatch(getCountries())
   },[])
   useEffect(()=>{
     if(id){ 
       dispatch(getDestination(id))
+     
     }},[id,dispatch])
     console.log('my destination',destination)
   const handleSubmit = async (values, { setSubmitting,setFieldValue,resetForm }) => {
@@ -180,11 +186,10 @@ const DestinationForm= () => {
               tags: destination?destination?.tags:[],
           }}
           validationSchema={Yup.object().shape({
-              title: Yup.string().required('Title is required'),
-              description: Yup.string().required('Description is required'),
-              country: Yup.string().required('country is required'),
-              type: Yup.string().oneOf(['location', 'city', 'country']).required('Type is required'),
-              creator: Yup.string().required('Creator is required'),
+              // title: Yup.string().required('Title is required'),
+              // description: Yup.string().required('Description is required'),
+              // country: Yup.string().required('country is required'),
+              // creator: Yup.string().required('Creator is required'),
               // coverImage: Yup.mixed().required('Cover Image is required'),
               // images: Yup.array().of(
               //   Yup.mixed().required('Image is required')
@@ -203,13 +208,13 @@ const DestinationForm= () => {
                       {values.coverImage && (
                         <div className={classes.preview}>
                             <div  className={classes.coverImageWrapper}>
-                               <img src={destination.coverImage?values.coverImage:URL.createObjectURL(values.coverImage[0])} alt={`cover Image`} className={classes.coverImage} />
+                               <img src={destination?.coverImage?values.coverImage:URL.createObjectURL(values.coverImage[0])} alt={`cover Image`} className={classes.coverImage} />
                               <div
                                 className={classes.removeButton}
                                 onClick={ async (e) => {
                                   e.preventDefault()
-                                  if(destination.coverImage && typeof values.coverImage==='string'){
-                                    const deleteImage= await deleteS3Image(destination._id,values.coverImage)
+                                  if(destination?.coverImage && typeof values.coverImage==='string'){
+                                    const deleteImage= await deleteS3Image(destination?._id,values.coverImage)
                                   }
                                   setFieldValue('coverImage','');
                                 }}
@@ -260,22 +265,16 @@ const DestinationForm= () => {
                               helperText={touched.description && errors.description} />
                       </Grid>
                       <Grid item xs={12}>
-                          <Field
-                              name="country"
-                              label="country"
-                              variant="outlined"
-                              fullWidth
-                              as={TextField}
-                              error={touched.country && Boolean(errors.country)}
-                              helperText={touched.country && errors.country} />
-                      </Grid>
-                      <Grid item xs={12}>
                           <FormControl fullWidth className={classes.formControl}>
-                              <InputLabel className={classes.Select}>Type</InputLabel>
-                              <Field name="type" as={Select} label="Type" onBlur={handleBlur} variant="outlined" onChange={handleChange} value={values.type} >
-                                  <MenuItem value="location">Location</MenuItem>
-                                  <MenuItem value="city">City</MenuItem>
-                                  <MenuItem value="country">Country</MenuItem>
+                              <InputLabel className={classes.Select}>Country</InputLabel>
+                              <Field name="country" as={Select} label="Country " onBlur={handleBlur} variant="outlined" onChange={handleChange} value={values.country} >
+                                {
+                                  countries?.countries?.map((country)=>{
+                                    return(
+                                      <MenuItem value={country._id}>{country.title}</MenuItem>
+                                    )
+                                  })
+                                }
                               </Field>
                               {touched.type && Boolean(errors.type) && <div>{errors.type}</div>}
                           </FormControl>
@@ -301,14 +300,14 @@ const DestinationForm= () => {
                         <div className={classes.preview}>
                           {values.images?.map((image, index) => (
                             <div key={index} className={classes.imageWrapper}>
-                               <img src={destination?.images?.indexOf(image)!==-1?image:URL.createObjectURL(image)} alt={`Image ${index + 1}`} className={classes.image} />
+                               <img src={destination?.images?.indexOf(image)!==-1?image:URL.createObjectURL(image[0])} alt={`Image ${index + 1}`} className={classes.image} />
                               <div
                                 className={classes.removeButton}
                                 onClick={ async (e) => {
                                   e.preventDefault()
                                   if(destination && typeof image==="string"){
                                     console.log('reached deletion')
-                                     await deleteS3Image(destination._id,image)
+                                     await deleteS3Image(destination?._id,image)
                                      .then(()=>{
                                       console.log('image deleted successfully')
                                      })

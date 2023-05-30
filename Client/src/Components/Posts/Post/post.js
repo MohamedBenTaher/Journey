@@ -44,7 +44,8 @@ const handleLike=()=>{
       setLikes([...post.likes,userId])
   }
 }
-
+const lines = post.message.split(',');
+const firstThreeLines = lines.slice(0,1).join(' ,'); 
 
   return (
   <Card className={classes.card} raised elevation={6}>
@@ -52,7 +53,7 @@ const handleLike=()=>{
     className={classes.cardAction}
     onClick={openPost}
     >
-   <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
+   <CardMedia className={classes.media} image={post.selectedFile} title={post.title}/>
    <div className={classes.overlay}>
        <Typography variant='h6' >{post.name}</Typography>
        <Typography variant='body2' >{moment(post.createdAt).fromNow()}</Typography>
@@ -71,7 +72,7 @@ const handleLike=()=>{
    <Typography variant='h5' className={classes.title} gutterBottom>{post.title}</Typography>
    <CardContent>
      
-   <Typography variant='body2'color="textSecondary" component='p'>{post.message}</Typography>
+   <Typography variant='body2'color="textSecondary" component='p'>{firstThreeLines}</Typography>
    </CardContent>
    </ButtonBase>
    <CardActions className={classes.cardActions}>

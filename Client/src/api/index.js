@@ -15,7 +15,10 @@ API.interceptors.request.use(function (config) {
 export const fetchPost = (id) => API.get(`/post/${id}`);
 export const fetchTopPosts=()=>API.get(`/post/top`)
 export const fetchPosts = (page) => API.get(`/post?page=${page}`);
-export const createPost = (newPost) => API.post('/post', newPost)
+export const createPost = (newPost) => API.post('/post', newPost,{
+  headers: {
+    'Content-Type':'multipart/form-data',
+}})
 export const updatePost = (id, updatedPost) => API.patch(`/post/${id}`, updatedPost);
 export const deletePost = (id) => API.delete(`/post/${id}`);
 export const likePost = (id) => API.patch(`/post/${id}/like`);
@@ -50,6 +53,7 @@ export const deleteDestination = (id) => API.delete(`/destination/${id}`);
 export const upVoteDestination = (destinationId,userId) => API.patch(`/destination/${destinationId}/upvote`,{userId:userId})
 export const downVoteDestination = (destinationId,userId) => API.patch(`/destination/${destinationId}/downvote`,{userId:userId})
 export const fetchDestinationsBySearch = (searchQuery) => API.get(`/destination/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}&season=${searchQuery.season}`);
+export const fetchDestinationByCountry=(id)=>API.get(`/destination/country/${id}`)
 /*===================================Comments===============================================*/
 /*==============Destination============*/
 export const commentEntity = (entityId,entityType,userId,content) => API.post(`/comment/${entityId}/comment`, { body:{userId:userId,entityType:entityType,content:content} });

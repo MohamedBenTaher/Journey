@@ -4,7 +4,11 @@ const postSchema=mongoose.Schema({
     title:String,
     message:String,
     name:String,
-    creator:String,
+    creator:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
+        required: true,
+      },
     tags:[String],
     selectedFile:String,
     likes:{

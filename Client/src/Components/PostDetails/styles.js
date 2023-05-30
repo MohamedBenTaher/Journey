@@ -11,6 +11,8 @@ export default makeStyles((theme) => ({
   card: {
     display: 'flex',
     width: '100%',
+    alignItems:'center',
+    justifyContent:'startimageSection',
     [theme.breakpoints.down('sm')]: {
       flexWrap: 'wrap',
       flexDirection: 'column',
@@ -22,7 +24,7 @@ export default makeStyles((theme) => ({
     flex: 1,
   },
   imageSection: {
-    marginLeft: '20px',
+   
     [theme.breakpoints.down('sm')]: {
       marginLeft: 0,
     },

@@ -1,5 +1,5 @@
 
-import { UPDATE_DESTINATION, CREATE_DESTINATION, FETCH_DESTINATIONS, DELETE_DESTINATION, FETCH_DESTINATION, FETCH_DESTINATION_BY_SEARCH, START_LOADING_DESTINATIONS, END_LOADING_DESTINATIONS, COMMENT_DESTINATION, UPVOTE_DESTINATION,DOWNVOTE_DESTINATION } from '../constants/actionTypes.js';
+import { UPDATE_DESTINATION, CREATE_DESTINATION, FETCH_DESTINATIONS,FETCH_DESTINATIONS_BY_COUNTRY, DELETE_DESTINATION, FETCH_DESTINATION, FETCH_DESTINATION_BY_SEARCH, START_LOADING_DESTINATIONS, END_LOADING_DESTINATIONS, COMMENT_DESTINATION, UPVOTE_DESTINATION,DOWNVOTE_DESTINATION } from '../constants/actionTypes.js';
 export default (state = { isLoading: false, destinations: [] }, action) => {
   switch (action.type) {
     case START_LOADING_DESTINATIONS:
@@ -12,6 +12,11 @@ export default (state = { isLoading: false, destinations: [] }, action) => {
         destinations: action.payload.data,
         currentPage: action.payload.currentPage,
         NumberOfPages: action.payload.numrOfPages,
+      };
+      case FETCH_DESTINATIONS_BY_COUNTRY:
+      return {
+        ...state,
+        destinations: action.payload.data,
       };
     case FETCH_DESTINATION:
       return { ...state, destination: action.payload };

@@ -9,10 +9,12 @@ import { createPost, updatePost } from '../../../actions/posts.js';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min.js';
 import { getCountries } from '../../../actions/country.js';
 import { getDestinations ,getDestinationByCountry } from '../../../actions/destinations.js';
-const user = JSON.parse(localStorage.getItem('profile'))
+import { deleteS3Image } from '../../../api/index.js';
+
 const PostForm = ({ currentId, setCurrentId }) => {
+  const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')))
   const [postData, setPostData] = useState({
-    title: '', message: '', tags: '', selectedFile: ''
+    title: '', message: '', tags: '',country:'',city:'', selectedFile: '',creator:user?.result?._id
   });
   const {id}=useParams()
   const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
@@ -22,7 +24,6 @@ const PostForm = ({ currentId, setCurrentId }) => {
   const destinations=useSelector((state)=>state.destinations)
   console.log('fetched',destinations)
   const location=useSelector((state)=>state.loations)
-  const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const handleCountryChange = (e) => {
     setPostData({...postData,country:e.target.value});
   };
@@ -30,17 +31,28 @@ const PostForm = ({ currentId, setCurrentId }) => {
     console.log('city',e.target.value)
     setPostData({...postData,city:e.target.value});
   };
-  const userId=user.result._id
+  const userId=user?.result?._id
   const classes = useStyles();
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (currentId !== 0) {
-      dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }))
+    console.log('data',postData,postData.country)
+    const formData=new FormData()
+    formData.append('title',postData.title)
+    formData.append('message',postData.message)
+    formData.append('tags',postData.tags)
+    formData.append('country',postData.country)
+    formData.append('city',postData.city)
+    formData.append('user',userId)
+    formData.append('image',postData.selectedFile[0])
+    formData.append('creator',postData.creator)
+    if (id ) {
+      console.log('called updatePost')
+    
+      dispatch(updatePost(id, formData))
       clear();
     }
     else {
-
-      dispatch(createPost({ ...postData, name: user?.result?.name }));
+      dispatch(createPost(formData));
 
       clear();
     }
@@ -56,7 +68,7 @@ const PostForm = ({ currentId, setCurrentId }) => {
   }, [post])
   const clear = () => {
     // setCurrentId(0);
-    setPostData({ title: '', message: '', tags: '', selectedFile: '',country:'',city:'',location:'' });
+    setPostData({ title: '', message: '', tags: '', selectedFile: '',country:'',city:'',location:'',creator:user?.result?._id });
   }
   if (!user?.result?.name) {
     return (
@@ -72,17 +84,14 @@ const PostForm = ({ currentId, setCurrentId }) => {
 
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
-    const reader = new FileReader();
+    console.log('uploaded file',base64String)
+    setPostData({  ...postData, selectedFile: file })
+  } 
 
-    reader.onload = () => {
-      const base64String = reader.result.split(',')[1];
-      console.log('uploaded file',base64String)
-      setPostData({  ...postData, selectedFile: reader.result })} 
-    reader.readAsDataURL(file);
-  };
   useEffect(() => {
     return () => {
       if (postData.selectedFile) {
+       
         URL.revokeObjectURL(postData.selectedFile);
       }
     };
@@ -92,20 +101,22 @@ const PostForm = ({ currentId, setCurrentId }) => {
       JSON.parse(localStorage.getItem('profile'))
     )
 },[])
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({       
+    accept: 'image/*',
+    multiple: true,
+    onDrop: (acceptedFiles) => {
+    console.log('accepted cover',acceptedFiles)
+    setPostData({ ...postData, selectedFile: acceptedFiles });
+    console.log(postData)
+  },
+ });
+
 
   return (
     
           <div className={classes.paper} elevation={6}>
-            <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
+            <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit} encType="multipart/form-data">
               <Typography variant='h6'>{ id? 'Update your Memory' : 'create A Memory'}</Typography>
 
               <TextField
@@ -140,7 +151,7 @@ const PostForm = ({ currentId, setCurrentId }) => {
                        <FormControl variant="outlined" className={classes.select}>
                     <InputLabel>Select Country</InputLabel>
                     <Select value={postData.country} onChange={(e)=>{
-                        dispatch(getDestinationByCountry(id))
+                        dispatch(getDestinationByCountry(e.target.value))
                         setPostData({...postData,country:e.target.value})
                         
                 }} label="Select Country">
@@ -151,6 +162,7 @@ const PostForm = ({ currentId, setCurrentId }) => {
                         ))}
                     </Select>
                 </FormControl>
+                {destinations?.destinations?.length>0&&(
                 <FormControl variant="outlined" className={classes.select}>
                     <InputLabel>Select a city</InputLabel>
                     <Select value={postData.city} onChange={(e)=>{setPostData({...postData,city:e.target.value})}} label="Select a city          ">
@@ -161,6 +173,7 @@ const PostForm = ({ currentId, setCurrentId }) => {
                         ))}
                     </Select>
                 </FormControl>
+                )}
          
               <TextField
                 name='tags'
@@ -169,7 +182,7 @@ const PostForm = ({ currentId, setCurrentId }) => {
                 fullWidth
                 value={postData.tags}
                 onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
-
+                  {!postData.selectedFile&&(<>
                 <div {...getRootProps()} className={classes.dropZone}>
                     <input {...getInputProps()} />
                     {isDragActive ? (
@@ -178,9 +191,24 @@ const PostForm = ({ currentId, setCurrentId }) => {
                         <p>Drag 'n' drop a file here, or click to select a file</p>
                     )}
                     </div>
-                    {postData?.selectedFile && (
-                        <><p>Selected file</p><img src={postData.selectedFile} alt="Dropped" className={classes.droppedImage} loading='lazy' /></>
-                    )}
+                  </>
+                  )}
+                    <><p>Selected file</p><div className={classes.coverImageWrapper}>
+            <img src={postData.selectedFile[0]?URL.createObjectURL(postData.selectedFile[0]):postData.selectedFile}  className={classes.coverImage} loading='lazy' />
+            <div
+              className={classes.removeButton}
+              onClick={async (e) => {
+                e.preventDefault();
+                if (postData?.selectedFile && typeof postData.selectedFile === 'string') {
+                  const deleteImage = await deleteS3Image(post?._id, postData.selectedFile);
+                }
+                setPostData({ ...postData, selectedFile: '' });
+              } }
+            >
+              <Typography variant="caption">x</Typography>
+            </div>
+          </div></>
+
                     
 
               <Button className={classes.buttonSubmit} variant='contained' color='primary' size='large' type="submit" fullWidth>Submit</Button>

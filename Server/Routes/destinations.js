@@ -1,5 +1,5 @@
 import express from "express"
-import { getDestination,getTopDestinations, getDestinations,getDestinationsBySearch, downvoteDestination,createDestination, upvoteDestination,updateDestination,deleteDestination, deleteS3Image } from "../controllers/destination.js";
+import { getDestination,getTopDestinations, getDestinations,getDestinationsBySearch, downvoteDestination,createDestination, upvoteDestination,updateDestination,deleteDestination, deleteS3Image, getDestinationByCountry } from "../controllers/destination.js";
 const router = express.Router();
 import auth from '../Middleware/auth.js'
 
@@ -14,5 +14,5 @@ router.delete('/:id', auth, deleteDestination);
 router.patch('/:id/upvote', auth, upvoteDestination)
 router.patch('/:id/downvote', auth, downvoteDestination)
 router.post('/image/delete/:id',auth,deleteS3Image)
-
+router.get('/country/:id',auth,getDestinationByCountry)
 export default router;
