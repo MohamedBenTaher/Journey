@@ -12,7 +12,7 @@ const commentSchema = new mongoose.Schema({
         entity: {
           type: {
             type: String,
-            enum: ['Destination', 'Restaurant'], // Add more entity types as needed
+            enum: ['Destination', 'Location','PostMessage'], // Add more entity types as needed
             required: true,
           },
           entityId: {

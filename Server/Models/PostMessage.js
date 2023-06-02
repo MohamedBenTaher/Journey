@@ -9,6 +9,16 @@ const postSchema=mongoose.Schema({
         ref:'User',
         required: true,
       },
+    destination:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Destination',
+        required: false,
+      },
+    country:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Country',
+        required: false,
+      },
     tags:[String],
     selectedFile:String,
     likes:{

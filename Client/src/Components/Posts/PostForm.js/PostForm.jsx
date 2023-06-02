@@ -12,13 +12,17 @@ import { getDestinations ,getDestinationByCountry } from '../../../actions/desti
 import { deleteS3Image } from '../../../api/index.js';
 
 const PostForm = ({ currentId, setCurrentId }) => {
+  const dispatch = useDispatch();
+  const {id}=useParams()
+  const statePos=useSelector((state)=>state)
+  console.log('statte',statePos)
+  const post = useSelector((state) => id ? state?.posts.posts?.find((p) => p._id === id) : null);
   const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')))
   const [postData, setPostData] = useState({
     title: '', message: '', tags: '',country:'',city:'', selectedFile: '',creator:user?.result?._id
   });
-  const {id}=useParams()
-  const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
-  const dispatch = useDispatch();
+
+
   const countries=useSelector((state)=>state.countries)
   console.log('feteched countires',countries)
   const destinations=useSelector((state)=>state.destinations)
@@ -194,7 +198,7 @@ const PostForm = ({ currentId, setCurrentId }) => {
                   </>
                   )}
                     <><p>Selected file</p><div className={classes.coverImageWrapper}>
-            <img src={postData.selectedFile[0]?URL.createObjectURL(postData.selectedFile[0]):postData.selectedFile}  className={classes.coverImage} loading='lazy' />
+            <img src={typeof postData.selectedFile=='Array'?URL.createObjectURL(postData?.selectedFile[0]):postData?.selectedFile}  className={classes.coverImage} loading='lazy' />
             <div
               className={classes.removeButton}
               onClick={async (e) => {

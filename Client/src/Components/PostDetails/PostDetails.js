@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Paper, Typography, CircularProgress, Divider } from '@material-ui/core/';
+import React, { useEffect,useState } from 'react';
+import { Paper, Typography, CircularProgress, Divider ,Card,CardContent} from '@material-ui/core/';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { useParams, useHistory, Link } from 'react-router-dom';
@@ -7,9 +7,11 @@ import { useParams, useHistory, Link } from 'react-router-dom';
 import { getPost, getPostsBySearch } from '../../actions/posts';
 import useStyles from './styles';
 import ComentSection from './ComentSection';
+import Comments from '../Comment/Comments';
 function PostDetails() {
   const {post,posts,isLoading}=useSelector((state)=>state.posts);
-  console.log('state',posts)
+  console.log('state',posts);
+  const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')))
   const dispatch=useDispatch();
   const history=useHistory()
   const classes=useStyles();
@@ -20,9 +22,11 @@ function PostDetails() {
   useEffect(()=>{
     if(post){
       dispatch(getPostsBySearch({ search: 'none', tags: post?.tags?.join(',') }));
+      setUser(JSON.parse(localStorage.getItem('profile')))
     }
   },[post])
-  if (!post) return null;
+  
+  if (!post ||!user) return null;
   console.log('rendered post ',post)
   console.log('post file',post.selectedFile)
   const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
@@ -49,7 +53,14 @@ function PostDetails() {
         <Typography variant="h6">Created by: {post?.creator?.name}</Typography>
         <Typography variant="body1">{moment(post?.createdAt).fromNow()}</Typography>
         <Divider style={{ margin: '20px 0' }} />
-        <ComentSection post={post}/>
+       { post&&(
+          <Card>
+            <CardContent>
+                <Comments entityId={id} entityType={'PostMessage'} user={user||{}}/>
+            </CardContent>
+          </Card>
+        )
+    }  
         <Divider style={{ margin: '20px 0' }} />
       </div>
 

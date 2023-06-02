@@ -32,7 +32,6 @@ const Post = ({post,setCurrentId}) => {
   const openPost=()=>{
    history.push(`/stories/${post._id}`);
   }
-
   const classes=useStyles();
   const dispatch=useDispatch();
 
@@ -49,6 +48,14 @@ const firstThreeLines = lines.slice(0,1).join(' ,');
 
   return (
   <Card className={classes.card} raised elevation={6}>
+      {userId==post?.creator ? ( 
+   <div className={classes.overlay2}>
+      <Button style={{color:'white'}} size="small" onClick={() =>history.push(`/stories/new/${post._id}`)}>
+        <MoreHorizonIcon fontSize='medium'/>
+      </Button>
+     
+   </div>
+    ):null}
     <ButtonBase 
     className={classes.cardAction}
     onClick={openPost}
@@ -58,14 +65,7 @@ const firstThreeLines = lines.slice(0,1).join(' ,');
        <Typography variant='h6' >{post.name}</Typography>
        <Typography variant='body2' >{moment(post.createdAt).fromNow()}</Typography>
    </div>
-   {userId==post?.creator ? ( 
-   <div className={classes.overlay2}>
-      <Button style={{color:'white'}} size="small" onClick={() => setCurrentId(post._id)}>
-        <MoreHorizonIcon fontSize='medium'/>
-      </Button>
-     
-   </div>
-    ):null}
+ 
    <div className={classes.details}>
        <Typography variant='body2' color='textSecondary'>{post.tags.map((tag)=> `#${tag} `)}</Typography>
    </div>

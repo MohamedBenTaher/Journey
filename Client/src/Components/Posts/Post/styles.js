@@ -28,10 +28,10 @@ export default makeStyles({
     color: 'white',
   },
   overlay2: {
-    position: 'absolute',
-    top: '20px',
-    right: '20px',
-    color: 'white',
+    // position: 'absolute',
+    // top: '20px',
+    // right: '20px',
+    // color: 'white',
   },
   grid: {
     display: 'flex',

@@ -70,6 +70,25 @@ try {
 export const updatePost=async (req,res)=>{
  const {id:_id}=req.params;
  const post =req.body; 
+ const files=req.files;
+    console.log('req',req,'files',files)
+    if(files){
+    const fileKey=uuidv4()
+    const uploadParams = {
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: fileKey.toString(),
+        Body: files.image.data ,
+        ContentType: 'image/jpeg', 
+      };
+      let uploadResult ;
+      try{
+       uploadResult = await s3.upload(uploadParams).promise();
+      }
+      catch(err){
+        console.log(err)
+      }
+    const Fileurl = uploadResult?.Location||'';
+    post.selectedFile=Fileurl;}
  if(!mongoose.Types.ObjectId.isValid(_id)){
    return  res.status(404).send('No Posts with this Id');
  }
@@ -79,7 +98,21 @@ res.json(UpdatedPost);
 
 export const deletePost = async (req, res) => {
     const { id } = req.params;
-
+    const postToDelete=await PostMessage.findById(id)
+    console.log('found post to Delete',postToDelete)
+    if(postToDelete['selectedFile']){
+    const coverImageKey=postToDelete.selectedFile.split('/').pop()
+    const params = {
+    Bucket: process.env.S3_BUCKET_NAME,
+    Key:coverImageKey
+    };
+    try{
+        await s3.deleteObject(params).promise();
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
 
     await PostMessage.findByIdAndRemove(id);
