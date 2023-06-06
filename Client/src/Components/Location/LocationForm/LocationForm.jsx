@@ -15,6 +15,7 @@ import { deleteS3Image } from '../../../api';
 import { getCountries } from '../../../actions/country';
 import { createLocation, getLocation, updateLocation } from '../../../actions/locations';
 import { getDestinations } from '../../../actions/destinations';
+import { locationTypes } from '../../../constants/locals';
 const useStyles = makeStyles((theme) =>
   createStyles({
     formControl: {
@@ -265,6 +266,21 @@ const LocationFom= () => {
                               as={TextField}
                               error={touched.description && Boolean(errors.description)}
                               helperText={touched.description && errors.description} />
+                      </Grid>
+                      <Grid item xs={12}>
+                          <FormControl fullWidth className={classes.formControl}>
+                              <InputLabel className={classes.Select}>Type</InputLabel>
+                              <Field name="type" as={Select} label="Type " onBlur={handleBlur} variant="outlined" onChange={handleChange} value={values.country} >
+                                {
+                                  locationTypes.map((location)=>{
+                                    return(
+                                      <MenuItem value={location.value}>{location.name}</MenuItem>
+                                    )
+                                  })
+                                }
+                              </Field>
+                              {touched.country && Boolean(errors.country) && <div>{errors.country}</div>}
+                          </FormControl>
                       </Grid>
                       <Grid item xs={12}>
                           <FormControl fullWidth className={classes.formControl}>
