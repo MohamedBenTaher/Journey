@@ -18,7 +18,12 @@ const locationSchema = mongoose.Schema({
         ref:'User',
         required: true,
       },
-    selectedFile: String,
+    coverImage:{type:String,required:true},
+    images:{type:[String],required:true},
+    type:{
+      type:String,
+      enum:['restaurant','hotel','histrocal','natural']
+    },
     avgRating: { type: [{id:String,rating:Number}], default: 0 },
     tags: {
         type: [String],

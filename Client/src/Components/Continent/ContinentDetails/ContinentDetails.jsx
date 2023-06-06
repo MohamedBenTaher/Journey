@@ -47,9 +47,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ContinentDetails = () => {
-  const {continents,isLoading}=useSelector((state)=>state.continents);
+  const {continent,isLoading}=useSelector((state)=>state.continents);
   const value=useSelector((state)=>state)
-  console.log('continent details',continents,value)
+  console.log('continent details',continent,value)
   const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const classes = useStyles();
   const dispatch=useDispatch()
@@ -63,13 +63,13 @@ const ContinentDetails = () => {
 
   return (
     <Card >
-      <CardMedia className={classes.coverImage} image={continents?.coverImage} title={continents?.name} />
+      <CardMedia className={classes.coverImage} image={continent?.coverImage} title={continent?.name} />
       <CardContent>
         <Typography variant="h5" component="h2" className={classes.title}>
-          {continents?.name}
+          {continent?.name}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-        {continents?.description?.split('\n').map((paragraph, index) => (
+        {continent?.description?.split('\n').map((paragraph, index) => (
                       <p key={index} style={{ textAlign: 'justify' }}>{paragraph}</p>
                   ))}
         </Typography>
@@ -78,7 +78,7 @@ const ContinentDetails = () => {
         </Typography>
         <div className={classes.imagesSection}>
         <Grid container spacing={2}>
-          {continents?.images?.map((image, index) => (
+          {continent?.images?.map((image, index) => (
           <Grid key={index} item xs={12} sm={6} md={4} lg={6}>
             <div className={classes.image} style={{ backgroundImage: `url(${image})` }} />
           </Grid>

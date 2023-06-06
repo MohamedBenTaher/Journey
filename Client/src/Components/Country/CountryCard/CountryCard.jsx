@@ -16,12 +16,12 @@ const useStyles = makeStyles((theme) =>
         margin: 20,
         transition: 'all 0.5s',
         borderRadius:'15px',
-        // '&:hover': {
-        //   transform: 'scale(1.05)',
-        //   '& $content': {
-        //     opacity: 1,
-        //   },
-        // },
+        '&:hover': {
+          transform: 'scale(1.05)',
+          '& $content': {
+            opacity: 1,
+          },
+        },
       },
     backgroundImage: {
         height: '100%',
@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) =>
         backgroundPosition: 'center',
         filter: 'brightness(70%)',
         transition: 'all .5s ease-in-out',
+        cursor: 'pointer'
     },
     content: {
         position: 'absolute',
@@ -40,6 +41,7 @@ const useStyles = makeStyles((theme) =>
         opacity: 1,
         width:'100%',
         transition: 'all 0.5s',
+        cursor: 'pointer'
     },
     likeButton:{
         position:'absolute',
@@ -73,7 +75,7 @@ const CountryCard = ({country}) => {
     //to be added
 
     <Card className={classes.card} >
-      <CardMedia image={Morocco} alt={country?.name} className={classes.backgroundImage} onClick={()=>history.push(`/countries/${country?._id}`)} />
+      <CardMedia image={country.coverImage} alt={country?.name} className={classes.backgroundImage} onClick={()=>history.push(`/countries/${country?._id}`)} />
       <IconButton className={classes.likeButton} onClick={()=>setLiked((prev)=>!prev)}>
         {liked ?( <FavoriteOutlinedIcon style={{color:'white'}}/>):
         (<FavoriteBorderOutlinedIcon style={{color:'white'}} />)

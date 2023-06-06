@@ -5,15 +5,16 @@ import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Grid, Typ
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import AddRounded  from '@material-ui/icons/AddRounded'
-import FileInput from './FileInput';
+import FileInput from'../../Destination/DestinationForm/FileInput';
 import './styles'
-import CoverImageInput from './CoverImageInput';
+import CoverImageInput from '../../Destination/DestinationForm/CoverImageInput';
 import ChipInput from 'material-ui-chip-input';
 import { useParams } from 'react-router-dom';
-import { createDestination, getDestination, updateDestination } from '../../../actions/destinations';
 import { useDispatch,useSelector } from "react-redux";
 import { deleteS3Image } from '../../../api';
 import { getCountries } from '../../../actions/country';
+import { createLocation, getLocation, updateLocation } from '../../../actions/locations';
+import { getDestinations } from '../../../actions/destinations';
 const useStyles = makeStyles((theme) =>
   createStyles({
     formControl: {
@@ -118,11 +119,12 @@ const useStyles = makeStyles((theme) =>
 
 const LocationFom= () => {
   const {id}=useParams()
-  const {destination,isLoading}=useSelector((state)=>state.destinations);
+  const {location,isLoading}=useSelector((state)=>state.locations);
   const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const userId=user.result._id
   const classes = useStyles();
   const countries=useSelector((state)=>state.countries)
+  const destinations=useSelector((state)=>state.destinations)
   console.log('countires',countries)
   const dispatch =useDispatch();
   useEffect(()=>{
@@ -130,13 +132,14 @@ const LocationFom= () => {
         JSON.parse(localStorage.getItem('profile'))
       )
       dispatch(getCountries())
+      dispatch(getDestinations())
   },[])
   useEffect(()=>{
     if(id){ 
-      dispatch(getDestination(id))
+      dispatch(getLocation(id))
      
     }},[id,dispatch])
-    console.log('my destination',destination)
+    console.log('my myLocation',location)
   const handleSubmit = async (values, { setSubmitting,setFieldValue,resetForm }) => {
     setSubmitting(true);
     console.log(values)
@@ -145,45 +148,45 @@ const LocationFom= () => {
     formData.append('title', values.title);
     formData.append('description', values.description);
     formData.append('country', values.country);
+    formData.append('destination',values.destination);
     formData.append('type', values.type);
     formData.append('creator', user?.result?._id);
-    formData.append('coverImage', values.coverImage[0]); // Assuming only one file is selected
+    formData.append('coverImage', values.coverImage[0]); 
     values.images.forEach((image) => {
       formData.append('images', image);
     });
     values.tags.forEach((tag) => {
       formData.append('tags', tag);
     });
-   if(destination){
-    dispatch(updateDestination(destination?._id,formData))
+   if(location){
+    dispatch(updateLocation(location?._id,formData))
    }else{
-    dispatch(createDestination(formData))
+    dispatch(createLocation(formData))
    }
     resetForm()
 
     setSubmitting(false);
   }
-  
-
   if (!user ) {
-    return; // `user` is null in the first render
+    return;
 }
 
   return (
     <><Typography variant='h2'  className={classes.heading}>
-        { destination ?('Add a new destination'):('Update this destioanion')}
+        { !location ?('Add a new Location'):('Update this Location')}
       </Typography>
         <Formik
         enableReinitialize
           initialValues={{
-              title:destination?destination?.title: '',
-              description: destination?destination?.description:'',
-              country: destination?destination?.country:'',
-              type: destination?destination?.type:'',
-              creator: destination?user?.result?._id:destination?.creator,
-              coverImage: destination?destination?.coverImage:'',
-              images: destination?destination?.images:[],
-              tags: destination?destination?.tags:[],
+              title:location?location?.title: '',
+              description: location?location?.description:'',
+              destination:location?location.destination:'',
+              country: location?location?.country:'',
+              type: location?location?.type:'',
+              creator: location?user?.result?._id:location?.creator,
+              coverImage: location?location?.coverImage:'',
+              images: location?location?.images:[],
+              tags: location?location?.tags:[],
           }}
           validationSchema={Yup.object().shape({
               // title: Yup.string().required('Title is required'),
@@ -208,13 +211,13 @@ const LocationFom= () => {
                       {values.coverImage && (
                         <div className={classes.preview}>
                             <div  className={classes.coverImageWrapper}>
-                               <img src={destination?.coverImage?values.coverImage:URL.createObjectURL(values.coverImage[0])} alt={`cover Image`} className={classes.coverImage} />
+                               <img src={location?.coverImage?values.coverImage:URL.createObjectURL(values.coverImage[0])} alt={`cover Image`} className={classes.coverImage} />
                               <div
                                 className={classes.removeButton}
                                 onClick={ async (e) => {
                                   e.preventDefault()
-                                  if(destination?.coverImage && typeof values.coverImage==='string'){
-                                    const deleteImage= await deleteS3Image(destination?._id,values.coverImage)
+                                  if(location?.coverImage && typeof values.coverImage==='string'){
+                                    const deleteImage= await deleteS3Image(location?._id,values.coverImage)
                                   }
                                   setFieldValue('coverImage','');
                                 }}
@@ -237,7 +240,6 @@ const LocationFom= () => {
                                 </Grid>
                             )
                             }
-                  
                       <Grid item xs={12}>
                           <Field
                               name="title"
@@ -276,7 +278,22 @@ const LocationFom= () => {
                                   })
                                 }
                               </Field>
-                              {touched.type && Boolean(errors.type) && <div>{errors.type}</div>}
+                              {touched.country && Boolean(errors.country) && <div>{errors.country}</div>}
+                          </FormControl>
+                      </Grid>
+                      <Grid item xs={12}>
+                          <FormControl fullWidth className={classes.formControl}>
+                              <InputLabel className={classes.Select}>City</InputLabel>
+                              <Field name="destination" as={Select} label="City " onBlur={handleBlur} variant="outlined" onChange={handleChange} value={values.destination} >
+                                {
+                                  destinations?.destinations?.map((destination)=>{
+                                    return(
+                                      <MenuItem value={destination._id}>{destination.name}</MenuItem>
+                                    )
+                                  })
+                                }
+                              </Field>
+                              {touched.destination && Boolean(errors.type) && <div>{errors.destination}</div>}
                           </FormControl>
                       </Grid>
                       <Grid item xs={12}>
@@ -300,14 +317,14 @@ const LocationFom= () => {
                         <div className={classes.preview}>
                           {values.images?.map((image, index) => (
                             <div key={index} className={classes.imageWrapper}>
-                               <img src={destination?.images?.indexOf(image)!==-1?image:URL.createObjectURL(image[0])} alt={`Image ${index + 1}`} className={classes.image} />
+                               <img src={location?.images?.indexOf(image)!==-1?image:URL.createObjectURL(image[0])} alt={`Image ${index + 1}`} className={classes.image} />
                               <div
                                 className={classes.removeButton}
                                 onClick={ async (e) => {
                                   e.preventDefault()
-                                  if(destination && typeof image==="string"){
+                                  if(location && typeof image==="string"){
                                     console.log('reached deletion')
-                                     await deleteS3Image(destination?._id,image)
+                                     await deleteS3Image(location?._id,image)
                                      .then(()=>{
                                       console.log('image deleted successfully')
                                      })
@@ -325,7 +342,7 @@ const LocationFom= () => {
                   
                       {values.images?.length<5?(
                       <Grid item xs={12}>
-                        <InputLabel className={classes.InputLabel}>Destination Images</InputLabel>
+                        <InputLabel className={classes.InputLabel}>location Images</InputLabel>
                       <Field name="images"  fullWidth component={FileInput} />
                        {touched.images && errors.images && (
                        <div className="error">{errors.images}</div>
@@ -344,7 +361,7 @@ const LocationFom= () => {
                               className={classes.submitButton}
                           >
                               <AddRounded />
-                              Add your destination
+                              Add your location
                           </Button>
                       </Grid>
                   </Grid>

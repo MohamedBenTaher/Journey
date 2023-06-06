@@ -52,9 +52,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CountryDetails = () => {
-  const {countries,isLoading}=useSelector((state)=>state.countries);
+  const {country,isLoading}=useSelector((state)=>state.countries);
   const value=useSelector((state)=>state)
-  console.log('continent details',countries,value)
+  console.log('continent details',country,value)
   const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const classes = useStyles();
   const dispatch=useDispatch()
@@ -91,23 +91,23 @@ const CountryDetails = () => {
 
   return (
     <Card >
-      <CardMedia className={classes.coverImage} image={countries?.coverImage} title={countries?.title} />
+      <CardMedia className={classes.coverImage} image={country?.coverImage} title={country?.title} />
       <CardContent>
         <Typography variant="h3" component="h2" className={classes.title}>
-          {countries?.title}
+          {country?.title}
         </Typography>
         <Typography variant="h5" component="h5" className={classes.subTitle}>
-          {countries?.continent?.name}
+          {country?.continent?.name}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="div">
-           {countries?.description?.split('\n').map((paragraph, index) => formatParagraph(paragraph))}
+           {country?.description?.split('\n').map((paragraph, index) => formatParagraph(paragraph))}
         </Typography>
         <Typography variant="h6" component="h3">
           Images
         </Typography>
         <div className={classes.imagesSection}>
         <Grid container spacing={2}>
-          {countries?.images?.map((image, index) => (
+          {country?.images?.map((image, index) => (
           <Grid key={index} item xs={12} sm={6} md={4} lg={6}>
             <div className={classes.image} style={{ backgroundImage: `url(${image})` }} />
           </Grid>

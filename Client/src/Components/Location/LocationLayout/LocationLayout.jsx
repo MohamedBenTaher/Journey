@@ -2,26 +2,26 @@ import React from 'react';
 import { Grid, CircularProgress } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import useStyles from './styles';
-import DestinationCard from '../DestinationCard/Destination.js';
-import  Paginate from './Pagination.jsx';
+import  Paginate from './Paginate.jsx';
 import { useLocation } from 'react-router-dom';
+import LocationCard from '../LocationCard/LocationCard';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
 const LocationLayout = ({ setCurrentId }) => {
-  const { loactions, isLoading } = useSelector((state) => state.loactions);
+  const { locations, isLoading } = useSelector((state) => state.locations);
   const  value = useSelector((state) => state);
-  console.log('my dests',loactions)
+  console.log('my dests',locations)
   console.log('my vals',value)
   const query = useQuery();
   const page = query.get('page') || 1;
   const searchQuery = query.get('searchQuery');
   const classes = useStyles();
 
-  if (isLoading && loactions.length === 0) {
-    return <div>No Destinations</div>;
+  if (isLoading && locations.length === 0) {
+    return <div>No Locations</div>;
   }
 console.log('test')
   return (
@@ -30,9 +30,9 @@ console.log('test')
         <CircularProgress />
       ) : (
         <Grid container spacing={3} justifyContent="start">
-          {destinations?.map((destination) => (
-            <Grid key={destination._id} item xs={12} sm={6} md={6} lg={4}>
-              <DestinationCard destination={destination} setCurrentId={setCurrentId} />
+          {locations?.map((location) => (
+            <Grid key={location._id} item xs={12} sm={6} md={6} lg={4}>
+              <LocationCard location={location} setCurrentId={setCurrentId} />
             </Grid>
           ))}
         </Grid>

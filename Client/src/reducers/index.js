@@ -6,4 +6,5 @@ import destinations from "./Destinations.js";
 import comments from "./Comments.js";
 import countries from "./Countries.js";
 import continents from "./Continents.js";
-export default combineReducers({posts,auth,events,destinations,comments,continents,countries});
+import locations from "./Locations.js"
+export default combineReducers({posts,auth,events,destinations,comments,continents,countries,locations});

@@ -5,7 +5,7 @@ import { RATE_LOCATION, UPDATE_LOCATION, CREATE_LOCATION, FETCH_LOCATION_BY_SEAR
 export const getTopLocations = () => async (dispatch) => {
     try {
       dispatch({ type: START_LOADING_LOCATIONS })
-      const { data: { data } } = await api.fetchTopDestinations();
+      const { data: { data } } = await api.fetchTopLocations();
   
       dispatch({ type: FETCH_LOCATIONS, payload: { data } });
       dispatch({ type: END_LOADING_LOCATIONS });
@@ -17,7 +17,7 @@ export const getLocations = (page) => async (dispatch) => {
   try {
     console.log('called action')
     dispatch({ type: START_LOADING_LOCATIONS })
-    const { data: { data, currentPage, numberOfPages } } = await api.fetchDestinatons(page);
+    const { data: { data, currentPage, numberOfPages } } = await api.fetchLocations(page);
     console.log('actions',data)
     dispatch({ type: FETCH_LOCATIONS, payload: { data, currentPage, numberOfPages } });
     dispatch({ type: END_LOADING_LOCATIONS });
@@ -27,7 +27,7 @@ export const getLocations = (page) => async (dispatch) => {
 };
 export const getLocation = (id) => async (dispatch) => {
   try {
-    const { data } = await api.fetchDestination(id);
+    const { data } = await api.fetchLocation(id);
     dispatch({ type: START_LOADING_LOCATIONS })
     dispatch({ type: FETCH_LOCATION, payload: data });
     dispatch({ type: END_LOADING_LOCATIONS });
@@ -39,7 +39,7 @@ export const getLocation = (id) => async (dispatch) => {
 export const getLocationsBySearch = (searchQuery) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_LOCATIONS })
-    const { data: { data } } = await api.fetchDestinationsBySearch(searchQuery);
+    const { data: { data } } = await api.fetchLocationsBySearch(searchQuery);
     console.log('searchedDseyinations', data)
     dispatch({ type: FETCH_LOCATION_BY_SEARCH, payload: { data } });
     dispatch({ type: END_LOADING_LOCATIONS });
@@ -51,7 +51,7 @@ export const getLocationsByCountry=(id)=>async (dispatch)=>{
   try {
     dispatch({ type: START_LOADING_LOCATIONS })
     console.log('id in action',id)
-    const { data: { data } } = await api.fetchDestinationByCountry(id);
+    const { data: { data } } = await api.fetchLocationsByCountry(id);
     console.log('searchedDseyinations', data)
     dispatch({ type: FETCH_LOCATION_BY_COUNTRY, payload: { data } });
     dispatch({ type: END_LOADING_LOCATIONS });
@@ -64,7 +64,7 @@ export const getLocationsByDestination=(id)=>async (dispatch)=>{
     try {
       dispatch({ type: START_LOADING_LOCATIONS })
       console.log('id in action',id)
-      const { data: { data } } = await api.fetchDestinationByCountry(id);
+      const { data: { data } } = await api.fetchLocationsByDestination(id);
       console.log('searchedDseyinations', data)
       dispatch({ type: FETCH_LOCATION_BY_DESTINATION, payload: { data } });
       dispatch({ type: END_LOADING_LOCATIONS });
@@ -76,7 +76,7 @@ export const getLocationsByDestination=(id)=>async (dispatch)=>{
 export const createLocation = (destination) => async (dispatch) => {
   try {
     console.log(destination);
-    const { data } = await api.createDestionation(destination);
+    const { data } = await api.createLocation(destination);
     dispatch({ type: START_LOADING_LOCATIONS })
     dispatch({ type: CREATE_LOCATION, payload: [data] })
     dispatch({ type: END_LOADING_LOCATIONS});
@@ -85,9 +85,9 @@ export const createLocation = (destination) => async (dispatch) => {
   }
 }
 
-export const updateLocation = (id, destination) => async (dispatch) => {
+export const updateLocation = (id, location) => async (dispatch) => {
   try {
-    const { data } = await api.updateDestinations(id, destination);
+    const { data } = await api.updateLocations(id, location);
     dispatch({ type: UPDATE_LOCATION, payload: data });
 
   } catch (error) {
@@ -97,16 +97,16 @@ export const updateLocation = (id, destination) => async (dispatch) => {
 
 export const deleteLocation = (id) => async (dispatch) => {
   try {
-    await api.deleteDestination(id);
+    await api.deleteLocation(id);
     dispatch({ type: DELETE_LOCATION, payload: id });
 
   } catch (error) {
     console.log(error.message)
   }
 }
-export const rateLocationn = (locationId,userId) => async (dispatch) => {
+export const rateLocation = (locationId,userId) => async (dispatch) => {
   try {
-    const { data } = await api.upVoteDestination(locationId,userId);
+    const { data } = await api.rateLocation(locationId,userId);
     console.log('after upvote ',data)
     dispatch({ type: RATE_LOCATION, payload: data });
   } catch (error) {

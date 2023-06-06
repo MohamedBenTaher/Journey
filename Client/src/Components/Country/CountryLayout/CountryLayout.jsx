@@ -28,7 +28,7 @@ console.log('test')
       ) : (
         <Grid container spacing={3} justifyContent="start">
           {countries?.map((country) => (
-            <Grid key={country._id} item xs={12} sm={6} md={6} lg={4}>
+            <Grid key={country._id} item xs={12} sm={6} md={4} lg={4}>
               <CountryCard country={country} />
             </Grid>
           ))}

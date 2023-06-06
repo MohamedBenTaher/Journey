@@ -82,6 +82,9 @@ export const fetchCountriesBySearch = (searchQuery) => API.get(`/country/search?
 export const likeCountry=(countryId,id)=>API.post(`/country/${countryId}/like`,{userId:id})
 export const dislikeCountry=(countryId,id)=>API.post(`/country/${countryId}/dislike`,{userId:id})
 export const fetchCountryByLikes=(id)=>API.get(`/country/likes/${id}`)
+// export const likeCountry=(countryId,id)=>API.post(`/country/${countryId}/like`,{userId:id})
+// export const dislikeCountry=(countryId,id)=>API.post(`/country/${countryId}/dislike`,{userId:id})
+// export const fetchCountryByLikes=(id)=>API.get(`/country/likes/${id}`)
 /*=====================================Continent=====================*/
 export const createContinent=(newContinent)=>API.post('/continent',newContinent,{
   headers: {
@@ -95,6 +98,24 @@ export const updateContinent= (id,updatedContinent) => API.patch(`/continent/${i
     }});
 export const deleteContinent= (id) => API.delete(`/continent/${id}`);
 export const fetchContinentBySearch = (searchQuery) => API.get(`/continent/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}&season=${searchQuery.season}`);
-// export const likeCountry=(countryId,id)=>API.post(`/country/${countryId}/like`,{userId:id})
-// export const dislikeCountry=(countryId,id)=>API.post(`/country/${countryId}/dislike`,{userId:id})
-// export const fetchCountryByLikes=(id)=>API.get(`/country/likes/${id}`)
+
+/*=====================================location================================*/
+export const fetchTopLocations=()=>API.get(`/location/top`)
+export const fetchLocations = (page) => API.get(`/location?page=${page}`);
+export const fetchLocation = (id) => API.get(`/location/${id}`);
+export const createLocation = (newDestination) => API.post('/location', newDestination,{
+  headers: {
+    'Content-Type':'multipart/form-data',
+}});
+export const updateLocations = (id, updatedDestination) => API.patch(`/destinalocationion/${id}`, updatedDestination,{
+  headers: {
+    'Content-Type':'multipart/form-data',
+}});
+export const deleteLocation = (id) => API.delete(`/location/${id}`);
+export const rateLocation = (locationId,userId,rating) => API.patch(`/location/${locationId}/rate`,{userId:userId,rating:rating})
+export const fetchLocationsBySearch = (searchQuery) => API.get(`/location/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}&season=${searchQuery.season}`);
+export const fetchLocationsByCountry=(id)=>API.get(`/location/country/${id}`)
+export const fetchLocationsByDestination=(id)=>API.get(`/location/destination/${id}`)
+
+// ?
+export const fetchLocationsBytype=(id,type)=>API.get(`/location/country/${id}/type/${type}`)

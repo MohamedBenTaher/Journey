@@ -27,6 +27,8 @@ import CountryLayout from './Components/Country/CountryLayout/CountryLayout.jsx'
 import CountryDetail from './Components/Country/CountryDetails/CountryDetails.jsx';
 import CountryForm from './Components/Country/CountryForm/CountryForm.jsx';
 import PostForm from './Components/Posts/PostForm.js/PostForm.jsx';
+import LocationLayout from './Components/Location/LocationLayout/LocationLayout.jsx';
+import LocationFom from './Components/Location/LocationForm/LocationForm.jsx';
 
 const theme = createTheme({
   typography: {
@@ -59,6 +61,9 @@ const App = () => {
                 <Route path={'/destinations'} exact component={Destinations} />
                 <Route path={'/destinations/new/:id?'} exact component={DestinationForm} />
                 <Route path={'/destinations/:id/'} exact component={DestinationDetails} />
+                <Route path={'/locations'} exact component={LocationLayout} />
+                <Route path={'/locations/new/:id?'} exact component={LocationFom} />
+                <Route path={'/locations/:id/'} exact component={DestinationDetails} />
                 <Route path={'/continents'} exact component={ContinentLayout} />
                 <Route path={'/continents/new/:id?'} exact component={ContinentForm} />
                 <Route path={'/continents/:id'} exact component={ContinentDetails} />
