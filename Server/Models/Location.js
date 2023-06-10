@@ -22,7 +22,7 @@ const locationSchema = mongoose.Schema({
     images:{type:[String],required:true},
     type:{
       type:String,
-      enum:['restaurant','hotel','histrocal','natural']
+      enum:['restaurant','hotel','historical','natural']
     },
     avgRating: { type: [{id:String,rating:Number}], default: 0 },
     tags: {

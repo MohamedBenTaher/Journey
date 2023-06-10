@@ -18,7 +18,7 @@ const LocationCard = ({location}) => {
           <Typography variant="body2" component="p">
             {firstThreeLines}...
           </Typography>
-          <Link  to={`/destinations/${location._id}`}>
+          <Link  to={`/locations/${location._id}`}>
           <Button className={classes.button}>
             Read More
           </Button>

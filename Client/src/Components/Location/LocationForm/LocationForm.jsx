@@ -151,7 +151,7 @@ const LocationFom= () => {
     formData.append('country', values.country);
     formData.append('destination',values.destination);
     formData.append('type', values.type);
-    formData.append('creator', user?.result?._id);
+    formData.append('user', user?.result?._id);
     formData.append('coverImage', values.coverImage[0]); 
     values.images.forEach((image) => {
       formData.append('images', image);
@@ -270,7 +270,7 @@ const LocationFom= () => {
                       <Grid item xs={12}>
                           <FormControl fullWidth className={classes.formControl}>
                               <InputLabel className={classes.Select}>Type</InputLabel>
-                              <Field name="type" as={Select} label="Type " onBlur={handleBlur} variant="outlined" onChange={handleChange} value={values.country} >
+                              <Field name="type" as={Select} label="Type " onBlur={handleBlur} variant="outlined" onChange={handleChange} value={values.type} >
                                 {
                                   locationTypes.map((location)=>{
                                     return(
@@ -279,7 +279,7 @@ const LocationFom= () => {
                                   })
                                 }
                               </Field>
-                              {touched.country && Boolean(errors.country) && <div>{errors.country}</div>}
+                              {touched.country && Boolean(errors.type) && <div>{errors.type}</div>}
                           </FormControl>
                       </Grid>
                       <Grid item xs={12}>
@@ -304,12 +304,12 @@ const LocationFom= () => {
                                 {
                                   destinations?.destinations?.map((destination)=>{
                                     return(
-                                      <MenuItem value={destination._id}>{destination.name}</MenuItem>
+                                      <MenuItem value={destination._id}>{destination.title}</MenuItem>
                                     )
                                   })
                                 }
                               </Field>
-                              {touched.destination && Boolean(errors.type) && <div>{errors.destination}</div>}
+                              {touched.destination && Boolean(errors.destination) && <div>{errors.destination}</div>}
                           </FormControl>
                       </Grid>
                       <Grid item xs={12}>

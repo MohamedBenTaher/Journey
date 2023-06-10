@@ -5,6 +5,7 @@ import { downvoteDestination, getDestination, upvoteDestination } from '../../..
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { useSelector,useDispatch } from 'react-redux';
 import  Comments  from '../../Comment/Comments.jsx';
+import { getLocation } from '../../../actions/locations';
 const useStyles = makeStyles((theme) => ({
   coverImage: {
     height: 400,
@@ -47,34 +48,34 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LocationDetails = () => {
-  const {destination,isLoading}=useSelector((state)=>state.destinations);
+  const {location,isLoading}=useSelector((state)=>state.locations);
   const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const classes = useStyles();
   const dispatch=useDispatch()
   const {id}=useParams()
   useEffect(()=>{
-   dispatch(getDestination(id))
+   dispatch(getLocation(id))
   },[dispatch,id])
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('profile')));
   }, []);
-const handleUpvote = () => {
-    dispatch(upvoteDestination(destination?._id, user?._id));
-  };
+// const handleUpvote = () => {
+//     dispatch(upvoteDestination(location?._id, user?._id));
+//   };
 
-  const handleDownvote = () => {
-    dispatch(downvoteDestination(destination?._id, user?._id));
-  };
+//   const handleDownvote = () => {
+//     dispatch(downvoteDestination(location?._id, user?._id));
+//   };
 
   return (
     <><Card>
-          <CardMedia className={classes.coverImage} image={destination?.coverImage} />
+          <CardMedia className={classes.coverImage} image={location?.coverImage} />
           <CardContent>
               <Typography variant="h5" className={classes.title}>
-                  {destination?.title}
+                  {location?.title}
               </Typography>
               <Typography variant="body2" component="p">
-                  Created: {new Date(destination?.createdAt).toLocaleString()}
+                  Created: {new Date(location?.createdAt).toLocaleString()}
               </Typography>
               <div className={classes.voteSection}>
                   {user && (
@@ -82,24 +83,24 @@ const handleUpvote = () => {
                   )}
 
                   <Typography variant="body2" className={classes.voteCount}>
-                      Upvotes:  {destination?.upvotes?.length}
+                      Upvotes:  {location?.upvotes?.length}
                   </Typography>
                   {user && (
                       <div className={classes.voteButton} onClick={() => handleDownvote()}>Downvote</div>
                   )}
                   <Typography variant="body2" className={classes.voteCount}>
-                      Downvotes:   {destination?.downvotes?.length}
+                      Downvotes:   {location?.downvotes?.length}
                   </Typography>
               </div>
               <div>
-                  {destination?.description.split('\n').map((paragraph, index) => (
+                  {location?.description.split('\n').map((paragraph, index) => (
                       <p key={index} style={{ textAlign: 'justify' }}>{paragraph}</p>
                   ))}
               </div>
 
               <div className={classes.imagesSection}>
                   <Grid container spacing={2}>
-                      {destination?.images.map((image, index) => (
+                      {location?.images.map((image, index) => (
                           <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
                               <div className={classes.image} style={{ backgroundImage: `url(${image})` }} />
                           </Grid>
@@ -109,7 +110,7 @@ const handleUpvote = () => {
           </CardContent>
       </Card>
       {
-        destination&&(
+        location&&(
           <Card>
             <CardContent>
                 <Comments entityId={id} entityType={'Destination'} user={user||{}}/>
