@@ -25,6 +25,16 @@ const postSchema=mongoose.Schema({
         type:[String],
         default:[]
     },
+    cost:{
+      type:Number,
+      required:false,
+      default:0
+    },
+    duration:{
+      type:Number,
+      required:true,
+      default:0
+    },
     comments:{
         type:[String],
         default:[]

@@ -72,7 +72,7 @@ const PostForm = ({ currentId, setCurrentId }) => {
   }, [post])
   const clear = () => {
     // setCurrentId(0);
-    setPostData({ title: '', message: '', tags: '', selectedFile: '',country:'',city:'',location:'',creator:user?.result?._id });
+    setPostData({ title: '', message: '', tags: '', selectedFile: '',country:'',city:'',location:'',creator:user?.result?._id ,cost:0,duration:0});
   }
   if (!user?.result?.name) {
     return (
@@ -152,6 +152,25 @@ const PostForm = ({ currentId, setCurrentId }) => {
                   }}
                 value={postData.message}
                 onChange={(e) => setPostData({ ...postData, message: e.target.value })} />
+
+                <TextField
+                  name='duration'
+                  variant='outlined'
+                  label='Duration in days'
+                  type='number'
+                  fullWidth
+                  value={postData.duration}
+                  onChange={(e) => setPostData({ ...postData, duration: e.target.value })} />
+
+                <TextField
+                  name='cost'
+                  variant='outlined'
+                  label='Approximate Cost'
+                  type='number'
+                  fullWidth
+                  value={postData.cost}
+                  onChange={(e) => setPostData({ ...postData, cost: e.target.value })} />
+                 
                        <FormControl variant="outlined" className={classes.select}>
                     <InputLabel>Select Country</InputLabel>
                     <Select value={postData.country} onChange={(e)=>{
@@ -186,6 +205,7 @@ const PostForm = ({ currentId, setCurrentId }) => {
                 fullWidth
                 value={postData.tags}
                 onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
+                
                   {!postData.selectedFile&&(<>
                 <div {...getRootProps()} className={classes.dropZone}>
                     <input {...getInputProps()} />

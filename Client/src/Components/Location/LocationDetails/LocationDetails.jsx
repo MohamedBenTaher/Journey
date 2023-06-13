@@ -5,7 +5,11 @@ import { downvoteDestination, getDestination, upvoteDestination } from '../../..
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { useSelector,useDispatch } from 'react-redux';
 import  Comments  from '../../Comment/Comments.jsx';
-import { getLocation } from '../../../actions/locations';
+import { getLocation, rateLocation } from '../../../actions/locations';
+import { Rating } from '@mui/material';
+import RatingComponent from '../../Rating/RatingComponent';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 const useStyles = makeStyles((theme) => ({
   coverImage: {
     height: 400,
@@ -21,10 +25,10 @@ const useStyles = makeStyles((theme) => ({
   },
   voteSection: {
     marginTop: theme.spacing(2),
-    width:'50%',
+    // width:'50%',
     display: 'flex',
     alignItems: 'center',
-    justifyContent:'space-evenly'
+    justifyContent:'start'
   },
   voteButton: {
     marginRight: theme.spacing(1),
@@ -55,18 +59,53 @@ const LocationDetails = () => {
   const {id}=useParams()
   useEffect(()=>{
    dispatch(getLocation(id))
+   console.log('my locations',location)
   },[dispatch,id])
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('profile')));
+    console.log( user?.result._id)
+
+   
   }, []);
-// const handleUpvote = () => {
-//     dispatch(upvoteDestination(location?._id, user?._id));
-//   };
+const handleSubmit =  (avgRating) => {
+  // Handle form submission here
+  
+  console.log('my arguments',id,user?.result._id,avgRating)
+  dispatch(rateLocation(id,user?.result._id,avgRating))
+  console.log('found it ', location?.avgRating.find((rating) => rating.id === user?.result._id).rating )
+};
+if(!user){
+  return null
+}
+const locationRating=location?.avgRating.find((rating) => rating.id === user.result._id)
+const initialValues = {
+  avgRating: locationRating?locationRating.rating: 0,
+};
+const calculateAverageRating = () => {
+  if (!location?.avgRating || location.avgRating.length === 0) {
+    return 0;
+  }
 
-//   const handleDownvote = () => {
-//     dispatch(downvoteDestination(location?._id, user?._id));
-//   };
+  const numericRatings = location.avgRating.filter(rating => typeof rating.rating === 'number');
+  if (numericRatings.length === 0) {
+    return 0;
+  }
 
+  const totalRating = numericRatings.reduce((sum, rating) => sum + rating.rating, 0);
+  const averageRating = totalRating / numericRatings.length;
+
+  return averageRating;
+};
+const averageRating = calculateAverageRating();
+console.log('my average',averageRating)
+console.log('my location',location)
+console.log('my initial values',initialValues)
+const validationSchema = Yup.object().shape({
+  avgRating: Yup.number()
+    .min(1, 'Rating must be at least 1')
+    .max(5, 'Rating cannot exceed 5')
+    .required('Rating is required'),
+});
   return (
     <><Card>
           <CardMedia className={classes.coverImage} image={location?.coverImage} />
@@ -79,19 +118,22 @@ const LocationDetails = () => {
               </Typography>
               <div className={classes.voteSection}>
                   {user && (
-                      <div className={classes.voteButton} onClick={() => handleUpvote()}>Upvote</div>
+                          <Formik
+                          enableReinitialize
+                          initialValues={initialValues}
+                          validationSchema={validationSchema}
+                          onSubmit={handleSubmit}
+                        >
+                          {(values)=>(
+                          <Form>
+                            <Field name="avgRating"  fullWidth component={RatingComponent} handleSubmit={handleSubmit}userId={user.result._id} id={id} avgRating={values.avgRating}/>
+                          </Form>)}
+                        </Formik>
                   )}
-
-                  <Typography variant="body2" className={classes.voteCount}>
-                      Upvotes:  {location?.upvotes?.length}
-                  </Typography>
-                  {user && (
-                      <div className={classes.voteButton} onClick={() => handleDownvote()}>Downvote</div>
-                  )}
-                  <Typography variant="body2" className={classes.voteCount}>
-                      Downvotes:   {location?.downvotes?.length}
-                  </Typography>
+                  <div>({averageRating})</div>
+                  
               </div>
+
               <div>
                   {location?.description.split('\n').map((paragraph, index) => (
                       <p key={index} style={{ textAlign: 'justify' }}>{paragraph}</p>

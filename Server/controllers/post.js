@@ -31,7 +31,7 @@ export const  getPost= async(req,res) => {
     const {id}=req.params;
     try {
 
-        const post=await PostMessage.findById(id).populate('creator');
+        const post=await PostMessage.findById(id).populate('creator').populate('country').populate('destination');
         res.status(200).json(post);
     } catch (error) {
         res.status(404).json({message :error.essage})

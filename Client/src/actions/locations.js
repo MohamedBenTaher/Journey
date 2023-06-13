@@ -104,9 +104,10 @@ export const deleteLocation = (id) => async (dispatch) => {
     console.log(error.message)
   }
 }
-export const rateLocation = (locationId,userId) => async (dispatch) => {
+export const rateLocation = (locationId,userId,avgRating) => async (dispatch) => {
   try {
-    const { data } = await api.rateLocation(locationId,userId);
+   console.log('called action')
+    const { data } = await api.rateLocation(locationId,userId,avgRating);
     console.log('after upvote ',data)
     dispatch({ type: RATE_LOCATION, payload: data });
   } catch (error) {

@@ -1,11 +1,13 @@
 import React, { useEffect,useState } from 'react';
-import { Paper, Typography, CircularProgress, Divider ,Card,CardContent} from '@material-ui/core/';
+import { Paper, Typography, CircularProgress, Divider ,Card,CardContent,Chip} from '@material-ui/core/';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { useParams, useHistory, Link } from 'react-router-dom';
-
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import { getPost, getPostsBySearch } from '../../actions/posts';
 import useStyles from './styles';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ComentSection from './ComentSection';
 import Comments from '../Comment/Comments';
 function PostDetails() {
@@ -49,6 +51,33 @@ function PostDetails() {
         <div className={classes.imageSection}>
         <img className={classes.media} src={post?.selectedFile} alt={post.title}/>       
          </div>
+        <div className={classes.PostInformations}>
+          <div className={classes.info}>
+          <AccessTimeIcon/> 
+          {post.duration} days 
+          </div>
+          <div className={classes.info}>
+            <LocationOnIcon/>
+            {post.destination},
+            {post.country}
+          </div>
+          <div className={classes.info}>
+          <AttachMoneyIcon/> 
+          {post.cost} $
+          </div>
+
+        </div>
+        <div>
+          {
+           post.tags.map((tag, index) => (
+            <div key={index} style={{marginLeft:10}}>
+              <Chip key={index}
+               label={tag}
+               sx={{ margin: '0.5rem' }} />
+            </div>
+          ))
+          }
+        </div>
         <Typography gutterBottom variant="body1" component="p">{post?.message}</Typography>
         <Typography variant="h6">Created by: {post?.creator?.name}</Typography>
         <Typography variant="body1">{moment(post?.createdAt).fromNow()}</Typography>

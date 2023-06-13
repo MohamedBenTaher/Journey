@@ -52,4 +52,18 @@ export default makeStyles((theme) => ({
     overflowY: 'auto',
     marginRight: '30px',
   },
+  PostInformations:{
+    width:'40%',
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'space-evenly',
+    flexDirection:'row',
+    marginTop:5,
+    marginBottom:5
+  },
+  info:{
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'space-evenly'
+  }
 }));

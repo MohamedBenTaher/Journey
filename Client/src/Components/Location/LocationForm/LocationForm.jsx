@@ -188,6 +188,7 @@ const LocationFom= () => {
               coverImage: location?location?.coverImage:'',
               images: location?location?.images:[],
               tags: location?location?.tags:[],
+              
           }}
           validationSchema={Yup.object().shape({
               // title: Yup.string().required('Title is required'),
