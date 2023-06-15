@@ -1,5 +1,5 @@
-import { Button, Modal, Box, Typography, Backdrop, TextField, Grid, Input } from '@material-ui/core';
-import React, { useState, Fragment } from 'react'
+import { Button, Modal, Box, Typography, Backdrop, TextField, Grid, Input,InputLabel } from '@material-ui/core';
+import React, { useState, Fragment ,useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import useStyles from "./styles.js"
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -11,17 +11,21 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import ChipInput from "material-ui-chip-input";
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import { createEvent } from '../../../actions/events';
+import { createEvent, getEvent } from '../../../actions/events';
 import FileBase64 from 'react-file-base64';
+import { deleteS3Image } from '../../../api/index.js';
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min.js';
+import CoverImageInput from '../../Destination/DestinationForm/CoverImageInput.js';
 function Event() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const {id}=useParams()
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch()
   const [image, setImage] = useState({})
   const user = JSON.parse(localStorage.getItem('profile'))
-  const { events, isLoading } = useSelector((state) => state.events);
+  const { event, isLoading } = useSelector((state) => state.events);
   const validationSchema = yup.object({
     email: yup
       .string('Enter your email')
@@ -35,16 +39,16 @@ function Event() {
 
   const formik = useFormik({
     initialValues: {
-      title: 'Meet Up at Sicily ',
-      description: 'This Our first meetup at sicily we will be having activities and enjoy our time ',
-      startDate: new Date(),
-      endDate: new Date(),
-      numberOfPlaces: 50,
-      eventFee: 100,
-      location: 'Italy',
-      discountRate: 5,
-      tags: [],
-      file: image,
+      title: event?event.title:'',
+      description: event?event.description:'',
+      startDate: event?event.startDate:new Date(),
+      endDate:event?event.endDate:new Date(),
+      numberOfPlaces: event?event.numberOfPlaces:0,
+      eventFee: event?event.numberOfPlaces:0,
+      location: event?event.location:'',
+      discountRate: event?event.discountRate:0,
+      tags: event?event.tags:[],
+      coverImage: event?event.coverImage[0]:'',
       creator: user?.result?.name,
     },
     // validationSchema: validationSchema,
@@ -53,7 +57,11 @@ function Event() {
       console.log(values);
     },
   });
-  console.log('events', events)
+  useEffect(()=>{
+    if(id){ 
+      dispatch(getEvent(id))
+    }},[id,dispatch])
+  console.log('events', event)
   return (
 
     <>
@@ -234,15 +242,40 @@ function Event() {
 
                 />
               </Grid>
-              <Grid item md={12} lg={12} sm={12}>
-                <Grid direction="row" alignItems="center" spacing={2}>
-                  {/* <Field type="file" name="file" /> */}
-                  <FileBase64
-                    multiple={false}
-                    onDone={(base64) => setFieldValue('selectedFile', base64)}
-                  />
-                </Grid>
-              </Grid>
+              <Grid item xs={12}>
+                      {values.coverImage && (
+                        <div className={classes.preview}>
+                            <div  className={classes.coverImageWrapper}>
+                               <img src={event?.coverImage?values.coverImage:URL.createObjectURL(values.coverImage[0])} alt={`cover Image`} className={classes.coverImage} />
+                              <div
+                                className={classes.removeButton}
+                                onClick={ async (e) => {
+                                  e.preventDefault()
+                                  if(event?.coverImage && typeof values.coverImage==='string'){
+                                    const deleteImage= await deleteS3Image(event?._id,values.coverImage)
+                                  }
+                                  setFieldValue('coverImage','');
+                                }}
+                              >
+                                <Typography variant="caption">x</Typography>
+                              </div>
+                            </div>
+                        </div>
+                      )}
+                      </Grid>
+                        {
+                          !values.file && (
+                            <Grid item xs={12}>
+                        <InputLabel className={classes.InputLabel}>Cover Image</InputLabel>
+                        <Field 
+                        name="coverImage"
+                        fullWidth
+                        component={CoverImageInput}
+                            />
+                                </Grid>
+                            )
+                            }
+                  
               <Grid item md={12} lg={12} sm={12}>
                 <Button fullWidth type="submit"
                   //  disabled={isSubmitting}

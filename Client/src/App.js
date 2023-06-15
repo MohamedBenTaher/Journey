@@ -45,10 +45,7 @@ const App = () => {
       <CssBaseline >
         <BrowserRouter>
 
-          <Hero />
-          <Container maxWidth={false} disableGutters>
-
-            <Container maxWidth='lg'>
+          
 
               <Switch>
                 <Route path='/' exact component={() => <Redirect to="/stories" />} />
@@ -73,8 +70,6 @@ const App = () => {
                 <Route path={'/countries/:id'} exact component={CountryDetail}/>
                 <Route path='/auth' exact component={() => !user ? <Auth /> : <Redirect to="/stories" />} />
               </Switch>
-            </Container>
-          </Container>
           <Footer />
         </BrowserRouter>
 

@@ -5,6 +5,7 @@ import useStyles from './styles';
 import DestinationCard from '../DestinationCard/Destination.js';
 import  Paginate from './Pagination.jsx';
 import { useLocation } from 'react-router-dom';
+import NavbarSecondary from '../../Navbar/NavbarSecondary';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -25,7 +26,9 @@ const Destinations = ({ setCurrentId }) => {
   }
 console.log('test')
   return (
-    <><div className={classes.mainContainer}>
+    <>
+    <NavbarSecondary/>
+    <div className={classes.mainContainer}>
       {isLoading ? (
         <CircularProgress />
       ) : (

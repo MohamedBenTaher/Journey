@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import PostMessage from "../Models/PostMessage.js";
 import s3 from '../awsConfig.js'
 import { v4 as uuidv4 } from 'uuid';
+import User from "../Models/user.js";
 
 
 export const  getTopPosts= async(req,res) => {
@@ -124,7 +125,6 @@ export const likePost=async (req,res)=>{
     const { id }=req.params
     if(!req.userId ) return res.json({mesage:'Unauthenticated'})
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
-   
     const post =await PostMessage.findById(id)
     console.log(post.likes)
     const index=post.likes.findIndex((id)=> id ===String(req.userId));
@@ -133,18 +133,23 @@ export const likePost=async (req,res)=>{
     }else {
             post.likes=post?.likes?.fliter((id)=>id!==String(req.userId ))
     }
-
+    const user=await User.findById(req.userId)
+    const userIndex=user.likedResources.findIndex((res)=> res.id===String(req.userId));
+    if(userIndex===-1){
+        user.likedResources.push({type:'PostMessage',id})
+    }else {
+        user.likedResources=user?.likedResources?.fliter((res)=>res.id!==String(req.userId ))
+    }
     const updatedPost= await PostMessage.findByIdAndUpdate(id,post,{new: true});
-    res.json(updatedPost);
-
+    const updatedUser=await User.findByIdAndUpdate(req.userId,user,{new:true})
+    res.status(200).json(updatedPost,updatedUser);
 }
+
 export const commentPost=async (req,res)=>{
     const { id }=req.params;
     const {value}=req.body; 
-   
     const post =await PostMessage.findById(id);
     post.comments.push(value);
-
     const updatedPost= await PostMessage.findByIdAndUpdate(id,post,{new: true});
     res.json(updatedPost);
 

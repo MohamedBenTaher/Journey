@@ -8,8 +8,13 @@ import { getPost, getPostsBySearch } from '../../actions/posts';
 import useStyles from './styles';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import ComentSection from './ComentSection';
 import Comments from '../Comment/Comments';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import NavbarSecondary from '../Navbar/NavbarSecondary';
+import { IconButton } from '@mui/material';
 function PostDetails() {
   const {post,posts,isLoading}=useSelector((state)=>state.posts);
   console.log('state',posts);
@@ -43,58 +48,75 @@ function PostDetails() {
 
   const openPost = (_id) => history.push(`/stories/${_id}`);
   return (
+    <>
+    <NavbarSecondary />
     <Paper style={{ padding: '20px', borderRadius: '15px' }} elevation={6}>
-    <div className={classes.card}>
-      <div className={classes.section}>
-        <Typography variant="h3" component="h2">{post.title}</Typography>
-        <Typography gutterBottom variant="h6" color="textSecondary" component="h2">{post?.tags?.map((tag) => `#${tag} `)}</Typography>
-        <div className={classes.imageSection}>
-        <img className={classes.media} src={post?.selectedFile} alt={post.title}/>       
-         </div>
-        <div className={classes.PostInformations}>
-          <div className={classes.info}>
-          <AccessTimeIcon/> 
-          {post.duration} days 
-          </div>
-          <div className={classes.info}>
-            <LocationOnIcon/>
-            {post.destination},
-            {post.country}
-          </div>
-          <div className={classes.info}>
-          <AttachMoneyIcon/> 
-          {post.cost} $
-          </div>
+      <div className={classes.card}>
+        <div className={classes.section}>
+          <Typography variant="h3" bold component="h2" className={classes.title}>{post.title}</Typography>
+          <div className={classes.PostInformations}>
+            {post.duration > 0 && (
+              <div className={classes.info}>
+                <AccessTimeIcon />
+                {post.duration} days
+              </div>
+            )}
+            <div className={classes.info}>
+              
+              {post?.destination?.name && post?.country.title ? (
+                <>
 
-        </div>
-        <div>
-          {
-           post.tags.map((tag, index) => (
-            <div key={index} style={{marginLeft:10}}>
-              <Chip key={index}
-               label={tag}
-               sx={{ margin: '0.5rem' }} />
+                <LocationOnIcon />  {post?.destination?.name}, {post?.country?.title}
+                </>
+              ) : post?.destination?.name ? (
+                <>
+                  <LocationOnIcon />{post?.destination?.name}
+                </>
+              ) : post?.country?.title ? (
+                <>
+                 <LocationOnIcon /> {post?.country?.title}
+                </>
+              ) : null}
             </div>
-          ))
-          }
-        </div>
-        <Typography gutterBottom variant="body1" component="p">{post?.message}</Typography>
-        <Typography variant="h6">Created by: {post?.creator?.name}</Typography>
-        <Typography variant="body1">{moment(post?.createdAt).fromNow()}</Typography>
-        <Divider style={{ margin: '20px 0' }} />
-       { post&&(
-          <Card>
-            <CardContent>
-                <Comments entityId={id} entityType={'PostMessage'} user={user||{}}/>
-            </CardContent>
-          </Card>
-        )
-    }  
-        <Divider style={{ margin: '20px 0' }} />
-      </div>
+            {post.cost > 0 && (
+              <div className={classes.info}>
 
-    </div>
-    {!!recommendedPosts.length && (
+                <AttachMoneyIcon />
+                {post.cost} $
+              </div>
+            )}
+          <Typography gutterBottom variant="h6" color="textSecondary" component="h3" className={classes.tags}><LocalOfferOutlinedIcon />{post?.tags?.map((tag, index) => (
+            <div key={index} style={{ marginLeft: 10 }}>
+              {tag}
+              {index !== post.tags.length - 1 && ','}
+            </div>
+          ))}</Typography>
+           </div>
+          <div className={classes.imageSection}>
+            <IconButton>
+              <BookmarkBorderIcon/>
+            </IconButton>
+            <img className={classes.media} src={post?.selectedFile} alt={post.title} />
+          </div>
+          <Typography gutterBottom variant="body1" component="p" className={classes.message}>
+            {post?.message.split('\n').map((paragraph, index) => (
+                      <p key={index} style={{ textAlign: 'justify' }}>{paragraph}</p>
+                  ))}</Typography>
+          <Typography variant="h6">Created by: {post?.creator?.name}</Typography>
+          <Typography variant="body1">{moment(post?.createdAt).fromNow()}</Typography>
+          <Divider style={{ margin: '20px 0' }} />
+          {post && (
+            <Card>
+              <CardContent>
+                <Comments entityId={id} entityType={'PostMessage'} user={user || {}} />
+              </CardContent>
+            </Card>
+          )}
+          <Divider style={{ margin: '20px 0' }} />
+        </div>
+
+      </div>
+      {!!recommendedPosts.length && (
         <div className={classes.section}>
           <Typography gutterBottom variant="h5">You might also like:</Typography>
           <Divider />
@@ -105,10 +127,10 @@ function PostDetails() {
                 <Typography gutterBottom variant="subtitle2">{name}</Typography>
                 <Typography gutterBottom variant="subtitle2">
                   {message.split('\n').map((paragraph, index) => (
-                      <p key={index} style={{ textAlign: 'justify' }}>{paragraph}</p>
+                    <p key={index} style={{ textAlign: 'justify' }}>{paragraph}</p>
                   ))}
-                  <br/>
-                  </Typography>
+                  <br />
+                </Typography>
                 <Typography gutterBottom variant="subtitle1">Likes: {likes?.length}</Typography>
                 <img src={selectedFile} width="200px" />
               </div>
@@ -116,7 +138,7 @@ function PostDetails() {
           </div>
         </div>
       )}
-  </Paper>
+    </Paper></>
   )
 }
 

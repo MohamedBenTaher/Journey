@@ -6,7 +6,32 @@ const userSchema = mongoose.Schema({
   password: { type: String, required: true },
   isAdmin: { type: Boolean, default: false }, 
   age: { type: Number },
-  address: { type: String }
+  address: { type: String },
+  type: {type:String,Enumerator:['Location','city','country']},
+  savedResources: {
+    type: {
+      type: String,
+      enum: ['Destination', 'Location','PostMessage','Event','City','Country'], // Add more entity types as needed
+      required: true,
+    },
+    resourceId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+    },
+    required:false
+  },
+  likedResources: {
+    type: {
+      type: String,
+      enum: ['Destination', 'Location','PostMessage','Event','City','Country'], // Add more entity types as needed
+      required: true,
+    },
+    resourceId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+    },
+    required:false
+  },
 });
 
 const User = mongoose.model('User', userSchema);

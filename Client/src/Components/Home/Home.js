@@ -11,6 +11,7 @@ import useStyles from './styles.js'
 import DestinationCard from '../Destination/DestinationCard/Destination.js'
 import CountryCard from '../Country/CountryCard/CountryCard.jsx'
 import Morocco from '../../Images/Morooco.jpg'
+import Hero from '../Hero/Hero.js'
 function useQuery(){
   return new URLSearchParams(useLocation().search)
 }
@@ -47,22 +48,22 @@ const Home = () => {
        }
     }
   return (
-    <Grow in>
-    <Container maxWidth="xl">
-     <Grid className={classes.gridContainer} container justifyContent="space-between" alignItems="stretch" spacing={3}>
-                <Grid item xs={12} sm={12} md={12}>
-                  <Posts setCurrentId={setCurrentId}/>
-                  {(!searchQuery && !tags.length) && (<Grid>
-                    <Pagination page={page} />
-                  </Grid>)}
-                </Grid>
-                {/* <Grid item >
-                  <Form  currentId={currentId} setCurrentId={setCurrentId} />
-                </Grid> */}
+    <><Hero /><Grow in>
+      <Container maxWidth="xl">
+        <Grid className={classes.gridContainer} container justifyContent="space-between" alignItems="stretch" spacing={3}>
+          <Grid item xs={12} sm={12} md={12}>
+            <Posts setCurrentId={setCurrentId} />
+            {(!searchQuery && !tags.length) && (<Grid>
+              <Pagination page={page} />
+            </Grid>)}
+          </Grid>
+          {/* <Grid item >
+      <Form  currentId={currentId} setCurrentId={setCurrentId} />
+    </Grid> */}
 
-     </Grid>
-     </Container>
-  </Grow>
+        </Grid>
+      </Container>
+    </Grow></>
   )
 }
 

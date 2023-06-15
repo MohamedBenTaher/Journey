@@ -56,14 +56,28 @@ export default makeStyles((theme) => ({
     width:'40%',
     display:'flex',
     alignItems:'center',
-    justifyContent:'space-evenly',
+    justifyContent:'start',
     flexDirection:'row',
-    marginTop:5,
-    marginBottom:5
   },
   info:{
     display:'flex',
     alignItems:'center',
     justifyContent:'space-evenly'
+  },
+  tags:{
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'start',
+    marginLeft:'2em'
+  },
+  title: {
+    marginTop: theme.spacing(2),
+    fontWeight: 'bold',
+  },
+  message:{
+    margin: '20px 0',
+    padding: '10px',
+    lineHeight: '1.5',
+    textJustify:'auto'
   }
 }));

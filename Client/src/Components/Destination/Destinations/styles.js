@@ -5,7 +5,8 @@ export default makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'start',
-    width:'100%'
+    width:'100%',
+    padding:'2em'
   },
   smMargin: {
     margin: theme.spacing(1),

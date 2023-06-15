@@ -1,6 +1,6 @@
 import React ,{useState,useEffect} from 'react'
 import { AppBar,Avatar,Button,Toolbar,Typography,Drawer,IconButton,useTheme,useMediaQuery, Box, Grid  } from '@material-ui/core'
-import useStyles from './styles.js'
+import useStyles from './secondaryStyles.js'
 import memories from "../../Images/journey.png";
 import title from "../../Images/title.png";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -49,14 +49,14 @@ const NavbarSecondary = () => {
                 Home
               </Typography>
             </Link>
-            <Link to="/events" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
+            <Link to="/destinations" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
               <Typography variant='h6'>
                 Top Destinations
               </Typography>
             </Link>
-            <Link to="/" className={classes.linksDrawer}>
+            <Link to="/locations" className={classes.linksDrawer}>
             <Typography variant='h6'>
-              Blog
+              Locations
             </Typography>
           </Link>
             <Link to="/" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
@@ -75,24 +75,36 @@ const NavbarSecondary = () => {
      )}
      </Grid>
      {!isMobile && (
-     <><Link to="/" className={classes.links}>
+     <>
+            <Link to="/" className={classes.links}>
+            <Typography variant='h6'>
+              Home
+            </Typography>
+          </Link>
+          <Link to="/" className={classes.links}>
+            <Typography variant='h6'>
+              Stories
+            </Typography>
+          </Link>
+          <Link to="/events" className={classes.links}>
           <Typography variant='h6'>
-             Explore
+             Events
           </Typography>
         </Link><Link to="/destinations" className={classes.links}>
             <Typography variant='h6'>
             Top Destinations
             </Typography>
-          </Link><Link to="/" className={classes.links}>
+          </Link><Link to="/locations" className={classes.links}>
             <Typography variant='h6'>
-              Blog
+              Locations
             </Typography>
           </Link>
-          <Link to="/" className={classes.links}>
+          <Link to="/locations" className={classes.links}>
             <Typography variant='h6'>
-              About us
+              About
             </Typography>
           </Link>
+          
           </>)
     }
      <Toolbar className={classes.toolbar}>

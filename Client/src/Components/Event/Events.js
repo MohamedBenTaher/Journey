@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import EventCard from './Display/EventCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { getEvents } from "../../actions/events";
+import NavbarSecondary from "../Navbar/NavbarSecondary";
 
 const Events = () => {
     const { events, isLoading } = useSelector((state) => state.events);
@@ -13,18 +14,17 @@ const Events = () => {
     }, [])
     console.log(typeof events, events)
     return (
-        <Link to={'/events/create'}>
-            <Button variant="outlined" color="primary" onClick={() => { }}> Add a new Event </Button>
-            {
-                events ? events?.map((event) => (
+        <><Link to={'/events/create'}>
+            <Button variant="outlined" color="primary" onClick={() => { } }> Add a new Event </Button>
+        </Link><NavbarSecondary /><Grid>
+                {events ? events?.map((event) => (
                     <EventCard title={event.title} desciption={event.description} img={event?.selectedFile} />
                 )) :
                     (<Typography>
                         no events
-                    </Typography>)
-            }
-            <EventCard />
-        </Link>
+                    </Typography>)}
+            </Grid><EventCard /></>
+      
     )
 }
 
