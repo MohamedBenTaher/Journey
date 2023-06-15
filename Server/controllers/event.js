@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import Event from "../Models/Event.js"
+import s3 from '../awsConfig.js'
+import { v4 as uuidv4 } from 'uuid';
 export const  getTopEvents= async(req,res) => {
           Destination.find()
             .sort({ upvotes: -1, downvotes: 1 })
@@ -30,9 +32,7 @@ export const  getEvents= async(req,res) => {
 export const  getEvent= async(req,res) => {
     const {id}=req.params;
     try {
-
         const event=await Event.findById(id);
-      
         res.status(200).json(event);
     } catch (error) {
         res.status(404).json({message :error.essage})
@@ -40,8 +40,26 @@ export const  getEvent= async(req,res) => {
 }
 export const createEvent=async(req,res) => {
     const event = req.body;
-
-    const newEvent = new Event({ ...event, creator:req.userId,createdAt:new Date().toISOString() })
+    const files=req.files;
+    console.log('req',req,'files',files)
+    const fileKey=uuidv4()
+    const uploadParams = {
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: fileKey.toString(),
+        Body: files.coverImage.data ,
+        ContentType: 'image/jpeg', 
+      };
+      let uploadResult ;
+      try{
+       uploadResult = await s3.upload(uploadParams).promise();
+      }
+      catch(err){
+        console.log(err)
+      }
+    const Fileurl = uploadResult?.Location||'';
+    event.coverImage=Fileurl;
+    event.creator=mongoose.Types.ObjectId(event?.creator)
+    const newEvent = new Event({ ...event,createdAt:new Date().toISOString() })
 try {
     await newEvent.save();
     res.status(201).json(newEvent );

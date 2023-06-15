@@ -30,6 +30,7 @@ import PostForm from './Components/Posts/PostForm.js/PostForm.jsx';
 import LocationLayout from './Components/Location/LocationLayout/LocationLayout.jsx';
 import LocationFom from './Components/Location/LocationForm/LocationForm.jsx';
 import LocationDetails from './Components/Location/LocationDetails/LocationDetails.jsx';
+import EventDetails from './Components/Event/EventDetails/EventDetails.jsx';
 
 const theme = createTheme({
   typography: {
@@ -50,8 +51,9 @@ const App = () => {
               <Switch>
                 <Route path='/' exact component={() => <Redirect to="/stories" />} />
                 <Route path='/stories' exact component={Home} />
-                <Route path='/events/create' exact component={EventForm} />
+                <Route path='/events/new/:id?' exact component={EventForm} />
                 <Route path='/events' exact component={Events} />
+                <Route path='/events/:id' exact component={EventDetails} />
                 <Route path="/stories/search" exact component={Home} />
                 <Route path='/stories/new/:id?' exact component={PostForm} />
                 <Route path='/stories/:id' exact component={PostDetails} />

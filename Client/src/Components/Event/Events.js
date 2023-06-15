@@ -18,7 +18,7 @@ const Events = () => {
             <Button variant="outlined" color="primary" onClick={() => { } }> Add a new Event </Button>
         </Link><NavbarSecondary /><Grid>
                 {events ? events?.map((event) => (
-                    <EventCard title={event.title} desciption={event.description} img={event?.selectedFile} />
+                    <EventCard event={event}/>
                 )) :
                     (<Typography>
                         no events

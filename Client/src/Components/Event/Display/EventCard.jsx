@@ -5,7 +5,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { Link } from 'react-router-dom';
-const EventCard = ({ img, title, desciption }) => {
+const EventCard = ({ event }) => {
 
     return (
         <Card >
@@ -14,22 +14,23 @@ const EventCard = ({ img, title, desciption }) => {
                     <CardMedia
                         component="img"
                         alt="Event Thumbnail"
-
-                        image={String(img)}
+                        image={event?.coverImage}
                     />
                 </Grid>
                 <Grid item xs={12} lg={8}>
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
-                            {title}
+                            {event?.title}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            {desciption}
+                            {event?.description}
                         </Typography>
                     </CardContent>
                     <CardActions>
                         <Button size="small">Share</Button>
-                        <Button size="small">Learn More</Button>
+                        <Button component={Link} to={`/events/${event?._id}`} size="small">
+                        Learn More
+                        </Button>
                     </CardActions>
                 </Grid>
             </Grid>

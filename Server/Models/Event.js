@@ -5,19 +5,22 @@ const eventSchema = mongoose.Schema({
     description: { type: String, required: true },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
-    location: [String],
-    creator: { type: String, required: true },
+    location: {type:String,required:true},
+    creator: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
+        required: true,
+      },
     tags: [String],
-    selectedFile: String,
+    coverImage:{type:String,required:true},
     numberOfPlaces: { type: Number, required: true },
     eventFee: { type: String, required: true },
     discountRate: { type: String, required: true },
     attendants: {
-        type: [String],
-        default: []
-    },
-    comments: {
-        type: [String],
+        type: [{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'User',
+          }],
         default: []
     },
     tags: {
