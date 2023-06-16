@@ -5,9 +5,10 @@ import EventCard from './Display/EventCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { getEvents } from "../../actions/events";
 import NavbarSecondary from "../Navbar/NavbarSecondary";
-
+import useStyles from "./styles.js"
 const Events = () => {
     const { events, isLoading } = useSelector((state) => state.events);
+    const classes=useStyles()
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getEvents(1))
@@ -16,14 +17,17 @@ const Events = () => {
     return (
         <><Link to={'/events/create'}>
             <Button variant="outlined" color="primary" onClick={() => { } }> Add a new Event </Button>
-        </Link><NavbarSecondary /><Grid>
+        </Link><NavbarSecondary />
+        <Grid container spacing={3} className={classes.events} >
                 {events ? events?.map((event) => (
+                    <Grid item xs={12}>
                     <EventCard event={event}/>
+                    </Grid>
                 )) :
                     (<Typography>
                         no events
                     </Typography>)}
-            </Grid><EventCard /></>
+            </Grid></>
       
     )
 }

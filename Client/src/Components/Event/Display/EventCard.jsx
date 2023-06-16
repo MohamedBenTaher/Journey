@@ -5,10 +5,11 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { Link } from 'react-router-dom';
+import useStyles from "./styles.js"
 const EventCard = ({ event }) => {
-
+    const classes=useStyles()
     return (
-        <Card >
+        <Card className={classes.card}>
             <Grid container direction='row'>
                 <Grid item xs={12} lg={4}>
                     <CardMedia
