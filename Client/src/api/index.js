@@ -36,7 +36,8 @@ export const createEvent = (newEvent) => API.post('/event', newEvent);
 export const updateEvent = (id, updatedEvent) => API.patch(`/event/${id}`, updatedEvent);
 export const commentEvent = (value, id) => API.post(`/event/${id}/commentEvent`, { value });
 export const deleteEvent = (id) => API.delete(`/event/${id}`);
-export const attendEvent = (id) => API.post(`/event/${id}`)
+export const attendEvent = (id,userId) => API.patch(`/event/${id}/attend`,{userId:userId})
+export const cancelEvent = (id,userId) => API.patch(`/event/${id}/cancel`,{userId:userId})
 /*===========================Destinations=========================================*/
 export const fetchTopDestinations=()=>API.get(`/destination/top`)
 export const fetchDestinatons = (page) => API.get(`/destination?page=${page}`);
@@ -119,3 +120,6 @@ export const fetchLocationsByDestination=(id)=>API.get(`/location/destination/${
 
 // ?
 export const fetchLocationsBytype=(id,type)=>API.get(`/location/country/${id}/type/${type}`)
+
+/*=============================Resources=======================*/
+export const bookmarkResource=(userId,id,resourceName)=> API.patch(`/user/${userId}/bookmark`,{id,resourceName})

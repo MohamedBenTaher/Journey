@@ -7,7 +7,8 @@ import CardMedia from '@mui/material/CardMedia';
 import { Link } from 'react-router-dom';
 import useStyles from "./styles.js"
 const EventCard = ({ event }) => {
-    const classes=useStyles()
+    console.log(event)
+    const classes=useStyles();
     return (
         <Card className={classes.card}>
             <Grid container direction='row'>
@@ -19,6 +20,8 @@ const EventCard = ({ event }) => {
                     />
                 </Grid>
                 <Grid item xs={12} lg={8}>
+                 <Grid>
+                 <Grid item lg={6}>
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
                             {event?.title}
@@ -26,13 +29,22 @@ const EventCard = ({ event }) => {
                         <Typography variant="body2" color="text.secondary">
                             {event?.description}
                         </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            Placed Left :{event?.numberOfPlaces-event?.attendants.length}
+                        </Typography>
+                        <Typography  variant="body2" color="text.secondary">Event fee:{event?.eventFee}</Typography>
+                        <Typography  variant="body2" color="text.secondary">Organized by:{event?.creator?.name}</Typography>
                     </CardContent>
-                    <CardActions>
+                    </Grid>
+                    <Grid>
+                    <CardActions  item lg={6}>
                         <Button size="small">Share</Button>
                         <Button component={Link} to={`/events/${event?._id}`} size="small">
                         Learn More
                         </Button>
                     </CardActions>
+                    </Grid> 
+                    </Grid>
                 </Grid>
             </Grid>
         </Card>

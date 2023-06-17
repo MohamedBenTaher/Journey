@@ -1,5 +1,5 @@
 import * as api from '../api/index.js';
-import { LIKE, UPDATE_EVENT, CREATE_EVENT, FETCH_EVENT_BY_SEARCH, DELETE_EVENT, FETCH_EVENTS, START_LOADING, END_LOADING, FETCH_EVENT, COMMENT_EVENT, ATTEND_EVENT } from '../constants/actionTypes.js';
+import { LIKE, UPDATE_EVENT, CREATE_EVENT, FETCH_EVENT_BY_SEARCH, CANCEL_EVENT,DELETE_EVENT, FETCH_EVENTS, START_LOADING, END_LOADING, FETCH_EVENT, COMMENT_EVENT, ATTEND_EVENT } from '../constants/actionTypes.js';
 
 //Action Creators
 
@@ -68,10 +68,19 @@ export const deleteEvent = (id) => async (dispatch) => {
     console.log(error.message)
   }
 }
-export const attendEvent = (id) => async (dispatch) => {
+export const attendEvent = (id,userId) => async (dispatch) => {
   try {
-    const { data } = await api.attendEvent(id);
+    const { data } = await api.attendEvent(id,userId);
     dispatch({ type: ATTEND_EVENT, payload: data });
+
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+export const cancelEvent = (id,userId) => async (dispatch) => {
+  try {
+    const { data } = await api.attendEvent(id,userId);
+    dispatch({ type: CANCEL_EVENT, payload: data });
 
   } catch (error) {
     console.log(error.message)

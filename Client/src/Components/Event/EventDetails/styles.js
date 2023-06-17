@@ -2,14 +2,14 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
     card: {
-      maxWidth: 600,
+      width:'80%',
       margin: '0 auto',
       marginTop: theme.spacing(3),
       boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)',
     },
     coverImage: {
       width: '100%',
-      height: 200,
+      height: 400,
       objectFit: 'cover',
     },
     title: {

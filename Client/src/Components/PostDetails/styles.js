@@ -23,12 +23,6 @@ export default makeStyles((theme) => ({
     margin: '10px',
     flex: 1,
   },
-  imageSection: {
-   
-    [theme.breakpoints.down('sm')]: {
-      marginLeft: 0,
-    },
-  },
   recommendedPosts: {
     display: 'flex',
     [theme.breakpoints.down('sm')]: {
@@ -79,5 +73,16 @@ export default makeStyles((theme) => ({
     padding: '10px',
     lineHeight: '1.5',
     textJustify:'auto'
-  }
+  },
+  imageSection: {
+  position: 'relative', // Add position relative to the parent container
+  [theme.breakpoints.down('sm')]: {
+    marginLeft: 0,
+  },
+},
+savePost: {
+  position: 'absolute', // Position the bookmark icon
+  top: 60, // Adjust the top position as needed
+  left: 1420, // Adjust the right position as needed
+},
 }));

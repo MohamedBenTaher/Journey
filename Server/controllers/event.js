@@ -22,7 +22,7 @@ export const  getEvents= async(req,res) => {
         const startIndex=(Number(page)-1)*Limit;
         const total=await Event.countDocuments({});
 
-        const events=await Event.find().sort({_id:-1}).limit(Limit).skip(startIndex);
+        const events=await Event.find().sort({_id:-1}).limit(Limit).skip(startIndex).populate('creator');
       
         res.status(200).json({data:events,currentPage:Number(page),NumberOfPages:Math.ceil(total/Limit)})
     } catch (error) {
@@ -32,7 +32,7 @@ export const  getEvents= async(req,res) => {
 export const  getEvent= async(req,res) => {
     const {id}=req.params;
     try {
-        const event=await Event.findById(id);
+        const event=await Event.findById(id).populate('creator');
         res.status(200).json(event);
     } catch (error) {
         res.status(404).json({message :error.essage})
@@ -71,10 +71,30 @@ try {
 export const updateEvent=async (req,res)=>{
  const {id:_id}=req.params;
  const event =req.body; 
+ const files=req.files;
+ console.log('req',req,'files',files)
+ if(files){
+ const fileKey=uuidv4()
+ const uploadParams = {
+     Bucket: process.env.S3_BUCKET_NAME,
+     Key: fileKey.toString(),
+     Body: files.coverImage.data ,
+     ContentType: 'image/jpeg', 
+   };
+   let uploadResult ;
+   try{
+    uploadResult = await s3.upload(uploadParams).promise();
+   }
+   catch(err){
+     console.log(err)
+   }
+ const Fileurl = uploadResult?.Location||'';
+ event.coverImage=Fileurl;
+}
  if(!mongoose.Types.ObjectId.isValid(_id)){
-   return  res.status(404).send('No Posts with this Id');
+   return  res.status(404).send('No Events with this Id');
  }
-const updatedEvent= await Event.findByIdAndUpdate(_id,post,{new:true})
+const updatedEvent= await Event.findByIdAndUpdate(_id,event,{new:true})
 res.json(updatedEvent);
 }
 
@@ -92,26 +112,34 @@ export const attendEvent=async (req,res)=>{
     const { id }=req.params
     if(!req.userId ) return res.json({mesage:'Unauthenticated'})
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No event with id: ${id}`);
-   
-    const event =await event.findById(id)
-    console.log(post.attendants)
+    const event =await Event.findById(id)
+    console.log(event.attendants)
     const index=event.attendants.findIndex((id)=> id ===String(req.userId));
     if(index===-1){
         if(event.attendants.length===event.numberOfPlaces)
         {
-            res.status(204).json('the event is full booked')
+            res.status(204).json('the event is fully booked')
         }
         else{
             event.attendants.push(req.userId)
         }
-       
-    }else {
-            event.attendants=event?.attendants?.fliter((id)=>id!==String(req.userId ))
     }
-
-    const updatedEvent= await event.findByIdAndUpdate(id,event,{new: true});
+    const updatedEvent= await Event.findByIdAndUpdate(id,event,{new: true});
     res.status(200).json(updatedEvent);
 
+}
+export const cancelEvent=async (req,res)=>{
+    const { id }=req.params
+    if(!req.userId ) return res.json({mesage:'Unauthenticated'})
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No event with id: ${id}`);
+    const event =await Event.findById(id)
+    console.log(event.attendants)
+    const index=event.attendants.findIndex((id)=> id ===String(req.userId));
+    if(index!==-1){
+        event.attendants=event?.attendants?.fliter((id)=>id!==String(req.userId )) 
+    }
+    const updatedEvent= await Event.findByIdAndUpdate(id,event,{new: true});
+    res.status(200).json(updatedEvent);
 }
 export const commentEvent=async (req,res)=>{
     const { id }=req.params;
