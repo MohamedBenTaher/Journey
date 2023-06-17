@@ -26,7 +26,14 @@ export const signup = (formData, history) => async (dispatch) => {
         console.log(error)
     }
 }
-//tranfrom Box on Scroll chakra ui ?
+
+export const bookmarkResource=(userId,id,type)=>async(dispatch)=>{
+    try {
+        const {data} =await api.bookmarkResource()
+    } catch (error) {
+        
+    }
+}
 
 
 
