@@ -29,7 +29,7 @@ function PostDetails() {
   useEffect(() => {
     dispatch(getPost(id))
   }, [id])
-  
+  console.log('my post',post)
   useEffect(() => {
     if (post) {
       dispatch(getPostsBySearch({ search: 'none', tags: post?.tags?.join(',') }));
@@ -51,9 +51,12 @@ function PostDetails() {
       </Paper>
     );
   }
-  
+
   const openPost = (_id) => history.push(`/stories/${_id}`);
   console.log('my current user',user)
+  if(!user) return ;
+  const found=user.result.savedResources.find((res) => res.resourceId === post._id)
+  console.log('found resource',found,user.result.savedResources )
   return (
     <>
 
@@ -100,8 +103,8 @@ function PostDetails() {
               </Typography>
             </div>
             <div className={classes.imageSection}>
-              <IconButton className={classes.savePost} onClick={()=>user?.saved?.find((savedId) => savedId === post._id) ? dispatch(bookmarkResource(user.result._id,post._id,'PostMessage')):dispatch(cancelBookmarkResource(user.result._id,post._id,'PostMessage'))}>
-                {user?.saved?.find((savedId) => savedId === post._id) ? (
+              <IconButton className={classes.savePost} onClick={()=>user?.result?.savedResources?.find((savedId) => savedId.resourceId == post._id) ? dispatch(cancelBookmarkResource(user?.result?._id,post._id,'PostMessage')):dispatch(bookmarkResource(user?.result?._id,post._id,'PostMessage'))}>
+                {user?.result?.savedResources?.find((res) => res.resourceId == post._id) ? (
                   <BookmarkIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />
                 ) : (
                   <BookmarkBorderIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />

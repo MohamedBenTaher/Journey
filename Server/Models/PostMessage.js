@@ -21,10 +21,6 @@ const postSchema=mongoose.Schema({
       },
     tags:[String],
     selectedFile:String,
-    likes:{
-        type:[String],
-        default:[]
-    },
     cost:{
       type:Number,
       required:false,
@@ -42,7 +38,10 @@ const postSchema=mongoose.Schema({
     createdAt:{
         type:Date,
         default:new Date()
-    }
+    },
+    bookmarkedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+
 });
 const PostMessage=mongoose.model('PostMessage',postSchema);
 

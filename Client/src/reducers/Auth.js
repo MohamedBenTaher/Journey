@@ -15,21 +15,19 @@
          localStorage.clear();
          return { ...state, user: null, loading: false, errors: null };
          case BOOKMARK_RESOURCE:
-          localStorage.setItem('profile',JSON.stringify({...action?.payload?.data}))
           return {
             ...state,
             user: {
               ...state.user,
-              likedResources: [...state.user.likedResources, action.payload],
+              savedResources: [...state.user.savedResources, action.payload],
             },
           };
           case CANCEL_BOOKMARK_RESOURCE:
-            localStorage.setItem('profile',JSON.stringify({...action?.payload?.data}))
       return {
         ...state,
         user: {
           ...state.user,
-          likedResources: state.user.likedResources.filter((resource) => resource.id !== action.payload.id),
+          savedResources: state.user.savedResources.filter((resource) => resource.id !== action.payload.id),
         },
       };
         default:
