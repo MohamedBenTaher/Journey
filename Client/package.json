@@ -23,7 +23,7 @@
     "material-ui-chip-input": "^1.1.0",
     "moment": "^2.27.0",
     "react": "^17.0.0",
-    "react-dom": "^16.12.0",
+    "react-dom": "^17.0.0",
     "react-dropzone": "^14.2.3",
     "react-file-base64": "^1.0.3",
     "react-google-login": "^5.1.25",

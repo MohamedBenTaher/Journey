@@ -31,52 +31,108 @@ import LocationLayout from './Components/Location/LocationLayout/LocationLayout.
 import LocationFom from './Components/Location/LocationForm/LocationForm.jsx';
 import LocationDetails from './Components/Location/LocationDetails/LocationDetails.jsx';
 import EventDetails from './Components/Event/EventDetails/EventDetails.jsx';
+import Profile from './Components/User/Profile/Profile.jsx';
+import NavbarSecondary from './Components/Navbar/NavbarSecondary.js';
 
-const theme = createTheme({
-  typography: {
-    fontFamily: [
-      'Gilroy', 'sans-serif'
-    ].join(','),
-  },
-});
 const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
   return (
-    <ThemeProvider theme={theme}>
+
       <CssBaseline >
-        <BrowserRouter>
-
-          
-
               <Switch>
                 <Route path='/' exact component={() => <Redirect to="/stories" />} />
                 <Route path='/stories' exact component={Home} />
-                <Route path='/events/new/:id?' exact component={EventForm} />
-                <Route path='/events' exact component={Events} />
-                <Route path='/events/:id' exact component={EventDetails} />
-                <Route path="/stories/search" exact component={Home} />
-                <Route path='/stories/new/:id?' exact component={PostForm} />
-                <Route path='/stories/:id' exact component={PostDetails} />
-                <Route path={['/creators/:name', '/tags/:name']} component={CreatorOrTag} />
-                <Route path={'/destinations'} exact component={Destinations} />
-                <Route path={'/destinations/new/:id?'} exact component={DestinationForm} />
-                <Route path={'/destinations/:id/'} exact component={DestinationDetails} />
-                <Route path={'/locations'} exact component={LocationLayout} />
-                <Route path={'/locations/new/:id?'} exact component={LocationFom} />
-                <Route path={'/locations/:id/'} exact component={LocationDetails} />
-                <Route path={'/continents'} exact component={ContinentLayout} />
-                <Route path={'/continents/new/:id?'} exact component={ContinentForm} />
-                <Route path={'/continents/:id'} exact component={ContinentDetails} />
-                <Route path={'/countries'} exact component={CountryLayout}/>
-                <Route path={'/countries/new/:id?'} exact component={CountryForm} />
-                <Route path={'/countries/:id'} exact component={CountryDetail}/>
-                <Route path='/auth' exact component={() => !user ? <Auth /> : <Redirect to="/stories" />} />
               </Switch>
+             
+              <Switch>
+          <Route path="/events/new/:id?" exact>
+            <NavbarSecondary />
+            <EventForm />
+          </Route>
+          <Route path="/events" exact>
+            <NavbarSecondary />
+            <Events />
+          </Route>
+          <Route path="/events/:id" exact>
+            <NavbarSecondary />
+            <EventDetails />
+          </Route>
+          <Route path="/stories/search" exact>
+            <NavbarSecondary />
+            <Home />
+          </Route>
+          <Route path="/stories/new/:id?" exact>
+            <NavbarSecondary />
+            <PostForm />
+          </Route>
+          <Route path="/stories/:id" exact>
+            <NavbarSecondary />
+            <PostDetails />
+          </Route>
+          <Route path={["/creators/:name", "/tags/:name"]}>
+            <NavbarSecondary />
+            <CreatorOrTag />
+          </Route>
+          <Route path="/destinations" exact>
+            <NavbarSecondary />
+            <Destinations />
+          </Route>
+          <Route path="/destinations/new/:id?" exact>
+            <NavbarSecondary />
+            <DestinationForm />
+          </Route>
+          <Route path="/destinations/:id/" exact>
+            <NavbarSecondary />
+            <DestinationDetails />
+          </Route>
+          <Route path="/locations" exact>
+            <NavbarSecondary />
+            <LocationLayout />
+          </Route>
+          <Route path="/locations/new/:id?" exact>
+            <NavbarSecondary />
+            <LocationFom />
+          </Route>
+          <Route path="/locations/:id/" exact>
+            <NavbarSecondary />
+            <LocationDetails />
+          </Route>
+          <Route path="/continents" exact>
+            <NavbarSecondary />
+            <ContinentLayout />
+          </Route>
+          <Route path="/continents/new/:id?" exact>
+            <NavbarSecondary />
+            <ContinentForm />
+          </Route>
+          <Route path="/continents/:id" exact>
+            <NavbarSecondary />
+            <ContinentDetails />
+          </Route>
+          <Route path="/countries" exact>
+            <NavbarSecondary />
+            <CountryLayout />
+          </Route>
+          <Route path="/countries/new/:id?" exact>
+            <NavbarSecondary />
+            <CountryForm />
+          </Route>
+          <Route path="/countries/:id" exact>
+            <NavbarSecondary />
+            <CountryDetail />
+          </Route>
+          <Route path="/auth" exact>
+            {!user ? <Auth /> : <Redirect to="/stories" />}
+          </Route>
+          <Route path="/user-profile" exact>
+            <NavbarSecondary />
+            <Profile user={user} />
+          </Route>
+        </Switch>
+
           <Footer />
-        </BrowserRouter>
 
       </CssBaseline>
-    </ThemeProvider>
   );
 }
 

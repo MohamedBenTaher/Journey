@@ -5,7 +5,6 @@ import { attendEvent, cancelEvent, getEvent } from '../../../actions/events'
 import useStyles from "./styles.js"
 import { Button, Card,CardContent,Grid,Typography } from '@material-ui/core'
 import moment from 'moment/moment'
-import NavbarSecondary from '../../Navbar/NavbarSecondary'
 const EventDetails = ({}) => {
     const classes=useStyles()
     const dispatch=useDispatch()
@@ -25,7 +24,7 @@ const EventDetails = ({}) => {
       dispatch(cancelEvent(id,user?.result?._id))
     }
   return(
-    <><NavbarSecondary /><Card className={classes.card}>
+    <><Card className={classes.card}>
       <img src={event?.coverImage} alt="Event Cover" className={classes.coverImage} />
       <CardContent>
         <Typography variant="h5" component="h2" className={classes.title}>

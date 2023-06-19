@@ -96,6 +96,17 @@ export default makeStyles((theme) => ({
     textDecoration:'none',
     fontWeight:'bold',
     color:'black'
+  },
+  profileAvatar:{
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    width: '400px',
+    alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      width: 'auto',
+      marginTop: 20,
+      justifyContent: 'center',
+    },
   }
  
 }));

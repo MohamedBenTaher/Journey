@@ -13,8 +13,9 @@ import ComentSection from './ComentSection';
 import Comments from '../Comment/Comments';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import NavbarSecondary from '../Navbar/NavbarSecondary';
-import { IconButton } from '@mui/material';
+
+import { IconButton } from '@material-ui/core';
+import { bookmarkResource, cancelBookmarkResource } from '../../actions/auth';
 
 function PostDetails() {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
@@ -52,10 +53,10 @@ function PostDetails() {
   }
   
   const openPost = (_id) => history.push(`/stories/${_id}`);
-  
+  console.log('my current user',user)
   return (
     <>
-      <NavbarSecondary />
+
       <Paper style={{ padding: '20px', borderRadius: '15px' }} elevation={6}>
         <div className={classes.card}>
           <div className={classes.section}>
@@ -99,11 +100,11 @@ function PostDetails() {
               </Typography>
             </div>
             <div className={classes.imageSection}>
-              <IconButton className={classes.savePost}>
+              <IconButton className={classes.savePost} onClick={()=>user?.saved?.find((savedId) => savedId === post._id) ? dispatch(bookmarkResource(user.result._id,post._id,'PostMessage')):dispatch(cancelBookmarkResource(user.result._id,post._id,'PostMessage'))}>
                 {user?.saved?.find((savedId) => savedId === post._id) ? (
-                  <BookmarkIcon style={{ color: 'white',fontSize: 32}} />
+                  <BookmarkIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />
                 ) : (
-                  <BookmarkBorderIcon style={{ color: 'white',fontSize: 32 }} />
+                  <BookmarkBorderIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />
                 )}
               </IconButton>
               <img className={classes.media} src={post?.selectedFile} alt={post.title}/>

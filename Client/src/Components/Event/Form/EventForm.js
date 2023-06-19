@@ -12,11 +12,11 @@ import ChipInput from "material-ui-chip-input";
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { createEvent, getEvent, updateEvent } from '../../../actions/events';
-import FileBase64 from 'react-file-base64';
+
 import { deleteS3Image } from '../../../api/index.js';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min.js';
 import CoverImageInput from '../../Destination/DestinationForm/CoverImageInput.js';
-import NavbarSecondary from '../../Navbar/NavbarSecondary.js';
+
 function Event() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -66,7 +66,7 @@ function Event() {
   console.log('events', event)
   if(!user) return;
   return (
-    <><NavbarSecondary />
+    <>
     <div className={classes.container}>
 
       <div>Event</div>

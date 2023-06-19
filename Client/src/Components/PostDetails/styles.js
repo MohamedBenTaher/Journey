@@ -6,13 +6,12 @@ export default makeStyles((theme) => ({
     objectFit: 'cover',
     width: '100%',
     maxHeight: '600px',
-
   },
   card: {
     display: 'flex',
     width: '100%',
-    alignItems:'center',
-    justifyContent:'startimageSection',
+    alignItems: 'center',
+    justifyContent: 'start',
     [theme.breakpoints.down('sm')]: {
       flexWrap: 'wrap',
       flexDirection: 'column',
@@ -46,43 +45,43 @@ export default makeStyles((theme) => ({
     overflowY: 'auto',
     marginRight: '30px',
   },
-  PostInformations:{
-    width:'40%',
-    display:'flex',
-    alignItems:'center',
-    justifyContent:'start',
-    flexDirection:'row',
+  PostInformations: {
+    width: '40%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'start',
+    flexDirection: 'row',
   },
-  info:{
-    display:'flex',
-    alignItems:'center',
-    justifyContent:'space-evenly'
+  info: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
-  tags:{
-    display:'flex',
-    alignItems:'center',
-    justifyContent:'start',
-    marginLeft:'2em'
+  tags: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'start',
+    marginLeft: '2em',
   },
   title: {
     marginTop: theme.spacing(2),
     fontWeight: 'bold',
   },
-  message:{
+  message: {
     margin: '20px 0',
     padding: '10px',
     lineHeight: '1.5',
-    textJustify:'auto'
+    textJustify: 'auto',
   },
   imageSection: {
-  position: 'relative', // Add position relative to the parent container
-  [theme.breakpoints.down('sm')]: {
-    marginLeft: 0,
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
-},
-savePost: {
-  position: 'absolute', // Position the bookmark icon
-  top: 60, // Adjust the top position as needed
-  left: 1420, // Adjust the right position as needed
-},
+  savePost: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    zIndex: 99,
+  },
 }));

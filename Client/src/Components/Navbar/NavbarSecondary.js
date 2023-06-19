@@ -110,8 +110,10 @@ const NavbarSecondary = () => {
      <Toolbar className={classes.toolbar}>
         {user ?(
             <div className={classes.profile}>
+              <Link to="/user-profile" className={classes.profileAvatar}>
                     <Avatar className={classes.purple} alt={user.result.name} src={user.result.imageUrl}>{user.result.name.charAt(0)}</Avatar>
                     <Typography className={classes.userName} variant='h6'>{user.result.name}</Typography>
+              </Link>
                     <Button variant='contained' className={classes.logout} onClick={Logout} >Logout</Button>
             </div>
         ):(

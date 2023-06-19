@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Avatar, Grid, Paper } from '@material-ui/core';
+import { Typography, Avatar, Grid, Paper,Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,31 +21,40 @@ const useStyles = makeStyles((theme) => ({
 
 const Profile = ({ user }) => {
   const classes = useStyles();
+  const likedResources = []; // Replace with an array of liked resources
+  const savedResources = []; // Replace with an array of saved resources
 
   return (
+    <>
     <Paper className={classes.root} elevation={3}>
       <Grid container spacing={2} alignItems="center">
         <Grid item>
           <Avatar className={classes.avatar} src={user.avatar} alt={user.name} />
         </Grid>
         <Grid item>
-          <Typography variant="h6">{user.name}</Typography>
-          <Typography variant="subtitle1">{user.email}</Typography>
+          <Typography variant="h6">{user.result.name}</Typography>
+          <Typography variant="subtitle1">{user.result.email}</Typography>
         </Grid>
       </Grid>
 
       <div className={classes.userInfo}>
         <Typography variant="h6" className={classes.infoItem}>
-          Age: {user.age}
+          Age: {user.result.age}
         </Typography>
         <Typography variant="h6" className={classes.infoItem}>
-          Address: {user.address}
+          Address: {user.result.address}
         </Typography>
         <Typography variant="h6" className={classes.infoItem}>
           Type: {user.type}
         </Typography>
       </div>
-    </Paper>
+   
+    <div>
+      <Typography variant="h6">Liked Resources</Typography>
+
+      <Typography variant="h6">Saved Resources</Typography>
+    </div>
+    </Paper></>
   );
 };
 

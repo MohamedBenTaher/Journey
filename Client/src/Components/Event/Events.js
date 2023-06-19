@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import EventCard from './Display/EventCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { getEvents } from "../../actions/events";
-import NavbarSecondary from "../Navbar/NavbarSecondary";
 import useStyles from "./styles.js"
 const Events = () => {
     const { events, isLoading } = useSelector((state) => state.events);
@@ -17,7 +16,7 @@ const Events = () => {
     return (
         <><Link to={'/events/create'}>
             <Button variant="outlined" color="primary" onClick={() => { } }> Add a new Event </Button>
-        </Link><NavbarSecondary />
+        </Link>
         <Grid container spacing={3} className={classes.events} >
                 {events ? events?.map((event) => (
                     <Grid item xs={12}>

@@ -5,7 +5,6 @@ import { downvoteDestination, getDestination, upvoteDestination } from '../../..
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { useSelector,useDispatch } from 'react-redux';
 import  Comments  from '../../Comment/Comments.jsx';
-import NavbarSecondary from '../../Navbar/NavbarSecondary';
 const useStyles = makeStyles((theme) => ({
   coverImage: {
     height: 400,
@@ -69,7 +68,6 @@ const handleUpvote = () => {
 
   return (
     <>
-    <NavbarSecondary/>
     <Card>
           <CardMedia className={classes.coverImage} image={destination?.coverImage} />
           <CardContent>
