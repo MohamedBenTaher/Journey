@@ -8,25 +8,29 @@ const userSchema = mongoose.Schema({
   age: { type: Number },
   address: { type: String },
   type: {type:String,Enumerator:['Location','city','country']},
-  savedResources: [{
-    type: {
-      type: String,
-      enum: ['Destination', 'Location','PostMessage','Event','City','Country'], // Add more entity types as needed
-    },
-    resourceId: {
+    savedCities: [{
       type: mongoose.Schema.Types.ObjectId,
-    },
-    required:false
-  }],
-  likedResources: [{
-    type: {
-      type: String,
-      enum: ['Destination', 'Location','PostMessage','Event','City','Country'], // Add more entity types as needed
-    },
-    resourceId: {
+      ref:'Destination'
+    }],
+    savedLocations: [{
       type: mongoose.Schema.Types.ObjectId,
-    },
-    required:false
+      ref:'Location'
+    }],
+    savedStories: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'PostMessage'
+    }],
+   savedEvents: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'Event'
+    }],
+  likedPosts: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'PostMessage'
+    }],
+  likedEvents: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref:'Event'
   }],
 });
 
