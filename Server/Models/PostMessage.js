@@ -39,8 +39,20 @@ const postSchema=mongoose.Schema({
         type:Date,
         default:new Date()
     },
-    bookmarkedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    bookmarkedBy:{
+      type: [{
+          type:mongoose.Schema.Types.ObjectId,
+          ref:'User',
+        }],
+      default: []
+  },
+    likedBy: {
+      type: [{
+          type:mongoose.Schema.Types.ObjectId,
+          ref:'User',
+        }],
+      default: []
+  },
 
 });
 const PostMessage=mongoose.model('PostMessage',postSchema);

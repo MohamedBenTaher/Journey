@@ -1,4 +1,4 @@
- import { AUTH,LOGOUT,START_LOADING_USER,END_LOADING_USER, BOOKMARK_RESOURCE,CANCEL_BOOKMARK_RESOURCE } from "../constants/actionTypes";
+ import { AUTH,LOGOUT,START_LOADING_USER,END_LOADING_USER, BOOKMARK_RESOURCE,CANCEL_BOOKMARK_RESOURCE,USER_INFROMATIONS } from "../constants/actionTypes";
 
  export default  (state = {user:null,isLoading:false},action)=>{
     switch (action.type) {
@@ -30,8 +30,14 @@
           savedResources: state.user.savedResources.filter((resource) => resource.id !== action.payload.id),
         },
       };
+      case USER_INFROMATIONS:{
+        return {
+          ...state,
+          user:{ ...action.payload.data }
+        }
+      }
         default:
           return state;
     }
-  } 
+  }
 

@@ -14,8 +14,8 @@ const Post = ({post,setCurrentId}) => {
   const userId = user?.result?.googleId || user?.result?._id;
   console.log('userid',userId)
   console.log('post creator',post.creator)
-  const [likes, setLikes] = useState(post?.likes);
-  const hasLikedPost=post.likes.find((like)=>like===userId)
+  const [likes, setLikes] = useState(post?.likedBy);
+  const hasLikedPost=post.likedBy.find((like)=>like===userId)
   const history=useHistory();
   const Likes = () => {
     if (likes.length > 0) {
@@ -38,9 +38,9 @@ const Post = ({post,setCurrentId}) => {
 const handleLike=()=>{
   dispatch(likePost(post._id)) 
   if(hasLikedPost){
-      setLikes(post.likes.filter((id)=>id!== (userId))) 
+      setLikes(post.likedBy.filter((id)=>id!== (userId))) 
   }else{
-      setLikes([...post.likes,userId])
+      setLikes([...post.likedBy,userId])
   }
 }
 const lines = post.message.split(',');

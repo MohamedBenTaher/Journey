@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import PostMessage from "../Models/PostMessage.js";
 import s3 from '../awsConfig.js'
-import { v4 as uuidv4 } from 'uuid';
-import User from "../Models/user.js";
+import User from "../models/user.js";
+import PostMessage from "../models/PostMessage.js";
 
+import { v4 as uuidv4 } from 'uuid';
 
 export const  getTopPosts= async(req,res) => {
     PostMessage.find()
@@ -126,12 +126,12 @@ export const likePost=async (req,res)=>{
     if(!req.userId ) return res.json({mesage:'Unauthenticated'})
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
     const post =await PostMessage.findById(id)
-    console.log(post.likes)
-    const index=post.likes.findIndex((id)=> id ===String(req.userId));
+    console.log(post.llikedByikes)
+    const index=post.likedBy.findIndex((id)=> id ===String(req.userId));
     if(index===-1){
-        post.likes.push(req.userId)
+        post.likedBy.push(req.userId)
     }else {
-            post.likes=post?.likes?.fliter((id)=>id!==String(req.userId ))
+            post.likedBy=post?.likes?.fliter((id)=>id!==String(req.userId ))
     }
     const user=await User.findById(req.userId)
     const userIndex=user.likedResources.findIndex((res)=> res.id===String(req.userId));

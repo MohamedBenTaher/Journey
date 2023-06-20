@@ -1,6 +1,8 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import User from "../Models/user.js"
+import User from '../models/user.js';
+
+
 export const signin= async(req,res)=>{
 
   const {email,password}=req.body;
@@ -32,11 +34,30 @@ export const signup= async(req,res)=>{
         return res.status(500).json({message:"Something Went Wrong !",error})
 
     }
-   
+  }
+  export const getUser = async (req, res) => {
+    try {
+      const {id}=req.params
+      const user = await User.findById(id)
+      .populate({
+        path: 'savedResources.resourceId',
+        model: 'PostMessage' // Replace 'Resource' with the actual model name
+      })
+      .populate({
+        path: 'likedResources.resourceId',
+        model: 'PostMessage' // Replace 'Resource' with the actual model name
+      })
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      res.status(200).json({ user });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Something went wrong' });
+    }
+  }
 
 
 
 
 
-
-}

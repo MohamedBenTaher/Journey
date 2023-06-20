@@ -124,3 +124,4 @@ export const fetchLocationsBytype=(id,type)=>API.get(`/location/country/${id}/ty
 /*=============================Resources=======================*/
 export const bookmarkResource=(userId,id,resourceName)=> API.patch(`/user/${userId}/bookmark`,{id,resourceName})
 export const cancelBookmarkResource=(userId,id,resourceName)=> API.patch(`/user/${userId}/cancel`,{id,resourceName})
+export const getUser=(id)=>API.get(`/user/me/${id}`);

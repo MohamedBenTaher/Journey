@@ -14,8 +14,20 @@ const destinationSchema = mongoose.Schema({
     images:{type:[String],required:true},
     upvotes:{type:[String],default:[]},
     downvotes:{type:[String],default:[]},
-    bookmarkedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    bookmarkedBy: {
+        type: [{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'User',
+          }],
+        default: []
+    },
+    likedBy: {
+        type: [{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'User',
+          }],
+        default: []
+    },
     comments: {
         type: [String],
         default: []

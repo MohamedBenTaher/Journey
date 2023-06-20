@@ -126,7 +126,7 @@ const App = () => {
           </Route>
           <Route path="/user-profile" exact>
             <NavbarSecondary />
-            <Profile user={user} />
+            <Profile id={user?.result?._id} />
           </Route>
         </Switch>
 

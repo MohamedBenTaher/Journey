@@ -1,5 +1,5 @@
 
-import { AUTH,START_LOADING_USER,END_LOADING_USER, BOOKMARK_RESOURCE, CANCEL_BOOKMARK_RESOURCE } from '../constants/actionTypes.js';
+import { AUTH,START_LOADING_USER,END_LOADING_USER, BOOKMARK_RESOURCE, CANCEL_BOOKMARK_RESOURCE,USER_INFROMATIONS } from '../constants/actionTypes.js';
 import * as api from '../api/index.js';
 
 export const signin = (formData, history) => async (dispatch) => {
@@ -22,6 +22,14 @@ export const signup = (formData, history) => async (dispatch) => {
         dispatch({ type: AUTH, payload:{data} })
         //log in the user
         history.push('/ ')
+    } catch (error) {
+        console.log(error)
+    }
+}
+export const getUser=(id)=> async(dispatch)=>{
+    try {
+        const {data}=await api.getUser(id)
+        dispatch({type:USER_INFROMATIONS,payload:{data}})
     } catch (error) {
         console.log(error)
     }

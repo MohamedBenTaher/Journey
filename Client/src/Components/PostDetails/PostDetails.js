@@ -103,8 +103,8 @@ function PostDetails() {
               </Typography>
             </div>
             <div className={classes.imageSection}>
-              <IconButton className={classes.savePost} onClick={()=>user?.result?.savedResources?.find((savedId) => savedId.resourceId == post._id) ? dispatch(cancelBookmarkResource(user?.result?._id,post._id,'PostMessage')):dispatch(bookmarkResource(user?.result?._id,post._id,'PostMessage'))}>
-                {user?.result?.savedResources?.find((res) => res.resourceId == post._id) ? (
+              <IconButton className={classes.savePost} onClick={()=>post?.bookmarkedBy?.indexOf(user?.result?._id)!==-1  ? dispatch(cancelBookmarkResource(user?.result?._id,post._id,'PostMessage')):dispatch(bookmarkResource(user?.result?._id,post._id,'PostMessage'))}>
+                {post?.bookmarkedBy?.indexOf(user?.result?._id)!==-1 ? (
                   <BookmarkIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />
                 ) : (
                   <BookmarkBorderIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />
@@ -135,7 +135,7 @@ function PostDetails() {
             <Typography gutterBottom variant="h5">You might also like:</Typography>
             <Divider />
             <div className={classes.recommendedPosts}>
-              {recommendedPosts.map(({ title, name, message, likes, selectedFile, _id }) => (
+              {recommendedPosts.map(({ title, name, message, likedBy, selectedFile, _id }) => (
                 <div style={{ margin: '20px', cursor: 'pointer' }} onClick={() => openPost(_id)} key={_id}>
                   <Typography gutterBottom variant="h6">{title}</Typography>
                   <Typography gutterBottom variant="subtitle2">{name}</Typography>
@@ -145,7 +145,7 @@ function PostDetails() {
                     ))}
                     <br />
                   </Typography>
-                  <Typography gutterBottom variant="subtitle1">Likes: {likes?.length}</Typography>
+                  <Typography gutterBottom variant="subtitle1">Likes: {likedBy?.length}</Typography>
                   <img src={selectedFile} width="200px" />
                 </div>
               ))}
