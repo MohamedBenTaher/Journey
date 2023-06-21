@@ -31,8 +31,6 @@ const countrySchema = new mongoose.Schema({
     ref:'User',
     required: true,
   },
-  bookmarkedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   destinations: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Destination',

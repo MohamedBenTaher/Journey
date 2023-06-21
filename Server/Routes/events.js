@@ -1,5 +1,5 @@
 import express from "express"
-import { getEventsBySearch, getEvents, getEvent, createEvent, updateEvent, deleteEvent, commentEvent, attendEvent, cancelEvent } from "../controllers/event.js";
+import { getEventsBySearch, getEvents, getEvent, createEvent, updateEvent, deleteEvent, commentEvent, attendEvent, cancelEvent,bookmarkEvent,cancelBookmarkEvent } from "../controllers/event.js";
 const router = express.Router();
 import auth from '../Middleware/auth.js'
 
@@ -12,5 +12,6 @@ router.delete('/:id', auth, deleteEvent);
 router.patch('/:id/attend', auth, attendEvent)
 router.patch('/:id/cancel', auth, cancelEvent)
 router.post('/:id/comment', auth, commentEvent)
-
+router.patch(`/:id/bookmark`,auth, bookmarkEvent)
+router.patch(`/:id/cancel`,auth, cancelBookmarkEvent)
 export default router;

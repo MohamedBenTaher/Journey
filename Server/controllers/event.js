@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import Event from "../Models/Event.js"
 import s3 from '../awsConfig.js'
 import { v4 as uuidv4 } from 'uuid';
+import User from "../models/user.js";
 export const  getTopEvents= async(req,res) => {
           Destination.find()
             .sort({ upvotes: -1, downvotes: 1 })
@@ -14,7 +15,87 @@ export const  getTopEvents= async(req,res) => {
               }
             });
     }
+    export const bookmarkEvent = async (req, res) => {
 
+        const { id } = req.body;
+        const userId = req.params.id;
+        try {
+        const  resource = await Event.findById(id);
+          if (!resource) {
+            return res.status(404).json({ message: 'Event not found' });
+          }
+          const user = await User.findById(userId);
+          if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+          }
+          if (user.savedEvents.find((bookmark)=>bookmark==id)) {
+            return res.status(400).json({ message: 'Event already bookmarked' });
+          }
+          user.savedEvents.push(id);
+          resource.bookmarkedBy.push(userId);
+          await user.save();
+          await resource.save();
+          res.status(200).json({ message: 'Event bookmarked' },resource);
+        } catch (error) {
+          console.log(error);
+          res.status(500).json({ message: 'Something went wrong' ,...error});
+        }
+      };
+
+      export const likeEvent = async (req, res) => {
+        const { resourceId } = req.body;
+        const userId = req.userId;
+        try {
+          let resource;
+          resource = await Event.findById(resourceId);
+          if (!resource) {
+            return res.status(404).json({ message: 'Event not found' });
+          }
+          const user = await User.findById(userId);
+          if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+          }
+          if (user.likes.includes(resourceId)) {
+            user.likedEevents.filter((id)=>id==resourceId);
+            resource.likedBy.filter((id)=>id==userId)
+            res.status(200).json({ message: 'Location Unliked' });
+          }
+          user.likedEevents.push(resourceId);
+          resource.likedBy.push(userId);
+          await user.save();
+          await resource.save();
+          res.status(200).json({ message: 'Resource liked' });
+        } catch (error) {
+          console.log(error);
+          res.status(500).json({ message: 'Something went wrong' });
+        }
+      };
+      export const cancelBookmarkEvent = async (req, res) => {
+        const { resourceId } = req.body;
+        const userId = req.userId;
+        try {
+          let resource;
+          resource = await Event.findById(resourceId);
+          if (!resource) {
+            return res.status(404).json({ message: 'Event not found' });
+          }
+          const user = await User.findById(userId);
+          if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+          }
+          if (!user.savedEvents.includes(resourceId)) {
+            return res.status(400).json({ message: 'Event not bookmarked' });
+          }
+          user.savedEvents.pull(resourceId);
+          resource.bookmarkedBy.pull(userId);
+          await user.save();
+          await resource.save();
+          res.status(200).json({ message: 'Bookmark canceled' });
+        } catch (error) {
+          console.log(error);
+          res.status(500).json({ message: 'Something went wrong' });
+        }
+      }
 export const  getEvents= async(req,res) => {
     const {page}=req.query;
     try {

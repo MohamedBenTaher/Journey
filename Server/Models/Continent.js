@@ -13,8 +13,6 @@ const continentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  bookmarkedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   images: {
     type: [String],
     default: [],

@@ -14,22 +14,7 @@
        case LOGOUT:
          localStorage.clear();
          return { ...state, user: null, loading: false, errors: null };
-         case BOOKMARK_RESOURCE:
-          return {
-            ...state,
-            user: {
-              ...state.user,
-              savedResources: [...state.user.savedResources, action.payload],
-            },
-          };
-          case CANCEL_BOOKMARK_RESOURCE:
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          savedResources: state.user.savedResources.filter((resource) => resource.id !== action.payload.id),
-        },
-      };
+  
       case USER_INFROMATIONS:{
         return {
           ...state,

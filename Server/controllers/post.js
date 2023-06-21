@@ -38,6 +38,7 @@ export const  getPost= async(req,res) => {
         res.status(404).json({message :error.essage})
     }
 }
+
 export const createPost=async(req,res) => {
     const post = req.body;
     const files=req.files;
@@ -121,29 +122,90 @@ export const deletePost = async (req, res) => {
     res.json({ message: "Post deleted successfully." });
 } 
 
-export const likePost=async (req,res)=>{
-    const { id }=req.params
-    if(!req.userId ) return res.json({mesage:'Unauthenticated'})
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
-    const post =await PostMessage.findById(id)
-    console.log(post.llikedByikes)
-    const index=post.likedBy.findIndex((id)=> id ===String(req.userId));
-    if(index===-1){
-        post.likedBy.push(req.userId)
-    }else {
-            post.likedBy=post?.likes?.fliter((id)=>id!==String(req.userId ))
+
+export const bookmarkPost = async (req, res) => {
+    const { id } = req.body;
+    const userId = req.params.id;
+    try {
+    const  resource = await PostMessage.findById(id);
+      if (!resource) {
+        return res.status(404).json({ message: 'Resource not found' });
+      }
+
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      if (user.savedStories.find((bookmark)=>bookmark==id)) {
+        return res.status(400).json({ message: 'Resource already bookmarked' });
+      }
+
+      user.savedStories.push(id);
+      resource.bookmarkedBy.push(userId);
+      await user.save();
+      await resource.save();
+      res.status(200).json({ message: 'Post bookmarked' },resource);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Something went wrong' ,...error});
     }
-    const user=await User.findById(req.userId)
-    const userIndex=user.likedResources.findIndex((res)=> res.id===String(req.userId));
-    if(userIndex===-1){
-        user.likedResources.push({type:'PostMessage',id})
-    }else {
-        user.likedResources=user?.likedResources?.fliter((res)=>res.id!==String(req.userId ))
+  };
+  export const cancelBookmarkPost = async (req, res) => {
+    const { id } = req.body;
+    const userId = req.userId;
+    try {
+      let resource;
+      resource = await PostMessage.findById(id);
+      if (!resource) {
+        return res.status(404).json({ message: 'Post not found' });
+      }
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      if (!user.savedStories.includes(id)) {
+        return res.status(400).json({ message: 'Post not bookmarked' });
+      }
+      user.savedStories.pull(id);
+      resource.bookmarkedBy.pull(userId);
+      await user.save();
+      await resource.save();
+      res.status(200).json({ message: 'Bookmark canceled' });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Something went wrong' });
     }
-    const updatedPost= await PostMessage.findByIdAndUpdate(id,post,{new: true});
-    const updatedUser=await User.findByIdAndUpdate(req.userId,user,{new:true})
-    res.status(200).json(updatedPost,updatedUser);
-}
+  };
+  export const likePost = async (req, res) => {
+    const { resourceId } = req.body;
+    const userId = req.userId;
+    try {
+      let resource;
+      resource = await PostMessage.findById(resourceId);
+      if (!resource) {
+        return res.status(404).json({ message: 'Resource not found' });
+      }
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      if (user.likes.includes(resourceId)) {
+
+        user.likes.filter((id)=>id==resourceId);
+        resource.likedBy.filter((id)=>id==userId)
+        res.status(200).json({ message: 'Resource Unliked' });
+      }
+      user.likes.push(resourceId);
+      resource.likedBy.push(userId);
+      await user.save();
+      await resource.save();
+      res.status(200).json({ message: 'Resource liked' });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Something went wrong' });
+    }
+  };
 
 export const commentPost=async (req,res)=>{
     const { id }=req.params;

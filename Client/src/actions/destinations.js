@@ -112,4 +112,13 @@ export const downvoteDestination = (destinationId,userId) => async (dispatch) =>
     console.log(error.message)
   }
 }
+export const bookmarkDestination = (destinationId,userId) => async (dispatch) => {
+  try {
+    const { data } = await api.downVoteDestination(destinationId,userId);
+    console.log('after downvote ',data)
+    dispatch({ type: DOWNVOTE_DESTINATION, payload: data });
 
+  } catch (error) {
+    console.log(error.message)
+  }
+}

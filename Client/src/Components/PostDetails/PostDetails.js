@@ -103,7 +103,7 @@ function PostDetails() {
               </Typography>
             </div>
             <div className={classes.imageSection}>
-              <IconButton className={classes.savePost} onClick={()=>post?.bookmarkedBy?.indexOf(user?.result?._id)!==-1  ? dispatch(cancelBookmarkResource(user?.result?._id,post._id,'PostMessage')):dispatch(bookmarkResource(user?.result?._id,post._id,'PostMessage'))}>
+              <IconButton className={classes.savePost} onClick={()=>{}}>
                 {post?.bookmarkedBy?.indexOf(user?.result?._id)!==-1 ? (
                   <BookmarkIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />
                 ) : (

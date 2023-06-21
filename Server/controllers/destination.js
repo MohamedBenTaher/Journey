@@ -3,6 +3,7 @@ import Destination from "../Models/Destination.js"
 import Comment from "../Models/Comment.js"
 import s3 from '../awsConfig.js'
 import { v4 as uuidv4 } from 'uuid';
+import User from "../models/user.js";
 export const  getTopDestinations= async(req,res) => {
     try {
         const destinations=await Destination.find().sort((a,b)=>(a.upvotes-a.downvotes)>(b.upvotes-b.downvotes)).limit(10);
@@ -164,7 +165,57 @@ const uploadedFiles = [];
     res.json(updatedDestination);
     }
 
-
+    export const bookmarkDestination = async (req, res) => {
+      const { id } = req.body;
+      const userId = req.params.id;
+      try {
+      const  resource = await Destination.findById(id);
+        if (!resource) {
+          return res.status(404).json({ message: 'City not found' });
+        }
+        const user = await User.findById(userId);
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+        if (user.savedCities.find((bookmark)=>bookmark==id)) {
+          return res.status(400).json({ message: 'City already bookmarked' });
+        }
+        user.savedCities.push(id);
+        resource.bookmarkedBy.push(userId);
+        await user.save();
+        await resource.save();
+        res.status(200).json({ message: 'City bookmarked' },resource);
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Something went wrong' ,...error});
+      }
+    };
+    export const cancelBookmarkDestination = async (req, res) => {
+      const { resourceId } = req.body;
+      const userId = req.userId;
+      try {
+        let resource;
+        resource = await Destination.findById(resourceId);
+        if (!resource) {
+          return res.status(404).json({ message: 'City not found' });
+        }
+        const user = await User.findById(userId);
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+        if (!user.savedCities.includes(resourceId)) {
+          return res.status(400).json({ message: 'City not bookmarked' });
+        }
+        user.savedCities.pull(resourceId);
+        resource.bookmarkedBy.pull(userId);
+        await user.save();
+        await resource.save();
+        res.status(200).json({ message: 'Bookmark canceled' });
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Something went wrong' });
+      }
+    }
 export const deleteDestination = async (req, res) => {
     const { id } = req.params;
 
