@@ -43,6 +43,7 @@ export default (state = { isLoading: false, locations: [] }, action) => {
     }
     return location;
   });
+
   return {
     ...state,
     locations: updatedLocations,

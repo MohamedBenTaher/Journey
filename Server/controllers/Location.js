@@ -3,6 +3,7 @@ import Location from "../Models/Location.js"
 import Comment from "../Models/Comment.js"
 import s3 from '../awsConfig.js'
 import { v4 as uuidv4 } from 'uuid';
+import User from "../models/user.js";
 
 
 export const  getTopLocations= async(req,res) => {
@@ -94,6 +95,61 @@ try {
     res.status(401).json({message :error.message})
 }
 }
+export const bookmarkLocation = async (req, res) => {
+
+  const { id } = req.body;
+  const userId = req.params.id;
+  try {
+  const  resource = await Location.findById(id);
+    if (!resource) {
+      return res.status(404).json({ message: 'Resource not found' });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (user.savedLocations.find((bookmark)=>bookmark==id)) {
+      return res.status(400).json({ message: 'Resource already bookmarked' });
+    }
+
+    user.savedLocations.push(id);
+    resource.bookmarkedBy.push(userId);
+    await user.save();
+    await resource.save();
+    res.status(200).json({ message: 'Post bookmarked' },resource);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Something went wrong' ,...error});
+  }
+};
+export const cancelBookmarkLocation = async (req, res) => {
+  const { resourceId } = req.body;
+  const userId = req.userId;
+  try {
+    let resource;
+    resource = await Location.findById(resourceId);
+    if (!resource) {
+      return res.status(404).json({ message: 'Location not found' });
+    }
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    if (!user.savedLocations.includes(resourceId)) {
+      return res.status(400).json({ message: 'Location not bookmarked' });
+    }
+    user.savedLocations.pull(resourceId);
+    resource.bookmarkedBy.pull(userId);
+    await user.save();
+    await resource.save();
+    res.status(200).json({ message: 'Bookmark canceled' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+};
 
 export const updateLocation=async (req,res)=>{
  const {id}=req.params;
