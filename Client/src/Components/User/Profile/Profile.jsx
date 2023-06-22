@@ -83,7 +83,9 @@ const Profile = ({ id}) => {
    
     <div>
     <Typography variant="h6">Liked Resources</Typography>
-    <Tabs value={likedvalue} onChange={handleLikeChange} aria-label="basic tabs example" className={classes.tabs} variant={'fullWidth'}> 
+    <Tabs value={likedvalue} onChange={handleLikeChange} aria-label="basic tabs example" className={classes.tabs} variant={'fullWidth'} TabIndicatorProps={{
+        style: { backgroundColor: '#1CA0E3' }, // Change this color to the desired underline color
+      }}> 
           <Tab label="Stories"  />
           <Tab label="Locations" />
           <Tab label="Cities"  />
@@ -203,7 +205,9 @@ const Profile = ({ id}) => {
         </TabPanel>
       )}
       <Typography variant="h6">Saved Resources</Typography>
-      <Tabs value={savedValue} onChange={handleSaveChange} aria-label="basic tabs example"  variant={'fullWidth'}>
+      <Tabs value={savedValue} onChange={handleSaveChange} aria-label="basic tabs example"  variant={'fullWidth'} TabIndicatorProps={{
+        style: { backgroundColor: '#1CA0E3' }, // Change this color to the desired underline color
+      }}>
           <Tab label="Stories"  />
           <Tab label="Locations" />
           <Tab label="Cities"  />

@@ -28,6 +28,7 @@ export const fetchPostsBySearch = (searchQuery) => API.get(`/post/search?searchQ
 /*========================UserAuth=====================================*/
 export const signIn = (formData) => API.post('/user/signin', formData)
 export const signUp = (formData) => API.post('/user/signup', formData)
+export const getUser=(id)=>API.get(`/user/me/${id}`);
 /*=======================EVents========================================*/
 export const fetchTopEevents=()=>API.get(`/event/top`)
 export const fetchEvents = (page) => API.get(`/event?page=${page}`);
@@ -38,6 +39,10 @@ export const commentEvent = (value, id) => API.post(`/event/${id}/commentEvent`,
 export const deleteEvent = (id) => API.delete(`/event/${id}`);
 export const attendEvent = (id,userId) => API.patch(`/event/${id}/attend`,{userId:userId})
 export const cancelEvent = (id,userId) => API.patch(`/event/${id}/cancel`,{userId:userId})
+export const likeEvent=(id,userId)=>API.patch(`/event/${id}/like`,{userId:userId})
+export const bookmarkEvent=(id,userId)=>API.patch(`event/${id}/bookmark`,{userId:userId})
+export const cancelBookmarkEvent=(id,userId)=>API.patch(`event/${id}/bookmark`,{userId:userId})
+
 /*===========================Destinations=========================================*/
 export const fetchTopDestinations=()=>API.get(`/destination/top`)
 export const fetchDestinatons = (page) => API.get(`/destination?page=${page}`);
@@ -55,17 +60,17 @@ export const upVoteDestination = (destinationId,userId) => API.patch(`/destinati
 export const downVoteDestination = (destinationId,userId) => API.patch(`/destination/${destinationId}/downvote`,{userId:userId})
 export const fetchDestinationsBySearch = (searchQuery) => API.get(`/destination/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}&season=${searchQuery.season}`);
 export const fetchDestinationByCountry=(id)=>API.get(`/destination/country/${id}`)
+export const likeDestination=(id,userId)=>API.patch(`/destination/${id}/like`,{userId:userId})
+export const bookmarkDestination=(id,userId)=>API.patch(`destination/${id}/bookmark`,{userId:userId})
+export const cancelBookmarkDestination=(id,userId)=>API.patch(`destination/${id}/bookmark`,{userId:userId})
 /*===================================Comments===============================================*/
 /*==============Destination============*/
 export const commentEntity = (entityId,entityType,userId,content) => API.post(`/comment/${entityId}/comment`, { body:{userId:userId,entityType:entityType,content:content} });
 export const getEntityComments=(id,entityType)=>API.get(`/comment/${id}`,{ params: { entityType } })
 export const updateEntityComments=(id,userId,content)=>API.patch(`/comment/${id}`,{userId:userId,content:content})
 export const deleteEntityComments=(id)=>API.delete(`/comment/${id}`)
-
-
 /*=====================================Images============================================*/
 export const deleteS3Image=(id,url)=>API.post(`/destination/image/delete/${id}`,{url:url})
-
 /*=====================================Country==========================*/
 export const createCountry=(newCountry)=>API.post('/country',newCountry,{
   headers: {
@@ -86,6 +91,8 @@ export const fetchCountryByLikes=(id)=>API.get(`/country/likes/${id}`)
 // export const likeCountry=(countryId,id)=>API.post(`/country/${countryId}/like`,{userId:id})
 // export const dislikeCountry=(countryId,id)=>API.post(`/country/${countryId}/dislike`,{userId:id})
 // export const fetchCountryByLikes=(id)=>API.get(`/country/likes/${id}`)
+export const bookmarkCountry=(id,userId)=>API.patch(`country/${id}/bookmark`,{userId:userId})
+export const cancelBookmarCountry=(id,userId)=>API.patch(`country/${id}/bookmark`,{userId:userId})
 /*=====================================Continent=====================*/
 export const createContinent=(newContinent)=>API.post('/continent',newContinent,{
   headers: {
@@ -117,11 +124,8 @@ export const rateLocation = (locationId,userId,rating) => API.patch(`/location/$
 export const fetchLocationsBySearch = (searchQuery) => API.get(`/location/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}&season=${searchQuery.season}`);
 export const fetchLocationsByCountry=(id)=>API.get(`/location/country/${id}`)
 export const fetchLocationsByDestination=(id)=>API.get(`/location/destination/${id}`)
-
-// ?
+export const likeLocation=(id,userId)=>API.patch(`/location/${id}/like`,{userId:userId})
 export const fetchLocationsBytype=(id,type)=>API.get(`/location/country/${id}/type/${type}`)
-
+export const bookmarkLocation=(id,userId)=>API.patch(`location/${id}/bookmark`,{userId:userId})
+export const cancelBookmarkLocation=(id,userId)=>API.patch(`location/${id}/bookmark`,{userId:userId})
 /*=============================Resources=======================*/
-export const bookmarkResource=(userId,id,resourceName)=> API.patch(`/user/${userId}/bookmark`,{id,resourceName})
-export const cancelBookmarkResource=(userId,id,resourceName)=> API.patch(`/user/${userId}/cancel`,{id,resourceName})
-export const getUser=(id)=>API.get(`/user/me/${id}`);

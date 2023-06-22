@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref:'Event'
     }],
-  likedPosts: [{
+  likedStories: [{
       type: mongoose.Schema.Types.ObjectId,
       ref:'PostMessage'
     }],
@@ -32,6 +32,14 @@ const userSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref:'Event'
   }],
+  likedLocations: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref:'Location'
+  }],
+likedCities: [{
+  type: mongoose.Schema.Types.ObjectId,
+  ref:'Destination'
+}],
 });
 
 const User = mongoose.model('User', userSchema);
