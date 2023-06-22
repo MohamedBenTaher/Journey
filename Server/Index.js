@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from 'cors';
+import fileUpload from 'express-fileupload';
 import postRoutes from './Routes/posts.js'
 import userRoutes from './Routes/user.js'
 import eventRoutes from './Routes/events.js'
@@ -10,7 +11,7 @@ import commentRoutes from'./Routes/Comments.js'
 import continentRoutes from './Routes/continents.js'
 import countryRoutes from './Routes/countries.js'
 import locationRoutes from './Routes/locations.js'
-import fileUpload from 'express-fileupload';
+
 
 
 // import * as dotenv from 'dotenv' 
