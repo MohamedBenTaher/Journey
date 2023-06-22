@@ -12,6 +12,7 @@ import countryRoutes from './Routes/countries.js'
 import locationRoutes from './Routes/locations.js'
 import fileUpload from 'express-fileupload';
 
+
 // import * as dotenv from 'dotenv' 
 // dotenv.config()
 const app = express();
