@@ -29,6 +29,6 @@ export default (state = { isLoading: true, comments: [] }, action) => {
       return { ...state, comments: state.comments.filter((comment) => comment._id !== action.payload) };
     default:
       return state;
-
+ 
   }
 }
