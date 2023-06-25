@@ -67,7 +67,7 @@ const NavbarSecondary = () => {
             </Box>
           </Drawer><IconButton  onClick={() => setIsOpen(!isOpen)}>
               <MenuIcon style={{ 
-                color: 'rgb(255, 255, 255)',
+                color: 'rgb(0, 0, 0)',
                 height:'2em',
                 width:'2em'
             }} />

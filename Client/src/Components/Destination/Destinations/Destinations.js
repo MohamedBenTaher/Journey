@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState}from 'react';
 import { Grid, CircularProgress } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import useStyles from './styles';
@@ -13,6 +13,7 @@ function useQuery() {
 
 const Destinations = ({ setCurrentId }) => {
   const { destinations, isLoading } = useSelector((state) => state.destinations);
+  const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const  value = useSelector((state) => state);
   console.log('my dests',destinations)
   console.log('my vals',value)
@@ -34,7 +35,7 @@ console.log('test')
         <Grid container spacing={3} justifyContent="start">
           {destinations?.map((destination) => (
             <Grid key={destination._id} item xs={12} sm={6} md={6} lg={4}>
-              <DestinationCard destination={destination} setCurrentId={setCurrentId} />
+              <DestinationCard destination={destination} setCurrentId={setCurrentId} userId={user?.result._id} />
             </Grid>
           ))}
         </Grid>

@@ -13,6 +13,34 @@ export const  getTopDestinations= async(req,res) => {
         res.status(404).json({message :error.essage})
     }
 }
+export const likeDestination = async (req, res) => {
+  const { id } = req.params;
+  const {userId} = req.body;
+  try {
+    let resource;
+    resource = await Destination.findById(id);
+    if (!resource) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    if (user?.likes?.includes(id)) {
+      user?.likedCities?.filter((id)=>id==id);
+      resource.likedBy?.filter((id)=>id==userId)
+      res.status(200).json({ message: 'Location Unliked' });
+    }
+    user?.likedCities.push(id);
+    resource.likedBy.push(userId);
+    await user.save();
+    await resource.save();
+    res.status(200).json({ message: 'Resource liked' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+};
 export const  getDestinations= async(req,res) => {
     const {page}=req.query;
     try {

@@ -1,4 +1,4 @@
-import { UPDATE_DESTINATION, CREATE_DESTINATION, FETCH_DESTINATIONS, FETCH_DESTINATIONS_BY_COUNTRY, DELETE_DESTINATION, FETCH_DESTINATION, FETCH_DESTINATION_BY_SEARCH, START_LOADING_DESTINATIONS, END_LOADING_DESTINATIONS, COMMENT_DESTINATION, UPVOTE_DESTINATION, DOWNVOTE_DESTINATION, BOOKMARK_DESTINATION, CANCEL_BOOKMARK_DESTINATION } from '../constants/actionTypes.js';
+import { UPDATE_DESTINATION, CREATE_DESTINATION, FETCH_DESTINATIONS, FETCH_DESTINATIONS_BY_COUNTRY, DELETE_DESTINATION, FETCH_DESTINATION, FETCH_DESTINATION_BY_SEARCH, START_LOADING_DESTINATIONS, END_LOADING_DESTINATIONS, COMMENT_DESTINATION, UPVOTE_DESTINATION, DOWNVOTE_DESTINATION, BOOKMARK_DESTINATION, CANCEL_BOOKMARK_DESTINATION, LIKE_DESTINATION } from '../constants/actionTypes.js';
 
 export default (state = { isLoading: false, destinations: [], user: { savedDestinations: [] } }, action) => {
   switch (action.type) {
@@ -44,6 +44,13 @@ export default (state = { isLoading: false, destinations: [], user: { savedDesti
           destination._id === action.payload._id ? action.payload : destination
         ),
       };
+   case LIKE_DESTINATION:
+        return {
+          ...state,
+          destinations: state.destinations.map((destination) =>
+            destination._id === action.payload._id ? action.payload : destination
+          ),
+        };
     case BOOKMARK_DESTINATION:
       return {
         ...state,

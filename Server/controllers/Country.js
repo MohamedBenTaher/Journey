@@ -196,7 +196,7 @@ export const likeCountry=async (req,res)=>{
         country.likes.push(userId)
     }
     else{
-        country.downvotes.splice(downvoteIndex,1)
+        country.downvotes.splice(index,1)
     }
 
     updatedCountry= await Country.findByIdAndUpdate(id,country,{new: true});

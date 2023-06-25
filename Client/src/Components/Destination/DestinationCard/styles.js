@@ -15,6 +15,14 @@ const useStyles = makeStyles((theme) => ({
         },
       },
     },
+    description: {
+      height: '60px', // Set the desired height for the description container
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      display: '-webkit-box',
+      '-webkit-line-clamp': '3', // Limit the description to 3 lines
+      '-webkit-box-orient': 'vertical',
+    },
     media: {
       height: 400,
       backgroundSize: 'cover',
@@ -45,6 +53,28 @@ const useStyles = makeStyles((theme) => ({
         color: '#000',
       },
     },
+    likeButton:{
+      position:'absolute',
+      top:'10px',
+      right:'10px',
+      color:'#fff',
+      '&:hover':{
+          color:'#fff',
+          backgroundColor: 'rgba(10, 10, 10, 0.5)'
+          },
+      zIndex:99
+  },
+  likeCount:{
+    position:'absolute',
+    top:'23px',
+    right:'75px',
+    color:'#fff',
+    '&:hover':{
+        color:'#fff',
+        backgroundColor: 'rgba(10, 10, 10, 0.5)'
+        },
+    zIndex:99
+  },
     textContainer: {
       padding: theme.spacing(0, 2),
     },
