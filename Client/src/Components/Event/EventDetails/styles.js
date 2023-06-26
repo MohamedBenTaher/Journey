@@ -22,5 +22,11 @@ export default makeStyles((theme) => ({
     },
     infoItem: {
       marginBottom: theme.spacing(1),
+      display:'flex',
+      alignItems:'center',
+      justifyContent:'center'
     },
+    content:{
+      padding:'16px'
+    }
   }));
