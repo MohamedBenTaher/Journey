@@ -28,7 +28,7 @@ app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 let url;
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  url='http://localhost:5000/'
+  url='http://localhost:3000/'
  } else {
   url='https://journeybackend.onrender.com/'
  }
