@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import Event from "../Models/Event.js"
 import s3 from '../awsConfig.js'
 import { v4 as uuidv4 } from 'uuid';
-import User from "../Models/User.js";
+import User from "../Models/user.js";
 
 export const  getTopEvents= async(req,res) => {
           Destination.find()

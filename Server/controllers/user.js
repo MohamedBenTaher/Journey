@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import User from '../Models/User.js';
+import User from '../Models/user.js';
 
 export const signin= async(req,res)=>{
 
