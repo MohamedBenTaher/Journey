@@ -1,4 +1,4 @@
-import PostMessage from '../models/PostMessage.js';
+import PostMessage from '../Models/PostMessage.js';
 import Country from '../Models/Country.js';
 import Event from '../Models/Event.js';
 import Location from '../Models/Location.js';
