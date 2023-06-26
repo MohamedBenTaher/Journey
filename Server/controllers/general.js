@@ -1,9 +1,9 @@
-import PostMessage from '../Models/PostMessage.js';
 import Country from '../Models/Country.js';
 import Event from '../Models/Event.js';
 import Location from '../Models/Location.js';
 import Destination from '../Models/Destination.js';
 import User from '../Models/user.js';
+import PostMessage from '../Models/PostMessage.js';
 
 export const likeResource = async (req, res) => {
   const { resourceId, resourceName } = req.body;
