@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import s3 from '../awsConfig.js'
 import PostMessage from "../models/PostMessage.js";
 import { v4 as uuidv4 } from 'uuid';
-import User from "../models/user.js";
+import User from "../Models/User.js";
 
 export const  getTopPosts= async(req,res) => {
     PostMessage.find()

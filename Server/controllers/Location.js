@@ -3,7 +3,8 @@ import Location from "../Models/Location.js"
 import Comment from "../Models/Comment.js"
 import s3 from '../awsConfig.js'
 import { v4 as uuidv4 } from 'uuid';
-import User from "../models/user.js";
+import User from "../Models/User.js";
+
 
 
 export const  getTopLocations= async(req,res) => {
