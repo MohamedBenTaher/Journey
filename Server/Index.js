@@ -26,9 +26,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
-
+let url;
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  url='http://localhost:5000/'
+ } else {
+  url='https://journeybackend.onrender.com/'
+ }
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: url,
     credentials: true,            //access-control-allow-credentials:true
     optionSuccessStatus: 200
 }
