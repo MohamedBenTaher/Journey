@@ -1,7 +1,11 @@
 import axios from 'axios';
-
-// const API = axios.create({ baseURL: 'https://journeybackend.onrender.com/' });
-const API = axios.create({ baseURL: 'http://localhost:5000/' });
+let url;
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+ url='http://localhost:5000/'
+} else {
+  url='https://journeybackend.onrender.com/'
+}
+const API = axios.create({ baseURL:url  });
 //to be added user roles &  chat 
 API.interceptors.request.use(function (config) {
   if (localStorage.getItem('profile')) {
