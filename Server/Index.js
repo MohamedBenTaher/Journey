@@ -24,7 +24,7 @@ app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://journey-client.onrender.com'],
+  origin: 'https://journey-client.onrender.com',
   credentials: true,
   optionSuccessStatus: 200
 };
@@ -49,9 +49,9 @@ mongoose.connect(process.env.CONNECTION_URL, { useUnifiedTopology: true, useCrea
   .catch((error) => console.log(error.message));
 
 // Add CORS headers middleware
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', '*');
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   next();
+// });
