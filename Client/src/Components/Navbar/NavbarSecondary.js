@@ -76,32 +76,29 @@ const NavbarSecondary = () => {
      </Grid>
      {!isMobile && (
      <>
-            <Link to="/" className={classes.links}>
-            <Typography variant='h6'>
-              Home
-            </Typography>
-          </Link>
-          <Link to="/" className={classes.links}>
-            <Typography variant='h6'>
-              Stories
-            </Typography>
-          </Link>
-          <Link to="/events" className={classes.links}>
-          <Typography variant='h6'>
-             Events
+           <Link to="/" className={classes.links}>
+          <Typography variant='p'>
+             Explore
           </Typography>
-        </Link><Link to="/destinations" className={classes.links}>
-            <Typography variant='h6'>
+        </Link>
+        <Link to="/destinations" className={classes.links}>
+            <Typography variant='p'>
             Top Destinations
-            </Typography>
-          </Link><Link to="/locations" className={classes.links}>
-            <Typography variant='h6'>
-              Locations
             </Typography>
           </Link>
           <Link to="/locations" className={classes.links}>
-            <Typography variant='h6'>
-              About
+            <Typography variant='p'>
+            Top Locations
+            </Typography>
+          </Link>
+          <Link to="/countries" className={classes.links}>
+            <Typography variant='p'>
+              Countries
+            </Typography>
+          </Link>
+          <Link to="/events" className={classes.links}>
+            <Typography variant='p'>
+              Upcoming events
             </Typography>
           </Link>
           

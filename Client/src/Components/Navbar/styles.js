@@ -70,7 +70,7 @@ export default makeStyles((theme) => ({
   },
   Drawer:{
     width:'30vh',
-    height:'40vh',
+    height:'80vh',
     display:'flex',
     flexDirection:"column",
     alignItems:"center",

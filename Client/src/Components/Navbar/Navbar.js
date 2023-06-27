@@ -51,9 +51,29 @@ const Navbar = () => {
                 Home
               </Typography>
             </Link>
-            <Link to="/events" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
+            <Link to="/destinations" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
               <Typography variant='h6'>
                 Top Destinations
+              </Typography>
+            </Link>
+            <Link to="/events" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
+              <Typography variant='h6'>
+                Upcoming Events
+              </Typography>
+            </Link>
+            <Link to="/countries" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
+              <Typography variant='h6'>
+                Countries
+              </Typography>
+            </Link>
+            <Link to="/locations" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
+              <Typography variant='h6'>
+                Top Locations
+              </Typography>
+            </Link>
+            <Link to="/continents" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
+              <Typography variant='h6'>
+                Continents
               </Typography>
             </Link>
             <Link to="/" className={classes.linksDrawer}>
@@ -78,21 +98,28 @@ const Navbar = () => {
      </Grid>
      {!isMobile && (
      <><Link to="/" className={classes.links}>
-          <Typography variant='h6'>
+          <Typography variant='p'>
              Explore
           </Typography>
-        </Link><Link to="/destinations" className={classes.links}>
-            <Typography variant='h6'>
+        </Link>
+        <Link to="/destinations" className={classes.links}>
+            <Typography variant='p'>
             Top Destinations
             </Typography>
-          </Link><Link to="/" className={classes.links}>
-            <Typography variant='h6'>
-              Blog
+          </Link>
+          <Link to="/locations" className={classes.links}>
+            <Typography variant='p'>
+            Top Locations
             </Typography>
           </Link>
-          <Link to="/" className={classes.links}>
-            <Typography variant='h6'>
-              About us
+          <Link to="/countries" className={classes.links}>
+            <Typography variant='p'>
+              Countries
+            </Typography>
+          </Link>
+          <Link to="/events" className={classes.links}>
+            <Typography variant='p'>
+              Upcoming events
             </Typography>
           </Link>
           </>)

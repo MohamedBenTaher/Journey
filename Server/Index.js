@@ -28,9 +28,9 @@ app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 let url;
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  url='http://localhost:3000/'
+  url='http://localhost:3000'
  } else {
-  url='https://journeybackend.onrender.com/'
+  url='https://journeybackend.onrender.com'
  }
 const corsOptions = {
     origin: url,
