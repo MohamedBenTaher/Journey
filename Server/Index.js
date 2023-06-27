@@ -50,6 +50,12 @@ app.use('/location',locationRoutes)
 app.get('/', (req, res) => { res.send('test works') })
 app.set('port', Port);
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 mongoose.connect(process.env.CONNECTION_URL,  {useUnifiedTopology: true, useCreateIndex: true, useNewUrlParser: true})
     .then(app.listen(Port, () => console.log('server Running on Port :' + Port)))
     .catch((error) => console.log(error.message));
