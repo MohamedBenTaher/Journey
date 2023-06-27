@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/static/css/main.6044c6f1.css",
-    "main.js": "/static/js/main.61468938.js",
+    "main.js": "/static/js/main.ddb8e2ea.js",
     "static/media/tokyo.jpg": "/static/media/tokyo.2af72c385a81ca309846.jpg",
     "static/media/Morooco.jpg": "/static/media/Morooco.1d3da07875bdb98ea52a.jpg",
     "static/media/hero.jpg": "/static/media/hero.93f2f9e62547091773d7.jpg",
     "static/media/title.png": "/static/media/title.66f54b33bc99c8dfc039.png",
     "index.html": "/index.html",
     "main.6044c6f1.css.map": "/static/css/main.6044c6f1.css.map",
-    "main.61468938.js.map": "/static/js/main.61468938.js.map"
+    "main.ddb8e2ea.js.map": "/static/js/main.ddb8e2ea.js.map"
   },
   "entrypoints": [
     "static/css/main.6044c6f1.css",
-    "static/js/main.61468938.js"
+    "static/js/main.ddb8e2ea.js"
   ]
 }
