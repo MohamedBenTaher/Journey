@@ -30,7 +30,7 @@ let url;
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   url='http://localhost:3000'
  } else {
-  url='https://journeybackend.onrender.com'
+  url='https://jouney-client.onrender.com'
  }
 const corsOptions1 = {
     origin: 'http://localhost:3000',
@@ -38,7 +38,7 @@ const corsOptions1 = {
     optionSuccessStatus: 200
 }
 const corsOptions2 = {
-  origin: 'https://journeybackend.onrender.com',
+  origin: 'https://jouney-client.onrender.com',
   credentials: true,            //access-control-allow-credentials:true
   optionSuccessStatus: 200
 }
