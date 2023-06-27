@@ -32,18 +32,13 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
  } else {
   url='https://jouney-client.onrender.com'
  }
-const corsOptions1 = {
-    origin: 'http://localhost:3000',
-    credentials: true,            //access-control-allow-credentials:true
-    optionSuccessStatus: 200
-}
-const corsOptions2 = {
-  origin:[ 'https://jouney-client.onrender.com','http://localhost:3000'],
-  credentials: true,            //access-control-allow-credentials:true
+ const corsOptions = {
+  origin: ['http://localhost:3000', 'https://jouney-client.onrender.com'],
+  credentials: true,
   optionSuccessStatus: 200
-}
-app.use(cors(corsOptions1));
-app.use(cors(corsOptions2));
+};
+
+app.use(cors(corsOptions));
 app.use('/post', postRoutes);
 app.use('/user', userRoutes);
 app.use('/event', eventRoutes)
