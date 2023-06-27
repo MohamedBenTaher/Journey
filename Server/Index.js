@@ -32,13 +32,18 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
  } else {
   url='https://journeybackend.onrender.com'
  }
-const corsOptions = {
-    origin: url,
+const corsOptions1 = {
+    origin: 'http://localhost:3000',
     credentials: true,            //access-control-allow-credentials:true
     optionSuccessStatus: 200
 }
-app.use(cors(corsOptions));
-
+const corsOptions2 = {
+  origin: 'https://journeybackend.onrender.com',
+  credentials: true,            //access-control-allow-credentials:true
+  optionSuccessStatus: 200
+}
+app.use(cors(corsOptions1));
+app.use(cors(corsOptions2));
 app.use('/post', postRoutes);
 app.use('/user', userRoutes);
 app.use('/event', eventRoutes)
