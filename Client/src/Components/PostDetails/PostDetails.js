@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { getPost, getPostsBySearch } from '../../actions/posts';
+import { bookmarkPost, cancelBookmarkPost, getPost, getPostsBySearch } from '../../actions/posts';
 import useStyles from './styles';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -37,7 +37,7 @@ function PostDetails() {
     }
   }, [post])
   
-  if (!post || !user) return null;
+  if (!post ) return null;
   console.log('rendered post ', post)
   console.log('post file', post.selectedFile)
   
@@ -54,9 +54,9 @@ function PostDetails() {
 
   const openPost = (_id) => history.push(`/stories/${_id}`);
   console.log('my current user',user)
-  if(!user) return ;
-  const found=user.result.savedResources.find((res) => res.resourceId === post._id)
-  console.log('found resource',found,user.result.savedResources )
+
+  const found=user?.result?.savedResources.find((res) => res.resourceId === post._id)
+  console.log('found resource',found,user?.result?.savedResources )
   return (
     <>
 
@@ -103,7 +103,7 @@ function PostDetails() {
               </Typography>
             </div>
             <div className={classes.imageSection}>
-              <IconButton className={classes.savePost} onClick={()=>{}}>
+              <IconButton className={classes.savePost} onClick={()=>{user && post?.bookmarkedBy?.indexOf(user?.result?._id)!==-1 ? dispatch(cancelBookmarkPost(post._id,user.result._id)):dispatch(bookmarkPost(post._id,user.result._id))}}>
                 {post?.bookmarkedBy?.indexOf(user?.result?._id)!==-1 ? (
                   <BookmarkIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />
                 ) : (
@@ -123,7 +123,7 @@ function PostDetails() {
             {post && (
               <Card>
                 <CardContent>
-                  <Comments entityId={id} entityType={'PostMessage'} user={user || {}} />
+                  <Comments entityId={id} entityType={'PostMessage'} user={user} />
                 </CardContent>
               </Card>
             )}

@@ -143,7 +143,8 @@ const Comments = ({ entityId, entityType,user }) => {
               </React.Fragment>
             ))}
           </List>
-          <Formik initialValues={{ comment: '' }} onSubmit={handleAddComment}>
+          { user ??(
+            <Formik initialValues={{ comment: '' }} onSubmit={handleAddComment}>
             {({ handleSubmit }) => (
               <Form>
                 <Field
@@ -168,6 +169,8 @@ const Comments = ({ entityId, entityType,user }) => {
               </Form>
             )}
           </Formik>
+         )}
+          
         </>
       )}
     </Box>

@@ -1,5 +1,5 @@
 import * as api from '../api/index.js';
-import { LIKE, UPDATE_DESTINATION, CREATE_DESTINATION, FETCH_DESTINATION_BY_SEARCH,FETCH_DESTINATIONS_BY_COUNTRY, DELETE_DESTINATION, FETCH_DESTINATIONS, START_LOADING_DESTINATIONS, END_LOADING_DESTINATIONS, FETCH_DESTINATION, LIKE_DESTINATION, UPVOTE_DESTINATION,DOWNVOTE_DESTINATION } from '../constants/actionTypes.js';
+import { LIKE, UPDATE_DESTINATION, CREATE_DESTINATION, FETCH_DESTINATION_BY_SEARCH,FETCH_DESTINATIONS_BY_COUNTRY, DELETE_DESTINATION, FETCH_DESTINATIONS, START_LOADING_DESTINATIONS, END_LOADING_DESTINATIONS, FETCH_DESTINATION, LIKE_DESTINATION, UPVOTE_DESTINATION,DOWNVOTE_DESTINATION, BOOKMARK_DESTINATION, CANCEL_BOOKMARK_DESTINATION } from '../constants/actionTypes.js';
 
 //Action Creators
 export const getTopDestinations = () => async (dispatch) => {
@@ -112,21 +112,31 @@ export const downvoteDestination = (destinationId,userId) => async (dispatch) =>
     console.log(error.message)
   }
 }
-export const bookmarkDestination = (destinationId,userId) => async (dispatch) => {
-  try {
-    const { data } = await api.downVoteDestination(destinationId,userId);
-    console.log('after downvote ',data)
-    dispatch({ type: DOWNVOTE_DESTINATION, payload: data });
-
-  } catch (error) {
-    console.log(error.message)
-  }
-}
 export const likeDestination = (destinationId,userId) => async (dispatch) => {
   try {
     const { data } = await api.likeDestination(destinationId,userId);
     console.log('after downvote ',data)
     dispatch({ type: LIKE_DESTINATION, payload: data });
+
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+export const bookmarkDestination=(id,userId)=>async(dispatch)=>{
+  try {
+    const { data } = await api.bookmarkDestination(id,userId);
+    console.log('after post bookmark ',data)
+    dispatch({ type: BOOKMARK_DESTINATION, payload: data });
+
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+export const cancelBookmarkDestination=(id,userId)=>async(dispatch)=>{
+  try {
+    const { data } = await api.cancelBookmarkDestination(id,userId);
+    console.log('after post bookmark ',data)
+    dispatch({ type: CANCEL_BOOKMARK_DESTINATION, payload: data });
 
   } catch (error) {
     console.log(error.message)

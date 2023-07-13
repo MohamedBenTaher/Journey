@@ -1,5 +1,5 @@
 import * as api from '../api/index.js';
-import { LIKE, UPDATE_EVENT, CREATE_EVENT, FETCH_EVENT_BY_SEARCH, CANCEL_EVENT,DELETE_EVENT, FETCH_EVENTS, START_LOADING, END_LOADING, FETCH_EVENT, COMMENT_EVENT, ATTEND_EVENT } from '../constants/actionTypes.js';
+import { LIKE, UPDATE_EVENT, CREATE_EVENT, FETCH_EVENT_BY_SEARCH, CANCEL_EVENT,DELETE_EVENT, FETCH_EVENTS, START_LOADING, END_LOADING, FETCH_EVENT, COMMENT_EVENT, ATTEND_EVENT, BOOKMARK_EVENT, CANCEL_BOOKMARK_EVENT } from '../constants/actionTypes.js';
 
 //Action Creators
 
@@ -93,5 +93,25 @@ export const commentEvent = (value, id) => async (dispatch) => {
     return data.comments;
   } catch (error) {
     console.log(error)
+  }
+}
+export const bookmarkEvent=(id,userId)=>async(dispatch)=>{
+  try {
+    const { data } = await api.bookmarkEvent(id,userId);
+    console.log('after post bookmark ',data)
+    dispatch({ type: BOOKMARK_EVENT, payload: data });
+
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+export const cancelBookmarkEvent=(id,userId)=>async(dispatch)=>{
+  try {
+    const { data } = await api.bookmarkEvent(id,userId);
+    console.log('after post bookmark ',data)
+    dispatch({ type: CANCEL_BOOKMARK_EVENT, payload: data });
+
+  } catch (error) {
+    console.log(error.message)
   }
 }

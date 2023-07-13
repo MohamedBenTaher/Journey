@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 const LocationDetails = () => {
   const {location,isLoading}=useSelector((state)=>state.locations);
-  const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile'))||null);
   const classes = useStyles();
   const dispatch=useDispatch()
   const {id}=useParams()
@@ -68,16 +68,9 @@ const LocationDetails = () => {
    
   }, []);
 const handleSubmit =  (avgRating) => {
-  // Handle form submission here
-  
-  console.log('my arguments',id,user?.result._id,avgRating)
-  dispatch(rateLocation(id,user?.result._id,avgRating))
-  console.log('found it ', location?.avgRating.find((rating) => rating.id === user?.result._id).rating )
-};
-if(!user){
-  return null
-}
-const locationRating=location?.avgRating.find((rating) => rating.id === user.result._id)
+  if(user)dispatch(rateLocation(id,user?.result._id,avgRating))}
+
+const locationRating=location?.avgRating.find((rating) => rating.id === user?.result?._id)
 const initialValues = {
   avgRating: locationRating?locationRating.rating: 0,
 };
@@ -117,7 +110,7 @@ const validationSchema = Yup.object().shape({
                   Created: {new Date(location?.createdAt).toLocaleString()}
               </Typography>
               <div className={classes.voteSection}>
-                  {user && (
+                  {user !=null ?? (
                           <Formik
                           enableReinitialize
                           initialValues={initialValues}
@@ -126,7 +119,7 @@ const validationSchema = Yup.object().shape({
                         >
                           {(values)=>(
                           <Form>
-                            <Field name="avgRating"  fullWidth component={RatingComponent} handleSubmit={handleSubmit}userId={user.result._id} id={id} avgRating={values.avgRating}/>
+                            <Field name="avgRating"  fullWidth component={RatingComponent} handleSubmit={handleSubmit} userId={user?.result?._id} id={id} avgRating={values.avgRating}/>
                           </Form>)}
                         </Formik>
                   )}
@@ -155,7 +148,7 @@ const validationSchema = Yup.object().shape({
         location&&(
           <Card>
             <CardContent>
-                <Comments entityId={id} entityType={'Destination'} user={user||{}}/>
+                <Comments entityId={id} entityType={'Destination'} user={user}/>
             </CardContent>
           </Card>
         )

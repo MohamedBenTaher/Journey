@@ -29,6 +29,8 @@ export const likePost = (id) => API.patch(`/post/${id}/like`);
 export const comment = (value, id) => API.post(`/post/${id}/comment`, { value });
 export const fetchPostsByCreator = (name) => API.get(`/post/creator?name=${name}`);
 export const fetchPostsBySearch = (searchQuery) => API.get(`/post/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}&season=${searchQuery.season}`);
+export const bookmarkPost=(id,userId)=>API.patch(`post/${id}/bookmark`,{userId:userId})
+export const cancelBookmarkPost=(id,userId)=>API.patch(`post/${id}/bookmark`,{userId:userId})
 /*========================UserAuth=====================================*/
 export const signIn = (formData) => API.post('/user/signin', formData)
 export const signUp = (formData) => API.post('/user/signup', formData)

@@ -116,7 +116,7 @@ const handleUpvote = () => {
                   ))}
               </div>
             <div className={classes.imagesSection}>
-            <Grid container spacing={2} direction={{ xs: 'column', md: 'column' ,lg:'row'}} >
+            <Grid container spacing={2} direction={{ lg:'row'}} >
                 
                   {/* Display the first image as the major image */}
                   {destination?.images?.length > 0 && (

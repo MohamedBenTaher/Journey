@@ -1,5 +1,5 @@
 
-import { CREATE_COUNTRY,UPDATE_COUNTRY,DELETE_COUNTRY,LIKE_COUNTRY,DISLIKE_COUNTRY,FETCH_COUNTRY_BY_SEARCH,FETCH_COUNTRY,FETCH_COUNTRIES,START_LOADING_COUNTRIES,END_LOADING_COUNTRIES } from '../constants/actionTypes.js';
+import { CREATE_COUNTRY,UPDATE_COUNTRY,DELETE_COUNTRY,LIKE_COUNTRY,DISLIKE_COUNTRY,FETCH_COUNTRY_BY_SEARCH,FETCH_COUNTRY,FETCH_COUNTRIES,START_LOADING_COUNTRIES,END_LOADING_COUNTRIES, BOOKMARK_COUNTRY, CANCEL_BOOKMARK_COUNTRY } from '../constants/actionTypes.js';
 export default (state = { isLoading: false, countries: [] }, action) => {
   switch (action.type) {
     case START_LOADING_COUNTRIES:
@@ -52,6 +52,32 @@ export default (state = { isLoading: false, countries: [] }, action) => {
               : destination
           ),
         };
+        case BOOKMARK_COUNTRY:
+      return {
+        ...state,
+        countries: state.countries.map((country) =>
+        country._id === action.payload.id
+            ? {
+                ...country,
+                bookmarkedBy: [...country.bookmarkedBy, action.payload.userId],
+              }
+            : country
+        ),
+      };
+    case CANCEL_BOOKMARK_COUNTRY:
+      return {
+        ...state,
+        countries: state.destinations.map((country) =>
+        country._id === action.payload.id
+            ? {
+                ...country,
+                bookmarkedBy: country.bookmarkedBy.filter(
+                  (userId) => userId !== action.payload.userId
+                ),
+              }
+            : country
+        ),
+      };
     default:
       return state;
 

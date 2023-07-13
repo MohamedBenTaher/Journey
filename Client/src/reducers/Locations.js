@@ -1,5 +1,5 @@
 
-import { UPDATE_LOCATION, CREATE_LOCATION, FETCH_LOCATION,FETCH_LOCATIONS, DELETE_LOCATION, FETCH_LOCATION_BY_SEARCH, START_LOADING_LOCATIONS, END_LOADING_LOCATIONS, COMMENT_LOCATION, RATE_LOCATION } from '../constants/actionTypes.js';
+import { UPDATE_LOCATION, CREATE_LOCATION, FETCH_LOCATION,FETCH_LOCATIONS, DELETE_LOCATION, FETCH_LOCATION_BY_SEARCH, START_LOADING_LOCATIONS, END_LOADING_LOCATIONS, COMMENT_LOCATION, RATE_LOCATION, BOOKMARK_lOCATION, CANCEL_BOOKMARK_LOCATION } from '../constants/actionTypes.js';
 export default (state = { isLoading: false, locations: [] }, action) => {
   switch (action.type) {
     case START_LOADING_LOCATIONS:
@@ -43,12 +43,32 @@ export default (state = { isLoading: false, locations: [] }, action) => {
     }
     return location;
   });
-
-  return {
-    ...state,
-    locations: updatedLocations,
-  };
-    
+  case BOOKMARK_lOCATION:
+    return {
+      ...state,
+      locations: state.locations.map((location) =>
+      location._id === action.payload.id
+          ? {
+              ...location,
+              bookmarkedBy: [...location.bookmarkedBy, action.payload.userId],
+            }
+          : location
+      ),
+    };
+  case CANCEL_BOOKMARK_LOCATION:
+    return {
+      ...state,
+      locations: state.locations.map((location) =>
+      location._id === action.payload.id
+          ? {
+              ...location,
+              bookmarkedBy: location.bookmarkedBy.filter(
+                (userId) => userId !== action.payload.userId
+              ),
+            }
+          : location
+      ),
+    };
     default:
       return state;
 

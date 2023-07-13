@@ -6,6 +6,7 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import { useHistory } from 'react-router-dom';
 import zIndex from '@material-ui/core/styles/zIndex';
+import { useDispatch } from 'react-redux';
 const useStyles = makeStyles((theme) =>
   createStyles({
     card: {
@@ -69,6 +70,8 @@ const useStyles = makeStyles((theme) =>
 const CountryCard = ({country}) => {
   const history=useHistory()
   const classes = useStyles();
+  const dispatch=useDispatch()
+
   const [liked,setLiked]=useState(false)
   console.log('country in card',country)
   return (

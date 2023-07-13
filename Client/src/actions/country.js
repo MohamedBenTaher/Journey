@@ -1,5 +1,5 @@
 import * as api from '../api/index.js';
-import { LIKE_COUNTRY,DISLIKE_COUNTRY,FETCH_COUNTRIES,FETCH_COUNTRY,FETCH_COUNTRY_BY_SEARCH, START_LOADING_COUNTRIES,END_LOADING_COUNTRIES, CREATE_COUNTRY, UPDATE_COUNTRY, DELETE_COUNTRY} from '../constants/actionTypes.js';
+import { LIKE_COUNTRY,DISLIKE_COUNTRY,FETCH_COUNTRIES,FETCH_COUNTRY,FETCH_COUNTRY_BY_SEARCH, START_LOADING_COUNTRIES,END_LOADING_COUNTRIES, CREATE_COUNTRY, UPDATE_COUNTRY, DELETE_COUNTRY, BOOKMARK_COUNTRY, CANCEL_BOOKMARK_COUNTRY} from '../constants/actionTypes.js';
 
 //Action Creators
 export const getTopCountries = () => async (dispatch) => {
@@ -95,6 +95,26 @@ export const dislikeCountry = (destinationId,userId) => async (dispatch) => {
     const { data } = await api.dislikeCountry(destinationId,userId);
     console.log('after downvote ',data)
     dispatch({ type: DISLIKE_COUNTRY, payload: data });
+
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+export const bookmarkCountry=(id,userId)=>async(dispatch)=>{
+  try {
+    const { data } = await api.bookmarkCountry(id,userId);
+    console.log('after post bookmark ',data)
+    dispatch({ type: BOOKMARK_COUNTRY, payload: data });
+
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+export const cancelBookmarkCountry=(id,userId)=>async(dispatch)=>{
+  try {
+    const { data } = await api.cancelBookmarkDestination(id,userId);
+    console.log('after post bookmark ',data)
+    dispatch({ type: CANCEL_BOOKMARK_COUNTRY, payload: data });
 
   } catch (error) {
     console.log(error.message)

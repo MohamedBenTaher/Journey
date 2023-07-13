@@ -1,5 +1,5 @@
 import * as api from '../api/index.js';
-import { LIKE,UPDATE,CREATE,FETCH_BY_SEARCH,DELETE, FETCH_ALL,START_LOADING,END_LOADING,FETCH_POST,COMMENT,FETCH_BY_CREATOR } from '../constants/actionTypes.js';
+import { LIKE,UPDATE,CREATE,FETCH_BY_SEARCH,DELETE, FETCH_ALL,START_LOADING,END_LOADING,FETCH_POST,COMMENT,FETCH_BY_CREATOR, BOOKMARK_POST, CANCEL_BOOKMARK_POST } from '../constants/actionTypes.js';
 
 //Action Creators
 
@@ -84,6 +84,26 @@ export const likePost=(id)=>async (dispatch)=>{
      return data.comments;
     } catch (error) {
       console.log(error)
+    }
+  }
+  export const bookmarkPost=(id,userId)=>async(dispatch)=>{
+    try {
+      const { data } = await api.bookmarkPost(id,userId);
+      console.log('after post bookmark ',data)
+      dispatch({ type: BOOKMARK_POST, payload: data });
+  
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+  export const cancelBookmarkPost=(id,userId)=>async(dispatch)=>{
+    try {
+      const { data } = await api.cancelBookmarkPost(id,userId);
+      console.log('after post bookmark ',data)
+      dispatch({ type: CANCEL_BOOKMARK_POST, payload: data });
+  
+    } catch (error) {
+      console.log(error.message)
     }
   }
   export const getPostsByCreator = (name) => async (dispatch) => {

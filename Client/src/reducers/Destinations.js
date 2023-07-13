@@ -54,10 +54,6 @@ export default (state = { isLoading: false, destinations: [], user: { savedDesti
     case BOOKMARK_DESTINATION:
       return {
         ...state,
-        user: {
-          ...state.user,
-          savedDestinations: [...state.user.savedDestinations, action.payload.id],
-        },
         destinations: state.destinations.map((destination) =>
           destination._id === action.payload.id
             ? {
@@ -70,12 +66,6 @@ export default (state = { isLoading: false, destinations: [], user: { savedDesti
     case CANCEL_BOOKMARK_DESTINATION:
       return {
         ...state,
-        user: {
-          ...state.user,
-          savedDestinations: state.user.savedDestinations.filter(
-            (destination) => destination !== action.payload
-          ),
-        },
         destinations: state.destinations.map((destination) =>
           destination._id === action.payload.id
             ? {

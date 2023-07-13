@@ -1,5 +1,5 @@
 
-import { LIKE, UPDATE_EVENT, CREATE_EVENT, FETCH_EVENTS, DELETE_EVENT, FETCH_EVENT, FETCH_EVENT_BY_SEARCH, START_LOADING, END_LOADING, COMMENT_EVENT, FETCH_EVENTS_BY_CREATOR, ATTEND_EVENT } from '../constants/actionTypes.js';
+import { LIKE, UPDATE_EVENT, CREATE_EVENT, FETCH_EVENTS, DELETE_EVENT, FETCH_EVENT, FETCH_EVENT_BY_SEARCH, START_LOADING, END_LOADING, COMMENT_EVENT, FETCH_EVENTS_BY_CREATOR, ATTEND_EVENT, BOOKMARK_EVENT, CANCEL_BOOKMARK_EVENT } from '../constants/actionTypes.js';
 const EventReducer = (state = { isLoading: true, events: [] }, action) => {
   switch (action.type) {
     case START_LOADING:
@@ -39,7 +39,32 @@ const EventReducer = (state = { isLoading: true, events: [] }, action) => {
     // })};
     case FETCH_EVENT_BY_SEARCH:
       return { ...state, events: action.payload.data };
-
+      case BOOKMARK_EVENT:
+        return {
+          ...state,
+          events: state.events.map((event) =>
+          event._id === action.payload.id
+              ? {
+                  ...event,
+                  bookmarkedBy: [...event.bookmarkedBy, action.payload.userId],
+                }
+              : event
+          ),
+        };
+      case CANCEL_BOOKMARK_EVENT:
+        return {
+          ...state,
+          events: state.events.map((event) =>
+          event._id === action.payload.id
+              ? {
+                  ...event,
+                  bookmarkedBy: event.bookmarkedBy.filter(
+                    (userId) => userId !== action.payload.userId
+                  ),
+                }
+              : event
+          ),
+        };
     default:
       return state;
 

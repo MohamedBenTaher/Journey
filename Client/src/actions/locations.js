@@ -1,5 +1,5 @@
 import * as api from '../api/index.js';
-import { RATE_LOCATION, UPDATE_LOCATION, CREATE_LOCATION, FETCH_LOCATION_BY_SEARCH,FETCH_LOCATION_BY_COUNTRY,FETCH_LOCATION_BY_DESTINATION, DELETE_LOCATION, FETCH_LOCATIONS, START_LOADING_LOCATIONS, END_LOADING_LOCATIONS, FETCH_LOCATION, COMMENT_LOCATION } from '../constants/actionTypes.js';
+import { RATE_LOCATION, UPDATE_LOCATION, CREATE_LOCATION, FETCH_LOCATION_BY_SEARCH,FETCH_LOCATION_BY_COUNTRY,FETCH_LOCATION_BY_DESTINATION, DELETE_LOCATION, FETCH_LOCATIONS, START_LOADING_LOCATIONS, END_LOADING_LOCATIONS, FETCH_LOCATION, COMMENT_LOCATION, CANCEL_BOOKMARK_LOCATION, BOOKMARK_lOCATION } from '../constants/actionTypes.js';
 
 //Action Creators
 export const getTopLocations = () => async (dispatch) => {
@@ -114,4 +114,23 @@ export const rateLocation = (locationId,userId,avgRating) => async (dispatch) =>
     console.log(error.message)
   }
 }
+export const bookmarkLocation=(id,userId)=>async(dispatch)=>{
+  try {
+    const { data } = await api.bookmarkLocation(id,userId);
+    console.log('after post bookmark ',data)
+    dispatch({ type: BOOKMARK_lOCATION, payload: data });
 
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+export const cancelBookmarkLocation=(id,userId)=>async(dispatch)=>{
+  try {
+    const { data } = await api.cancelBookmarkLocation(id,userId);
+    console.log('after post bookmark ',data)
+    dispatch({ type: CANCEL_BOOKMARK_LOCATION, payload: data });
+
+  } catch (error) {
+    console.log(error.message)
+  }
+}

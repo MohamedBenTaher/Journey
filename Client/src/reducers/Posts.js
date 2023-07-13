@@ -1,5 +1,5 @@
 
-import { LIKE,UPDATE,CREATE,FETCH_ALL,DELETE ,FETCH_POST,FETCH_BY_SEARCH,START_LOADING,END_LOADING,COMMENT,FETCH_BY_CREATOR} from '../constants/actionTypes.js';
+import { LIKE,UPDATE,CREATE,FETCH_ALL,DELETE ,FETCH_POST,FETCH_BY_SEARCH,START_LOADING,END_LOADING,COMMENT,FETCH_BY_CREATOR, CANCEL_BOOKMARK_POST, BOOKMARK_POST} from '../constants/actionTypes.js';
 export default ( state= {isLoading:true,posts:[]},action)=>{
   switch (action.type) {
     case START_LOADING:
@@ -39,7 +39,32 @@ export default ( state= {isLoading:true,posts:[]},action)=>{
       })};
       case FETCH_BY_SEARCH:
       return {...state,posts:action.payload.data};
-       
+      case BOOKMARK_POST:
+        return {
+          ...state,
+          posts: state.destinations.map((post) =>
+          post._id === action.payload.id
+              ? {
+                  ...post,
+                  bookmarkedBy: [...post.bookmarkedBy, action.payload.userId],
+                }
+              : post
+          ),
+        };
+      case CANCEL_BOOKMARK_POST:
+        return {
+          ...state,
+          posts: state.posts.map((post) =>
+          post._id === action.payload.id
+              ? {
+                  ...post,
+                  bookmarkedBy: post.bookmarkedBy.filter(
+                    (userId) => userId !== action.payload.userId
+                  ),
+                }
+              : post
+          ),
+        };
       default:
         return state;
         
