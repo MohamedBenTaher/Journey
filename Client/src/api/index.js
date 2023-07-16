@@ -30,7 +30,7 @@ export const comment = (value, id) => API.post(`/post/${id}/comment`, { value })
 export const fetchPostsByCreator = (name) => API.get(`/post/creator?name=${name}`);
 export const fetchPostsBySearch = (searchQuery) => API.get(`/post/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}&season=${searchQuery.season}`);
 export const bookmarkPost=(id,userId)=>API.patch(`post/${id}/bookmark`,{userId:userId})
-export const cancelBookmarkPost=(id,userId)=>API.patch(`post/${id}/bookmark`,{userId:userId})
+export const cancelBookmarkPost=(id,userId)=>API.patch(`post/${id}/cancel`,{userId:userId})
 /*========================UserAuth=====================================*/
 export const signIn = (formData) => API.post('/user/signin', formData)
 export const signUp = (formData) => API.post('/user/signup', formData)
@@ -47,7 +47,7 @@ export const attendEvent = (id,userId) => API.patch(`/event/${id}/attend`,{userI
 export const cancelEvent = (id,userId) => API.patch(`/event/${id}/cancel`,{userId:userId})
 export const likeEvent=(id,userId)=>API.patch(`/event/${id}/like`,{userId:userId})
 export const bookmarkEvent=(id,userId)=>API.patch(`event/${id}/bookmark`,{userId:userId})
-export const cancelBookmarkEvent=(id,userId)=>API.patch(`event/${id}/bookmark`,{userId:userId})
+export const cancelBookmarkEvent=(id,userId)=>API.patch(`event/${id}/cancel`,{userId:userId})
 
 /*===========================Destinations=========================================*/
 export const fetchTopDestinations=()=>API.get(`/destination/top`)
@@ -68,7 +68,7 @@ export const fetchDestinationsBySearch = (searchQuery) => API.get(`/destination/
 export const fetchDestinationByCountry=(id)=>API.get(`/destination/country/${id}`)
 export const likeDestination=(id,userId)=>API.patch(`/destination/${id}/like`,{userId:userId})
 export const bookmarkDestination=(id,userId)=>API.patch(`destination/${id}/bookmark`,{userId:userId})
-export const cancelBookmarkDestination=(id,userId)=>API.patch(`destination/${id}/bookmark`,{userId:userId})
+export const cancelBookmarkDestination=(id,userId)=>API.patch(`destination/${id}/cancel`,{userId:userId})
 /*===================================Comments===============================================*/
 /*==============Destination============*/
 export const commentEntity = (entityId,entityType,userId,content) => API.post(`/comment/${entityId}/comment`, { body:{userId:userId,entityType:entityType,content:content} });
@@ -133,5 +133,5 @@ export const fetchLocationsByDestination=(id)=>API.get(`/location/destination/${
 export const likeLocation=(id,userId)=>API.patch(`/location/${id}/like`,{userId:userId})
 export const fetchLocationsBytype=(id,type)=>API.get(`/location/country/${id}/type/${type}`)
 export const bookmarkLocation=(id,userId)=>API.patch(`location/${id}/bookmark`,{userId:userId})
-export const cancelBookmarkLocation=(id,userId)=>API.patch(`location/${id}/bookmark`,{userId:userId})
+export const cancelBookmarkLocation=(id,userId)=>API.patch(`location/${id}/cancel`,{userId:userId})
 /*=============================Resources=======================*/

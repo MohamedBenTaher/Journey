@@ -195,8 +195,8 @@ const uploadedFiles = [];
     }
 
     export const bookmarkDestination = async (req, res) => {
-      const { id } = req.body;
-      const userId = req.params.id;
+      const { userId } = req.body;
+      const id = req.params.id;
       try {
       const  resource = await Destination.findById(id);
         if (!resource) {
@@ -206,8 +206,8 @@ const uploadedFiles = [];
         if (!user) {
           return res.status(404).json({ message: 'User not found' });
         }
-        if (user.savedCities.find((bookmark)=>bookmark==id)) {
-          return res.status(400).json({ message: 'City already bookmarked' });
+        if (!user.savedCities.find((bookmark)=>bookmark==id)) {
+          return res.status(200).json({ message: 'City already bookmarked' });
         }
         user.savedCities.push(id);
         resource.bookmarkedBy.push(userId);
@@ -220,8 +220,8 @@ const uploadedFiles = [];
       }
     };
     export const cancelBookmarkDestination = async (req, res) => {
-      const { resourceId } = req.body;
-      const userId = req.userId;
+      const { userId } = req.body;
+      const resourceId = req.params.id;
       try {
         let resource;
         resource = await Destination.findById(resourceId);

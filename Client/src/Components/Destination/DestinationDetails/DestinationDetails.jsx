@@ -1,15 +1,18 @@
 import React ,{useEffect,useState} from 'react';
-import { Card, CardContent, CardMedia, Typography, Grid } from '@material-ui/core';
+import { Card, CardContent, CardMedia, Typography, Grid ,IconButton} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { downvoteDestination, getDestination, upvoteDestination } from '../../../actions/destinations';
+import { bookmarkDestination, cancelBookmarkDestination, downvoteDestination, getDestination, upvoteDestination } from '../../../actions/destinations';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { useSelector,useDispatch } from 'react-redux';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import  Comments  from '../../Comment/Comments.jsx';
 const useStyles = makeStyles((theme) => ({
   coverImage: {
     height: 700,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    position:'relative'
   },
   title: {
     marginTop: theme.spacing(2),
@@ -61,6 +64,13 @@ const useStyles = makeStyles((theme) => ({
   description:{
     paddingBlock:'1em',
     textJustify:'auto'
+  },
+  saveDestination:{
+    position: 'absolute',
+    top: theme.spacing(1),
+    right: theme.spacing(1),
+    zIndex: 1,
+    color: 'white',
   }
 }));
 
@@ -77,25 +87,41 @@ const DestinationDetails = () => {
     setUser(JSON.parse(localStorage.getItem('profile')));
   }, []);
 const handleUpvote = () => {
-    dispatch(upvoteDestination(destination?._id, user?._id));
+    dispatch(upvoteDestination(destination?._id, user?.result?._id));
   };
 
   const handleDownvote = () => {
-    dispatch(downvoteDestination(destination?._id, user?._id));
+    dispatch(downvoteDestination(destination?._id, user?.result?._id));
+  };
+  const handleBookmark = () => {
+    if (user && destination?.bookmarkedBy?.indexOf(user?.result?._id) !== -1) {
+      dispatch(cancelBookmarkDestination(destination._id, user.result._id));
+    } else {
+      dispatch(bookmarkDestination(destination._id, user.result._id));
+    }
   };
 
+console.log('who bookmaraked',destination?.bookmarkedBy?.find((id)=>id===user?.result?._id))
   return (
     <>
     <Card>
-          <CardMedia className={classes.coverImage} image={destination?.coverImage} />
+          <CardMedia className={classes.coverImage} image={destination?.coverImage} >
+          <IconButton className={classes.saveDestination}  onClick={handleBookmark} disabled={!user}>
+                {destination?.bookmarkedBy?.indexOf(user?.result?._id)!==-1 ? (
+                  <BookmarkIcon style={{ color: 'white',fontSize: 32,zIndex:99 }} />
+                ) : (
+                  <BookmarkBorderIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />
+                )}
+              </IconButton>
+          </CardMedia>
           <CardContent>
-              <Typography variant="h5" className={classes.title}>
+              <Typography variant="h2" className={classes.title}>
                   {destination?.title}
               </Typography>
               <Typography variant="body2" component="p">
                   Created: {new Date(destination?.createdAt).toLocaleString()}
               </Typography>
-              <div className={classes.voteSection}>
+             <div className={classes.voteSection}>
                   {user && (
                       <div className={classes.voteButton} onClick={() => handleUpvote()}>Upvote</div>
                   )}
@@ -109,7 +135,7 @@ const handleUpvote = () => {
                   <Typography variant="body2" className={classes.voteCount}>
                       Downvotes:   {destination?.downvotes?.length}
                   </Typography>
-              </div>
+              </div> 
               <div className={classes.description}>
                   {destination?.description.split('\n').map((paragraph, index) => (
                       <p key={index} style={{ textAlign: 'justify' }}>{paragraph}</p>
@@ -141,7 +167,7 @@ const handleUpvote = () => {
         destination&&(
           <Card>
             <CardContent>
-                <Comments entityId={id} entityType={'Destination'} user={user||{}}/>
+                <Comments entityId={id} entityType={'Destination'} user={user}/>
             </CardContent>
           </Card>
         )

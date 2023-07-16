@@ -123,8 +123,8 @@ export const deletePost = async (req, res) => {
 
 
 export const bookmarkPost = async (req, res) => {
-    const { id } = req.body;
-    const userId = req.params.id;
+    const { userId } = req.body;
+    const id = req.params.id;
     try {
     const  resource = await PostMessage.findById(id);
       if (!resource) {
@@ -136,7 +136,7 @@ export const bookmarkPost = async (req, res) => {
         return res.status(404).json({ message: 'User not found' });
       }
 
-      if (user.savedStories.find((bookmark)=>bookmark==id)) {
+      if (user.savedStories.includes(id)) {
         return res.status(400).json({ message: 'Resource already bookmarked' });
       }
 
@@ -151,8 +151,8 @@ export const bookmarkPost = async (req, res) => {
     }
   };
   export const cancelBookmarkPost = async (req, res) => {
-    const { id } = req.body;
-    const userId = req.userId;
+    const { userId } = req.body;
+    const id = req.params.id;
     try {
       let resource;
       resource = await PostMessage.findById(id);
@@ -164,7 +164,7 @@ export const bookmarkPost = async (req, res) => {
         return res.status(404).json({ message: 'User not found' });
       }
       if (!user.savedStories.includes(id)) {
-        return res.status(400).json({ message: 'Post not bookmarked' });
+        return res.status(200).json({ message: 'Post not bookmarked' });
       }
       user.savedStories.pull(id);
       resource.bookmarkedBy.pull(userId);

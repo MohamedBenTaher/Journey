@@ -26,6 +26,17 @@ export default makeStyles((theme) => ({
       alignItems:'center',
       justifyContent:'center'
     },
+    saveEvent: {
+      position: 'absolute',
+      top: 20,
+      right: 20,
+      zIndex: 99,
+    },
+    imageSection: {
+      position: 'relative',
+      display: 'flex',
+      justifyContent: 'flex-end',
+    },
     content:{
       padding:'16px'
     }

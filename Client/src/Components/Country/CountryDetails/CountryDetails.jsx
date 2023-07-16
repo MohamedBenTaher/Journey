@@ -1,15 +1,25 @@
 import React,{useState,useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardMedia, CardContent, Typography ,Grid} from '@material-ui/core';
+import { Card, CardMedia, CardContent, Typography ,Grid,IconButton} from '@material-ui/core';
 import { useDispatch,useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
-
-import { getCountry } from '../../../actions/country';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import { bookmarkCountry, cancelBookmarkCountry, getCountry } from '../../../actions/country';
 const useStyles = makeStyles((theme) => ({
   coverImage: {
     height: 400,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    position: 'relative',
+  },
+  saveCountry:{
+    position: 'absolute',
+    top: theme.spacing(1),
+    right: theme.spacing(1),
+    zIndex: 1,
+    color: 'white',
+
   },
   title: {
     marginTop: theme.spacing(2),
@@ -91,7 +101,15 @@ const CountryDetails = () => {
 
   return (
     <Card >
-      <CardMedia className={classes.coverImage} image={country?.coverImage} title={country?.title} />
+        <CardMedia className={classes.coverImage} image={country?.coverImage} >
+          <IconButton className={classes.saveCountry} onClick={()=>{user && country?.bookmarkedBy?.indexOf(user?.result?._id)!==-1 ? dispatch(cancelBookmarkCountry(country._id,user.result._id)):dispatch(bookmarkCountry(country._id,user.result._id))}} disabled={!user}>
+                {country?.bookmarkedBy?.indexOf(user?.result?._id)!==-1 ? (
+                  <BookmarkIcon style={{ color: 'white',fontSize: 32,zIndex:99 }} />
+                ) : (
+                  <BookmarkBorderIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />
+                )}
+              </IconButton>
+            </CardMedia>
       <CardContent>
         <Typography variant="h3" component="h2" className={classes.title}>
           {country?.title}

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
-import { attendEvent, cancelEvent, getEvent } from '../../../actions/events'
+import { attendEvent, bookmarkEvent, cancelBookmarkEvent, cancelEvent, getEvent } from '../../../actions/events'
 import useStyles from "./styles.js"
-import { Button, Card,CardContent,Grid,Typography } from '@material-ui/core'
+import { Button, Card,CardContent,Grid,Typography,IconButton } from '@material-ui/core'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
@@ -11,6 +11,8 @@ import PlaceIcon from '@mui/icons-material/Place';
 import TagIcon from '@mui/icons-material/Tag';
 import PercentIcon from '@mui/icons-material/Percent';
 import BackpackIcon from '@mui/icons-material/Backpack';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import moment from 'moment/moment'
 const EventDetails = ({}) => {
     const classes=useStyles()
@@ -32,7 +34,17 @@ const EventDetails = ({}) => {
     }
   return(
     <><Card className={classes.card}>
+        <div className={classes.imageSection}>
+      
+      <IconButton className={classes.saveEvent} onClick={()=>{user && event?.bookmarkedBy?.indexOf(user?.result?._id)!==-1 ? dispatch(cancelBookmarkEvent(event._id,user.result._id)):dispatch(bookmarkEvent(event._id,user.result._id))}} disabled={!user}>
+                {event?.bookmarkedBy?.indexOf(user?.result?._id)!==-1 ? (
+                  <BookmarkIcon style={{ color: 'white',fontSize: 32,zIndex:99 }} />
+                ) : (
+                  <BookmarkBorderIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />
+                )}
+      </IconButton>
       <img src={event?.coverImage} alt="Event Cover" className={classes.coverImage} />
+      </div>
       <CardContent className={classes.content}>
         <Typography variant="h5" component="h2" className={classes.title}>
           {event?.title}
