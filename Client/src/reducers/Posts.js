@@ -42,13 +42,13 @@ export default ( state= {isLoading:true,posts:[]},action)=>{
       case BOOKMARK_POST:
         return {
           ...state,
-          posts: state.destinations.map((post) =>
-          post._id === action.payload.id
-              ? {
-                  ...post,
-                  bookmarkedBy: [...post.bookmarkedBy, action.payload.userId],
+          posts: state.destinations.map((post) =>{
+          if(post._id === action.payload._id)
+               {
+                return action.payload
                 }
-              : post
+              return  post
+          }
           ),
         };
       case CANCEL_BOOKMARK_POST:

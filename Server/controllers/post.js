@@ -144,7 +144,7 @@ export const bookmarkPost = async (req, res) => {
       resource.bookmarkedBy.push(userId);
       await user.save();
       await resource.save();
-      res.status(200).json({ message: 'Post bookmarked' },resource);
+      res.status(200).json({ message: 'Post bookmarked', resource});
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: 'Something went wrong' ,...error});
@@ -164,7 +164,7 @@ export const bookmarkPost = async (req, res) => {
         return res.status(404).json({ message: 'User not found' });
       }
       if (!user.savedStories.includes(id)) {
-        return res.status(200).json({ message: 'Post not bookmarked' });
+        return res.status(400).json({ message: 'Post not bookmarked' });
       }
       user.savedStories.pull(id);
       resource.bookmarkedBy.pull(userId);

@@ -77,8 +77,12 @@ const useStyles = makeStyles((theme) => ({
 const DestinationDetails = () => {
   const {destination,isLoading}=useSelector((state)=>state.destinations);
   const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
+  const [bookmarked, setBookmarked] = useState(false); // New state to track bookmarked status
   const classes = useStyles();
   const dispatch=useDispatch()
+  const [bookmarks, setBookmarks] = useState(destination?.bookmarkedBy);
+  const hasBoomarkedPost=destination.bookmarkedBy.find((like)=>like===user.result._id)
   const {id}=useParams()
   useEffect(()=>{
    dispatch(getDestination(id))
@@ -94,24 +98,29 @@ const handleUpvote = () => {
     dispatch(downvoteDestination(destination?._id, user?.result?._id));
   };
   const handleBookmark = () => {
-    if (user && destination?.bookmarkedBy?.indexOf(user?.result?._id) !== -1) {
+    if (bookmarked) {
       dispatch(cancelBookmarkDestination(destination._id, user.result._id));
     } else {
       dispatch(bookmarkDestination(destination._id, user.result._id));
     }
   };
 
+const Bookmark=() => {
+  if (destination.bookmarkedBy.length > 0) {
+    return (destination && user && destination.bookmarkedBy.includes(user?.result?._id)) 
+      ? (
+        <BookmarkIcon style={{ color: 'white',fontSize: 32,zIndex:99 }} />      ) : (
+          <BookmarkBorderIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />
+      );
+  
+}}
 console.log('who bookmaraked',destination?.bookmarkedBy?.find((id)=>id===user?.result?._id))
   return (
     <>
     <Card>
           <CardMedia className={classes.coverImage} image={destination?.coverImage} >
           <IconButton className={classes.saveDestination}  onClick={handleBookmark} disabled={!user}>
-                {destination?.bookmarkedBy?.indexOf(user?.result?._id)!==-1 ? (
-                  <BookmarkIcon style={{ color: 'white',fontSize: 32,zIndex:99 }} />
-                ) : (
-                  <BookmarkBorderIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />
-                )}
+                <Bookmark/>
               </IconButton>
           </CardMedia>
           <CardContent>
