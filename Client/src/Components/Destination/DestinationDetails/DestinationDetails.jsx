@@ -1,18 +1,25 @@
-import React ,{useEffect,useState} from 'react';
-import { Card, CardContent, CardMedia, Typography, Grid ,IconButton} from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { Card, CardContent, CardMedia, Typography, Grid, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { bookmarkDestination, cancelBookmarkDestination, downvoteDestination, getDestination, upvoteDestination } from '../../../actions/destinations';
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
-import { useSelector,useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import  Comments  from '../../Comment/Comments.jsx';
+import { useParams } from 'react-router-dom';
+import {
+  bookmarkDestination,
+  cancelBookmarkDestination,
+  downvoteDestination,
+  getDestination,
+  upvoteDestination
+} from '../../../actions/destinations';
+import Comments from '../../Comment/Comments';
+
 const useStyles = makeStyles((theme) => ({
   coverImage: {
     height: 700,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    position:'relative'
+    position: 'relative'
   },
   title: {
     marginTop: theme.spacing(2),
@@ -20,13 +27,14 @@ const useStyles = makeStyles((theme) => ({
   },
   description: {
     marginTop: theme.spacing(2),
+    textAlign: 'justify',
   },
   voteSection: {
     marginTop: theme.spacing(2),
-    width:'50%',
+    width: '50%',
     display: 'flex',
     alignItems: 'center',
-    justifyContent:'space-evenly'
+    justifyContent: 'space-evenly'
   },
   voteButton: {
     marginRight: theme.spacing(1),
@@ -38,34 +46,27 @@ const useStyles = makeStyles((theme) => ({
   voteCount: {
     fontWeight: 'bold',
   },
-
   majorImage: {
-    height: '100%', // Adjust the height of the major image
+    height: '100%',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     borderRadius: '8px',
     [theme.breakpoints.down('sm')]: {
-      height: '300px', 
-      width:'99%'// Adjust the height for smaller screens
+      height: '300px',
+      width: '99%',
     },
- 
   },
   image: {
-    height: '200px', // Adjust the height of the grid images
+    height: '200px',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    borderRadius:'8px'
+    borderRadius: '8px',
   },
-  otherImages:{
+  otherImages: {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    
   },
-  description:{
-    paddingBlock:'1em',
-    textJustify:'auto'
-  },
-  saveDestination:{
+  saveDestination: {
     position: 'absolute',
     top: theme.spacing(1),
     right: theme.spacing(1),
@@ -75,113 +76,117 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DestinationDetails = () => {
-  const {destination,isLoading}=useSelector((state)=>state.destinations);
-  const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-
-  const [bookmarked, setBookmarked] = useState(false); // New state to track bookmarked status
   const classes = useStyles();
-  const dispatch=useDispatch()
-  const [bookmarks, setBookmarks] = useState(destination?.bookmarkedBy);
-  const hasBoomarkedPost=destination.bookmarkedBy.find((like)=>like===user.result._id)
-  const {id}=useParams()
-  useEffect(()=>{
-   dispatch(getDestination(id))
-  },[dispatch,id])
+  const { id } = useParams();
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const userId = user?.result?._id;
+  
+  const dispatch = useDispatch();
+  const { destination, isLoading } = useSelector((state) => state.destinations);
+  const [bookmarked, setBookmarked] = useState(false);
+  
+  useEffect(() => {
+    dispatch(getDestination(id));
+  }, [dispatch, id]);
+  
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('profile')));
   }, []);
-const handleUpvote = () => {
-    dispatch(upvoteDestination(destination?._id, user?.result?._id));
+  
+  useEffect(() => {
+    if (destination) {
+      setBookmarked(destination.bookmarkedBy.includes(userId));
+    }
+  }, [destination, userId]);
+
+  const handleUpvote = () => {
+    dispatch(upvoteDestination(destination?._id, userId));
   };
 
   const handleDownvote = () => {
-    dispatch(downvoteDestination(destination?._id, user?.result?._id));
+    dispatch(downvoteDestination(destination?._id, userId));
   };
+
   const handleBookmark = () => {
     if (bookmarked) {
-      dispatch(cancelBookmarkDestination(destination._id, user.result._id));
+      dispatch(cancelBookmarkDestination(destination?._id, userId));
     } else {
-      dispatch(bookmarkDestination(destination._id, user.result._id));
+      dispatch(bookmarkDestination(destination?._id, userId));
     }
+    setBookmarked(!bookmarked);
   };
 
-const Bookmark=() => {
-  if (destination.bookmarkedBy.length > 0) {
-    return (destination && user && destination.bookmarkedBy.includes(user?.result?._id)) 
-      ? (
-        <BookmarkIcon style={{ color: 'white',fontSize: 32,zIndex:99 }} />      ) : (
-          <BookmarkBorderIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />
-      );
-  
-}}
-console.log('who bookmaraked',destination?.bookmarkedBy?.find((id)=>id===user?.result?._id))
   return (
     <>
-    <Card>
-          <CardMedia className={classes.coverImage} image={destination?.coverImage} >
-          <IconButton className={classes.saveDestination}  onClick={handleBookmark} disabled={!user}>
-                <Bookmark/>
-              </IconButton>
-          </CardMedia>
-          <CardContent>
-              <Typography variant="h2" className={classes.title}>
-                  {destination?.title}
-              </Typography>
-              <Typography variant="body2" component="p">
-                  Created: {new Date(destination?.createdAt).toLocaleString()}
-              </Typography>
-             <div className={classes.voteSection}>
-                  {user && (
-                      <div className={classes.voteButton} onClick={() => handleUpvote()}>Upvote</div>
-                  )}
-
-                  <Typography variant="body2" className={classes.voteCount}>
-                      Upvotes:  {destination?.upvotes?.length}
-                  </Typography>
-                  {user && (
-                      <div className={classes.voteButton} onClick={() => handleDownvote()}>Downvote</div>
-                  )}
-                  <Typography variant="body2" className={classes.voteCount}>
-                      Downvotes:   {destination?.downvotes?.length}
-                  </Typography>
-              </div> 
-              <div className={classes.description}>
-                  {destination?.description.split('\n').map((paragraph, index) => (
-                      <p key={index} style={{ textAlign: 'justify' }}>{paragraph}</p>
-                  ))}
+      <Card>
+        <CardMedia className={classes.coverImage} image={destination?.coverImage}>
+          <IconButton className={classes.saveDestination} onClick={handleBookmark} disabled={!user}>
+            {bookmarked ? (
+              <BookmarkIcon style={{ color: 'white', fontSize: 32, zIndex: 99 }} />
+            ) : (
+              <BookmarkBorderIcon style={{ color: 'white', fontSize: 32, zIndex: 99 }} />
+            )}
+          </IconButton>
+        </CardMedia>
+        <CardContent>
+          <Typography variant="h2" className={classes.title}>
+            {destination?.title}
+          </Typography>
+          <Typography variant="body2" component="p">
+            Created: {new Date(destination?.createdAt).toLocaleString()}
+          </Typography>
+          <div className={classes.voteSection}>
+            {user && (
+              <div className={classes.voteButton} onClick={handleUpvote}>
+                Upvote
               </div>
-            <div className={classes.imagesSection}>
-            <Grid container spacing={2} direction={{ lg:'row'}} >
-                
-                  {/* Display the first image as the major image */}
-                  {destination?.images?.length > 0 && (
-                    <Grid item xs={12} md={6} lg={6} >
-                      <div className={classes.majorImage} style={{ backgroundImage: `url(${destination?.images[0]})` }} />
-                    </Grid>
-                  )}
-              
-                  <Grid item container className={classes.otherImages} xs={12} md={6} lg={6}spacing={2}direction={{ xs: 'column', md: 'column',lg:'row' }} >
-                  {/* Display the rest of the images in a grid */}
-                  {destination?.images?.slice(1, 6).map((image, index) => (
-                    <Grid key={index} item xs={12} sm={12} md={3} lg={6}>
-                      <div className={classes.image} style={{ backgroundImage: `url(${image})` }} />
-                    </Grid>
-                  ))}
-                  </Grid>
+            )}
+            <Typography variant="body2" className={classes.voteCount}>
+              Upvotes: {destination?.upvotes?.length}
+            </Typography>
+            {user && (
+              <div className={classes.voteButton} onClick={handleDownvote}>
+                Downvote
+              </div>
+            )}
+            <Typography variant="body2" className={classes.voteCount}>
+              Downvotes: {destination?.downvotes?.length}
+            </Typography>
+          </div>
+          <div className={classes.description}>
+            {destination?.description.split('\n').map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
+          <div className={classes.imagesSection}>
+            <Grid container spacing={2} direction={{ lg: 'row' }}>
+              {destination?.images?.length > 0 && (
+                <Grid item xs={12} md={6} lg={6}>
+                  <div
+                    className={classes.majorImage}
+                    style={{ backgroundImage: `url(${destination?.images[0]})` }}
+                  />
                 </Grid>
-              </div>
-          </CardContent>
+              )}
+              <Grid item container className={classes.otherImages} xs={12} md={6} lg={6} spacing={2} direction={{ xs: 'column', md: 'column', lg: 'row' }}>
+                {destination?.images?.slice(1, 6).map((image, index) => (
+                  <Grid key={index} item xs={12} sm={12} md={3} lg={6}>
+                    <div className={classes.image} style={{ backgroundImage: `url(${image})` }} />
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
+          </div>
+        </CardContent>
       </Card>
-      {
-        destination&&(
-          <Card>
-            <CardContent>
-                <Comments entityId={id} entityType={'Destination'} user={user}/>
-            </CardContent>
-          </Card>
-        )
-    }      
-          </>
+      {destination && (
+        <Card>
+          <CardContent>
+            <Comments entityId={id} entityType="Destination" user={user} />
+          </CardContent>
+        </Card>
+      )}
+    </>
   );
 };
 
