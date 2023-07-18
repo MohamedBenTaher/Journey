@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import Country from "../Models/Country.js"
 import s3 from '../awsConfig.js'
 import { v4 as uuidv4 } from 'uuid';
+import User from "../Models/user.js";
 
 
 export const  getTopCountries= async(req,res) => {
@@ -266,4 +267,57 @@ export const deleteS3Image=async(req,res)=>{
     });
     await Country.findByIdAndUpdate(id,country,{new: true});
     res.status(200).json(country)
+}
+
+export const bookmarkCountry = async (req, res) => {
+  const { userId } = req.body;
+  const id = req.params.id;
+  try {
+  const  resource = await Country.findById(id);
+    if (!resource) {
+      return res.status(404).json({ message: 'Country not found' });
+    }
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+ 
+    if (user.savedStories.includes(id)) {
+      return res.status(400).json({ message: 'Country already bookmarked' });
+    }
+    user.savedCities.push(id);
+    resource.bookmarkedBy.push(userId);
+    await user.save();
+    await resource.save();
+    res.status(201).json({ message: 'Country bookmarked', resource});
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Something went wrong' ,...error});
+  }
+};
+export const cancelBookmarkCountry = async (req, res) => {
+  const { userId } = req.body;
+  const resourceId = req.params.id;
+  try {
+    let resource;
+    resource = await Country.findById(resourceId);
+    if (!resource) {
+      return res.status(404).json({ message: 'Country not found' });
+    }
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    if (!user.savedCities.includes(resourceId)) {
+      return res.status(400).json({ message: 'Country not bookmarked' });
+    }
+    user.savedCities.pull(resourceId);
+    resource.bookmarkedBy.pull(userId);
+    await user.save();
+    await resource.save();
+    res.status(200).json({ message: 'Bookmark canceled' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Something went wrong' });
+  }
 }

@@ -98,7 +98,7 @@ export const fetchCountryByLikes=(id)=>API.get(`/country/likes/${id}`)
 // export const dislikeCountry=(countryId,id)=>API.post(`/country/${countryId}/dislike`,{userId:id})
 // export const fetchCountryByLikes=(id)=>API.get(`/country/likes/${id}`)
 export const bookmarkCountry=(id,userId)=>API.patch(`country/${id}/bookmark`,{userId:userId})
-export const cancelBookmarCountry=(id,userId)=>API.patch(`country/${id}/bookmark`,{userId:userId})
+export const cancelBookmarCountry=(id,userId)=>API.patch(`country/${id}/cancel`,{userId:userId})
 /*=====================================Continent=====================*/
 export const createContinent=(newContinent)=>API.post('/continent',newContinent,{
   headers: {

@@ -112,7 +112,7 @@ export const bookmarkCountry=(id,userId)=>async(dispatch)=>{
 }
 export const cancelBookmarkCountry=(id,userId)=>async(dispatch)=>{
   try {
-    const { data } = await api.cancelBookmarkDestination(id,userId);
+    const { data } = await api.cancelBookmarCountry(id,userId);
     console.log('after post bookmark ',data)
     dispatch({ type: CANCEL_BOOKMARK_COUNTRY, payload: data });
 

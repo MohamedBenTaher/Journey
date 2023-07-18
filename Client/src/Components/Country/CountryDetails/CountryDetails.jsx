@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { bookmarkCountry, cancelBookmarkCountry, getCountry } from '../../../actions/country';
+import { cancelBookmarCountry } from '../../../api';
 const useStyles = makeStyles((theme) => ({
   coverImage: {
     height: 400,
@@ -67,6 +68,8 @@ const CountryDetails = () => {
   console.log('continent details',country,value)
   const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const classes = useStyles();
+  const [bookmarked, setBookmarked] = useState(false);
+  const userId = user?.result?._id;
   const dispatch=useDispatch()
   const {id}=useParams()
   useEffect(()=>{
@@ -75,6 +78,11 @@ const CountryDetails = () => {
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('profile')));
   }, []);
+  useEffect(() => {
+    if (country) {
+      setBookmarked(country.bookmarkedBy.includes(userId));
+    }
+  }, [country, userId]);
   const formatParagraph = (paragraph) => {
     const titleRegex = /^(\d+):(.*)$/; // Regex to match the title pattern with number and colon
     const matches = paragraph.match(titleRegex);
@@ -97,13 +105,20 @@ const CountryDetails = () => {
   };
 
 
-
+  const handleBookmark = () => {
+    if (bookmarked) {
+      dispatch(cancelBookmarCountry(country?._id, userId));
+    } else {
+      dispatch(bookmarkCountry(country?._id, userId));
+    }
+    setBookmarked(!bookmarked);
+  };
 
   return (
     <Card >
         <CardMedia className={classes.coverImage} image={country?.coverImage} >
-          <IconButton className={classes.saveCountry} onClick={()=>{user && country?.bookmarkedBy?.indexOf(user?.result?._id)!==-1 ? dispatch(cancelBookmarkCountry(country._id,user.result._id)):dispatch(bookmarkCountry(country._id,user.result._id))}} disabled={!user}>
-                {country?.bookmarkedBy?.indexOf(user?.result?._id)!==-1 ? (
+          <IconButton className={classes.saveCountry} onClick={handleBookmark} disabled={!user}>
+                {bookmarked ? (
                   <BookmarkIcon style={{ color: 'white',fontSize: 32,zIndex:99 }} />
                 ) : (
                   <BookmarkBorderIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />
