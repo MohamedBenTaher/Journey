@@ -107,7 +107,7 @@ const CountryDetails = () => {
 
   const handleBookmark = () => {
     if (bookmarked) {
-      dispatch(cancelBookmarCountry(country?._id, userId));
+      dispatch(cancelBookmarkCountry(country?._id, userId));
     } else {
       dispatch(bookmarkCountry(country?._id, userId));
     }
