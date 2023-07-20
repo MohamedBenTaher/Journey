@@ -98,8 +98,8 @@ try {
 }
 export const bookmarkLocation = async (req, res) => {
 
-  const { id } = req.body;
-  const userId = req.params.id;
+  const { userId } = req.body;
+  const id = req.params.id;
   try {
   const  resource = await Location.findById(id);
     if (!resource) {
@@ -119,18 +119,18 @@ export const bookmarkLocation = async (req, res) => {
     resource.bookmarkedBy.push(userId);
     await user.save();
     await resource.save();
-    res.status(200).json({ message: 'Post bookmarked' },resource);
+    res.status(200).json({ message: 'Post bookmarked',resource});
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Something went wrong' ,...error});
   }
 };
 export const cancelBookmarkLocation = async (req, res) => {
-  const { resourceId } = req.body;
-  const userId = req.userId;
+  const { userId } = req.body;
+  const id = req.params.id;
   try {
     let resource;
-    resource = await Location.findById(resourceId);
+    resource = await Location.findById(id);
     if (!resource) {
       return res.status(404).json({ message: 'Location not found' });
     }
@@ -138,10 +138,10 @@ export const cancelBookmarkLocation = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    if (!user.savedLocations.includes(resourceId)) {
+    if (!user.savedLocations.includes(id)) {
       return res.status(400).json({ message: 'Location not bookmarked' });
     }
-    user.savedLocations.pull(resourceId);
+    user.savedLocations.pull(id);
     resource.bookmarkedBy.pull(userId);
     await user.save();
     await resource.save();

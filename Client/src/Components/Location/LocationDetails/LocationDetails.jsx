@@ -66,8 +66,10 @@ const LocationDetails = () => {
   const {location,isLoading}=useSelector((state)=>state.locations);
   const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile'))||null);
   const classes = useStyles();
+  const userId = user?.result?._id;
   const dispatch=useDispatch()
   const {id}=useParams()
+  const [bookmarked, setBookmarked] = useState(false);
   useEffect(()=>{
    dispatch(getLocation(id))
    console.log('my locations',location)
@@ -75,9 +77,13 @@ const LocationDetails = () => {
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('profile')));
     console.log( user?.result._id)
-
-   
   }, []);
+    
+  useEffect(() => {
+    if (location) {
+      setBookmarked(location.bookmarkedBy.includes(userId));
+    }
+  }, [location, userId]);
 const handleSubmit =  (avgRating) => {
   if(user)dispatch(rateLocation(id,user?.result._id,avgRating))}
 
@@ -108,11 +114,19 @@ const validationSchema = Yup.object().shape({
     .max(5, 'Rating cannot exceed 5')
     .required('Rating is required'),
 });
+const handleBookmark = () => {
+  if (bookmarked) {
+    dispatch(cancelBookmarkLocation(location?._id, userId));
+  } else {
+    dispatch(bookmarkLocation(location?._id, userId));
+  }
+  setBookmarked(!bookmarked);
+};
   return (
     <><Card>
           <CardMedia className={classes.coverImage} image={location?.coverImage} >
-          <IconButton className={classes.saveLocation} onClick={()=>{user && location?.bookmarkedBy?.indexOf(user?.result?._id)!==-1 ? dispatch(cancelBookmarkLocation(location._id,user.result._id)):dispatch(bookmarkLocation(location._id,user.result._id))}} disabled={!user}>
-                {location?.bookmarkedBy?.indexOf(user?.result?._id)!==-1 ? (
+          <IconButton className={classes.saveLocation} onClick={handleBookmark} disabled={!user}>
+                {bookmarked ? (
                   <BookmarkIcon style={{ color: 'white',fontSize: 32,zIndex:99 }} />
                 ) : (
                   <BookmarkBorderIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />
