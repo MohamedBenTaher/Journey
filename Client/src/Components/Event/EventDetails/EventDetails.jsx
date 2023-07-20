@@ -17,27 +17,47 @@ import moment from 'moment/moment'
 const EventDetails = ({}) => {
     const classes=useStyles()
     const dispatch=useDispatch()
-    const {id}=useParams()
+    const {id}=useParams();
     const {event,isLoading}=useSelector((state)=>state.events)
     const [user,setUser]=useState(localStorage.getItem('profile'))
+    const userId = user?.result?._id;
     const userAttending=event?.attendants?.find((item)=>item===user?.result?._id)
+    const [bookmarked, setBookmarked] = useState(false);
     useEffect(()=>{
         if(id){
             dispatch(getEvent(id))
         }
     },[id,dispatch])
+    useEffect(() => {
+      setUser(JSON.parse(localStorage.getItem('profile')));
+    }, []);
+    useEffect(() => {
+      if (event) {
+        console.log('containing event',event.bookmarkedBy,userId,event.bookmarkedBy.includes(userId))
+      
+        setBookmarked(event.bookmarkedBy.includes(userId));
+      }
+    }, [event, userId]);
     const handleBooking=()=>{
       dispatch(attendEvent(id,user?.result?._id))
     }
     const cancelBooking=()=>{
       dispatch(cancelEvent(id,user?.result?._id))
     }
+    const handleBookmark = () => {
+      if (bookmarked) {
+        dispatch(cancelBookmarkEvent(event?._id, userId));
+      } else {
+        dispatch(bookmarkEvent(event?._id, userId));
+      }
+      setBookmarked(!bookmarked);
+    };
   return(
     <><Card className={classes.card}>
         <div className={classes.imageSection}>
       
-      <IconButton className={classes.saveEvent} onClick={()=>{user && event?.bookmarkedBy?.indexOf(user?.result?._id)!==-1 ? dispatch(cancelBookmarkEvent(event._id,user.result._id)):dispatch(bookmarkEvent(event._id,user.result._id))}} disabled={!user}>
-                {event?.bookmarkedBy?.indexOf(user?.result?._id)!==-1 ? (
+      <IconButton className={classes.saveEvent} onClick={handleBookmark} disabled={!user}>
+                {bookmarked ? (
                   <BookmarkIcon style={{ color: 'white',fontSize: 32,zIndex:99 }} />
                 ) : (
                   <BookmarkBorderIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />

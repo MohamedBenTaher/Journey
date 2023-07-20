@@ -18,8 +18,9 @@ export const  getTopEvents= async(req,res) => {
     }
     export const bookmarkEvent = async (req, res) => {
 
-        const { id } = req.body;
-        const userId = req.params.id;
+        const { userId } = req.body;
+        const id = req.params.id;
+        console.log('ids',id,userId)
         try {
         const  resource = await Event.findById(id);
           if (!resource) {
@@ -36,7 +37,7 @@ export const  getTopEvents= async(req,res) => {
           resource.bookmarkedBy.push(userId);
           await user.save();
           await resource.save();
-          res.status(200).json({ message: 'Event bookmarked' },resource);
+          res.status(200).json({ message: 'Event bookmarked',resource });
         } catch (error) {
           console.log(error);
           res.status(500).json({ message: 'Something went wrong' ,...error});
@@ -71,12 +72,14 @@ export const  getTopEvents= async(req,res) => {
           res.status(500).json({ message: 'Something went wrong' });
         }
       };
+  
       export const cancelBookmarkEvent = async (req, res) => {
-        const { resourceId } = req.body;
-        const userId = req.userId;
+        const { userId } = req.body;
+        const id = req.params.id;
+        console.log('called cancel')
         try {
           let resource;
-          resource = await Event.findById(resourceId);
+          resource = await Event.findById(id);
           if (!resource) {
             return res.status(404).json({ message: 'Event not found' });
           }
@@ -84,14 +87,15 @@ export const  getTopEvents= async(req,res) => {
           if (!user) {
             return res.status(404).json({ message: 'User not found' });
           }
-          if (!user.savedEvents.includes(resourceId)) {
+          if (!user.savedEvents.includes(id)) {
             return res.status(400).json({ message: 'Event not bookmarked' });
           }
-          user.savedEvents.pull(resourceId);
-          resource.bookmarkedBy.pull(userId);
+          console.log('the ueser resource',id,userId)
+          user.savedEvents.pull(id);
+          resource.bookmarkedBy.pull(userId)
           await user.save();
           await resource.save();
-          res.status(200).json({ message: 'Bookmark canceled' });
+          return res.status(200).json({ message: 'Bookmark canceled' });
         } catch (error) {
           console.log(error);
           res.status(500).json({ message: 'Something went wrong' });

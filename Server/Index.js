@@ -43,7 +43,7 @@ app.use('/location',locationRoutes)
 app.get('/', (req, res) => { res.send('test works') })
 app.set('port', Port);
 
-mongoose.connect(process.env.CONNECTION_URL,  {useUnifiedTopology: true, useCreateIndex: true, useNewUrlParser: true})
+mongoose.connect(process.env.CONNECTION_URL,  {useUnifiedTopology: true, useCreateIndex: true, useNewUrlParser: true,useFindAndModify: false })
     .then(app.listen(Port, () => console.log('server Running on Port :' + Port)))
     .catch((error) => console.log(error.message));
 

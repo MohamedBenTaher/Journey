@@ -43,11 +43,11 @@ export const createEvent = (newEvent) => API.post('/event', newEvent);
 export const updateEvent = (id, updatedEvent) => API.patch(`/event/${id}`, updatedEvent);
 export const commentEvent = (value, id) => API.post(`/event/${id}/commentEvent`, { value });
 export const deleteEvent = (id) => API.delete(`/event/${id}`);
-export const attendEvent = (id,userId) => API.patch(`/event/${id}/attend`,{userId:userId})
-export const cancelEvent = (id,userId) => API.patch(`/event/${id}/cancel`,{userId:userId})
+export const attendEvent = (id,userId) => API.patch(`/event/${id}/attendance/attend`,{userId:userId})
+export const cancelEvent = (id,userId) => API.patch(`/event/${id}/attendance/cancel`,{userId:userId})
 export const likeEvent=(id,userId)=>API.patch(`/event/${id}/like`,{userId:userId})
-export const bookmarkEvent=(id,userId)=>API.patch(`event/${id}/bookmark`,{userId:userId})
-export const cancelBookmarkEvent=(id,userId)=>API.patch(`event/${id}/cancel`,{userId:userId})
+export const bookmarkEvent=(id,userId)=>API.patch(`/event/${id}/bookmark`,{userId:userId})
+export const cancelBookmarkEvent=(id,userId)=>API.patch(`/event/${id}/cancel`,{userId:userId});
 
 /*===========================Destinations=========================================*/
 export const fetchTopDestinations=()=>API.get(`/destination/top`)

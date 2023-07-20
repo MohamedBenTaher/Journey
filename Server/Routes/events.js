@@ -9,8 +9,8 @@ router.get('/:id', getEvent);
 router.post('/', auth, createEvent);
 router.patch('/:id', auth, updateEvent)
 router.delete('/:id', auth, deleteEvent);
-router.patch('/:id/attend', auth, attendEvent)
-router.patch('/:id/cancel', auth, cancelEvent)
+router.patch('/:id/attendance/attend', auth, attendEvent)
+router.patch('/:id/attendance/cancel', auth, cancelEvent)
 router.post('/:id/comment', auth, commentEvent)
 router.patch(`/:id/bookmark`,auth, bookmarkEvent)
 router.patch(`/:id/cancel`,auth, cancelBookmarkEvent)

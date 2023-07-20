@@ -107,7 +107,7 @@ export const bookmarkEvent=(id,userId)=>async(dispatch)=>{
 }
 export const cancelBookmarkEvent=(id,userId)=>async(dispatch)=>{
   try {
-    const { data } = await api.bookmarkEvent(id,userId);
+    const { data } = await api.cancelBookmarkEvent(id,userId);
     console.log('after post bookmark ',data)
     dispatch({ type: CANCEL_BOOKMARK_EVENT, payload: data });
 
