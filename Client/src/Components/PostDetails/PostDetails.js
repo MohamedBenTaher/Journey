@@ -24,8 +24,9 @@ function PostDetails() {
   const dispatch = useDispatch();
   const history = useHistory()
   const classes = useStyles();
+  const userId = user?.result?._id;
   const { id } = useParams()
-  
+  const  [bookmarked,setBookmarked]=useState(false)
   useEffect(() => {
     dispatch(getPost(id))
   }, [id])
@@ -36,7 +37,11 @@ function PostDetails() {
       setUser(JSON.parse(localStorage.getItem('profile')))
     }
   }, [post])
-  
+  useEffect(() => {
+    if (post) {
+      setBookmarked(post.bookmarkedBy.includes(userId));
+    }
+  }, [post, userId]);
   if (!post ) return null;
   console.log('rendered post ', post)
   console.log('post file', post.selectedFile)
@@ -44,6 +49,14 @@ function PostDetails() {
   const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
   console.log('recommendedPosts', recommendedPosts)
   
+  const handleBookmark = () => {
+    if (bookmarked) {
+      dispatch(cancelBookmarkPost(post?._id, userId));
+    } else {
+      dispatch(bookmarkPost(post?._id, userId));
+    }
+    setBookmarked(!bookmarked);
+  };
   if (isLoading) {
     return (
       <Paper elevation={6} className={classes.loadingPaper}>
@@ -103,8 +116,8 @@ function PostDetails() {
               </Typography>
             </div>
             <div className={classes.imageSection}>
-              <IconButton className={classes.savePost} onClick={()=>{user && post?.bookmarkedBy?.indexOf(user?.result?._id)!==-1 ? dispatch(cancelBookmarkPost(post._id,user.result._id)):dispatch(bookmarkPost(post._id,user.result._id))}} disabled={!user}>
-                {post?.bookmarkedBy?.indexOf(user?.result?._id)!==-1 ? (
+              <IconButton className={classes.savePost} onClick={handleBookmark} disabled={!user}>
+                {bookmarked ? (
                   <BookmarkIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />
                 ) : (
                   <BookmarkBorderIcon style={{ color: 'white',fontSize: 32,zIndex:99}} />

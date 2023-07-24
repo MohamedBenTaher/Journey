@@ -11,7 +11,7 @@ export const signin = (formData, history) => async (dispatch) => {
         dispatch({ type: AUTH, payload :{data} })
         //log in the user
         dispatch({ type: END_LOADING_USER });
-        history.push('/ ')
+        history.push('/')
     } catch (error) {
         console.log(error)
     }
@@ -21,7 +21,7 @@ export const signup = (formData, history) => async (dispatch) => {
         const { data } = await api.signUp(formData);
         dispatch({ type: AUTH, payload:{data} })
         //log in the user
-        history.push('/ ')
+        history.push('/')
     } catch (error) {
         console.log(error)
     }

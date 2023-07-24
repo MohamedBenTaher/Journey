@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+
 let url;
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
  url='http://localhost:5000'
@@ -15,6 +17,20 @@ API.interceptors.request.use(function (config) {
 
   return config;
 });
+API.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // Unauthorized response, log out the user and redirect to Auth
+      localStorage.clear();
+      const history = useHistory();
+      history.push('/auth');
+    }
+    return Promise.reject(error);
+  }
+);
 /*===================Posts====================*/
 export const fetchPost = (id) => API.get(`/post/${id}`);
 export const fetchTopPosts=()=>API.get(`/post/top`)
