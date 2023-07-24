@@ -25,7 +25,7 @@ export const createPost = (newPost) => API.post('/post', newPost,{
 }})
 export const updatePost = (id, updatedPost) => API.patch(`/post/${id}`, updatedPost);
 export const deletePost = (id) => API.delete(`/post/${id}`);
-export const likePost = (id) => API.patch(`/post/${id}/like`);
+export const likePost = (id,userId) => API.patch(`/post/${id}/like`,{userId:userId});
 export const comment = (value, id) => API.post(`/post/${id}/comment`, { value });
 export const fetchPostsByCreator = (name) => API.get(`/post/creator?name=${name}`);
 export const fetchPostsBySearch = (searchQuery) => API.get(`/post/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}&season=${searchQuery.season}`);

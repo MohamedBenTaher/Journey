@@ -7,10 +7,13 @@ const userSchema = mongoose.Schema({
   isAdmin: { type: Boolean, default: false }, 
   age: { type: Number },
   address: { type: String },
-  type: {type:String,Enumerator:['Location','city','country']},
     savedCities: [{
       type: mongoose.Schema.Types.ObjectId,
       ref:'Destination'
+    }],
+    savedCountries: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'Country'
     }],
     savedLocations: [{
       type: mongoose.Schema.Types.ObjectId,
@@ -24,6 +27,7 @@ const userSchema = mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref:'Event'
     }],
+    
   likedStories: [{
       type: mongoose.Schema.Types.ObjectId,
       ref:'PostMessage'
@@ -37,6 +41,10 @@ const userSchema = mongoose.Schema({
     ref:'Location'
   }],
 likedCities: [{
+  type: mongoose.Schema.Types.ObjectId,
+  ref:'Destination'
+}],
+likedCountries: [{
   type: mongoose.Schema.Types.ObjectId,
   ref:'Destination'
 }],

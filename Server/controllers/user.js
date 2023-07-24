@@ -38,14 +38,14 @@ export const signup= async(req,res)=>{
     try {
       const {id}=req.params
       const user = await User.findById(id)
-      .populate({
-        path: 'savedResources.resourceId',
-        model: 'PostMessage' // Replace 'Resource' with the actual model name
-      })
-      .populate({
-        path: 'likedResources.resourceId',
-        model: 'PostMessage' // Replace 'Resource' with the actual model name
-      })
+      .populate("savedCities")
+      .populate("savedLocations")
+      .populate("savedStories")
+      .populate("savedEvents")
+      .populate("likedStories")
+      .populate("likedEvents")
+      .populate("likedLocations")
+      .populate("likedCities");
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }

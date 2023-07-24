@@ -4,21 +4,21 @@ import React from 'react'
 import useStyles from "./styles.js"
 import  image from '../../../Images/tokyo.jpg'
 import { Link } from 'react-router-dom/cjs/react-router-dom.js'
-const LocationCard = ({location,small}) => {
+const PostCard = ({post,small}) => {
     const classes = useStyles();
-    const lines = location.description.split(',');
+    const lines = post.message.split(',');
     const firstThreeLines = lines.slice(0,2).join(' ,'); 
     return (
-      <Card className={small? classes.smallCard:classes.card}>
-        <CardMedia className={classes.media} image={location.coverImage} />
+      <Card className={classes.smallCard}>
+        <CardMedia className={classes.media} image={post.selectedFile} />
         <CardContent className={classes.content}>
           <Typography gutterBottom variant="h5" component="h2" className={classes.title}>
-            {location.title}
+            {post.title}
           </Typography>
           <Typography variant="body2" component="p">
             {firstThreeLines}...
           </Typography>
-          <Link  to={`/locations/${location._id}`}>
+          <Link  to={`/stories/${post._id}`}>
           <Button className={classes.button}>
             Read More
           </Button>
@@ -28,4 +28,4 @@ const LocationCard = ({location,small}) => {
   )
 }
 
-export default LocationCard
+export default PostCard

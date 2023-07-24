@@ -3,6 +3,11 @@ import useStyles from './styles';
 import { Typography, Avatar, Grid, Paper,Box,Card,CardContent,Tab,Tabs } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../../actions/auth';
+import DestinationCard from '../../Destination/DestinationCard/Destination';
+import SavedEventCard from '../../Event/Saved/SavedEventCard';
+import Post from '../../Posts/Post/post';
+import LocationCard from '../../Location/LocationCard/LocationCard';
+import PostCard from '../../Posts/PostCard/PostCard';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -30,6 +35,7 @@ const Profile = ({ id}) => {
   const dispatch=useDispatch()
   useEffect(()=>{
     dispatch(getUser(id))
+    console.log('my user ',user)
   },[])
   const classes = useStyles();
   const [likedvalue, setLikedValue] = React.useState(0);
@@ -43,19 +49,21 @@ const Profile = ({ id}) => {
   if(!user) return(
     <div>test</div>
   )
-  const likedPostMessages = user?.user?.likedResources?.filter(res => res.type === "PostMessage");
-  const likedLocations = user?.user?.likedResources?.filter(res => res.type === "location");
-  const likedCountries = user?.user?.likedResources?.filter(res => res.type === "countries");
-  const LikedCities=user?.user?.likedResources?.filter(res => res.type === "destination");
-  const LikedEvents=user?.user?.likedResources?.filter(res => res.type === "event");
-  const savedPostMessages = user?.user?.savedResources?.filter(res => res.type === "PostMessage");
-  const savedLocations = user?.user?.savedResources?.filter(res => res.type === "location");
-  const savedCountries = user?.user?.savedResources?.filter(res => res.type === "countries");
-  const savedCities=user?.user?.savedResources?.filter(res => res.type === "destination");
-  const savedEvents=user?.user?.savedResources?.filter(res => res.type === "event");
-  const likedResources = []; // Replace with an array of liked resources
-  const savedResources = []; // Replace with an array of saved resources
-
+  const likedPostMessages = user?.user?.likedStories
+  const likedLocations = user?.user?.likedLocations
+  const likedCountries = []
+  const LikedCities=user?.user?.likedCities
+const LikedEvents=[]
+  const savedPostMessages = user?.user?.savedStories
+  const savedLocations = user?.user?.savedLocations
+  const savedCountries = []
+  const savedCities=user?.user?.savedCities
+  const savedEvents=user?.user?.savedEvents
+ console.log('my likes',likedPostMessages,
+likedLocations,
+likedCountries ,
+LikedCities,
+LikedEvents)
   return (
     <>
     <Paper className={classes.root} elevation={3}>
@@ -95,8 +103,8 @@ const Profile = ({ id}) => {
       {user?.user?.savedResources?.length>0 ?(
          <><TabPanel value={likedvalue} index={0}>
               {likedPostMessages.length > 0 ? (
-                user?.user?.likedResources?.map((res) => {
-                  if (res.type === "PostMessage") {
+                likedPostMessages?.map((res) => {
+                 
                     return (
                       <Card key={res._id} style={{ width: '50%', margin: 'auto' }}>
                         <CardContent>
@@ -109,15 +117,15 @@ const Profile = ({ id}) => {
                         </CardContent>
                       </Card>
                     );
-                  }
+                  
                   return null; // Skip rendering if the resource name is not "PostMessage"
                 })) : (
                 <Typography variant="body2">No Liked PostMessage</Typography>
               )}
             </TabPanel><TabPanel value={likedvalue} index={1}>
                 {likedLocations.length > 0 ? (
-                  user?.user?.likedResources?.map((res) => {
-                    if (res.type === "location") {
+                  likedLocations?.map((res) => {
+                  
                       return (
                         <Card key={res._id} style={{ width: '50%', margin: 'auto' }}>
                           <CardContent>
@@ -130,32 +138,38 @@ const Profile = ({ id}) => {
                           </CardContent>
                         </Card>
                       );
-                    }
+                    
                     return null; // Skip rendering if the resource name is not "PostMessage"
                   })) : (
                   <Typography variant="body2">No Liked Locations</Typography>
                 )}
               </TabPanel><TabPanel value={likedvalue} index={2}>
-                {LikedCities.length > 0 ? (
-                  user?.user?.likedResources?.map((res) => {
-                    if (res.type === "destination") {
+              <Grid container spacing={3}>
+
+                {
+                LikedCities.length > 0 ? (
+                 LikedCities.map((res) => {
+                    
                       return (
-                        <Card key={res._id} style={{ width: '50%', margin: 'auto' }}>
-                          <CardContent>
-                            <Typography gutterBottom variant="body2" component="p">
-                              {res.title} {/* Display the title */}
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                              {res.description} {/* Display the description */}
-                            </Typography>
-                          </CardContent>
-                        </Card>
-                      );
-                    }
+                        // <Card key={res._id} style={{ width: '50%', margin: 'auto' }}>
+                        //   <CardContent>
+                        //     <Typography gutterBottom variant="body2" component="p">
+                        //       {res.title}
+                        //     </Typography>
+                        //     <Typography variant="body2" color="textSecondary" component="p">
+                        //       {res.description.split(',').slice(0,2).join(' ,')}
+                        //     </Typography>
+                        //   </CardContent>
+                        // </Card>
+                        <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
+                        <DestinationCard destination={res} userId={user.user._id} small/>
+                        </Grid>
+                      );       
                     return null; // Skip rendering if the resource name is not "PostMessage"
                   })) : (
                   <Typography variant="body2">No Liked Cities</Typography>
                 )}
+                </Grid>
               </TabPanel><TabPanel value={likedvalue} index={3}>
                 {likedCountries.length > 0 ? (
                   user?.user?.likedResources?.map((res) => {
@@ -216,68 +230,46 @@ const Profile = ({ id}) => {
       </Tabs>
       {user?.user?.savedResources?.length>0 ?(
       <><TabPanel value={savedValue} index={0}>
+        <Grid container spacing={3}>
           {savedPostMessages.length > 0 ? (
-            user?.user?.savedResources?.map((res) => {
-              if (res.type === "PostMessage") {
+            savedPostMessages?.map((res) => {
                 return (
-                  <Card key={res._id} style={{ width: '50%', margin: 'auto' }}>
-                    <CardContent>
-                      <Typography gutterBottom variant="body2" component="p">
-                        {res.title} {/* Display the title */}
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary" component="p">
-                        {res.description} {/* Display the description */}
-                      </Typography>
-                    </CardContent>
-                  </Card>
+                <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
+                <PostCard post={res} small/>
+                </Grid>
                 );
-              }
-              return null; // Skip rendering if the resource name is not "PostMessage"
             })) : (
             <Typography variant="body2">No Saved PostMessage</Typography>
           )}
+          </Grid>
         </TabPanel><TabPanel value={savedValue} index={1}>
+        <Grid container spacing={3}>
             {savedLocations.length > 0 ? (
-              user?.user?.savedResources?.map((res) => {
-                if (res.type === "location") {
+              savedLocations?.map((res) => {
+              
                   return (
-                    <Card key={res._id} style={{ width: '50%', margin: 'auto' }}>
-                      <CardContent>
-                        <Typography gutterBottom variant="body2" component="p">
-                          {res.title} {/* Display the title */}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                          {res.description} {/* Display the description */}
-                        </Typography>
-                      </CardContent>
-                    </Card>
+                    <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
+                        <LocationCard location={res} small/>
+                    </Grid>
                   );
-                }
-                return null; // Skip rendering if the resource name is not "PostMessage"
               })) : (
               <Typography variant="body2">No Saved Locations</Typography>
             )}
+            </Grid>
           </TabPanel><TabPanel value={savedValue} index={2}>
+          <Grid container spacing={3}>
             {savedCities.length > 0 ? (
-              user?.user?.savedResources?.map((res) => {
-                if (res.type === "destination") {
-                  return (
-                    <Card key={res._id} style={{ width: '50%', margin: 'auto' }}>
-                      <CardContent>
-                        <Typography gutterBottom variant="body2" component="p">
-                          {res.title} {/* Display the title */}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                          {res.description} {/* Display the description */}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  );
-                }
+             savedCities?.map((res) => {
+              return(
+                <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
+                <DestinationCard destination={res} userId={user.user._id} small/>
+                </Grid>
+              )
                 return null; // Skip rendering if the resource name is not "PostMessage"
               })) : (
               <Typography variant="body2">No Saved Cities</Typography>
             )}
+            </Grid>
           </TabPanel><TabPanel value={savedValue} index={3}>
             {savedCountries.length > 0 ? (
               user?.user?.savedResources?.map((res) => {
@@ -300,26 +292,19 @@ const Profile = ({ id}) => {
               <Typography variant="body2">No Saved Countries</Typography>
             )}
           </TabPanel><TabPanel value={savedValue} index={4}>
+          <Grid container spacing={3}>
             {savedEvents.length > 0 ? (
-              user?.user?.savedResources?.map((res) => {
-                if (res.type === "Event") {
+             savedEvents?.map((res) => {
                   return (
-                    <Card key={res._id} style={{ width: '50%', margin: 'auto' }}>
-                      <CardContent>
-                        <Typography gutterBottom variant="body2" component="p">
-                          {res.title} {/* Display the title */}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                          {res.description} {/* Display the description */}
-                        </Typography>
-                      </CardContent>
-                    </Card>
+                 <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
+                   <SavedEventCard event={res}/>
+                 </Grid>
                   );
-                }
                 return null; // Skip rendering if the resource name is not "PostMessage"
               })) : (
               <Typography variant="body2">No Saved Events</Typography>
             )}
+            </Grid>
           </TabPanel></>
       ):(
         <TabPanel >

@@ -9,7 +9,7 @@ import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
 import { useDispatch } from 'react-redux';
 import { deletePost ,likePost} from '../../../actions/posts.js';
 import { useHistory } from 'react-router-dom';
-const Post = ({post,setCurrentId}) => {
+const Post = ({post,setCurrentId,small}) => {
   const user = JSON.parse(localStorage.getItem('profile'));
   const userId = user?.result?.googleId || user?.result?._id;
   console.log('userid',userId)
@@ -18,7 +18,7 @@ const Post = ({post,setCurrentId}) => {
   const hasLikedPost=post.likedBy.find((like)=>like===userId)
   const history=useHistory();
   const Likes = () => {
-    if (likes.length > 0) {
+    if (likes.length > 0 && !small) {
       return likes.find((like) => like === userId)
         ? (
           <><ThumbUpAltIcon fontSize="small" />&nbsp;{likes.length > 2 ? `You and ${likes.length - 1} others` : `${likes.length} like${likes.length > 1 ? 's' : ''}` }</>
@@ -36,7 +36,7 @@ const Post = ({post,setCurrentId}) => {
   const dispatch=useDispatch();
 
 const handleLike=()=>{
-  dispatch(likePost(post._id)) 
+  dispatch(likePost(post._id,userId)) 
   if(hasLikedPost){
       setLikes(post.likedBy.filter((id)=>id!== (userId))) 
   }else{
@@ -44,11 +44,11 @@ const handleLike=()=>{
   }
 }
 const lines = post.message.split(',');
-const firstThreeLines = lines.slice(0,1).join(' ,'); 
+const firstThreeLines = lines.slice(0,1).join(','); 
 
   return (
-  <Card className={classes.card} raised elevation={6}>
-      {userId==post?.creator ? ( 
+  <Card className={small?classes.smallCard:classes.card} raised elevation={6}>
+      {(userId==post?.creator && !small)? ( 
    <div className={classes.overlay2}>
       <Button style={{color:'white'}} size="small" onClick={() =>history.push(`/stories/new/${post._id}`)}>
         <MoreHorizonIcon fontSize='medium'/>
@@ -65,21 +65,23 @@ const firstThreeLines = lines.slice(0,1).join(' ,');
        <Typography variant='h6' >{post.name}</Typography>
        <Typography variant='body2' >{moment(post.createdAt).fromNow()}</Typography>
    </div>
- 
+ {!small?(
    <div className={classes.details}>
        <Typography variant='body2' color='textSecondary'>{post.tags.map((tag)=> `#${tag} `)}</Typography>
    </div>
+   ):null}
    <Typography variant='h5' className={classes.title} gutterBottom>{post.title}</Typography>
    <CardContent>
-     
    <Typography variant='body2'color="textSecondary" component='p'>{firstThreeLines}</Typography>
    </CardContent>
    </ButtonBase>
-   <CardActions className={classes.cardActions}>
-   <Button size="small" color="primary" disabled={!user?.result} onClick={handleLike}>
+   <CardActions className={!small?classes.cardActions:classes.smallActions}>
+   {!small ?
+   (<Button size="small" color="primary" disabled={!user?.result} onClick={handleLike}>
           <Likes />
         </Button>
-        {userId==post?.creator?
+   ):null}
+        {userId==post?.creator && !small?
          (
       <Button color="primary" size="small" onClick={()=>{dispatch(deletePost(post._id))}} >
         <DeleteIcon />
@@ -88,6 +90,11 @@ const firstThreeLines = lines.slice(0,1).join(' ,');
       </Button> 
         ):null
 }
+{small?(
+<Button size="small" color="primary" onClick={()=>{history.push(`/stories/${post._id}`)}} variant='contained' className={classes.bookingButton}>
+    Read post
+   </Button>
+):null}
    </CardActions>
   </Card>
   );

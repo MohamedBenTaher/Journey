@@ -11,7 +11,7 @@ export default makeStyles({
     border: 'solid',
   },
   fullHeightCard: {
-    height: '100%',
+    height: '40%',
   },
   card: {
     display: 'flex',
@@ -21,17 +21,26 @@ export default makeStyles({
     height: '100%',
     position: 'relative',
   },
+  smallCard:{
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    borderRadius: '15px',
+    height: '100%',
+    position: 'relative',
+    transition: 'all 0.5s',
+    '&:hover': {
+      transform: 'scale(1.05)',
+      '& $content': {
+        opacity: 1,
+      },
+    },
+  },
   overlay: {
     position: 'absolute',
-    top: '20px',
+    top: '10px',
     left: '20px',
     color: 'white',
-  },
-  overlay2: {
-    // position: 'absolute',
-    // top: '20px',
-    // right: '20px',
-    // color: 'white',
   },
   grid: {
     display: 'flex',
@@ -39,18 +48,26 @@ export default makeStyles({
   details: {
     display: 'flex',
     justifyContent: 'space-between',
-    margin: '20px',
+    marginRight: '20px',
+    marginLeft:'20px'
   },
   title: {
-    padding: '0 16px',
+    padding: '4px 16px',
   },
   cardActions: {
-    padding: '0 16px 8px 16px',
+    // padding: '0 16px 8px 16px',
     display: 'flex',
     justifyContent: 'space-between',
+  },
+  smallActions:{
+    display: 'flex',
+    justifyContent: 'end',
   },
   cardAction: {
     display: 'block',
     textAlign: 'initial',
   },
+  bookingButton:{
+    borderRadius:'15px'
+  }
 });

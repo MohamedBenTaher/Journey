@@ -177,11 +177,11 @@ export const bookmarkPost = async (req, res) => {
     }
   };
   export const likePost = async (req, res) => {
-    const { resourceId } = req.body;
-    const userId = req.userId;
+    const { userId } = req.body;
+    const id = req.params.id;
     try {
       let resource;
-      resource = await PostMessage.findById(resourceId);
+      resource = await PostMessage.findById(id);
       if (!resource) {
         return res.status(404).json({ message: 'Resource not found' });
       }
@@ -189,13 +189,13 @@ export const bookmarkPost = async (req, res) => {
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
-      if (user.likes.includes(resourceId)) {
+      if (user.likedStories.includes(id)) {
 
-        user.likes.filter((id)=>id==resourceId);
+        user.likedStories.filter((id)=>id==id);
         resource.likedBy.filter((id)=>id==userId)
         res.status(200).json({ message: 'Resource Unliked' });
       }
-      user.likes.push(resourceId);
+      user.likedStories.push(id);
       resource.likedBy.push(userId);
       await user.save();
       await resource.save();

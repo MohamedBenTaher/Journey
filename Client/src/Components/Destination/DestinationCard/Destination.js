@@ -8,7 +8,7 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import { useDispatch } from 'react-redux'
 import { likeDestination } from '../../../actions/destinations.js'
-const DestinationCard = ({destination,userId}) => {
+const DestinationCard = ({destination,userId,small}) => {
     const dispatch=useDispatch()
     const classes = useStyles();
     const [liked,setLiked]=useState(false)
@@ -16,17 +16,19 @@ const DestinationCard = ({destination,userId}) => {
     const lines = destination.description.split(',');
     const firstThreeLines = lines.slice(0,2).join(' ,'); 
     return (
-      <Card className={classes.card}>
+      <Card className={small? classes.smallCard:classes.card}>
         <CardMedia className={classes.media} image={destination.coverImage} />
         <CardContent className={classes.content}>
-          <div  className={classes.likeButton} >
-          <IconButton className={classes.likeButton} onClick={()=>dispatch(likeDestination(destination._id,userId))} disabled={!userId}>
+         {!small ?(
+           <div  className={classes.likeButton} >
+          <IconButton className={classes.likeButton} onClick={()=>dispatch(likeDestination(destination._id,userId))} disabled={!userId || small}>
               { likes.find((like) => like === userId) ?( <FavoriteOutlinedIcon style={{color:'white'}}/>):
               (<FavoriteBorderOutlinedIcon style={{color:'white'}} />)
               }
         </IconButton>
         <Typography className={classes.likeCount}>{likes.length}</Typography>
         </div>
+        ):null}
           <Typography gutterBottom variant="h5" component="h2" className={classes.title}>
             {destination.title}
           </Typography>

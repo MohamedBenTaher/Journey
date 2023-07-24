@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         },
       },
     },
-    smallCard:{
+    smallCard: {
       position: 'relative',
       width: '100%',
       height: 300,
@@ -27,21 +27,14 @@ const useStyles = makeStyles((theme) => ({
         '& $content': {
           opacity: 1,
         },
-      }, 
-    },
-    description: {
-      height: '60px', // Set the desired height for the description container
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      display: '-webkit-box',
-      '-webkit-line-clamp': '3', // Limit the description to 3 lines
-      '-webkit-box-orient': 'vertical',
+      },
     },
     media: {
       height: 400,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       filter: 'brightness(70%)',
+      
     },
     content: {
       position: 'absolute',
@@ -67,28 +60,21 @@ const useStyles = makeStyles((theme) => ({
         color: '#000',
       },
     },
-    likeButton:{
-      position:'absolute',
-      top:'10px',
-      right:'10px',
-      color:'#fff',
-      '&:hover':{
-          color:'#fff',
-          backgroundColor: 'rgba(10, 10, 10, 0.5)'
-          },
-      zIndex:99
-  },
-  likeCount:{
-    position:'absolute',
-    top:'23px',
-    right:'75px',
-    color:'#fff',
-    '&:hover':{
-        color:'#fff',
-        backgroundColor: 'rgba(10, 10, 10, 0.5)'
+    buttonNoImage: {
+        marginTop: theme.spacing(2),
+        // backgroundColor: 'transparent',
+        // color: '#fff',
+        backgroundColor: '#fff',
+        color: '#000',
+        border: '2px solid #fff',
+        borderRadius: '15px',
+        width: '100%',
+        transition: 'all 0.3s',
+        '&:hover': {
+            backgroundColor: '#000',
+            color: '#fff',
         },
-    zIndex:99
-  },
+      },
     textContainer: {
       padding: theme.spacing(0, 2),
     },
@@ -96,6 +82,18 @@ const useStyles = makeStyles((theme) => ({
       color:'#fff',
       fontSize:'30px',
       fontWeight:'bold',
+    },
+    noImageTitle:{
+        color:'#000',
+        fontSize:'30px',
+        fontWeight:'bold',
+    },
+    noImageDesctiption:{
+        color:'#000',
+
+    },
+    noImageBtnColor:{
+        color:'#000'
     }
   
 }));
