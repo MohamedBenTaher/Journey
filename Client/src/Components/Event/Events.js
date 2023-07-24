@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect ,useState} from "react";
 import { Button, Modal, Box, Typography, Backdrop, TextField, Grid, Input } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import EventCard from './Display/EventCard';
@@ -17,6 +17,11 @@ const Events = () => {
     const query = useQuery();
     const page = query.get('page') || 1;
     const searchQuery = query.get('searchQuery');
+    const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    const userId=user.result._id
+    useEffect(() => {
+        setUser(JSON.parse(localStorage.getItem('profile')));
+      }, []);
     useEffect(() => {
         dispatch(getEvents(1))
     }, [])
@@ -28,7 +33,7 @@ const Events = () => {
         <Grid container spacing={3} className={classes.events} >
                 {events ? events?.map((event) => (
                     <Grid item xs={12}>
-                    <EventCard event={event}/>
+                    <EventCard event={event} userId={userId} small={false}/>
                     </Grid>
                 )) :
                     (<Typography>

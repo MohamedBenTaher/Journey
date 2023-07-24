@@ -43,35 +43,41 @@ export const  getTopEvents= async(req,res) => {
           res.status(500).json({ message: 'Something went wrong' ,...error});
         }
       };
-
       export const likeEvent = async (req, res) => {
-        const { resourceId } = req.body;
-        const userId = req.userId;
+        const { userId } = req.body;
+        const id = req.params.id;
+      
         try {
-          let resource;
-          resource = await Event.findById(resourceId);
+          const resource = await Event.findById(id);
           if (!resource) {
             return res.status(404).json({ message: 'Event not found' });
           }
+      
           const user = await User.findById(userId);
           if (!user) {
             return res.status(404).json({ message: 'User not found' });
           }
-          if (user.likes.includes(resourceId)) {
-            user.likedEevents.filter((id)=>id==resourceId);
-            resource.likedBy.filter((id)=>id==userId)
-            res.status(200).json({ message: 'Location Unliked' });
+      
+          if (resource.likedBy.includes(userId)) {
+            user.likedEvents = user.likedEvents.filter((eventId) => eventId !== id);
+            resource.likedBy = resource.likedBy.filter((likedUserId) => likedUserId !== userId);
+            await user.save();
+            await resource.save();
+            return res.status(200).json({ message: 'Event Unliked' });
           }
-          user.likedEevents.push(resourceId);
+          else{
+          user.likedEvents.push(id);
           resource.likedBy.push(userId);
           await user.save();
           await resource.save();
-          res.status(200).json({ message: 'Resource liked' });
+          res.status(200).json({ message: 'Event Liked' });
+          }
         } catch (error) {
           console.log(error);
           res.status(500).json({ message: 'Something went wrong' });
         }
       };
+      
   
       export const cancelBookmarkEvent = async (req, res) => {
         const { userId } = req.body;

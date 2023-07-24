@@ -29,6 +29,7 @@ export const ATTEND_EVENT = 'ATTEND_EVENT'
 export const FETCH_EVENT = 'FETCH_EVENT'
 export const COMMENT_EVENT = 'COMMENT_EVENT'
 export const CANCEL_EVENT='CANCEL_EVENT'
+export const LIKE_EVENT='LIKE_EVENT'
 /*=======================================*/
 export const FETCH_DESTINATIONS = 'FETCH_DESTINATIONS'
 export const FETCH_DESTINATION_BY_SEARCH = 'FETCH_DESTINATION_BY_SEARCH'
