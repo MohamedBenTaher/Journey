@@ -19,12 +19,20 @@ const EventCard = ({ event ,userId,small}) => {
           try {
          dispatch(likeEvent(event._id, userId));
          setLiked(!liked);
+         setLikes((prevLikes) => {
+            if (liked) {
+              return prevLikes.filter((id) => id !== userId);
+            } else {
+              return [...prevLikes, userId];
+            }
+          });
         } catch (error) {
           console.log(error);
         }
       };
       useEffect(() => {
         if (event) {
+          setLikes(event.likedBy || []);
           setLiked(event.likedBy.includes(userId));
         }
       }, [event, userId]);

@@ -80,9 +80,9 @@ export const deleteCountry = (id) => async (dispatch) => {
     console.log(error.message)
   }
 }
-export const likeCountry = (destinationId,userId) => async (dispatch) => {
+export const likeCountry = (id,userId) => async (dispatch) => {
   try {
-    const { data } = await api.likeCountry(destinationId,userId);
+    const { data } = await api.likeCountry(id,userId);
     console.log('after upvote ',data)
     dispatch({ type: LIKE_COUNTRY, payload: data });
 
@@ -90,16 +90,7 @@ export const likeCountry = (destinationId,userId) => async (dispatch) => {
     console.log(error.message)
   }
 }
-export const dislikeCountry = (destinationId,userId) => async (dispatch) => {
-  try {
-    const { data } = await api.dislikeCountry(destinationId,userId);
-    console.log('after downvote ',data)
-    dispatch({ type: DISLIKE_COUNTRY, payload: data });
 
-  } catch (error) {
-    console.log(error.message)
-  }
-}
 export const bookmarkCountry=(id,userId)=>async(dispatch)=>{
   try {
     const { data } = await api.bookmarkCountry(id,userId);

@@ -23,10 +23,12 @@ API.interceptors.response.use(
   },
   (error) => {
     if (error.response && error.response.status === 401) {
-      // Unauthorized response, log out the user and redirect to Auth
-      localStorage.clear();
       const history = useHistory();
+      console.log('loggin of client')
       history.push('/auth');
+      localStorage.clear();
+      
+     
     }
     return Promise.reject(error);
   }
@@ -107,8 +109,7 @@ export const updateCountry= (id,updatedCountry) => API.patch(`/country/${id}`,up
     }});
 export const deleteCountry= (id) => API.delete(`/country/${id}`);
 export const fetchCountriesBySearch = (searchQuery) => API.get(`/country/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}&season=${searchQuery.season}`);
-export const likeCountry=(countryId,id)=>API.post(`/country/${countryId}/like`,{userId:id})
-export const dislikeCountry=(countryId,id)=>API.post(`/country/${countryId}/dislike`,{userId:id})
+export const likeCountry=(id,userId)=>API.patch(`/country/${id}/like`,{userId:userId})
 export const fetchCountryByLikes=(id)=>API.get(`/country/likes/${id}`)
 // export const likeCountry=(countryId,id)=>API.post(`/country/${countryId}/like`,{userId:id})
 // export const dislikeCountry=(countryId,id)=>API.post(`/country/${countryId}/dislike`,{userId:id})

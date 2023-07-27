@@ -30,13 +30,8 @@ export default (state = { isLoading: false, countries: [] }, action) => {
         console.log('upvote payload',action.payload)
         return {
           ...state,
-          countries: state.countries.map((country) =>
-          countries._id === action.payload._id
-              ? {
-                  ...countries,
-                  likes: [...action.payload.likes],
-                }
-              : country
+          destinations: state.countries.map((country) =>
+          country._id === action.payload._id ? action.payload : country
           ),
         };
       case DISLIKE_COUNTRY:

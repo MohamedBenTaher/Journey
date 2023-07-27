@@ -18,7 +18,7 @@ const Events = () => {
     const page = query.get('page') || 1;
     const searchQuery = query.get('searchQuery');
     const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-    const userId=user.result._id
+    const userId=user?.result?._id
     useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('profile')));
       }, []);

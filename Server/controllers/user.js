@@ -45,7 +45,8 @@ export const signup= async(req,res)=>{
       .populate("likedStories")
       .populate("likedEvents")
       .populate("likedLocations")
-      .populate("likedCities");
+      .populate("likedCities")
+      .populate("likedCountries");
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }

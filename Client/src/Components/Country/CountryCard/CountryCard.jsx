@@ -1,4 +1,4 @@
-import React ,{useState}from 'react';
+import React ,{useState,useEffect}from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { Button, Card, CardContent, CardMedia, Typography,IconButton } from '@material-ui/core';
 import Morocco from '../../../Images/Morooco.jpg'
@@ -7,6 +7,7 @@ import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import { useHistory } from 'react-router-dom';
 import zIndex from '@material-ui/core/styles/zIndex';
 import { useDispatch } from 'react-redux';
+import { likeCountry } from '../../../actions/country';
 const useStyles = makeStyles((theme) =>
   createStyles({
     card: {
@@ -67,22 +68,52 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const CountryCard = ({country}) => {
+const CountryCard = ({country,userId,small}) => {
   const history=useHistory()
   const classes = useStyles();
   const dispatch=useDispatch()
-
   const [liked,setLiked]=useState(false)
+  const [likes, setLikes] = useState(country?.likedBy||[]);
+  console.log('my country',country)
+  const handleLike = () => {
+    try{
+    dispatch(likeCountry(country?._id, userId));
+    setLiked(!liked);
+    setLikes((prevLikes) => {
+            if (liked) {
+              return prevLikes.filter((id) => id !== userId);
+            } else {
+              return [...prevLikes, userId];
+            }
+          });
+        }
+       catch (error) {
+        console.log(error);
+      }
+  };
+  useEffect(() => {
+    if (country) {
+      setLiked(country?.likedBy?.includes(userId));
+      setLikes(country?.likedBy || []);
+    }
+  }, [country, userId]);
+  const Likes = () => {
+    if (likes.length > 0 && !small) {
+      return  liked ?
+        ( <><FavoriteOutlinedIcon style={{color:'white'}}/></>)
+        :
+        (<><FavoriteBorderOutlinedIcon style={{color:'white'}} /></>)
+        }
+        return   <><FavoriteBorderOutlinedIcon style={{color:'white'}} /></>
+    }
   console.log('country in card',country)
   return (
     //to be added
 
     <Card className={classes.card} >
       <CardMedia image={country.coverImage} alt={country?.name} className={classes.backgroundImage} onClick={()=>history.push(`/countries/${country?._id}`)} />
-      <IconButton className={classes.likeButton} onClick={()=>setLiked((prev)=>!prev)}>
-        {liked ?( <FavoriteOutlinedIcon style={{color:'white'}}/>):
-        (<FavoriteBorderOutlinedIcon style={{color:'white'}} />)
-        }
+      <IconButton className={classes.likeButton} onClick={handleLike}>
+      <Likes/>
       </IconButton>
       <CardContent className={classes.content}>
         <Typography variant="h6" className={classes.title}>

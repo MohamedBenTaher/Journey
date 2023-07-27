@@ -33,6 +33,7 @@ import LocationDetails from './Components/Location/LocationDetails/LocationDetai
 import EventDetails from './Components/Event/EventDetails/EventDetails.jsx';
 import Profile from './Components/User/Profile/Profile.jsx';
 import NavbarSecondary from './Components/Navbar/NavbarSecondary.js';
+import PrivateRoute from './Components/Auth/PrivateRoute.jsx';
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
@@ -45,10 +46,10 @@ const App = () => {
               </Switch>
              
               <Switch>
-          <Route path="/events/new/:id?" exact>
+          <PrivateRoute path="/events/new/:id?" exact user={user}>
             <NavbarSecondary />
             <EventForm />
-          </Route>
+          </PrivateRoute>
           <Route path="/events" exact>
             <NavbarSecondary />
             <Events />
@@ -61,10 +62,10 @@ const App = () => {
             <NavbarSecondary />
             <Home />
           </Route>
-          <Route path="/stories/new/:id?" exact>
+          <PrivateRoute path="/stories/new/:id?" exact user={user}>
             <NavbarSecondary />
             <PostForm />
-          </Route>
+          </PrivateRoute>
           <Route path="/stories/:id" exact>
             <NavbarSecondary />
             <PostDetails />
@@ -77,10 +78,10 @@ const App = () => {
             <NavbarSecondary />
             <Destinations />
           </Route>
-          <Route path="/destinations/new/:id?" exact>
+          <PrivateRoute path="/destinations/new/:id?" exact user={user}>
             <NavbarSecondary />
             <DestinationForm />
-          </Route>
+          </PrivateRoute>
           <Route path="/destinations/:id/" exact>
             <NavbarSecondary />
             <DestinationDetails />
@@ -89,10 +90,10 @@ const App = () => {
             <NavbarSecondary />
             <LocationLayout />
           </Route>
-          <Route path="/locations/new/:id?" exact>
+          <PrivateRoute path="/locations/new/:id?" exact user={user}>
             <NavbarSecondary />
             <LocationFom />
-          </Route>
+          </PrivateRoute>
           <Route path="/locations/:id/" exact>
             <NavbarSecondary />
             <LocationDetails />
@@ -101,10 +102,10 @@ const App = () => {
             <NavbarSecondary />
             <ContinentLayout />
           </Route>
-          <Route path="/continents/new/:id?" exact>
+          <PrivateRoute path="/continents/new/:id?" exact user={user}>
             <NavbarSecondary />
             <ContinentForm />
-          </Route>
+          </PrivateRoute>
           <Route path="/continents/:id" exact>
             <NavbarSecondary />
             <ContinentDetails />
@@ -124,9 +125,11 @@ const App = () => {
           <Route path="/auth" exact>
             {!user ? <Auth /> : <Redirect to="/stories" />}
           </Route>
-          <Route path="/user-profile" exact>
+          <Route element={<PrivateRoute/>}>
+          <PrivateRoute path="/user-profile" exact user={user}>
             <NavbarSecondary />
             <Profile id={user?.result?._id} />
+          </PrivateRoute>
           </Route>
         </Switch>
 

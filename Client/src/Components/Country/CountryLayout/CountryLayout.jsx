@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState,useEffect} from 'react';
 import { Grid, CircularProgress } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import useStyles from './styles';
@@ -16,7 +16,11 @@ const CountryLayout = ({ setCurrentId }) => {
   const page = query.get('page') || 1;
   const searchQuery = query.get('searchQuery');
   const classes = useStyles();
-
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const userId = user?.result?._id;
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, []);
   if (isLoading && countries?.length === 0) {
     return <div>No Countries</div>;
   }
@@ -29,7 +33,7 @@ console.log('test')
         <Grid container spacing={3} justifyContent="start">
           {countries?.map((country) => (
             <Grid key={country._id} item xs={12} sm={6} md={4} lg={4}>
-              <CountryCard country={country} />
+              <CountryCard country={country} userId={userId} />
             </Grid>
           ))}
         </Grid>

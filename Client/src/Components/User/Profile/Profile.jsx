@@ -8,6 +8,7 @@ import SavedEventCard from '../../Event/Saved/SavedEventCard';
 import Post from '../../Posts/Post/post';
 import LocationCard from '../../Location/LocationCard/LocationCard';
 import PostCard from '../../Posts/PostCard/PostCard';
+import CountryCard from '../../Country/CountryCard/CountryCard';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -51,12 +52,12 @@ const Profile = ({ id}) => {
   )
   const likedPostMessages = user?.user?.likedStories
   const likedLocations = user?.user?.likedLocations
-  const likedCountries = []
+  const likedCountries = user?.user?.likedCountries
   const LikedCities=user?.user?.likedCities
-const LikedEvents=[]
+  const LikedEvents=user?.user?.likedEvents
   const savedPostMessages = user?.user?.savedStories
   const savedLocations = user?.user?.savedLocations
-  const savedCountries = []
+  const savedCountries = user?.user?.savedCountries
   const savedCities=user?.user?.savedCities
   const savedEvents=user?.user?.savedEvents
  console.log('my likes',likedPostMessages,
@@ -102,47 +103,34 @@ LikedEvents)
       </Tabs>
       {user?.user?.savedResources?.length>0 ?(
          <><TabPanel value={likedvalue} index={0}>
+          <Grid container spacing={3}>
               {likedPostMessages.length > 0 ? (
                 likedPostMessages?.map((res) => {
                  
                     return (
-                      <Card key={res._id} style={{ width: '50%', margin: 'auto' }}>
-                        <CardContent>
-                          <Typography gutterBottom variant="body2" component="p">
-                            {res.title} {/* Display the title */}
-                          </Typography>
-                          <Typography variant="body2" color="textSecondary" component="p">
-                            {res.description} {/* Display the description */}
-                          </Typography>
-                        </CardContent>
-                      </Card>
+                      <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
+                      <PostCard post={res} small/>
+                      </Grid>
                     );
                   
-                  return null; // Skip rendering if the resource name is not "PostMessage"
                 })) : (
                 <Typography variant="body2">No Liked PostMessage</Typography>
               )}
+              </Grid>
             </TabPanel><TabPanel value={likedvalue} index={1}>
+              <Grid conatiner spacing={3}>
                 {likedLocations.length > 0 ? (
                   likedLocations?.map((res) => {
                   
                       return (
-                        <Card key={res._id} style={{ width: '50%', margin: 'auto' }}>
-                          <CardContent>
-                            <Typography gutterBottom variant="body2" component="p">
-                              {res.title} {/* Display the title */}
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                              {res.description} {/* Display the description */}
-                            </Typography>
-                          </CardContent>
-                        </Card>
-                      );
-                    
-                    return null; // Skip rendering if the resource name is not "PostMessage"
-                  })) : (
+                        <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
+                        <LocationCard location={res} small/>
+                    </Grid>
+                      )
+                    })) : (
                   <Typography variant="body2">No Liked Locations</Typography>
                 )}
+                </Grid>
               </TabPanel><TabPanel value={likedvalue} index={2}>
               <Grid container spacing={3}>
 
@@ -151,67 +139,37 @@ LikedEvents)
                  LikedCities.map((res) => {
                     
                       return (
-                        // <Card key={res._id} style={{ width: '50%', margin: 'auto' }}>
-                        //   <CardContent>
-                        //     <Typography gutterBottom variant="body2" component="p">
-                        //       {res.title}
-                        //     </Typography>
-                        //     <Typography variant="body2" color="textSecondary" component="p">
-                        //       {res.description.split(',').slice(0,2).join(' ,')}
-                        //     </Typography>
-                        //   </CardContent>
-                        // </Card>
                         <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
                         <DestinationCard destination={res} userId={user.user._id} small/>
                         </Grid>
                       );       
-                    return null; // Skip rendering if the resource name is not "PostMessage"
                   })) : (
                   <Typography variant="body2">No Liked Cities</Typography>
                 )}
                 </Grid>
               </TabPanel><TabPanel value={likedvalue} index={3}>
                 {likedCountries.length > 0 ? (
-                  user?.user?.likedResources?.map((res) => {
-                    if (res.type === "country") {
+                likedCountries?.map((res) => {
+                  console.log('my res',res)
                       return (
-                        <Card key={res._id} style={{ width: '50%', margin: 'auto' }}>
-                          <CardContent>
-                            <Typography gutterBottom variant="body2" component="p">
-                              {res.title} {/* Display the title */}
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                              {res.description} {/* Display the description */}
-                            </Typography>
-                          </CardContent>
-                        </Card>
+                       <CountryCard country={res} userId={user?.user._id} small/>
                       );
-                    }
-                    return null; // Skip rendering if the resource name is not "PostMessage"
                   })) : (
                   <Typography variant="body2">No Liked Countries</Typography>
                 )}
               </TabPanel><TabPanel value={likedvalue} index={4}>
+                <Grid container spacing={3}>
                 {LikedEvents.length > 0 ? (
-                  user?.user?.likedResources?.map((res) => {
-                    if (res.type === "Event") {
+                  LikedEvents?.map((res) => {
                       return (
-                        <Card key={res._id} style={{ width: '50%', margin: 'auto' }}>
-                          <CardContent>
-                            <Typography gutterBottom variant="body2" component="p">
-                              {res.title} {/* Display the title */}
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                              {res.description} {/* Display the description */}
-                            </Typography>
-                          </CardContent>
-                        </Card>
+                        <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
+                        <SavedEventCard event={res}/>
+                      </Grid>
                       );
-                    }
-                    return null; // Skip rendering if the resource name is not "PostMessage"
-                  })) : (
+                })) : (
                   <Typography variant="body2">No Liked Events</Typography>
                 )}
+                </Grid>
               </TabPanel></>
       ):(
         <TabPanel >

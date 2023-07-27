@@ -184,25 +184,37 @@ export const deleteCountry = async (req, res) => {
     res.status(200).json({ message: destiationDeleted });
 } 
 
-export const likeCountry=async (req,res)=>{
-    console.log(req.body,req.params)
-    const { id }=req.params
-    const userId=req.userId
-    if(!req.userId ) return res.json({mesage:'Unauthenticated'})
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No country with id: ${id}`);
-    const country =await Country.findById(id)
-    const index=country.upvotes.findIndex((id)=> id ===String(userId));
-    let updatedCountry=country
-    if(index===-1){
-        country.likes.push(userId)
+export const likeCountry = async (req, res) => {
+  const { userId } = req.body;
+  const id = req.params.id;
+  try {
+    const resource = await Country.findById(id);
+    if (!resource) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    if (resource.likedBy.includes(userId)) {
+      user.likedCountries.pull(id);
+      resource.likedBy.pull(userId)
+      await user.save();
+      await resource.save();
+      return res.status(200).json({ message: 'Country Unliked' });
     }
     else{
-        country.downvotes.splice(index,1)
+    user.likedCountries.push(id);
+    resource.likedBy.push(userId);
+    await user.save();
+    await resource.save();
+    res.status(200).json({ message: 'Country Liked' });
     }
-
-    updatedCountry= await Country.findByIdAndUpdate(id,country,{new: true});
-    res.status(200).json(updatedCountry);
-}
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+};
 // export const downvoteCountry=async (req,res)=>{
 //     const { id }=req.params
 //     const userId=req.userId

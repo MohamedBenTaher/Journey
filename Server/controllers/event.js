@@ -46,21 +46,18 @@ export const  getTopEvents= async(req,res) => {
       export const likeEvent = async (req, res) => {
         const { userId } = req.body;
         const id = req.params.id;
-      
         try {
           const resource = await Event.findById(id);
           if (!resource) {
             return res.status(404).json({ message: 'Event not found' });
           }
-      
           const user = await User.findById(userId);
           if (!user) {
             return res.status(404).json({ message: 'User not found' });
           }
-      
           if (resource.likedBy.includes(userId)) {
-            user.likedEvents = user.likedEvents.filter((eventId) => eventId !== id);
-            resource.likedBy = resource.likedBy.filter((likedUserId) => likedUserId !== userId);
+            user.likedEvents.pull(id);
+            resource.likedBy.pull(userId)
             await user.save();
             await resource.save();
             return res.status(200).json({ message: 'Event Unliked' });
