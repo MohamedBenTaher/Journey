@@ -184,32 +184,30 @@ export const deleteCountry = async (req, res) => {
     res.status(200).json({ message: destiationDeleted });
 } 
 
+
 export const likeCountry = async (req, res) => {
-  const { userId } = req.body;
-  const id = req.params.id;
+  const { id } = req.params;
+  const {userId} = req.body;
   try {
-    const resource = await Country.findById(id);
+    let resource;
+    resource = await Country.findById(id);
     if (!resource) {
-      return res.status(404).json({ message: 'Event not found' });
+      return res.status(404).json({ message: 'Country not found' });
     }
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    if (resource.likedBy.includes(userId)) {
-      user.likedCountries.pull(id);
-      resource.likedBy.pull(userId)
-      await user.save();
-      await resource.save();
-      return res.status(200).json({ message: 'Country Unliked' });
+    if (user?.likes?.includes(id)) {
+      user?.likedCountries?.filter((id)=>id==id);
+      resource.likedBy?.filter((id)=>id==userId)
+      res.status(200).json({ message: 'Country Unliked' });
     }
-    else{
-    user.likedCountries.push(id);
+    user?.likedCountries.push(id);
     resource.likedBy.push(userId);
     await user.save();
     await resource.save();
-    res.status(200).json({ message: 'Country Liked' });
-    }
+    res.status(200).json({ message: 'Country liked' });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Something went wrong' });

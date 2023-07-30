@@ -47,42 +47,42 @@ const Navbar = () => {
           >
             <Box className={classes.Drawer}>
             <Link to="/" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-              <Typography variant='h6'>
+              <Typography >
                 Home
               </Typography>
             </Link>
             <Link to="/destinations" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-              <Typography variant='h6'>
+              <Typography >
                 Top Destinations
               </Typography>
             </Link>
             <Link to="/events" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-              <Typography variant='h6'>
+              <Typography >
                 Upcoming Events
               </Typography>
             </Link>
             <Link to="/countries" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-              <Typography variant='h6'>
+              <Typography >
                 Countries
               </Typography>
             </Link>
             <Link to="/locations" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-              <Typography variant='h6'>
+              <Typography >
                 Top Locations
               </Typography>
             </Link>
             <Link to="/continents" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-              <Typography variant='h6'>
+              <Typography >
                 Continents
               </Typography>
             </Link>
             <Link to="/" className={classes.linksDrawer}>
-            <Typography variant='h6'>
+            <Typography >
               Blog
             </Typography>
           </Link>
             <Link to="/" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-              <Typography variant='h6'>
+              <Typography >
                 About us
               </Typography>
             </Link>

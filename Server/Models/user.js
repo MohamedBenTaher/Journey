@@ -46,7 +46,7 @@ likedCities: [{
 }],
 likedCountries: [{
   type: mongoose.Schema.Types.ObjectId,
-  ref:'Destination'
+  ref:'Country'
 }],
 });
 

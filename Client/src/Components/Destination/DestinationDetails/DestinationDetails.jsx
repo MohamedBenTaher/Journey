@@ -118,7 +118,7 @@ const DestinationDetails = () => {
 
   return (
     <>
-      <Card>
+    
         <CardMedia className={classes.coverImage} image={destination?.coverImage}>
           <IconButton className={classes.saveDestination} onClick={handleBookmark} disabled={!user}>
             {bookmarked ? (
@@ -178,7 +178,6 @@ const DestinationDetails = () => {
             </Grid>
           </div>
         </CardContent>
-      </Card>
       {destination && (
         <Card>
           <CardContent>

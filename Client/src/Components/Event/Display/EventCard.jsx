@@ -1,5 +1,5 @@
 import React ,{useState,useEffect} from 'react'
-import { Button, Modal, Box, Typography, Backdrop, TextField, Grid, Input, IconButton } from '@material-ui/core';
+import { Button, Modal, Box, Typography, Backdrop, TextField, Grid, Input, IconButton, useMediaQuery, useTheme } from '@material-ui/core';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -11,6 +11,9 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import { useDispatch } from 'react-redux';
 const EventCard = ({ event ,userId,small}) => {
+    const classes=useStyles();
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
     const [likes, setLikes] = useState(event?.likedBy);
     const [liked, setLiked] = useState(false);
     const dispatch=useDispatch()
@@ -36,15 +39,17 @@ const EventCard = ({ event ,userId,small}) => {
           setLiked(event.likedBy.includes(userId));
         }
       }, [event, userId]);
-    const classes=useStyles();
+      
+
+  
      const Likes = () => {
     if (likes.length > 0 && !small) {
       return  liked ?
-        ( <><FavoriteOutlinedIcon style={{color:'white'}}/></>)
+        ( <><FavoriteOutlinedIcon style={{color:!isMobile?'black':'white'}}/></>)
         :
-        (<><FavoriteBorderOutlinedIcon style={{color:'white'}} /></>)
+        (<><FavoriteBorderOutlinedIcon style={{color:!isMobile?'black':'white'}} /></>)
         }
-        return   <><FavoriteBorderOutlinedIcon style={{color:'white'}} /></>
+        return   <><FavoriteBorderOutlinedIcon style={{color:!isMobile?'black':'white'}}/></>
     }
     return (
         <Card className={classes.card}>

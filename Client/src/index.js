@@ -16,6 +16,35 @@ const theme = createTheme({
        'Gilroy', 'sans-serif'
      ].join(','),
    },
+  palette: {
+    primary: {
+      main: '#3F95EC', // Sky Blue
+    },
+    secondary: {
+      main: '#FFC107', // Amber
+    },
+    success: {
+      main: '#8BC34A', // Lime Green
+    },
+    background: {
+      default: '#FFFFFF', // White
+    },
+    text: {
+      primary: '#333333', // Dark Gray
+    },
+    error: {
+      main: '#FF5722', // Deep Orange
+    },
+  },
+  link: {
+    main: '#2196F3', // Blue
+  },
+  highlight: {
+    main: '#FF9800', // Orange
+  },
+  subtleShade: {
+    main: '#E0E0E0', // Light Gray
+  },
  });
 
 ReactDOM.render(

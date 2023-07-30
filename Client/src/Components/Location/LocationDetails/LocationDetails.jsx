@@ -123,7 +123,7 @@ const handleBookmark = () => {
   setBookmarked(!bookmarked);
 };
   return (
-    <><Card>
+    <>
           <CardMedia className={classes.coverImage} image={location?.coverImage} >
           <IconButton className={classes.saveLocation} onClick={handleBookmark} disabled={!user}>
                 {bookmarked ? (
@@ -171,7 +171,7 @@ const handleBookmark = () => {
                   </Grid>
               </div>
           </CardContent>
-      </Card>
+     
       {
         location&&(
           <Card>

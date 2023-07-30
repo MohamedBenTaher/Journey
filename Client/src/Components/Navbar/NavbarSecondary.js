@@ -37,7 +37,8 @@ const NavbarSecondary = () => {
      <Typography variant='h2' className={classes.title}>Journey</Typography>
      </Link>
      {isMobile &&(
-     <><Drawer
+     <>
+     <Drawer
             anchor="right"
             className={classes.Drawer}
             open={isOpen}
@@ -45,27 +46,39 @@ const NavbarSecondary = () => {
           >
             <Box className={classes.Drawer}>
             <Link to="/" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-              <Typography variant='h6'>
+              <Typography >
                 Home
               </Typography>
             </Link>
             <Link to="/destinations" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-              <Typography variant='h6'>
+              <Typography >
                 Top Destinations
               </Typography>
             </Link>
-            <Link to="/locations" className={classes.linksDrawer}>
-            <Typography variant='h6'>
-              Locations
-            </Typography>
-          </Link>
-            <Link to="/" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-              <Typography variant='h6'>
-                About us
+            <Link to="/events" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
+              <Typography >
+                Upcoming Events
               </Typography>
             </Link>
+            <Link to="/countries" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
+              <Typography >
+                Countries
+              </Typography>
+            </Link>
+            <Link to="/locations" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
+              <Typography >
+                Top Locations
+              </Typography>
+            </Link>
+            <Link to="/continents" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
+              <Typography >
+                Continents
+              </Typography>
+            </Link>
+       
             </Box>
-          </Drawer><IconButton  onClick={() => setIsOpen(!isOpen)}>
+          </Drawer>
+          <IconButton  onClick={() => setIsOpen(!isOpen)}>
               <MenuIcon style={{ 
                 color: 'rgb(0, 0, 0)',
                 height:'2em',
@@ -76,32 +89,37 @@ const NavbarSecondary = () => {
      </Grid>
      {!isMobile && (
      <>
-           <Link to="/" className={classes.links}>
-          <Typography variant='p'>
-             Explore
-          </Typography>
-        </Link>
-        <Link to="/destinations" className={classes.links}>
-            <Typography variant='p'>
-            Top Destinations
-            </Typography>
-          </Link>
-          <Link to="/locations" className={classes.links}>
-            <Typography variant='p'>
-            Top Locations
-            </Typography>
-          </Link>
-          <Link to="/countries" className={classes.links}>
-            <Typography variant='p'>
-              Countries
-            </Typography>
-          </Link>
-          <Link to="/events" className={classes.links}>
-            <Typography variant='p'>
-              Upcoming events
-            </Typography>
-          </Link>
-          
+            <Link to="/" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
+              <Typography >
+                Home
+              </Typography>
+            </Link>
+            <Link to="/destinations" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
+              <Typography >
+                Top Destinations
+              </Typography>
+            </Link>
+            <Link to="/events" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
+              <Typography >
+                Upcoming Events
+              </Typography>
+            </Link>
+            <Link to="/countries" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
+              <Typography >
+                Countries
+              </Typography>
+            </Link>
+            <Link to="/locations" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
+              <Typography >
+                Top Locations
+              </Typography>
+            </Link>
+            <Link to="/continents" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
+              <Typography >
+                Continents
+              </Typography>
+            </Link>
+ 
           </>)
     }
      <Toolbar className={classes.toolbar}>

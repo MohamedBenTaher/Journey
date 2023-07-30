@@ -148,15 +148,19 @@ LikedEvents)
                 )}
                 </Grid>
               </TabPanel><TabPanel value={likedvalue} index={3}>
+                <Grid spacing={2} container>
                 {likedCountries.length > 0 ? (
                 likedCountries?.map((res) => {
                   console.log('my res',res)
                       return (
-                       <CountryCard country={res} userId={user?.user._id} small/>
+                       <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
+                          <CountryCard country={res} userId={user?.user._id} small/>
+                       </Grid>
                       );
                   })) : (
                   <Typography variant="body2">No Liked Countries</Typography>
                 )}
+                </Grid>
               </TabPanel><TabPanel value={likedvalue} index={4}>
                 <Grid container spacing={3}>
                 {LikedEvents.length > 0 ? (

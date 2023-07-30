@@ -25,6 +25,21 @@ const useStyles = makeStyles((theme) =>
           },
         },
       },
+      smallCard:{
+        position: 'relative',
+        width: '100%',
+        height: 300,
+        width:300,
+        margin: 20,
+        transition: 'all 0.5s',
+        borderRadius:'15px',
+        '&:hover': {
+          transform: 'scale(1.05)',
+          '& $content': {
+            opacity: 1,
+          },
+        },
+      },
     backgroundImage: {
         height: '100%',
         backgroundSize: 'cover',
@@ -110,7 +125,7 @@ const CountryCard = ({country,userId,small}) => {
   return (
     //to be added
 
-    <Card className={classes.card} >
+    <Card className={small?classes.smallCard:classes.card} >
       <CardMedia image={country.coverImage} alt={country?.name} className={classes.backgroundImage} onClick={()=>history.push(`/countries/${country?._id}`)} />
       <IconButton className={classes.likeButton} onClick={handleLike}>
       <Likes/>

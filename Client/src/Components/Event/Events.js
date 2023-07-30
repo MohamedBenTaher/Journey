@@ -27,9 +27,14 @@ const Events = () => {
     }, [])
     console.log(typeof events, events)
     return (
-        <><Link to={'/events/create'}>
+
+        <>
+        {
+        user && user.result.isAdmin?(
+        <Link to={'/events/new'}>
             <Button variant="outlined" color="primary" onClick={() => { } }> Add a new Event </Button>
         </Link>
+            ):null}
         <Grid container spacing={3} className={classes.events} >
                 {events ? events?.map((event) => (
                     <Grid item xs={12}>

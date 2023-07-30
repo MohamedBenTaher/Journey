@@ -73,7 +73,6 @@ function PostDetails() {
   return (
     <>
 
-      <Paper style={{ padding: '20px', borderRadius: '15px' }} elevation={6}>
         <div className={classes.card}>
           <div className={classes.section}>
             <Typography variant="h3" bold component="h2" className={classes.title}>{post.title}</Typography>
@@ -165,7 +164,6 @@ function PostDetails() {
             </div>
           </div>
         )}
-      </Paper>
     </>
   )
 }
