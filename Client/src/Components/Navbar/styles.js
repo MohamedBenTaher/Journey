@@ -11,26 +11,26 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
     padding: '10px 0px',
     [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column',
-    },
+      flexDirection: 'column'
+    }
   },
   heading: {
     color: theme.palette.primary.main,
     textDecoration: 'none',
     fontSize: '2em',
-    fontWeight: 300,
+    fontWeight: 300
   },
   image: {
     marginLeft: '10px',
-    marginTop: '5px',
+    marginTop: '5px'
   },
   toolbar: {
     display: 'flex',
     justifyContent: 'flex-end',
     width: '400px',
     [theme.breakpoints.down('sm')]: {
-      width: 'auto',
-    },
+      width: 'auto'
+    }
   },
   profile: {
     display: 'flex',
@@ -40,60 +40,58 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       width: 'auto',
       marginTop: 20,
-      justifyContent: 'center',
-    },
+      justifyContent: 'center'
+    }
   },
   logout: {
-    marginLeft: '20px',
+    marginLeft: '20px'
   },
   userName: {
     display: 'flex',
     alignItems: 'center',
     textAlign: 'center',
-    color:'black'
+    color: 'black'
   },
   brandContainer: {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
-    backgroundColor: deepPurple[500],
+    backgroundColor: deepPurple[500]
   },
-  links:{
-    textDecoration:'none',
-    color:'white',
-    '&:hover':{
+  links: {
+    textDecoration: 'none',
+    color: 'white',
+    '&:hover': {
       //textDecoration: "underline blue ",
       borderBottom: '2px solid #3F95EC'
     }
   },
-  Drawer:{
-    width:'30vh',
-    height:'80vh',
-    display:'flex',
-    flexDirection:"column",
-    alignItems:"center",
-    justifyContent:'space-evenly'
+  Drawer: {
+    width: '30vh',
+    height: '80vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-evenly'
   },
-  linksDrawer:{
-    textDecoration:'none',
-    color:'black',
-    '&:hover':{
-      borderBottom: '2px solid #3F95EC',
+  linksDrawer: {
+    textDecoration: 'none',
+    color: 'black',
+    '&:hover': {
+      borderBottom: '2px solid #3F95EC'
       //textDecoration: "underline blue ",
-      
     }
   },
-  navLinks:{
-    backgroundColor:'red',
-    justifyContent :'space-evenly',
-    alignItems:'center'
+  navLinks: {
+    backgroundColor: 'red',
+    justifyContent: 'space-evenly',
+    alignItems: 'center'
   },
-  title:{
-    textDecoration:'none',
-    fontWeight:'bold',
-    color:'white'
+  title: {
+    textDecoration: 'none',
+    fontWeight: 'bold',
+    color: 'white'
   }
- 
 }));

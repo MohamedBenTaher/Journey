@@ -3,67 +3,65 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-    },
-  },
-  link:{
-    textDecoration:'none',
-    fontSize:'18px',
-    fontWeight:'500',
-    color:'#ffffffcc',
-    '&:hover':{
-        color:'#ffffff'
+      margin: theme.spacing(1)
     }
   },
-  container:{
-    height:'110%',
-    backgroundColor:'#1CA0E3',
-    alignItems:'center',
-    padding:'5rem',
+  link: {
+    textDecoration: 'none',
+    fontSize: '18px',
+    fontWeight: '500',
+    color: '#ffffffcc',
+    '&:hover': {
+      color: '#ffffff'
+    }
+  },
+  container: {
+    height: '110%',
+    backgroundColor: '#1CA0E3',
+    alignItems: 'center',
+    padding: '5rem'
+  },
+  title: {
+    fontWeight: '900',
+    color: 'white',
+    fontSize: '24px'
+  },
 
+  list: {
+    alignItems: 'flex-start',
+    justifyContent: 'center'
   },
-  title:{
-    fontWeight:'900',
-    color:'white',
-    fontSize:'24px'
+  ListItem: {
+    alignItems: 'start'
   },
- 
-  list:{
-    alignItems:'flex-start',
-    justifyContent:'center',
+  image: {
+    width: '100px'
   },
-  ListItem:{
-    alignItems:'start',
+  text: {
+    color: 'white',
+    textAlign: 'left'
   },
-  image:{
-    width:'100px'
+  content: {
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  text:{
-    color:'white',
-    textAlign:'left'
+  links: {
+    padding: '1%'
   },
-  content:{
-    alignItems:'center',
-    justifyContent:'center'
+  Brand: {
+    padding: '1%'
   },
-  links:{
-    padding:'1%',
+  Divider: {
+    backgroundColor: 'white',
+    color: 'white',
+    width: '1200x'
   },
-  Brand:{
-    padding:'1%',
+  gutter: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'space-between'
   },
-  Divider:{
-    backgroundColor:'white',
-    color:'white',
-    width:"1200x"
-  },
-  gutter:{
-    alignItems:'center',
-    display:"flex",
-    justifyContent:"space-between"
-  },
-  gutterText:{
-    color:'white'
+  gutterText: {
+    color: 'white'
   }
-
 }));

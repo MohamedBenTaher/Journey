@@ -1,100 +1,96 @@
 import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
-
-    card: {
-      position: 'relative',
-      width: '100%',
-      height: 400,
-      margin: 20,
-      transition: 'all 0.5s',
-      borderRadius:'15px',
-      '&:hover': {
-        transform: 'scale(1.05)',
-        '& $content': {
-          opacity: 1,
-        },
-      },
-    },
-    smallCard: {
-      position: 'relative',
-      width: '100%',
-      height: 300,
-      margin: 20,
-      transition: 'all 0.5s',
-      borderRadius:'15px',
-      '&:hover': {
-        transform: 'scale(1.05)',
-        '& $content': {
-          opacity: 1,
-        },
-      },
-    },
-    media: {
-      height: 400,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      filter: 'brightness(70%)',
-      
-    },
-    content: {
-      position: 'absolute',
-      bottom: 0,
-      left: '50%',
-      transform: 'translateX(-50%)',
-      textAlign: 'left',
-      color: '#fff',
-      opacity: 0,
-      width:'100%',
-      transition: 'all 0.5s',
-    },
-    button: {
-      marginTop: theme.spacing(2),
-      backgroundColor: 'transparent',
-      color: '#fff',
-      border: '2px solid #fff',
-      borderRadius: '15px',
-      width: '100%',
-      transition: 'all 0.3s',
-      '&:hover': {
-        backgroundColor: '#fff',
-        color: '#000',
-      },
-    },
-    buttonNoImage: {
-        marginTop: theme.spacing(2),
-        // backgroundColor: 'transparent',
-        // color: '#fff',
-        backgroundColor: '#fff',
-        color: '#000',
-        border: '2px solid #fff',
-        borderRadius: '15px',
-        width: '100%',
-        transition: 'all 0.3s',
-        '&:hover': {
-            backgroundColor: '#000',
-            color: '#fff',
-        },
-      },
-    textContainer: {
-      padding: theme.spacing(0, 2),
-    },
-    title:{
-      color:'#fff',
-      fontSize:'30px',
-      fontWeight:'bold',
-    },
-    noImageTitle:{
-        color:'#000',
-        fontSize:'30px',
-        fontWeight:'bold',
-    },
-    noImageDesctiption:{
-        color:'#000',
-
-    },
-    noImageBtnColor:{
-        color:'#000'
+  card: {
+    position: 'relative',
+    width: '100%',
+    height: 400,
+    margin: 20,
+    transition: 'all 0.5s',
+    borderRadius: '15px',
+    '&:hover': {
+      transform: 'scale(1.05)',
+      '& $content': {
+        opacity: 1
+      }
     }
-  
+  },
+  smallCard: {
+    position: 'relative',
+    width: '100%',
+    height: 300,
+    margin: 20,
+    transition: 'all 0.5s',
+    borderRadius: '15px',
+    '&:hover': {
+      transform: 'scale(1.05)',
+      '& $content': {
+        opacity: 1
+      }
+    }
+  },
+  media: {
+    height: 400,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    filter: 'brightness(70%)'
+  },
+  content: {
+    position: 'absolute',
+    bottom: 0,
+    left: '50%',
+    transform: 'translateX(-50%)',
+    textAlign: 'left',
+    color: '#fff',
+    opacity: 0,
+    width: '100%',
+    transition: 'all 0.5s'
+  },
+  button: {
+    marginTop: theme.spacing(2),
+    backgroundColor: 'transparent',
+    color: '#fff',
+    border: '2px solid #fff',
+    borderRadius: '15px',
+    width: '100%',
+    transition: 'all 0.3s',
+    '&:hover': {
+      backgroundColor: '#fff',
+      color: '#000'
+    }
+  },
+  buttonNoImage: {
+    marginTop: theme.spacing(2),
+    // backgroundColor: 'transparent',
+    // color: '#fff',
+    backgroundColor: '#fff',
+    color: '#000',
+    border: '2px solid #fff',
+    borderRadius: '15px',
+    width: '100%',
+    transition: 'all 0.3s',
+    '&:hover': {
+      backgroundColor: '#000',
+      color: '#fff'
+    }
+  },
+  textContainer: {
+    padding: theme.spacing(0, 2)
+  },
+  title: {
+    color: '#fff',
+    fontSize: '30px',
+    fontWeight: 'bold'
+  },
+  noImageTitle: {
+    color: '#000',
+    fontSize: '30px',
+    fontWeight: 'bold'
+  },
+  noImageDesctiption: {
+    color: '#000'
+  },
+  noImageBtnColor: {
+    color: '#000'
+  }
 }));
-  export default useStyles;
+export default useStyles;

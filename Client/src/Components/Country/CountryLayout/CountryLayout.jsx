@@ -30,9 +30,9 @@ console.log('test')
       {isLoading ? (
         <CircularProgress />
       ) : (
-        <Grid container spacing={3} justifyContent="start">
+        <Grid container spacing={3} >
           {countries?.map((country) => (
-            <Grid key={country._id} item xs={12} sm={6} md={4} lg={4}>
+            <Grid key={country._id} item xs={12} sm={6} md={4} lg={3}>
               <CountryCard country={country} userId={userId} />
             </Grid>
           ))}

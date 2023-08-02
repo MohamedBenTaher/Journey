@@ -3,38 +3,39 @@ import { Chip, TextField, Box } from '@mui/material';
 import { useField } from 'formik';
 
 const ChipInputField = ({ label, ...props }) => {
-    const [field, meta, helpers] = useField(props.name);
-    console.log(field,helpers)
-    const handleAddChip = (chip) => {
-      const tags = field.value.tags;
-      console.log('field value',field.value.tags,chip)
-      helpers.setValue('tags',[...tags, chip]);
-    };
-  
-    const handleDeleteChip = (tagToDelete) => {
-      const tags = field.value || [];
-      helpers.setValue(tags.filter((tag) => tag !== tagToDelete));
-    };
-  
-    return (
+  const [field, meta, helpers] = useField(props.name);
+  console.log(field, helpers);
+  const handleAddChip = (chip) => {
+    const tags = field.value.tags;
+    console.log('field value', field.value.tags, chip);
+    helpers.setValue('tags', [...tags, chip]);
+  };
+
+  const handleDeleteChip = (tagToDelete) => {
+    const tags = field.value || [];
+    helpers.setValue(tags.filter((tag) => tag !== tagToDelete));
+  };
+
+  return (
+    <Box>
+      <TextField
+        label={label}
+        fullWidth
+        variant="outlined"
+        InputLabelProps={{
+          shrink: true
+        }}
+        onKeyDown={(e) => {
+          if (e.key === ' ') {
+            e.preventDefault();
+            handleAddChip(e.target.value);
+            e.target.value = '';
+          }
+        }}
+      />
       <Box>
-        <TextField
-          label={label}
-          fullWidth
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          onKeyDown={(e) => {
-            if (e.key === ' ') {
-              e.preventDefault();
-              handleAddChip(e.target.value);
-              e.target.value = '';
-            }
-          }}
-        />
-        <Box>
-          {field.value.tags && field?.value.tags?.map((tag) => (
+        {field.value.tags &&
+          field?.value.tags?.map((tag) => (
             <Chip
               key={tag}
               label={tag}
@@ -44,8 +45,8 @@ const ChipInputField = ({ label, ...props }) => {
               sx={{ marginRight: '4px', marginBottom: '4px' }}
             />
           ))}
-        </Box>
       </Box>
-    );
-  };
-  export default ChipInputField;
+    </Box>
+  );
+};
+export default ChipInputField;

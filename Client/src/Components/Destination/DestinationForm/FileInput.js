@@ -1,79 +1,79 @@
-import { useDropzone } from "react-dropzone";
+import { useDropzone } from 'react-dropzone';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import "./styles";
+import './styles';
 const useStyles = makeStyles((theme) => ({
-    root: {
-      flexGrow: 1,
-      marginTop: theme.spacing(2),
-    },
-    paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-    },
-    dropzone: {
-      height: 150,
-      border: '2px dashed #ccc',
-      borderRadius: 5,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      cursor: 'pointer',
-    },
-    preview: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      marginTop: theme.spacing(2),
-    },
-    imageWrapper: {
-      position: 'relative',
-      width: 100,
-      height: 100,
-      margin: theme.spacing(1),
-    },
-    image: {
-      width: '100%',
-      height: '100%',
-      objectFit: 'cover',
-    },
-    removeButton: {
-      position: 'absolute',
-      top: -5,
-      right: -5,
-      color: '#fff',
-      backgroundColor: '#000',
-      borderRadius: '50%',
-      width: 20,
-      height: 20,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      cursor: 'pointer',
-    },
-  }));
-const FileInput = ({ field, form: { setFieldValue,values } }) => {
-    const classes=useStyles()
-    const { getRootProps, getInputProps } = useDropzone({
-      accept: 'image/*',
-      multiple: true,
-      onDrop: (acceptedFiles) => {
-        const filesArray = [...values[field.name], ...acceptedFiles]
-        console.log('accepted files',filesArray)
-        setFieldValue(field.name, filesArray);
-      },
-    });
-  
-    return (
-      <Paper>
+  root: {
+    flexGrow: 1,
+    marginTop: theme.spacing(2)
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary
+  },
+  dropzone: {
+    height: 150,
+    border: '2px dashed #ccc',
+    borderRadius: 5,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    cursor: 'pointer'
+  },
+  preview: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    marginTop: theme.spacing(2)
+  },
+  imageWrapper: {
+    position: 'relative',
+    width: 100,
+    height: 100,
+    margin: theme.spacing(1)
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover'
+  },
+  removeButton: {
+    position: 'absolute',
+    top: -5,
+    right: -5,
+    color: '#fff',
+    backgroundColor: '#000',
+    borderRadius: '50%',
+    width: 20,
+    height: 20,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    cursor: 'pointer'
+  }
+}));
+const FileInput = ({ field, form: { setFieldValue, values } }) => {
+  const classes = useStyles();
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: 'image/*',
+    multiple: true,
+    onDrop: (acceptedFiles) => {
+      const filesArray = [...values[field.name], ...acceptedFiles];
+      console.log('accepted files', filesArray);
+      setFieldValue(field.name, filesArray);
+    }
+  });
+
+  return (
+    <Paper>
       <div {...getRootProps()} className={classes.dropzone}>
         <input {...getInputProps()} />
         <Typography>Drag 'n' drop your photos here, or click to select photos</Typography>
       </div>
-      </Paper>
-    );
-  };
-  export default FileInput;
+    </Paper>
+  );
+};
+export default FileInput;

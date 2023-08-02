@@ -18,8 +18,9 @@ const PostForm = ({ currentId, setCurrentId }) => {
   console.log('statte',statePos)
   const post = useSelector((state) => id ? state?.posts.posts?.find((p) => p._id === id) : null);
   const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')))
+  const [locations,setLocations]=useState([])
   const [postData, setPostData] = useState({
-    title: '', message: '', tags: '',country:'',city:'', selectedFile: '',creator:user?.result?._id
+    title: '', message: '', tags: '',country:'',city:'', selectedFile: '',creator:user?.result?._id,locations:[]
   });
 
 
@@ -171,13 +172,44 @@ const PostForm = ({ currentId, setCurrentId }) => {
                   value={postData.cost}
                   onChange={(e) => setPostData({ ...postData, cost: e.target.value })} />
                  
-                       <FormControl variant="outlined" className={classes.select}>
+                <FormControl variant="outlined" className={classes.select}>
                     <InputLabel>Select Country</InputLabel>
                     <Select value={postData.country} onChange={(e)=>{
                         dispatch(getDestinationByCountry(e.target.value))
                         setPostData({...postData,country:e.target.value})
                         
                 }} label="Select Country">
+                        {countries?.countries?.map((country) => (
+                        <MenuItem key={country._id} value={country._id}>
+                            {country.title}
+                        </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                <FormControl variant="outlined" className={classes.select}>
+                    <InputLabel>Select Country</InputLabel>
+                    <Select value={postData.country} onChange={(e)=>{
+                        setPostData({...postData,country:e.target.value})
+                        
+                }} label="Select Country">
+                        {countries?.countries?.map((country) => (
+                        <MenuItem key={country._id} value={country._id}>
+                            {country.title}
+                        </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                
+                <FormControl variant="outlined" className={classes.select}>
+                    <InputLabel>Select Locations</InputLabel>
+                    <Select 
+                        value={postData.country} 
+                        onChange={(e)=>{
+                        dispatch(getDestinationByCountry(e.target.value))
+                        setPostData({...postData,country:e.target.value})}} 
+                        label="Select Country"
+                        multiple
+                        >
                         {countries?.countries?.map((country) => (
                         <MenuItem key={country._id} value={country._id}>
                             {country.title}

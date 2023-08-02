@@ -5,18 +5,18 @@ export default makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'start',
-    width:'100%',
-    padding:'2em'
+    width: '100%',
+    padding: '2em'
   },
   smMargin: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   actionDiv: {
-    width:'100%',
-    alignItems:"center",
-    justifyContent:"center",
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  ul:{
-    justifyContent:'space-around',
-},
+  ul: {
+    justifyContent: 'space-around'
+  }
 }));

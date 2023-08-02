@@ -53,6 +53,25 @@ const postSchema=mongoose.Schema({
         }],
       default: []
   },
+  locations:{
+    type: [{location:{
+      type:
+      {
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'Location',
+    }},
+    costPerLocation:{
+      type:Number,
+      default:0
+    }
+  }],
+  numberOfTarvelers:{
+    type: Number,
+    min :1,
+    max:50,
+    default:1
+  }
+  }
 
 });
 const PostMessage=mongoose.model('PostMessage',postSchema);
