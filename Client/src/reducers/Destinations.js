@@ -13,12 +13,12 @@ import {
   DOWNVOTE_DESTINATION,
   BOOKMARK_DESTINATION,
   CANCEL_BOOKMARK_DESTINATION,
-  LIKE_DESTINATION
+  LIKE_DESTINATION,
 } from '../constants/actionTypes.js';
 
 export default (
   state = { isLoading: false, destinations: [], user: { savedDestinations: [] } },
-  action
+  action,
 ) => {
   switch (action.type) {
     case START_LOADING_DESTINATIONS:
@@ -30,12 +30,12 @@ export default (
         ...state,
         destinations: action.payload.data,
         currentPage: action.payload.currentPage,
-        NumberOfPages: action.payload.numrOfPages
+        NumberOfPages: action.payload.numrOfPages,
       };
     case FETCH_DESTINATIONS_BY_COUNTRY:
       return {
         ...state,
-        destinations: action.payload.data
+        destinations: action.payload.data,
       };
     case FETCH_DESTINATION:
       return { ...state, destination: action.payload };
@@ -47,28 +47,30 @@ export default (
       return {
         ...state,
         destinations: state.destinations.map((destination) =>
-          destination._id === action.payload._id ? action.payload : destination
-        )
+          destination._id === action.payload._id ? action.payload : destination,
+        ),
       };
     case DELETE_DESTINATION:
       return {
         ...state,
-        destinations: state.destinations.filter((destination) => destination._id !== action.payload)
+        destinations: state.destinations.filter(
+          (destination) => destination._id !== action.payload,
+        ),
       };
     case UPVOTE_DESTINATION:
     case DOWNVOTE_DESTINATION:
       return {
         ...state,
         destinations: state.destinations.map((destination) =>
-          destination._id === action.payload._id ? action.payload : destination
-        )
+          destination._id === action.payload._id ? action.payload : destination,
+        ),
       };
     case LIKE_DESTINATION:
       return {
         ...state,
         destinations: state.destinations.map((destination) =>
-          destination._id === action.payload._id ? action.payload : destination
-        )
+          destination._id === action.payload._id ? action.payload : destination,
+        ),
       };
     case BOOKMARK_DESTINATION:
       return {
@@ -77,10 +79,10 @@ export default (
           destination._id === action.payload.id
             ? {
                 ...destination,
-                bookmarkedBy: [...destination.bookmarkedBy, action.payload.userId]
+                bookmarkedBy: [...destination.bookmarkedBy, action.payload.userId],
               }
-            : destination
-        )
+            : destination,
+        ),
       };
     case CANCEL_BOOKMARK_DESTINATION:
       return {
@@ -90,11 +92,11 @@ export default (
             ? {
                 ...destination,
                 bookmarkedBy: destination.bookmarkedBy.filter(
-                  (userId) => userId !== action.payload.userId
-                )
+                  (userId) => userId !== action.payload.userId,
+                ),
               }
-            : destination
-        )
+            : destination,
+        ),
       };
     default:
       return state;

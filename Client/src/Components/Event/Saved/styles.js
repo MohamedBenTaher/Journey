@@ -10,9 +10,9 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       transform: 'scale(1.05)',
       '& $content': {
-        opacity: 1
-      }
-    }
+        opacity: 1,
+      },
+    },
   },
   smallCard: {
     position: 'relative',
@@ -24,15 +24,15 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       transform: 'scale(1.05)',
       '& $content': {
-        opacity: 1
-      }
-    }
+        opacity: 1,
+      },
+    },
   },
   media: {
     height: 400,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    filter: 'brightness(70%)'
+    filter: 'brightness(70%)',
   },
   content: {
     position: 'absolute',
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     opacity: 0,
     width: '100%',
-    transition: 'all 0.5s'
+    transition: 'all 0.5s',
   },
   button: {
     marginTop: theme.spacing(2),
@@ -55,8 +55,8 @@ const useStyles = makeStyles((theme) => ({
     transition: 'all 0.3s',
     '&:hover': {
       backgroundColor: '#fff',
-      color: '#000'
-    }
+      color: '#000',
+    },
   },
   buttonNoImage: {
     marginTop: theme.spacing(2),
@@ -70,27 +70,27 @@ const useStyles = makeStyles((theme) => ({
     transition: 'all 0.3s',
     '&:hover': {
       backgroundColor: '#000',
-      color: '#fff'
-    }
+      color: '#fff',
+    },
   },
   textContainer: {
-    padding: theme.spacing(0, 2)
+    padding: theme.spacing(0, 2),
   },
   title: {
     color: '#fff',
     fontSize: '30px',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   noImageTitle: {
     color: '#000',
     fontSize: '30px',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   noImageDesctiption: {
-    color: '#000'
+    color: '#000',
   },
   noImageBtnColor: {
-    color: '#000'
-  }
+    color: '#000',
+  },
 }));
 export default useStyles;

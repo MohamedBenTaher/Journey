@@ -23,7 +23,7 @@ const ChipInputField = ({ label, ...props }) => {
         fullWidth
         variant="outlined"
         InputLabelProps={{
-          shrink: true
+          shrink: true,
         }}
         onKeyDown={(e) => {
           if (e.key === ' ') {

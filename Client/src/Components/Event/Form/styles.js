@@ -3,32 +3,32 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
   container: {
     width: '95%',
-    padding: '5em'
+    padding: '5em',
   },
   coverImage: {
     width: '100%',
     height: '100%',
     objectFit: 'cover', // crop the image to fill the container
     objectPosition: 'center',
-    borderRadius: '16px'
+    borderRadius: '16px',
   },
   preview: {
     display: 'flex',
     flexWrap: 'wrap',
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   coverImageWrapper: {
     position: 'relative',
     width: '100%',
     height: '400px',
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   image: {
     width: '100%',
     height: '100%',
     objectFit: 'cover', // crop the image to fill the container
     objectPosition: 'center',
-    borderRadius: '16px'
+    borderRadius: '16px',
   },
   removeButton: {
     position: 'absolute',
@@ -42,10 +42,10 @@ export default makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   InputLabel: {
     marginBottom: '1em',
-    marginTop: '1em'
-  }
+    marginTop: '1em',
+  },
 }));

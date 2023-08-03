@@ -6,7 +6,7 @@ import {
   FETCH_CONTINENT,
   FETCH_CONTINENTS,
   START_LOADING_CONTINENTS,
-  END_LOADING_CONTINENTS
+  END_LOADING_CONTINENTS,
 } from '../constants/actionTypes.js';
 export default (state = { isLoading: false, continents: [] }, action) => {
   switch (action.type) {
@@ -19,7 +19,7 @@ export default (state = { isLoading: false, continents: [] }, action) => {
         ...state,
         continents: action.payload.data,
         currentPage: action.payload.currentPage,
-        numberOfPages: action.payload.numberOfPages
+        numberOfPages: action.payload.numberOfPages,
       };
     case FETCH_CONTINENT:
       return { ...state, continent: action.payload };
@@ -33,14 +33,14 @@ export default (state = { isLoading: false, continents: [] }, action) => {
       return {
         ...state,
         continents: state.continents.map((continent) =>
-          continent._id === action.payload._id ? action.payload : continent
-        )
+          continent._id === action.payload._id ? action.payload : continent,
+        ),
       };
 
     case DELETE_CONTINENT:
       return {
         ...state,
-        continents: state.continents.filter((continent) => continent._id !== action.payload)
+        continents: state.continents.filter((continent) => continent._id !== action.payload),
       };
     default:
       return state;

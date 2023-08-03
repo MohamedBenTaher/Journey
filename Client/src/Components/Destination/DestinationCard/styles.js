@@ -10,9 +10,9 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       transform: 'scale(1.05)',
       '& $content': {
-        opacity: 1
-      }
-    }
+        opacity: 1,
+      },
+    },
   },
   smallCard: {
     position: 'relative',
@@ -24,9 +24,9 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       transform: 'scale(1.05)',
       '& $content': {
-        opacity: 1
-      }
-    }
+        opacity: 1,
+      },
+    },
   },
   description: {
     height: '60px', // Set the desired height for the description container
@@ -34,13 +34,13 @@ const useStyles = makeStyles((theme) => ({
     textOverflow: 'ellipsis',
     display: '-webkit-box',
     '-webkit-line-clamp': '3', // Limit the description to 3 lines
-    '-webkit-box-orient': 'vertical'
+    '-webkit-box-orient': 'vertical',
   },
   media: {
     height: 400,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    filter: 'brightness(70%)'
+    filter: 'brightness(70%)',
   },
   content: {
     position: 'absolute',
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     opacity: 0,
     width: '100%',
-    transition: 'all 0.5s'
+    transition: 'all 0.5s',
   },
   button: {
     marginTop: theme.spacing(2),
@@ -63,8 +63,8 @@ const useStyles = makeStyles((theme) => ({
     transition: 'all 0.3s',
     '&:hover': {
       backgroundColor: '#fff',
-      color: '#000'
-    }
+      color: '#000',
+    },
   },
   likeButton: {
     position: 'absolute',
@@ -73,9 +73,9 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     '&:hover': {
       color: '#fff',
-      backgroundColor: 'rgba(10, 10, 10, 0.5)'
+      backgroundColor: 'rgba(10, 10, 10, 0.5)',
     },
-    zIndex: 99
+    zIndex: 99,
   },
   likeCount: {
     position: 'absolute',
@@ -84,17 +84,17 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     '&:hover': {
       color: '#fff',
-      backgroundColor: 'rgba(10, 10, 10, 0.5)'
+      backgroundColor: 'rgba(10, 10, 10, 0.5)',
     },
-    zIndex: 99
+    zIndex: 99,
   },
   textContainer: {
-    padding: theme.spacing(0, 2)
+    padding: theme.spacing(0, 2),
   },
   title: {
     color: '#fff',
     fontSize: '30px',
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 }));
 export default useStyles;

@@ -10,7 +10,7 @@ const Input = ({
   autoFocus,
   type,
   handleShowPassword,
-  handleChange
+  handleChange,
 }) => {
   return (
     <Grid item xs={12} sm={half ? 6 : 12}>
@@ -32,7 +32,7 @@ const Input = ({
                       {type === 'password' ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
-                )
+                ),
               }
             : null
         }

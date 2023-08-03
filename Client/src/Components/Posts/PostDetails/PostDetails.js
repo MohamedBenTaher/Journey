@@ -6,7 +6,7 @@ import {
   Divider,
   Card,
   CardContent,
-  Chip
+  Chip,
 } from '@material-ui/core/';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
@@ -16,7 +16,7 @@ import {
   bookmarkPost,
   cancelBookmarkPost,
   getPost,
-  getPostsBySearch
+  getPostsBySearch,
 } from '../../../actions/posts';
 import useStyles from './styles';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';

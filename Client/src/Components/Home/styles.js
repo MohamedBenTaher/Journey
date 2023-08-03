@@ -9,21 +9,21 @@ export default makeStyles((theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
     height: '9rem',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
   },
   pagination: {
     borderRadius: 4,
     marginTop: '1rem',
-    padding: '16px'
+    padding: '16px',
   },
   gridContainer: {
     [theme.breakpoints.down('xs')]: {
-      flexDirection: 'column-reverse'
-    }
+      flexDirection: 'column-reverse',
+    },
   },
   search: {
     alignItems: 'center',
-    justifyContent: 'start'
+    justifyContent: 'start',
   },
   searchButton: {
     backgroundColor: '#3f95ec',
@@ -32,7 +32,7 @@ export default makeStyles((theme) => ({
     height: '3.2rem',
     '&:hover': {
       color: 'gray',
-      backgroundColor: 'lightblue'
-    }
-  }
+      backgroundColor: 'lightblue',
+    },
+  },
 }));

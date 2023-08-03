@@ -13,13 +13,13 @@ const Form = ({ currentId, setCurrentId }) => {
     title: '',
     message: '',
     tags: '',
-    selectedFile: ''
+    selectedFile: '',
   });
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const post = useSelector((state) =>
-    currentId ? state.posts.find((p) => p._id === currentId) : null
+    currentId ? state.posts.find((p) => p._id === currentId) : null,
   );
   const dispatch = useDispatch();
   const classes = useStyles();

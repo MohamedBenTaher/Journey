@@ -8,7 +8,7 @@ import {
   Select,
   MenuItem,
   Grid,
-  Typography
+  Typography,
 } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
@@ -21,7 +21,7 @@ import { useParams } from 'react-router-dom';
 import {
   createDestination,
   getDestination,
-  updateDestination
+  updateDestination,
 } from '../../../actions/destinations';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteS3Image } from '../../../api';
@@ -29,41 +29,41 @@ import { getCountries } from '../../../actions/country';
 const useStyles = makeStyles((theme) =>
   createStyles({
     formControl: {
-      minWidth: 120
+      minWidth: 120,
     },
     submitButton: {
-      marginTop: theme.spacing(2)
+      marginTop: theme.spacing(2),
     },
     heading: {
       marginTop: theme.spacing(2),
       marginBottom: theme.spacing(2),
       color: 'black',
       fontWeight: 'bold',
-      fontSize: '20px'
+      fontSize: '20px',
     },
     form: {
       marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     Select: {
       paddingLeft: 18,
-      paddingBottom: 15
+      paddingBottom: 15,
     },
     input: {
-      display: 'none'
+      display: 'none',
     },
     previewContainer: {
       display: 'flex',
       alignItems: 'center',
-      marginBottom: theme.spacing(1)
+      marginBottom: theme.spacing(1),
     },
     previewImage: {
       width: '100%',
       maxWidth: 200,
-      marginRight: theme.spacing(1)
+      marginRight: theme.spacing(1),
     },
     addButton: {
-      marginTop: theme.spacing(1)
+      marginTop: theme.spacing(1),
     },
     dropzone: {
       height: 150,
@@ -72,38 +72,38 @@ const useStyles = makeStyles((theme) =>
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      cursor: 'pointer'
+      cursor: 'pointer',
     },
     preview: {
       display: 'flex',
       flexWrap: 'wrap',
-      marginTop: theme.spacing(1)
+      marginTop: theme.spacing(1),
     },
     imageWrapper: {
       position: 'relative',
       width: 200,
       height: 200,
-      margin: theme.spacing(1)
+      margin: theme.spacing(1),
     },
     coverImage: {
       width: '100%',
       height: '100%',
       objectFit: 'cover', // crop the image to fill the container
       objectPosition: 'center',
-      borderRadius: '16px'
+      borderRadius: '16px',
     },
     coverImageWrapper: {
       position: 'relative',
       width: '100%',
       height: '200px',
-      margin: theme.spacing(1)
+      margin: theme.spacing(1),
     },
     image: {
       width: '100%',
       height: '100%',
       objectFit: 'cover', // crop the image to fill the container
       objectPosition: 'center',
-      borderRadius: '16px'
+      borderRadius: '16px',
     },
     removeButton: {
       position: 'absolute',
@@ -117,13 +117,13 @@ const useStyles = makeStyles((theme) =>
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      cursor: 'pointer'
+      cursor: 'pointer',
     },
     InputLabel: {
       marginBottom: '1em',
-      marginTop: '1em'
-    }
-  })
+      marginTop: '1em',
+    },
+  }),
 );
 
 const DestinationForm = () => {
@@ -191,7 +191,7 @@ const DestinationForm = () => {
           creator: destination ? user?.result?._id : destination?.creator,
           coverImage: destination ? destination?.coverImage : '',
           images: destination ? destination?.images : [],
-          tags: destination ? destination?.tags : []
+          tags: destination ? destination?.tags : [],
         }}
         validationSchema={Yup.object().shape({
           // title: Yup.string().required('Title is required'),
@@ -202,7 +202,7 @@ const DestinationForm = () => {
           // images: Yup.array().of(
           //   Yup.mixed().required('Image is required')
           // ).min(1, 'At least one image is required'),
-          tags: Yup.array()
+          tags: Yup.array(),
         })}
         onSubmit={(values, { setSubmitting, setFieldValue, resetForm }) => {
           handleSubmit(values, { setSubmitting, setFieldValue, resetForm });
@@ -217,7 +217,7 @@ const DestinationForm = () => {
           handleBlur,
           handleSubmit,
           isSubmitting,
-          setFieldValue
+          setFieldValue,
         }) => (
           <Form className={classes.form} encType="multipart/form-data">
             <Grid container spacing={3}>
@@ -241,7 +241,7 @@ const DestinationForm = () => {
                           if (destination?.coverImage && typeof values.coverImage === 'string') {
                             const deleteImage = await deleteS3Image(
                               destination?._id,
-                              values.coverImage
+                              values.coverImage,
                             );
                           }
                           setFieldValue('coverImage', '');
@@ -280,8 +280,8 @@ const DestinationForm = () => {
                   fullWidth
                   InputProps={{
                     style: {
-                      minHeight: '100px'
-                    }
+                      minHeight: '100px',
+                    },
                   }}
                   as={TextField}
                   error={touched.description && Boolean(errors.description)}
@@ -350,7 +350,7 @@ const DestinationForm = () => {
                             }
                             setFieldValue(
                               'images',
-                              values.images?.filter((_, i) => i !== index)
+                              values.images?.filter((_, i) => i !== index),
                             );
                           }}
                         >

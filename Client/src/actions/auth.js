@@ -2,7 +2,7 @@ import {
   AUTH,
   START_LOADING_USER,
   END_LOADING_USER,
-  USER_INFROMATIONS
+  USER_INFROMATIONS,
 } from '../constants/actionTypes.js';
 import * as api from '../api/index.js';
 

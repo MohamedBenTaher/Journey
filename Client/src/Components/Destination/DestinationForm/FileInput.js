@@ -8,12 +8,12 @@ import './styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   dropzone: {
     height: 150,
@@ -22,23 +22,23 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   preview: {
     display: 'flex',
     flexWrap: 'wrap',
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
   imageWrapper: {
     position: 'relative',
     width: 100,
     height: 100,
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   image: {
     width: '100%',
     height: '100%',
-    objectFit: 'cover'
+    objectFit: 'cover',
   },
   removeButton: {
     position: 'absolute',
@@ -52,8 +52,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    cursor: 'pointer'
-  }
+    cursor: 'pointer',
+  },
 }));
 const FileInput = ({ field, form: { setFieldValue, values } }) => {
   const classes = useStyles();
@@ -64,7 +64,7 @@ const FileInput = ({ field, form: { setFieldValue, values } }) => {
       const filesArray = [...values[field.name], ...acceptedFiles];
       console.log('accepted files', filesArray);
       setFieldValue(field.name, filesArray);
-    }
+    },
   });
 
   return (

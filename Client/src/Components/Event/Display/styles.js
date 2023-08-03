@@ -11,9 +11,9 @@ export default makeStyles((theme) => ({
       transform: 'scale(1.05)',
       transition: 'all 0.5s',
       '& $content': {
-        opacity: 1
-      }
-    }
+        opacity: 1,
+      },
+    },
   },
   likeButton: {
     position: 'absolute',
@@ -22,8 +22,8 @@ export default makeStyles((theme) => ({
     color: '#fff',
     '&:hover': {
       color: '#fff',
-      backgroundColor: 'rgba(10, 10, 10, 0.5)'
+      backgroundColor: 'rgba(10, 10, 10, 0.5)',
     },
-    zIndex: 99
-  }
+    zIndex: 99,
+  },
 }));

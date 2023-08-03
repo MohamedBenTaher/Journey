@@ -11,7 +11,7 @@ import {
   Typography,
   Select,
   MenuItem,
-  InputLabel
+  InputLabel,
 } from '@material-ui/core';
 import { getPosts, getPostsBySearch } from '../../actions/posts.js';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -48,7 +48,7 @@ function SearchBar() {
       history.push(
         `/stories/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}&season=${
           season || 'none'
-        }`
+        }`,
       );
     } else {
       history.push('/stories');

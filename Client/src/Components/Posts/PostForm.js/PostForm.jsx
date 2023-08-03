@@ -10,25 +10,24 @@ import { useParams } from 'react-router-dom/cjs/react-router-dom.min.js';
 import { getCountries } from '../../../actions/country.js';
 import { getDestinations ,getDestinationByCountry } from '../../../actions/destinations.js';
 import { deleteS3Image } from '../../../api/index.js';
+import { getLocations } from '../../../actions/locations.js';
 
 const PostForm = ({ currentId, setCurrentId }) => {
   const dispatch = useDispatch();
   const {id}=useParams()
-  const statePos=useSelector((state)=>state)
-  console.log('statte',statePos)
   const post = useSelector((state) => id ? state?.posts.posts?.find((p) => p._id === id) : null);
   const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')))
-  const [locations,setLocations]=useState([])
+  const [structuredLocations,setStructuredLocations]=useState([])
   const [postData, setPostData] = useState({
     title: '', message: '', tags: '',country:'',city:'', selectedFile: '',creator:user?.result?._id,locations:[]
   });
 
-
+  const locations=useSelector((state)=>state.locations)
+  console.log('fetched',locations)
   const countries=useSelector((state)=>state.countries)
   console.log('feteched countires',countries)
   const destinations=useSelector((state)=>state.destinations)
   console.log('fetched',destinations)
-  const location=useSelector((state)=>state.loations)
   const handleCountryChange = (e) => {
     setPostData({...postData,country:e.target.value});
   };
@@ -50,9 +49,8 @@ const PostForm = ({ currentId, setCurrentId }) => {
     formData.append('user',userId)
     formData.append('image',postData.selectedFile[0])
     formData.append('creator',postData.creator)
+    formData.append('locations',postData.locations)
     if (id ) {
-      console.log('called updatePost')
-    
       dispatch(updatePost(id, formData))
       clear();
     }
@@ -65,6 +63,7 @@ const PostForm = ({ currentId, setCurrentId }) => {
   useEffect(()=>{
     dispatch(getCountries())
     dispatch(getDestinations())
+    dispatch(getLocations())
   },[])
   useEffect(() => {
     if (post) setPostData(post)
@@ -72,8 +71,7 @@ const PostForm = ({ currentId, setCurrentId }) => {
 
   }, [post])
   const clear = () => {
-    // setCurrentId(0);
-    setPostData({ title: '', message: '', tags: '', selectedFile: '',country:'',city:'',location:'',creator:user?.result?._id ,cost:0,duration:0});
+    setPostData({ title: '', message: '', tags: '', selectedFile: '',country:'',city:'',location:'',creator:user?.result?._id ,cost:0,duration:0,locations:[]});
   }
   if (!user?.result?.name) {
     return (
@@ -119,7 +117,6 @@ const PostForm = ({ currentId, setCurrentId }) => {
 
 
   return (
-    
           <div className={classes.paper} elevation={6}>
             <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit} encType="multipart/form-data">
               <Typography variant='h6'>{ id? 'Update your Memory' : 'create A Memory'}</Typography>
@@ -186,37 +183,7 @@ const PostForm = ({ currentId, setCurrentId }) => {
                         ))}
                     </Select>
                 </FormControl>
-                <FormControl variant="outlined" className={classes.select}>
-                    <InputLabel>Select Country</InputLabel>
-                    <Select value={postData.country} onChange={(e)=>{
-                        setPostData({...postData,country:e.target.value})
-                        
-                }} label="Select Country">
-                        {countries?.countries?.map((country) => (
-                        <MenuItem key={country._id} value={country._id}>
-                            {country.title}
-                        </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
                 
-                <FormControl variant="outlined" className={classes.select}>
-                    <InputLabel>Select Locations</InputLabel>
-                    <Select 
-                        value={postData.country} 
-                        onChange={(e)=>{
-                        dispatch(getDestinationByCountry(e.target.value))
-                        setPostData({...postData,country:e.target.value})}} 
-                        label="Select Country"
-                        multiple
-                        >
-                        {countries?.countries?.map((country) => (
-                        <MenuItem key={country._id} value={country._id}>
-                            {country.title}
-                        </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
                 {destinations?.destinations?.length>0&&(
                 <FormControl variant="outlined" className={classes.select}>
                     <InputLabel>Select a city</InputLabel>
@@ -229,6 +196,25 @@ const PostForm = ({ currentId, setCurrentId }) => {
                     </Select>
                 </FormControl>
                 )}
+                <FormControl variant="outlined" className={classes.select}>
+                    <InputLabel>Select Locations</InputLabel>
+                    <Select 
+                        value={postData.locations} 
+                        onChange={(e)=>{
+                        // dispatch(getDestinationByCountry(e.target.value))
+                        // setPostData({...postData,locations:e.target.value})
+                      }} 
+                        label="Select Locations"
+                        multiple
+                        >
+                        {locations?.locations?.map((location) => (
+                        <MenuItem key={location._id} value={location._id}>
+                            {location.title}
+                        </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+              
          
               <TextField
                 name='tags'

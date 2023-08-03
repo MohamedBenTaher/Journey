@@ -5,13 +5,13 @@ export default makeStyles({
     height: 0,
     paddingTop: '56.25%',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    backgroundBlendMode: 'darken'
+    backgroundBlendMode: 'darken',
   },
   border: {
-    border: 'solid'
+    border: 'solid',
   },
   fullHeightCard: {
-    height: '40%'
+    height: '40%',
   },
   card: {
     display: 'flex',
@@ -19,7 +19,7 @@ export default makeStyles({
     justifyContent: 'space-between',
     borderRadius: '15px',
     height: '100%',
-    position: 'relative'
+    position: 'relative',
   },
   smallCard: {
     display: 'flex',
@@ -32,42 +32,42 @@ export default makeStyles({
     '&:hover': {
       transform: 'scale(1.05)',
       '& $content': {
-        opacity: 1
-      }
-    }
+        opacity: 1,
+      },
+    },
   },
   overlay: {
     position: 'absolute',
     top: '10px',
     left: '20px',
-    color: 'white'
+    color: 'white',
   },
   grid: {
-    display: 'flex'
+    display: 'flex',
   },
   details: {
     display: 'flex',
     justifyContent: 'space-between',
     marginRight: '20px',
-    marginLeft: '20px'
+    marginLeft: '20px',
   },
   title: {
-    padding: '4px 16px'
+    padding: '4px 16px',
   },
   cardActions: {
     // padding: '0 16px 8px 16px',
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   smallActions: {
     display: 'flex',
-    justifyContent: 'end'
+    justifyContent: 'end',
   },
   cardAction: {
     display: 'block',
-    textAlign: 'initial'
+    textAlign: 'initial',
   },
   bookingButton: {
-    borderRadius: '15px'
-  }
+    borderRadius: '15px',
+  },
 });

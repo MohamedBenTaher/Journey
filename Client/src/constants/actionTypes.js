@@ -9,13 +9,13 @@ export const END_LOADING = 'END_LOADING';
 export const FETCH_POST = 'FETCH_POST';
 export const COMMENT = 'COMMENT';
 export const FETCH_BY_CREATOR = 'FETCH_BY_CREATOR';
-/*==================================User================================================ */
+
 export const AUTH = 'AUTH';
 export const LOGOUT = 'LOGOUT';
 export const USER_INFROMATIONS = 'USER_INFROMATIONS';
 export const START_LOADING_USER = 'START_LOADING_USER';
 export const END_LOADING_USER = 'END_LOADING_USER';
-/*=====================================Events=====================================================*/
+
 export const FETCH_EVENTS = 'FETCH_EVENTS';
 export const FETCH_EVENT_BY_SEARCH = 'FETCH_EVENTS_BY_SEARCH';
 export const FETCH_EVENTS_BY_CREATOR = 'FETCH_EVENTS_BY_CREATOR';
@@ -30,7 +30,7 @@ export const FETCH_EVENT = 'FETCH_EVENT';
 export const COMMENT_EVENT = 'COMMENT_EVENT';
 export const CANCEL_EVENT = 'CANCEL_EVENT';
 export const LIKE_EVENT = 'LIKE_EVENT';
-/*=======================================*/
+
 export const FETCH_DESTINATIONS = 'FETCH_DESTINATIONS';
 export const FETCH_DESTINATION_BY_SEARCH = 'FETCH_DESTINATION_BY_SEARCH';
 export const START_LOADING_DESTINATIONS = 'START_LOADING_DESTINATIONS';
@@ -42,7 +42,7 @@ export const UPVOTE_DESTINATION = 'UPVOTE_DESTINATION';
 export const DOWNVOTE_DESTINATION = 'DOWNVOTE_DESTINATION';
 export const FETCH_DESTINATION = 'FETCH_DESTINATION';
 export const LIKE_DESTINATION = 'LIKE_DESTINATION';
-/*=========================================*/
+
 export const START_LOADING_DESTINATION_COMMENTS = 'START_LOADING_DESTINATION_COMMENTS';
 export const END_LOADING_DESTINATION_COMMENTS = 'END_LOADING_DESTINATION_COMMENTS';
 export const FETCH_DESTINATION_COMMENT = 'FETCH_DESTINATION_COMMENT';
@@ -50,7 +50,7 @@ export const COMMENT_DESTINATION = 'COMMENT_DESTINATION';
 export const UPDATE_DESTINATION_COMMENT = 'UPDATE_DESTIATION_COMMENT';
 export const DELETE_DESTINATION_COMMENT = 'DELETE_DESTINATION_COMMENT';
 export const FETCH_DESTINATIONS_BY_COUNTRY = 'FETCH_DESTINATIONS_BY_COUNTRY';
-/*==================================================*/
+
 export const START_LOADING_COUNTRIES = 'START_LOADING_COUNTRIES';
 export const END_LOADING_COUNTRIES = 'END_LOADING_COUNTRIES';
 export const FETCH_COUNTRY = 'FETCH_COUNTRY';
@@ -62,7 +62,6 @@ export const DELETE_COUNTRY = 'DELETE_COUNTRY';
 export const LIKE_COUNTRY = 'LIKE_COUNTRY';
 export const DISLIKE_COUNTRY = 'DISLIKE_COUNTRY';
 
-/*=======================================================*/
 export const START_LOADING_CONTINENTS = 'START_LOADING_CONTINENTS';
 export const END_LOADING_CONTINENTS = 'END_LOADING_CONTINENTS';
 export const FETCH_CONTINENT = 'FETCH_CONTINENT';
@@ -71,7 +70,7 @@ export const FETCH_CONTINENT_BY_SEARCH = 'FETCH_COUNTRY_BY_SEARCH';
 export const CREATE_CONTINENT = 'CREATE_CONTINENT';
 export const UPDATE_CONTINENT = 'UPDATE_CONTINENT';
 export const DELETE_CONTINENT = 'DELETE_CONTINENT';
-/*===========================================================*/
+
 export const START_LOADING_LOCATIONS = 'START_LOADING_LOCATIONS';
 export const END_LOADING_LOCATIONS = 'END_LOADING_LOCATIONS';
 export const FETCH_LOCATION = 'FETCH_LOCATION';
@@ -84,10 +83,11 @@ export const UPDATE_LOCATION = 'UPDATE_LOCATION';
 export const DELETE_LOCATION = 'DELETE_LOCATION';
 export const RATE_LOCATION = 'RATE_LOCATION';
 export const DISLIKE_LOCATION = 'DISLIKE_LOCATION';
-/*=============================================================*/
+export const COMMENT_LOCATION = 'COMMENT_LOCATION';
+
 export const BOOKMARK_POST = 'BOOKMARK_POST';
 export const CANCEL_BOOKMARK_POST = 'CANCEL_BOOKMARK_POST';
-export const BOOKMARK_lOCATION = 'BOOKMARK_lOCATION';
+export const BOOKMARK_LOCATION = 'BOOKMARK_lOCATION';
 export const CANCEL_BOOKMARK_LOCATION = 'CANCEL_BOOKMARK_LOCATION';
 export const BOOKMARK_DESTINATION = 'BOOKMARK_DESTINATION';
 export const CANCEL_BOOKMARK_DESTINATION = 'CANCEL_BOOKMARK_DESTINATION';

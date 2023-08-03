@@ -7,7 +7,7 @@ import {
   END_LOADING_CONTINENTS,
   CREATE_CONTINENT,
   UPDATE_CONTINENT,
-  DELETE_CONTINENT
+  DELETE_CONTINENT,
 } from '../constants/actionTypes.js';
 
 //Action Creators
@@ -15,7 +15,7 @@ export const getTopContinents = () => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_CONTINENTS });
     const {
-      data: { data }
+      data: { data },
     } = await api.fetchTopDestinations();
 
     dispatch({ type: FETCH_CONTINENTS, payload: { data } });
@@ -29,7 +29,7 @@ export const getContinents = (page) => async (dispatch) => {
     console.log('called action');
     dispatch({ type: START_LOADING_CONTINENTS });
     const {
-      data: { data, currentPage, numberOfPages }
+      data: { data, currentPage, numberOfPages },
     } = await api.fetchContinents(page);
     dispatch({ type: FETCH_CONTINENTS, payload: { data, currentPage, numberOfPages } });
     dispatch({ type: END_LOADING_CONTINENTS });
@@ -55,7 +55,7 @@ export const getContinentsBySearch = (searchQuery) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_CONTINENTS });
     const {
-      data: { data }
+      data: { data },
     } = await api.fetchCountriesBySearch(searchQuery);
     console.log('searchedCountries', data);
     dispatch({ type: FETCH_CONTINENT_BY_SEARCH, payload: { data } });

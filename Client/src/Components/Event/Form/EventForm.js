@@ -7,7 +7,7 @@ import {
   TextField,
   Grid,
   Input,
-  InputLabel
+  InputLabel,
 } from '@material-ui/core';
 import React, { useState, Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -45,7 +45,7 @@ function Event() {
     password: yup
       .string('Enter your password')
       .min(8, 'Password should be of minimum 8 characters length')
-      .required('Password is required')
+      .required('Password is required'),
   });
 
   const formik = useFormik({
@@ -60,13 +60,13 @@ function Event() {
       discountRate: event ? event.discountRate : 0,
       tags: event ? event.tags : [],
       coverImage: event ? event.coverImage[0] : '',
-      creator: user?.result?.name
+      creator: user?.result?.name,
     },
     // validationSchema: validationSchema,
     onSubmit: (values) => {
       dispatch(createEvent(values));
       console.log(values);
-    }
+    },
   });
   useEffect(() => {
     if (id) {
@@ -98,7 +98,7 @@ function Event() {
             discountRate: event ? event.discountRate : 0,
             tags: event ? event.tags : [],
             coverImage: event ? event.coverImage[0] : '',
-            creator: user?.result?.name
+            creator: user?.result?.name,
           }}
           // validate={values => {
           //   const errors = {};
@@ -148,7 +148,7 @@ function Event() {
             handleBlur,
             handleSubmit,
             isSubmitting,
-            setFieldValue
+            setFieldValue,
             /* and other goodies */
           }) => (
             <form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -293,7 +293,7 @@ function Event() {
                             if (event?.coverImage && typeof values.coverImage === 'string') {
                               const deleteImage = await deleteS3Image(
                                 event?._id,
-                                values.coverImage
+                                values.coverImage,
                               );
                             }
                             setFieldValue('coverImage', '');

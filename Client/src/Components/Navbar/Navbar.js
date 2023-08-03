@@ -10,7 +10,7 @@ import {
   useTheme,
   useMediaQuery,
   Box,
-  Grid
+  Grid,
 } from '@material-ui/core';
 import useStyles from './styles.js';
 import memories from '../../Images/journey.png';
@@ -111,7 +111,7 @@ const Navbar = () => {
                 style={{
                   color: 'rgb(255, 255, 255)',
                   height: '2em',
-                  width: '2em'
+                  width: '2em',
                 }}
               />
             </IconButton>

@@ -10,7 +10,7 @@ import {
   START_LOADING_COUNTRIES,
   END_LOADING_COUNTRIES,
   BOOKMARK_COUNTRY,
-  CANCEL_BOOKMARK_COUNTRY
+  CANCEL_BOOKMARK_COUNTRY,
 } from '../constants/actionTypes.js';
 export default (state = { isLoading: false, countries: [] }, action) => {
   switch (action.type) {
@@ -23,7 +23,7 @@ export default (state = { isLoading: false, countries: [] }, action) => {
         ...state,
         countries: action.payload.data,
         currentPage: action.payload.currentPage,
-        NumberOfPages: action.payload.numrOfPages
+        NumberOfPages: action.payload.numrOfPages,
       };
     case FETCH_COUNTRY:
       return { ...state, country: action.payload };
@@ -37,22 +37,22 @@ export default (state = { isLoading: false, countries: [] }, action) => {
       return {
         ...state,
         countries: state.countries.map((country) =>
-          country._id === action.payload._id ? action.payload : country
-        )
+          country._id === action.payload._id ? action.payload : country,
+        ),
       };
 
     case DELETE_COUNTRY:
       return {
         ...state,
-        countries: state.countries.filter((country) => country._id !== action.payload)
+        countries: state.countries.filter((country) => country._id !== action.payload),
       };
     case LIKE_COUNTRY:
       console.log('upvote payload', action.payload);
       return {
         ...state,
         destinations: state.countries.map((country) =>
-          country._id === action.payload._id ? action.payload : country
-        )
+          country._id === action.payload._id ? action.payload : country,
+        ),
       };
     case DISLIKE_COUNTRY:
       return {
@@ -62,10 +62,10 @@ export default (state = { isLoading: false, countries: [] }, action) => {
             ? {
                 ...destination,
                 upvotes: [...action.payload.upvotes],
-                downvotes: [...action.payload.downvotes]
+                downvotes: [...action.payload.downvotes],
               }
-            : destination
-        )
+            : destination,
+        ),
       };
     case BOOKMARK_COUNTRY:
       return {
@@ -74,10 +74,10 @@ export default (state = { isLoading: false, countries: [] }, action) => {
           country._id === action.payload.id
             ? {
                 ...country,
-                bookmarkedBy: [...country.bookmarkedBy, action.payload.userId]
+                bookmarkedBy: [...country.bookmarkedBy, action.payload.userId],
               }
-            : country
-        )
+            : country,
+        ),
       };
     case CANCEL_BOOKMARK_COUNTRY:
       return {
@@ -87,11 +87,11 @@ export default (state = { isLoading: false, countries: [] }, action) => {
             ? {
                 ...country,
                 bookmarkedBy: country.bookmarkedBy.filter(
-                  (userId) => userId !== action.payload.userId
-                )
+                  (userId) => userId !== action.payload.userId,
+                ),
               }
-            : country
-        )
+            : country,
+        ),
       };
     default:
       return state;

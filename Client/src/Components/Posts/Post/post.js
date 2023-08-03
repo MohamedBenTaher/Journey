@@ -7,7 +7,7 @@ import {
   CardContent,
   Button,
   Typography,
-  ButtonBase
+  ButtonBase,
 } from '@material-ui/core';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import DeleteIcon from '@material-ui/icons/Delete';

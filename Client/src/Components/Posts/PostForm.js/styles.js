@@ -3,23 +3,23 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
-      margin: theme.spacing(1)
-    }
+      margin: theme.spacing(1),
+    },
   },
   paper: {
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
   },
   form: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'start'
+    justifyContent: 'start',
   },
   fileInput: {
     width: '97%',
-    margin: '10px 0'
+    margin: '10px 0',
   },
   buttonSubmit: {
-    marginBottom: 10
+    marginBottom: 10,
   },
   dropZone: {
     height: 150,
@@ -31,28 +31,28 @@ export default makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   droppedImage: {
     width: '100%',
-    borderRadius: '16px'
+    borderRadius: '16px',
   },
   select: {
     width: '100%',
-    margin: 10
+    margin: 10,
   },
   coverImageWrapper: {
     position: 'relative',
     width: '100%',
     height: '200px',
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   coverImage: {
     width: '100%',
     height: '100%',
     objectFit: 'cover', // crop the image to fill the container
     objectPosition: 'center',
-    borderRadius: '16px'
+    borderRadius: '16px',
   },
   removeButton: {
     position: 'absolute',
@@ -66,6 +66,6 @@ export default makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    cursor: 'pointer'
-  }
+    cursor: 'pointer',
+  },
 }));

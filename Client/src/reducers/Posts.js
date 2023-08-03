@@ -8,10 +8,9 @@ import {
   FETCH_BY_SEARCH,
   START_LOADING,
   END_LOADING,
-  COMMENT,
   FETCH_BY_CREATOR,
   CANCEL_BOOKMARK_POST,
-  BOOKMARK_POST
+  BOOKMARK_POST,
 } from '../constants/actionTypes.js';
 export default (state = { isLoading: true, posts: [] }, action) => {
   switch (action.type) {
@@ -24,7 +23,7 @@ export default (state = { isLoading: true, posts: [] }, action) => {
         ...state,
         posts: action.payload.data,
         currentPage: action.payload.currentPage,
-        NumberOfPages: action.payload.numrOfPages
+        NumberOfPages: action.payload.numrOfPages,
       };
     case FETCH_POST:
       return { ...state, post: action.payload };
@@ -37,7 +36,7 @@ export default (state = { isLoading: true, posts: [] }, action) => {
     case UPDATE:
       return {
         ...state,
-        posts: state.posts.map((post) => (post._id === action.payload._id ? action.payload : post))
+        posts: state.posts.map((post) => (post._id === action.payload._id ? action.payload : post)),
       };
 
     case DELETE:
@@ -46,7 +45,7 @@ export default (state = { isLoading: true, posts: [] }, action) => {
     case LIKE:
       return {
         ...state,
-        posts: state.posts.map((post) => (post._id === action.payload._id ? action.payload : post))
+        posts: state.posts.map((post) => (post._id === action.payload._id ? action.payload : post)),
       };
 
     case LIKE:
@@ -57,7 +56,7 @@ export default (state = { isLoading: true, posts: [] }, action) => {
             return action.payload;
           }
           return post;
-        })
+        }),
       };
     case FETCH_BY_SEARCH:
       return { ...state, posts: action.payload.data };
@@ -69,7 +68,7 @@ export default (state = { isLoading: true, posts: [] }, action) => {
             return action.payload;
           }
           return post;
-        })
+        }),
       };
     case CANCEL_BOOKMARK_POST:
       return {
@@ -78,10 +77,12 @@ export default (state = { isLoading: true, posts: [] }, action) => {
           post._id === action.payload.id
             ? {
                 ...post,
-                bookmarkedBy: post.bookmarkedBy.filter((userId) => userId !== action.payload.userId)
+                bookmarkedBy: post.bookmarkedBy.filter(
+                  (userId) => userId !== action.payload.userId,
+                ),
               }
-            : post
-        )
+            : post,
+        ),
       };
     default:
       return state;

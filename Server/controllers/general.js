@@ -150,7 +150,8 @@ export const bookmarkResource = async (req, res) => {
     user.savedResources.push({id,type:resourceName});
     resource.bookmarkedBy.push(userId);
 
-    await user.save();
+    await user.save(); 
+
     await resource.save();
 
     res.status(200).json({ message: 'Resource bookmarked' });

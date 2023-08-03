@@ -14,7 +14,7 @@ import {
   ATTEND_EVENT,
   BOOKMARK_EVENT,
   CANCEL_BOOKMARK_EVENT,
-  LIKE_EVENT
+  LIKE_EVENT,
 } from '../constants/actionTypes.js';
 
 //Action Creators
@@ -23,7 +23,7 @@ export const getEvents = (page) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
     const {
-      data: { data, currentPage, numberOfPages }
+      data: { data, currentPage, numberOfPages },
     } = await api.fetchEvents(page);
 
     dispatch({ type: FETCH_EVENTS, payload: { data, currentPage, numberOfPages } });
@@ -47,7 +47,7 @@ export const getEventsBySearch = (searchQuery) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
     const {
-      data: { data }
+      data: { data },
     } = await api.fetchPostsBySearch(searchQuery);
     console.log('searchedEvents', data);
     dispatch({ type: FETCH_EVENT_BY_SEARCH, payload: { data } });

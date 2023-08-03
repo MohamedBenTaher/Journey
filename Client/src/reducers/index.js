@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux';
-import posts from './Posts.js';
-import auth from './Auth.js';
-import events from './Events.js';
-import destinations from './Destinations.js';
-import comments from './Comments.js';
-import countries from './Countries.js';
-import continents from './Continents.js';
-import locations from './Locations.js';
+import posts from './Posts';
+import auth from './Auth';
+import events from './Events';
+import destinations from './Destinations';
+import comments from './Comments';
+import countries from './Countries';
+import continents from './Continents';
+import locations from './Locations';
+
 export default combineReducers({
   posts,
   auth,
@@ -15,5 +16,5 @@ export default combineReducers({
   comments,
   continents,
   countries,
-  locations
+  locations,
 });

@@ -11,7 +11,7 @@ import {
   UPDATE_COUNTRY,
   DELETE_COUNTRY,
   BOOKMARK_COUNTRY,
-  CANCEL_BOOKMARK_COUNTRY
+  CANCEL_BOOKMARK_COUNTRY,
 } from '../constants/actionTypes.js';
 
 //Action Creators
@@ -19,7 +19,7 @@ export const getTopCountries = () => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_COUNTRIES });
     const {
-      data: { data }
+      data: { data },
     } = await api.fetchTopCountries();
 
     dispatch({ type: FETCH_COUNTRIES, payload: { data } });
@@ -33,7 +33,7 @@ export const getCountries = (page) => async (dispatch) => {
     console.log('called action');
     dispatch({ type: START_LOADING_COUNTRIES });
     const {
-      data: { data, currentPage, numberOfPages }
+      data: { data, currentPage, numberOfPages },
     } = await api.fetchCountries(page);
     console.log('actions', data);
     dispatch({ type: FETCH_COUNTRIES, payload: { data, currentPage, numberOfPages } });
@@ -57,7 +57,7 @@ export const getCountriesBySearch = (searchQuery) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_COUNTRIES });
     const {
-      data: { data }
+      data: { data },
     } = await api.fetchCountriesBySearch(searchQuery);
     console.log('searchedCountries', data);
     dispatch({ type: FETCH_COUNTRY_BY_SEARCH, payload: { data } });

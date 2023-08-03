@@ -12,7 +12,7 @@ import {
   COMMENT,
   FETCH_BY_CREATOR,
   BOOKMARK_POST,
-  CANCEL_BOOKMARK_POST
+  CANCEL_BOOKMARK_POST,
 } from '../constants/actionTypes.js';
 
 //Action Creators
@@ -21,7 +21,7 @@ export const getPosts = (page) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
     const {
-      data: { data, currentPage, numberOfPages }
+      data: { data, currentPage, numberOfPages },
     } = await api.fetchPosts(page);
 
     dispatch({ type: FETCH_ALL, payload: { data, currentPage, numberOfPages } });
@@ -45,7 +45,7 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
     const {
-      data: { data }
+      data: { data },
     } = await api.fetchPostsBySearch(searchQuery);
     console.log('searchedPosts', data);
     dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
@@ -123,7 +123,7 @@ export const getPostsByCreator = (name) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
     const {
-      data: { data }
+      data: { data },
     } = await api.fetchPostsByCreator(name);
 
     dispatch({ type: FETCH_BY_CREATOR, payload: { data } });

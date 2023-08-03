@@ -5,7 +5,7 @@ import {
   END_LOADING_USER,
   BOOKMARK_RESOURCE,
   CANCEL_BOOKMARK_RESOURCE,
-  USER_INFROMATIONS
+  USER_INFROMATIONS,
 } from '../constants/actionTypes';
 
 export default (state = { user: null, isLoading: false }, action) => {
@@ -26,7 +26,7 @@ export default (state = { user: null, isLoading: false }, action) => {
     case USER_INFROMATIONS: {
       return {
         ...state,
-        user: { ...action.payload.data }
+        user: { ...action.payload.data },
       };
     }
     default:

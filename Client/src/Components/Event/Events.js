@@ -7,7 +7,7 @@ import {
   Backdrop,
   TextField,
   Grid,
-  Input
+  Input,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import EventCard from './Display/EventCard';

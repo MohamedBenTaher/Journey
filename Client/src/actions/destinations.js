@@ -14,7 +14,7 @@ import {
   UPVOTE_DESTINATION,
   DOWNVOTE_DESTINATION,
   BOOKMARK_DESTINATION,
-  CANCEL_BOOKMARK_DESTINATION
+  CANCEL_BOOKMARK_DESTINATION,
 } from '../constants/actionTypes.js';
 
 //Action Creators
@@ -22,7 +22,7 @@ export const getTopDestinations = () => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_DESTINATIONS });
     const {
-      data: { data }
+      data: { data },
     } = await api.fetchTopDestinations();
 
     dispatch({ type: FETCH_DESTINATIONS, payload: { data } });
@@ -36,7 +36,7 @@ export const getDestinations = (page) => async (dispatch) => {
     console.log('called action');
     dispatch({ type: START_LOADING_DESTINATIONS });
     const {
-      data: { data, currentPage, numberOfPages }
+      data: { data, currentPage, numberOfPages },
     } = await api.fetchDestinatons(page);
     console.log('actions', data);
     dispatch({ type: FETCH_DESTINATIONS, payload: { data, currentPage, numberOfPages } });
@@ -60,7 +60,7 @@ export const getDestinationssBySearch = (searchQuery) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_DESTINATIONS });
     const {
-      data: { data }
+      data: { data },
     } = await api.fetchDestinationsBySearch(searchQuery);
     console.log('searchedDseyinations', data);
     dispatch({ type: FETCH_DESTINATION_BY_SEARCH, payload: { data } });
@@ -74,7 +74,7 @@ export const getDestinationByCountry = (id) => async (dispatch) => {
     dispatch({ type: START_LOADING_DESTINATIONS });
     console.log('id in action', id);
     const {
-      data: { data }
+      data: { data },
     } = await api.fetchDestinationByCountry(id);
     console.log('searchedDseyinations', data);
     dispatch({ type: FETCH_DESTINATIONS_BY_COUNTRY, payload: { data } });

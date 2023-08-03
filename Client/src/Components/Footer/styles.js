@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
-      margin: theme.spacing(1)
-    }
+      margin: theme.spacing(1),
+    },
   },
   link: {
     textDecoration: 'none',
@@ -12,56 +12,56 @@ export default makeStyles((theme) => ({
     fontWeight: '500',
     color: '#ffffffcc',
     '&:hover': {
-      color: '#ffffff'
-    }
+      color: '#ffffff',
+    },
   },
   container: {
     height: '110%',
     backgroundColor: '#1CA0E3',
     alignItems: 'center',
-    padding: '5rem'
+    padding: '5rem',
   },
   title: {
     fontWeight: '900',
     color: 'white',
-    fontSize: '24px'
+    fontSize: '24px',
   },
 
   list: {
     alignItems: 'flex-start',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   ListItem: {
-    alignItems: 'start'
+    alignItems: 'start',
   },
   image: {
-    width: '100px'
+    width: '100px',
   },
   text: {
     color: 'white',
-    textAlign: 'left'
+    textAlign: 'left',
   },
   content: {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   links: {
-    padding: '1%'
+    padding: '1%',
   },
   Brand: {
-    padding: '1%'
+    padding: '1%',
   },
   Divider: {
     backgroundColor: 'white',
     color: 'white',
-    width: '1200x'
+    width: '1200x',
   },
   gutter: {
     alignItems: 'center',
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   gutterText: {
-    color: 'white'
-  }
+    color: 'white',
+  },
 }));
