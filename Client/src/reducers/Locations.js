@@ -41,9 +41,7 @@ export default (state = { isLoading: false, locations: [] }, action) => {
     case UPDATE_LOCATION:
       return {
         ...state,
-        locations: state.locations.map((location) =>
-          location._id === action.payload._id ? action.payload : location,
-        ),
+        locations: state.locations.map((location) => (location._id === action.payload._id ? action.payload : location)),
       };
 
     case DELETE_LOCATION:
@@ -62,7 +60,10 @@ export default (state = { isLoading: false, locations: [] }, action) => {
             if (ratingIndex !== -1) {
               location.avgRating[ratingIndex].rating = action.payload.rating;
             } else {
-              location.avgRating.push({ id: action.payload.userId, rating: action.payload.rating });
+              location.avgRating.push({
+                id: action.payload.userId,
+                rating: action.payload.rating,
+              });
             }
           }
           return location;
@@ -71,26 +72,24 @@ export default (state = { isLoading: false, locations: [] }, action) => {
     case BOOKMARK_LOCATION:
       return {
         ...state,
-        locations: state.locations.map((location) =>
-          location._id === action.payload.id
+        locations: state.locations.map((location) => (location._id === action.payload.id
             ? {
                 ...location,
                 bookmarkedBy: [...location.bookmarkedBy, action.payload.userId],
               }
             : location,
-        ),
+        )),
       };
     case CANCEL_BOOKMARK_LOCATION:
       return {
         ...state,
-        locations: state.locations.map((location) =>
-          location._id === action.payload.id
+        locations: state.locations.map((location) => (location._id === action.payload.id
             ? {
-                ...location,
+              ...location,
                 bookmarkedBy: location.bookmarkedBy.filter(
                   (userId) => userId !== action.payload.userId,
-                ),
-              }
+              ),
+            }
             : location,
         ),
       };

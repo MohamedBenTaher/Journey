@@ -12,14 +12,15 @@ import {
   Box,
   Grid,
 } from '@material-ui/core';
-import useStyles from './styles.js';
-import memories from '../../Images/journey.png';
-import title from '../../Images/title.png';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import decode from 'jwt-decode';
-const Navbar = () => {
+import title from '../../Images/title.png';
+import memories from '../../Images/journey.png';
+import useStyles from './styles.js';
+
+function Navbar() {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
@@ -163,6 +164,6 @@ const Navbar = () => {
       <IconButton />
     </AppBar>
   );
-};
+}
 
 export default Navbar;

@@ -1,24 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
-  Grid,
-  Container,
-  Grow,
-  Paper,
-  AppBar,
-  TextField,
-  Button,
-  Typography,
-  Select,
-  MenuItem,
-  InputLabel,
+ Grid, Container, Grow, AppBar, TextField, Button, MenuItem 
 } from '@material-ui/core';
-import { getPosts, getPostsBySearch } from '../../actions/posts.js';
 import { useHistory, useLocation } from 'react-router-dom';
 import ChipInput from 'material-ui-chip-input';
-import Posts from '../Posts/Posts.js';
-import Pagination from '../Pagination';
-import useStyles from './styles.js';
+import { getPostsBySearch } from '../../actions/posts';
+import useStyles from './styles';
+
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
@@ -77,7 +66,12 @@ function SearchBar() {
             <AppBar className={classes.appBarSearch} position="static" color="inherit">
               <Grid
                 container
-                direction={{ xs: 'column', sm: 'column', md: 'row', lg: 'row' }}
+                direction={{
+                  xs: 'column',
+                  sm: 'column',
+                  md: 'row',
+                  lg: 'row',
+                }}
                 className={classes.search}
                 spacing={2}
               >
@@ -104,10 +98,10 @@ function SearchBar() {
                     fullWidth
                     variant="outlined"
                   >
-                    <MenuItem value={'Spring'}>Spring</MenuItem>
-                    <MenuItem value={'Winter'}>Winter</MenuItem>
-                    <MenuItem value={'Summer'}>Summer</MenuItem>
-                    <MenuItem value={'Automn'}>Automn</MenuItem>
+                    <MenuItem value="Spring">Spring</MenuItem>
+                    <MenuItem value="Winter">Winter</MenuItem>
+                    <MenuItem value="Summer">Summer</MenuItem>
+                    <MenuItem value="Automn">Automn</MenuItem>
                   </Select>
                 </Grid>
                 <Grid item xs={12} md={3}>

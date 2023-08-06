@@ -13,21 +13,21 @@ import {
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import AddRounded from '@material-ui/icons/AddRounded';
+import { useParams } from 'react-router-dom';
+import ChipInput from 'material-ui-chip-input';
+import { useDispatch, useSelector } from 'react-redux';
 import FileInput from './FileInput';
 import './styles';
 import CoverImageInput from './CoverImageInput';
-import ChipInput from 'material-ui-chip-input';
-import { useParams } from 'react-router-dom';
 import {
   createDestination,
   getDestination,
   updateDestination,
 } from '../../../actions/destinations';
-import { useDispatch, useSelector } from 'react-redux';
 import { deleteS3Image } from '../../../api';
 import { getCountries } from '../../../actions/country';
-const useStyles = makeStyles((theme) =>
-  createStyles({
+
+const useStyles = makeStyles((theme) => createStyles({
     formControl: {
       minWidth: 120,
     },
@@ -123,10 +123,9 @@ const useStyles = makeStyles((theme) =>
       marginBottom: '1em',
       marginTop: '1em',
     },
-  }),
-);
+  }));
 
-const DestinationForm = () => {
+function DestinationForm() {
   const { id } = useParams();
   const { destination, isLoading } = useSelector((state) => state.destinations);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
@@ -231,7 +230,7 @@ const DestinationForm = () => {
                             ? values.coverImage
                             : URL.createObjectURL(values.coverImage[0])
                         }
-                        alt={`cover Image`}
+                        alt="cover Image"
                         className={classes.coverImage}
                       />
                       <div
@@ -300,9 +299,9 @@ const DestinationForm = () => {
                     onChange={handleChange}
                     value={values.country}
                   >
-                    {countries?.countries?.map((country) => {
-                      return <MenuItem value={country._id}>{country.title}</MenuItem>;
-                    })}
+                    {countries?.countries?.map((country) => (
+                      <MenuItem value={country._id}>{country.title}</MenuItem>
+                    ))}
                   </Field>
                   {touched.type && Boolean(errors.type) && <div>{errors.type}</div>}
                 </FormControl>
@@ -389,5 +388,5 @@ const DestinationForm = () => {
       </Formik>
     </>
   );
-};
+}
 export default DestinationForm;

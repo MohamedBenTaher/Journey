@@ -1,7 +1,14 @@
-import { Rating } from '@mui/material'
-import React from 'react'
+import { Rating } from "@mui/material";
+import React from "react";
 
-const RatingComponent = ({ field, form: { setFieldValue} ,handleSubmit, userId,id,avgRating }) => {
+const RatingComponent = ({
+  field,
+  form: { setFieldValue },
+  handleSubmit,
+  userId,
+  id,
+  avgRating,
+}) => {
   return (
     <Rating
       name="simple-controlled"
@@ -11,7 +18,7 @@ const RatingComponent = ({ field, form: { setFieldValue} ,handleSubmit, userId,i
         handleSubmit(newValue);
       }}
     />
-  )
-}
+  );
+};
 
-export default RatingComponent
+export default RatingComponent;

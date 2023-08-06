@@ -1,4 +1,4 @@
-import * as api from '../api/index.js';
+import * as api from '../api/index';
 import {
   COMMENT_DESTINATION,
   UPDATE_DESTINATION_COMMENT,
@@ -6,9 +6,9 @@ import {
   DELETE_DESTINATION_COMMENT,
   START_LOADING_DESTINATION_COMMENTS,
   END_LOADING_DESTINATION_COMMENTS,
-} from '../constants/actionTypes.js';
+} from '../constants/actionTypes';
 
-//Action Creators
+// Action Creators
 
 export const getDestinationComments = (id, entityType) => async (dispatch) => {
   try {

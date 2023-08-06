@@ -3,7 +3,8 @@ import { Typography, TextField, Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import useStyles from './styles';
 import { commentPost } from '../../../actions/posts';
-const ComentSection = ({ post }) => {
+
+function ComentSection({ post }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [comments, setComments] = useState(post?.comments);
@@ -28,7 +29,10 @@ const ComentSection = ({ post }) => {
           </Typography>
           {comments?.map((c, i) => (
             <Typography key={i} gutterBottom variant="subtitle1">
-              <strong> {c.split(': ')[0]}</strong>
+              <strong> 
+{' '}
+{c.split(': ')[0]}
+</strong>
               {c.split(': ')[1]}
             </Typography>
           ))}
@@ -64,6 +68,6 @@ const ComentSection = ({ post }) => {
       </div>
     </div>
   );
-};
+}
 
 export default ComentSection;

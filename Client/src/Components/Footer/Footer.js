@@ -1,8 +1,11 @@
-import { Grid, Container, List, ListItem, Typography, Divider } from '@material-ui/core';
+import {
+ Grid, Container, List, ListItem, Typography, Divider 
+} from '@material-ui/core';
 import React from 'react';
-import memories from '../../Images/journey.png';
 import { Link } from 'react-router-dom';
+import memories from '../../Images/journey.png';
 import useStyles from './styles.js';
+
 function Footer() {
   const classes = useStyles();
   return (

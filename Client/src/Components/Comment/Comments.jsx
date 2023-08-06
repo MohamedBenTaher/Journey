@@ -1,12 +1,26 @@
-import React, { useEffect ,useState} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Box, Typography, List, ListItem, ListItemText, Divider, TextField, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { Formik, Form, Field } from 'formik';
-import { getDestinationComments, createComment, updateMyComment, deleteComment } from '../../actions/comments.js';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import DeleteIcon from '@mui/icons-material/Delete';
-const useStyles = makeStyles(theme => ({
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  Box,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+  TextField,
+  Button,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Formik, Form, Field } from "formik";
+import {
+  getDestinationComments,
+  createComment,
+  updateMyComment,
+  deleteComment,
+} from "../../actions/comments.js";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import DeleteIcon from "@mui/icons-material/Delete";
+const useStyles = makeStyles((theme) => ({
   commentsContainer: {
     marginTop: theme.spacing(4),
   },
@@ -16,16 +30,15 @@ const useStyles = makeStyles(theme => ({
   addCommentButton: {
     marginTop: theme.spacing(2),
   },
-  actionButton:{
-    width:'10%',
-
-  }
+  actionButton: {
+    width: "10%",
+  },
 }));
 
-const Comments = ({ entityId, entityType,user }) => {
+const Comments = ({ entityId, entityType, user }) => {
   const classes = useStyles();
-  const {comments,isLoading}=useSelector(state => state.comments);
-  console.log('my state',comments)
+  const { comments, isLoading } = useSelector((state) => state.comments);
+  console.log("my state", comments);
   const dispatch = useDispatch();
   const [edit, setEdit] = useState([]);
   const userId = user?.result?._id;
@@ -34,40 +47,40 @@ const Comments = ({ entityId, entityType,user }) => {
     dispatch(getDestinationComments(entityId, entityType));
   }, [entityId, entityType, dispatch]);
 
-  const handleAddComment = values => {
+  const handleAddComment = (values) => {
     console.log(values);
     if (userId && entityId && entityType && values.comment) {
       dispatch(createComment(entityId, entityType, userId, values.comment));
     }
   };
-  const handleSubmitEditComment=(values)=>{
-    console.log('values',values)
+  const handleSubmitEditComment = (values) => {
+    console.log("values", values);
     if (userId && entityId && values.commenttoupdate) {
-      dispatch(updateMyComment(values.id, userId , values.commenttoupdate))
-      .then(() => {
-        // Update the state with the updated comments
-        dispatch(getDestinationComments(entityId, entityType));
-        // Reset the edit state for all comments
-        setEdit(new Array(comments.length).fill(false));
-      })
-      .catch((error) => {
-        console.log('Error updating comment:', error.message);
-      });
+      dispatch(updateMyComment(values.id, userId, values.commenttoupdate))
+        .then(() => {
+          // Update the state with the updated comments
+          dispatch(getDestinationComments(entityId, entityType));
+          // Reset the edit state for all comments
+          setEdit(new Array(comments.length).fill(false));
+        })
+        .catch((error) => {
+          console.log("Error updating comment:", error.message);
+        });
     }
-  }
+  };
   const handleDeleteComment = (id) => {
     console.log(id);
     if (id) {
       dispatch(deleteComment(id));
     }
   };
-  const handleEdit = index => {
+  const handleEdit = (index) => {
     const newEdit = [...edit];
     newEdit[index] = true;
     setEdit(newEdit);
   };
 
-  const handleCancelEdit = index => {
+  const handleCancelEdit = (index) => {
     const newEdit = [...edit];
     newEdit[index] = false;
     setEdit(newEdit);
@@ -83,19 +96,23 @@ const Comments = ({ entityId, entityType,user }) => {
             Comments
           </Typography>
           <List>
-            {
-            comments?.map((comment, index) => (
+            {comments?.map((comment, index) => (
               <React.Fragment key={comment?._id}>
                 <ListItem alignItems="flex-start">
                   {!edit[index] && (
                     <>
-                      <ListItemText primary={comment?.content} secondary={`Author: ${comment?.user?.name}`} />
+                      <ListItemText
+                        primary={comment?.content}
+                        secondary={`Author: ${comment?.user?.name}`}
+                      />
                       {comment?.user._id === userId && (
                         <>
                           <Button onClick={() => handleEdit(index)}>
                             <ModeEditIcon className={classes.actionButton} />
                           </Button>
-                          <Button onClick={()=>handleDeleteComment(comment?._id)}>
+                          <Button
+                            onClick={() => handleDeleteComment(comment?._id)}
+                          >
                             <DeleteIcon className={classes.actionButton} />
                           </Button>
                         </>
@@ -103,7 +120,13 @@ const Comments = ({ entityId, entityType,user }) => {
                     </>
                   )}
                   {edit[index] && (
-                    <Formik initialValues={{ commenttoupdate: comment.content ,id:comment._id }} onSubmit={handleSubmitEditComment}>
+                    <Formik
+                      initialValues={{
+                        commenttoupdate: comment.content,
+                        id: comment._id,
+                      }}
+                      onSubmit={handleSubmitEditComment}
+                    >
                       {({ handleSubmit }) => (
                         <Form>
                           <Field
@@ -143,34 +166,33 @@ const Comments = ({ entityId, entityType,user }) => {
               </React.Fragment>
             ))}
           </List>
-          { user &&(
-            <Formik initialValues={{ comment: '' }} onSubmit={handleAddComment}>
-            {({ handleSubmit }) => (
-              <Form>
-                <Field
-                  as={TextField}
-                  name="comment"
-                  label="Add Comment"
-                  variant="outlined"
-                  multiline
-                  rows={4}
-                  fullWidth
-                  className={classes.commentInput}
-                />
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSubmit}
-                  className={classes.addCommentButton}
-                >
-                  Add Comment
-                </Button>
-              </Form>
-            )}
-          </Formik>
-         )}
-          
+          {user && (
+            <Formik initialValues={{ comment: "" }} onSubmit={handleAddComment}>
+              {({ handleSubmit }) => (
+                <Form>
+                  <Field
+                    as={TextField}
+                    name="comment"
+                    label="Add Comment"
+                    variant="outlined"
+                    multiline
+                    rows={4}
+                    fullWidth
+                    className={classes.commentInput}
+                  />
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmit}
+                    className={classes.addCommentButton}
+                  >
+                    Add Comment
+                  </Button>
+                </Form>
+              )}
+            </Formik>
+          )}
         </>
       )}
     </Box>

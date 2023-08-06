@@ -11,8 +11,9 @@ import {
   FETCH_BY_CREATOR,
   CANCEL_BOOKMARK_POST,
   BOOKMARK_POST,
-} from '../constants/actionTypes.js';
-export default (state = { isLoading: true, posts: [] }, action) => {
+} from '../constants/actionTypes';
+
+const PostReducer = (state = { isLoading: true, posts: [] }, action) => {
   switch (action.type) {
     case START_LOADING:
       return { ...state, isLoading: true };
@@ -40,7 +41,10 @@ export default (state = { isLoading: true, posts: [] }, action) => {
       };
 
     case DELETE:
-      return { ...state, posts: state.posts.filter((post) => post._id !== action.payload) };
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post._id !== action.payload),
+      };
 
     case LIKE:
       return {
@@ -73,18 +77,18 @@ export default (state = { isLoading: true, posts: [] }, action) => {
     case CANCEL_BOOKMARK_POST:
       return {
         ...state,
-        posts: state.posts.map((post) =>
-          post._id === action.payload.id
+        posts: state.posts.map((post) => (post._id === action.payload.id
             ? {
-                ...post,
-                bookmarkedBy: post.bookmarkedBy.filter(
-                  (userId) => userId !== action.payload.userId,
-                ),
-              }
+              ...post,
+              bookmarkedBy: post.bookmarkedBy.filter(
+                (userId) => userId !== action.payload.userId,
+              ),
+            }
             : post,
-        ),
+        )),
       };
     default:
       return state;
   }
 };
+export default PostReducer;

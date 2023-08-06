@@ -1,13 +1,16 @@
-import { Card, CardMedia, CardContent, Typography, Button, IconButton } from '@material-ui/core';
+import {
+ Card, CardMedia, CardContent, Typography, Button, IconButton 
+} from '@material-ui/core';
 import React, { useState } from 'react';
-import useStyles from './styles.js';
-import image from '../../../Images/tokyo.jpg';
 import { Link } from 'react-router-dom/cjs/react-router-dom.js';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import { useDispatch } from 'react-redux';
+import image from '../../../Images/tokyo.jpg';
+import useStyles from './styles.js';
 import { likeDestination } from '../../../actions/destinations.js';
-const DestinationCard = ({ destination, userId, small }) => {
+
+function DestinationCard({ destination, userId, small }) {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [liked, setLiked] = useState(false);
@@ -38,7 +41,8 @@ const DestinationCard = ({ destination, userId, small }) => {
           {destination.title}
         </Typography>
         <Typography variant="body2" component="p" className={classes.description}>
-          {firstThreeLines}...
+          {firstThreeLines}
+          ...
         </Typography>
         <Link to={`/destinations/${destination._id}`}>
           <Button className={classes.button}>Read More</Button>
@@ -46,6 +50,6 @@ const DestinationCard = ({ destination, userId, small }) => {
       </CardContent>
     </Card>
   );
-};
+}
 
 export default DestinationCard;

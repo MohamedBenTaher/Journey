@@ -1,10 +1,10 @@
-import React ,{useState,useEffect} from 'react';
-import { Grid, CircularProgress } from '@material-ui/core';
-import { useSelector } from 'react-redux';
-import useStyles from './styles';
-import  Paginate from './Paginates';
-import { useLocation } from 'react-router-dom';
-import CountryCard from '../CountryCard/CountryCard';
+import React, { useState, useEffect } from "react";
+import { Grid, CircularProgress } from "@material-ui/core";
+import { useSelector } from "react-redux";
+import useStyles from "./styles";
+import Paginate from "./Paginates";
+import { useLocation } from "react-router-dom";
+import CountryCard from "../CountryCard/CountryCard";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -13,36 +13,43 @@ function useQuery() {
 const CountryLayout = ({ setCurrentId }) => {
   const { countries, isLoading } = useSelector((state) => state.countries);
   const query = useQuery();
-  const page = query.get('page') || 1;
-  const searchQuery = query.get('searchQuery');
+  const page = query.get("page") || 1;
+  const searchQuery = query.get("searchQuery");
   const classes = useStyles();
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const userId = user?.result?._id;
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem('profile')));
+    setUser(JSON.parse(localStorage.getItem("profile")));
   }, []);
   if (isLoading && countries?.length === 0) {
     return <div>No Countries</div>;
   }
-console.log('test')
+  console.log("test");
   return (
-    <><div className={classes.mainContainer}>
-      {isLoading ? (
-        <CircularProgress />
-      ) : (
-        <Grid container spacing={3} >
-          {countries?.map((country) => (
-            <Grid key={country._id} item xs={12} sm={6} md={4} lg={3}>
-              <CountryCard country={country} userId={userId} />
-            </Grid>
-          ))}
-        </Grid>
-      )}
-    </div>
-    <Grid item xs={12} alignItems='center' justifyContent='center' className={classes.actionDiv}>
+    <>
+      <div className={classes.mainContainer}>
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <Grid container spacing={3}>
+            {countries?.map((country) => (
+              <Grid key={country._id} item xs={12} sm={6} md={4} lg={3}>
+                <CountryCard country={country} userId={userId} />
+              </Grid>
+            ))}
+          </Grid>
+        )}
+      </div>
+      <Grid
+        item
+        xs={12}
+        alignItems="center"
+        justifyContent="center"
+        className={classes.actionDiv}
+      >
         <Paginate page={page} />
-     </Grid></>
-
+      </Grid>
+    </>
   );
 };
 

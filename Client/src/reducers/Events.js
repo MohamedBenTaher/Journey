@@ -1,5 +1,4 @@
 import {
-  LIKE,
   UPDATE_EVENT,
   CREATE_EVENT,
   FETCH_EVENTS,
@@ -8,12 +7,12 @@ import {
   FETCH_EVENT_BY_SEARCH,
   START_LOADING,
   END_LOADING,
-  COMMENT_EVENT,
   FETCH_EVENTS_BY_CREATOR,
   ATTEND_EVENT,
   BOOKMARK_EVENT,
   CANCEL_BOOKMARK_EVENT,
-} from '../constants/actionTypes.js';
+} from '../constants/actionTypes';
+
 const EventReducer = (state = { isLoading: true, events: [] }, action) => {
   switch (action.type) {
     case START_LOADING:
@@ -44,14 +43,15 @@ const EventReducer = (state = { isLoading: true, events: [] }, action) => {
       };
 
     case DELETE_EVENT:
-      return { ...state, events: state.events.filter((event) => event._id !== action.payload) };
+      return {
+        ...state,
+        events: state.events.filter((event) => event._id !== action.payload),
+      };
 
     case ATTEND_EVENT:
       return {
         ...state,
-        event: state.events.map((event) =>
-          event._id === action.payload._id ? action.payload : event,
-        ),
+        event: state.events.map((event) => event._id === action.payload._id ? action.payload : event,),
       };
 
     // case LIKE:
@@ -65,28 +65,26 @@ const EventReducer = (state = { isLoading: true, events: [] }, action) => {
     case BOOKMARK_EVENT:
       return {
         ...state,
-        events: state.events.map((event) =>
-          event._id === action.payload.id
+        events: state.events.map((event) => (event._id === action.payload.id
             ? {
-                ...event,
-                bookmarkedBy: [...event.bookmarkedBy, action.payload.userId],
+              ...event,
+              bookmarkedBy: [...event.bookmarkedBy, action.payload.userId],
               }
-            : event,
-        ),
+            : event
+            )),
       };
     case CANCEL_BOOKMARK_EVENT:
       return {
         ...state,
-        events: state.events.map((event) =>
-          event._id === action.payload.id
+        events: state.events.map((event) => (event._id === action.payload.id
             ? {
                 ...event,
-                bookmarkedBy: event.bookmarkedBy.filter(
-                  (userId) => userId !== action.payload.userId,
+              bookmarkedBy: event.bookmarkedBy.filter(
+                (userId) => userId !== action.payload.userId,
                 ),
               }
-            : event,
-        ),
+            : event
+            )),
       };
     default:
       return state;

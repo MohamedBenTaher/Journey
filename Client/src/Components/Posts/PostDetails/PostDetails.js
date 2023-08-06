@@ -7,30 +7,30 @@ import {
   Card,
   CardContent,
   Chip,
+  IconButton,
 } from '@material-ui/core/';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import { Grid } from '@mui/material';
+import ComentSection from './ComentSection';
+import Comments from '../../Comment/Comments';
+
+import { bookmarkResource, cancelBookmarkResource } from '../../../actions/auth';
+import useStyles from './styles';
 import {
   bookmarkPost,
   cancelBookmarkPost,
   getPost,
   getPostsBySearch,
 } from '../../../actions/posts';
-import useStyles from './styles';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
-import ComentSection from './ComentSection';
-import Comments from '../../Comment/Comments';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-
-import { IconButton } from '@material-ui/core';
-import { bookmarkResource, cancelBookmarkResource } from '../../../actions/auth';
 import PostInfo from '../PostInfo/PostInfo';
-import { Grid } from '@mui/material';
 
 function PostDetails() {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
@@ -96,13 +96,19 @@ function PostDetails() {
             {post.duration > 0 && (
               <div className={classes.info}>
                 <AccessTimeIcon />
-                {post.duration} days
-              </div>
+                {post.duration}
+{' '}
+days
+</div>
             )}
             <div className={classes.info}>
               {post?.destination?.name && post?.country.title ? (
                 <>
-                  <LocationOnIcon /> {post?.destination?.name}, {post?.country?.title}
+                  <LocationOnIcon /> 
+{' '}
+{post?.destination?.name}, 
+{' '}
+{post?.country?.title}
                 </>
               ) : post?.destination?.name ? (
                 <>
@@ -111,15 +117,19 @@ function PostDetails() {
                 </>
               ) : post?.country?.title ? (
                 <>
-                  <LocationOnIcon /> {post?.country?.title}
+                  <LocationOnIcon /> 
+{' '}
+{post?.country?.title}
                 </>
               ) : null}
             </div>
             {post.cost > 0 && (
               <div className={classes.info}>
                 <AttachMoneyIcon />
-                {post.cost} $
-              </div>
+                {post.cost}
+{' '}
+$
+</div>
             )}
 
             <Typography
@@ -162,13 +172,16 @@ function PostDetails() {
               </p>
             ))}
           </Typography>
-          <Typography variant="h6">Created by: {post?.creator?.name}</Typography>
+          <Typography variant="h6">
+            Created by:
+            {post?.creator?.name}
+          </Typography>
           <Typography variant="body1">{moment(post?.createdAt).fromNow()}</Typography>
           <Divider style={{ margin: '20px 0' }} />
           {post && (
             <Card>
               <CardContent>
-                <Comments entityId={id} entityType={'PostMessage'} user={user} />
+                <Comments entityId={id} entityType="PostMessage" user={user} />
               </CardContent>
             </Card>
           )}
@@ -182,31 +195,32 @@ function PostDetails() {
           </Typography>
           <Divider />
           <div className={classes.recommendedPosts}>
-            {recommendedPosts.map(({ title, name, message, likedBy, selectedFile, _id }) => (
+            {recommendedPosts.map(({
+ title, name, message, likedBy, selectedFile, _id 
+}) => (
               <div
-                style={{ margin: '20px', cursor: 'pointer' }}
-                onClick={() => openPost(_id)}
-                key={_id}
-              >
-                <Typography gutterBottom variant="h6">
+    style={{ margin: '20px', cursor: 'pointer' }}
+    onClick={() => openPost(_id)}
+    key={_id}>
+    <Typography gutterBottom variant="h6">
                   {title}
                 </Typography>
-                <Typography gutterBottom variant="subtitle2">
+    <Typography gutterBottom variant="subtitle2">
                   {name}
                 </Typography>
-                <Typography gutterBottom variant="subtitle2">
+    <Typography gutterBottom variant="subtitle2">
                   {message.split('\n').map((paragraph, index) => (
-                    <p key={index} style={{ textAlign: 'justify' }}>
+        <p key={index} style={{ textAlign: 'justify' }}>
                       {paragraph}
                     </p>
-                  ))}
+      ))}
                   <br />
                 </Typography>
-                <Typography gutterBottom variant="subtitle1">
+    <Typography gutterBottom variant="subtitle1">
                   Likes: {likedBy?.length}
                 </Typography>
-                <img src={selectedFile} width="200px" />
-              </div>
+    <img src={selectedFile} width="200px" />
+  </div>
             ))}
           </div>
         </div>

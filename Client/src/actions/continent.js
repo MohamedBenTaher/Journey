@@ -1,4 +1,4 @@
-import * as api from '../api/index.js';
+import * as api from '../api/index';
 import {
   FETCH_CONTINENT,
   FETCH_CONTINENTS,
@@ -8,9 +8,9 @@ import {
   CREATE_CONTINENT,
   UPDATE_CONTINENT,
   DELETE_CONTINENT,
-} from '../constants/actionTypes.js';
+} from '../constants/actionTypes';
 
-//Action Creators
+// Action Creators
 export const getTopContinents = () => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_CONTINENTS });
@@ -31,7 +31,10 @@ export const getContinents = (page) => async (dispatch) => {
     const {
       data: { data, currentPage, numberOfPages },
     } = await api.fetchContinents(page);
-    dispatch({ type: FETCH_CONTINENTS, payload: { data, currentPage, numberOfPages } });
+    dispatch({
+      type: FETCH_CONTINENTS,
+      payload: { data, currentPage, numberOfPages },
+    });
     dispatch({ type: END_LOADING_CONTINENTS });
   } catch (error) {
     console.log(error.message);

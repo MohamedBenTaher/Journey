@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import { Typography, CircularProgress, Grid, Divider } from '@material-ui/core';
+import {
+ Typography, CircularProgress, Grid, Divider 
+} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Post from '../Posts/Post/post.js';
 import { getPostsByCreator, getPostsBySearch } from '../../actions/posts';
 
-const CreatorOrTag = () => {
+function CreatorOrTag() {
   const { name } = useParams();
   const dispatch = useDispatch();
   const { posts, isLoading } = useSelector((state) => state.posts);
@@ -40,6 +42,6 @@ const CreatorOrTag = () => {
       )}
     </div>
   );
-};
+}
 
 export default CreatorOrTag;

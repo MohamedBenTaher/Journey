@@ -7,7 +7,8 @@ import {
   FETCH_CONTINENTS,
   START_LOADING_CONTINENTS,
   END_LOADING_CONTINENTS,
-} from '../constants/actionTypes.js';
+} from '../constants/actionTypes';
+
 export default (state = { isLoading: false, continents: [] }, action) => {
   switch (action.type) {
     case START_LOADING_CONTINENTS:
@@ -32,9 +33,7 @@ export default (state = { isLoading: false, continents: [] }, action) => {
     case UPDATE_CONTINENT:
       return {
         ...state,
-        continents: state.continents.map((continent) =>
-          continent._id === action.payload._id ? action.payload : continent,
-        ),
+        continents: state.continents.map((continent) => continent._id === action.payload._id ? action.payload : continent,),
       };
 
     case DELETE_CONTINENT:

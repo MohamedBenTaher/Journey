@@ -1,6 +1,5 @@
-import * as api from '../api/index.js';
+import * as api from '../api/index';
 import {
-  LIKE,
   UPDATE_EVENT,
   CREATE_EVENT,
   FETCH_EVENT_BY_SEARCH,
@@ -15,9 +14,9 @@ import {
   BOOKMARK_EVENT,
   CANCEL_BOOKMARK_EVENT,
   LIKE_EVENT,
-} from '../constants/actionTypes.js';
+} from '../constants/actionTypes';
 
-//Action Creators
+// Action Creators
 
 export const getEvents = (page) => async (dispatch) => {
   try {
@@ -26,7 +25,10 @@ export const getEvents = (page) => async (dispatch) => {
       data: { data, currentPage, numberOfPages },
     } = await api.fetchEvents(page);
 
-    dispatch({ type: FETCH_EVENTS, payload: { data, currentPage, numberOfPages } });
+    dispatch({
+      type: FETCH_EVENTS,
+      payload: { data, currentPage, numberOfPages },
+    });
     dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error.message);

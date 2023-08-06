@@ -66,7 +66,7 @@ export default makeStyles((theme) => ({
     textDecoration: 'none',
     color: 'black',
     '&:hover': {
-      //textDecoration: "underline blue ",
+      // textDecoration: "underline blue ",
       borderBottom: '2px solid #3F95EC',
     },
   },
@@ -83,7 +83,7 @@ export default makeStyles((theme) => ({
     color: 'black',
     '&:hover': {
       borderBottom: '2px solid #3F95EC',
-      //textDecoration: "underline blue ",
+      // textDecoration: "underline blue ",
     },
   },
   navLinks: {

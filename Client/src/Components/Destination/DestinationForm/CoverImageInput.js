@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import './styles';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -55,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
   },
 }));
-const CoverImageInput = ({ field, form: { setFieldValue, values } }) => {
+function CoverImageInput({ field, form: { setFieldValue, values } }) {
   const classes = useStyles();
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
@@ -74,5 +75,5 @@ const CoverImageInput = ({ field, form: { setFieldValue, values } }) => {
       </div>
     </Paper>
   );
-};
+}
 export default CoverImageInput;

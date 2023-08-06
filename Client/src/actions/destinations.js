@@ -1,4 +1,4 @@
-import * as api from '../api/index.js';
+import * as api from '../api/index';
 import {
   LIKE,
   UPDATE_DESTINATION,
@@ -15,9 +15,9 @@ import {
   DOWNVOTE_DESTINATION,
   BOOKMARK_DESTINATION,
   CANCEL_BOOKMARK_DESTINATION,
-} from '../constants/actionTypes.js';
+} from '../constants/actionTypes';
 
-//Action Creators
+// Action Creators
 export const getTopDestinations = () => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_DESTINATIONS });
@@ -39,7 +39,10 @@ export const getDestinations = (page) => async (dispatch) => {
       data: { data, currentPage, numberOfPages },
     } = await api.fetchDestinatons(page);
     console.log('actions', data);
-    dispatch({ type: FETCH_DESTINATIONS, payload: { data, currentPage, numberOfPages } });
+    dispatch({
+      type: FETCH_DESTINATIONS,
+      payload: { data, currentPage, numberOfPages },
+    });
     dispatch({ type: END_LOADING_DESTINATIONS });
   } catch (error) {
     console.log(error.message);

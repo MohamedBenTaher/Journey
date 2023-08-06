@@ -1,15 +1,29 @@
 import React, { useState } from 'react';
-import { Avatar, Button, Paper, Typography, Container, Grid } from '@material-ui/core';
-import useStyles from './styles.js';
+import {
+  Avatar,
+  Button,
+  Paper,
+  Typography,
+  Container,
+  Grid,
+} from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Input from './Input.js';
 import { GoogleLogin } from 'react-google-login';
-import Icon from './Icon.js';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import Icon from './Icon';
+import Input from './Input';
+import useStyles from './styles';
 import { signin, signup } from '../../actions/auth';
-const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
-const Auth = () => {
+
+const initialState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
+function Auth() {
   const classes = useStyles();
   const [isSignup, setIsSignup] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -64,10 +78,20 @@ const Auth = () => {
                   autoFocus
                   half
                 />
-                <Input name="lastName" label="Last Name" handleChange={handleChange} half />
+                <Input
+                  name="lastName"
+                  label="Last Name"
+                  handleChange={handleChange}
+                  half
+                />
               </>
             )}
-            <Input name="email" label="Email Address" handleChange={handleChange} type="email" />
+            <Input
+              name="email"
+              label="Email Address"
+              handleChange={handleChange}
+              type="email"
+            />
             <Input
               name="password"
               label="Password"
@@ -115,14 +139,14 @@ const Auth = () => {
           <Grid container justifyContent="flex-end">
             <Button onClick={switchMode}>
               {!isSignup
-                ? `Don't Have An Account ? Sign Up `
-                : `Already have an Account ? Sign In `}
+                ? "Don't Have An Account ? Sign Up "
+                : 'Already have an Account ? Sign In '}
             </Button>
           </Grid>
         </form>
       </Paper>
     </Container>
   );
-};
+}
 
 export default Auth;

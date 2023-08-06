@@ -34,7 +34,10 @@ export const getLocations = (page) => async (dispatch) => {
     const {
       data: { data, currentPage, numberOfPages },
     } = await api.fetchLocations(page);
-    dispatch({ type: FETCH_LOCATIONS, payload: { data, currentPage, numberOfPages } });
+    dispatch({
+      type: FETCH_LOCATIONS,
+      payload: { data, currentPage, numberOfPages },
+    });
     dispatch({ type: END_LOADING_LOCATIONS });
   } catch (error) {
     console.log(error.message);

@@ -1,41 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Box, CssBaseline } from '@material-ui/core';
-import useStyles from './styles.js';
-import { useDispatch } from 'react-redux';
-import { getPosts } from './actions/posts';
-import Navbar from './Components/Navbar/Navbar';
-import Hero from './Components/Hero/Hero.js';
+import { CssBaseline } from '@material-ui/core';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Home from './Components/Home/Home';
 import Footer from './Components/Footer/Footer';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import Auth from './Components/Auth/Auth.js';
-import PostDetails from './Components/Posts/PostDetails/PostDetails.js';
-import { ThemeProvider, createTheme } from '@material-ui/core/styles';
-import SearchBar from './Components/Home/SearchBar.js';
+import Auth from './Components/Auth/Auth';
+import PostDetails from './Components/Posts/PostDetails/PostDetails';
 import CreatorOrTag from './Components/CreatorOrTag/CreatorOrTag';
 import EventForm from './Components/Event/Form/EventForm';
-import EventCard from './Components/Event/Display/EventCard.jsx';
-import Events from './Components/Event/Events.js';
-import Destinations from './Components/Destination/Destinations/Destinations.js';
-import DestinationForm from './Components/Destination/DestinationForm/DestinationForm.js';
-import DestinationDetails from './Components/Destination/DestinationDetails/DestinationDetails.jsx';
-import { useParams } from 'react-router-dom';
-import ContinentLayout from './Components/Continent/ContinentLayout/ContinentLayout.jsx';
-import ContinentDetails from './Components/Continent/ContinentDetails/ContinentDetails.jsx';
-import ContinentForm from './Components/Continent/ContinentFrom/ContinentForm.jsx';
-import CountryLayout from './Components/Country/CountryLayout/CountryLayout.jsx';
-import CountryDetail from './Components/Country/CountryDetails/CountryDetails.jsx';
-import CountryForm from './Components/Country/CountryForm/CountryForm.jsx';
-import PostForm from './Components/Posts/PostForm.js/PostForm.jsx';
-import LocationLayout from './Components/Location/LocationLayout/LocationLayout.jsx';
-import LocationFom from './Components/Location/LocationForm/LocationForm.jsx';
-import LocationDetails from './Components/Location/LocationDetails/LocationDetails.jsx';
-import EventDetails from './Components/Event/EventDetails/EventDetails.jsx';
-import Profile from './Components/User/Profile/Profile.jsx';
-import NavbarSecondary from './Components/Navbar/NavbarSecondary.js';
-import PrivateRoute from './Components/Auth/PrivateRoute.jsx';
+import Events from './Components/Event/Events';
+import Destinations from './Components/Destination/Destinations/Destinations';
+import DestinationForm from './Components/Destination/DestinationForm/DestinationForm';
+import DestinationDetails from './Components/Destination/DestinationDetails/DestinationDetails';
+import ContinentLayout from './Components/Continent/ContinentLayout/ContinentLayout';
+import ContinentDetails from './Components/Continent/ContinentDetails/ContinentDetails';
+import ContinentForm from './Components/Continent/ContinentFrom/ContinentForm';
+import CountryLayout from './Components/Country/CountryLayout/CountryLayout';
+import CountryDetail from './Components/Country/CountryDetails/CountryDetails';
+import CountryForm from './Components/Country/CountryForm/CountryForm';
+import PostForm from './Components/Posts/PostForm/PostForm';
+import LocationLayout from './Components/Location/LocationLayout/LocationLayout';
+import LocationFom from './Components/Location/LocationForm/LocationForm';
+import LocationDetails from './Components/Location/LocationDetails/LocationDetails';
+import EventDetails from './Components/Event/EventDetails/EventDetails';
+import Profile from './Components/User/Profile/Profile';
+import NavbarSecondary from './Components/Navbar/NavbarSecondary';
+import PrivateRoute from './Components/Auth/PrivateRoute';
 
-const App = () => {
+function App() {
   const user = JSON.parse(localStorage.getItem('profile'));
   return (
     <CssBaseline>
@@ -135,6 +125,6 @@ const App = () => {
       <Footer />
     </CssBaseline>
   );
-};
+}
 
 export default App;

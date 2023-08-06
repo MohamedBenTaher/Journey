@@ -1,4 +1,4 @@
-import * as api from '../api/index.js';
+import * as api from '../api/index';
 import {
   LIKE,
   UPDATE,
@@ -13,9 +13,7 @@ import {
   FETCH_BY_CREATOR,
   BOOKMARK_POST,
   CANCEL_BOOKMARK_POST,
-} from '../constants/actionTypes.js';
-
-//Action Creators
+} from '../constants/actionTypes';
 
 export const getPosts = (page) => async (dispatch) => {
   try {
@@ -24,7 +22,10 @@ export const getPosts = (page) => async (dispatch) => {
       data: { data, currentPage, numberOfPages },
     } = await api.fetchPosts(page);
 
-    dispatch({ type: FETCH_ALL, payload: { data, currentPage, numberOfPages } });
+    dispatch({
+      type: FETCH_ALL,
+      payload: { data, currentPage, numberOfPages },
+    });
     dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error.message);

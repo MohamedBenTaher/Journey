@@ -2,11 +2,11 @@ import React from 'react';
 import { Chip, TextField, Box } from '@mui/material';
 import { useField } from 'formik';
 
-const ChipInputField = ({ label, ...props }) => {
+function ChipInputField({ label, ...props }) {
   const [field, meta, helpers] = useField(props.name);
   console.log(field, helpers);
   const handleAddChip = (chip) => {
-    const tags = field.value.tags;
+    const { tags } = field.value;
     console.log('field value', field.value.tags, chip);
     helpers.setValue('tags', [...tags, chip]);
   };
@@ -34,8 +34,8 @@ const ChipInputField = ({ label, ...props }) => {
         }}
       />
       <Box>
-        {field.value.tags &&
-          field?.value.tags?.map((tag) => (
+        {field.value.tags
+          && field?.value.tags?.map((tag) => (
             <Chip
               key={tag}
               label={tag}
@@ -48,5 +48,5 @@ const ChipInputField = ({ label, ...props }) => {
       </Box>
     </Box>
   );
-};
+}
 export default ChipInputField;

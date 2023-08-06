@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Grid, CircularProgress } from '@material-ui/core';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import useStyles from './styles';
 import DestinationCard from '../DestinationCard/Destination.js';
 import Paginate from './Pagination.jsx';
-import { useLocation } from 'react-router-dom';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-const Destinations = ({ setCurrentId }) => {
+function Destinations({ setCurrentId }) {
   const { destinations, isLoading } = useSelector((state) => state.destinations);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const value = useSelector((state) => state);
@@ -49,6 +49,6 @@ const Destinations = ({ setCurrentId }) => {
       </Grid>
     </>
   );
-};
+}
 
 export default Destinations;

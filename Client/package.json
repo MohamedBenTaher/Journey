@@ -44,7 +44,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
-    "prettier":"npx prettier --config .prettierrc \"src/**/*.js\" --write"  },
+    "prettier": "npx prettier --config .prettierrc \"src/**/*.js\" --write"
+  },
   "browserslist": {
     "production": [
       ">0.2%",

@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import App from './App';
-import reducers from './reducers';
+
 import './index.css';
-import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
+import { BrowserRouter } from 'react-router-dom';
 import { createTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
+import reducers from './reducers';
+import App from './App';
+
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
 const theme = createTheme({
   typography: {

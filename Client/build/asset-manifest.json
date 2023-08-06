@@ -11,8 +11,5 @@
     "main.6044c6f1.css.map": "/static/css/main.6044c6f1.css.map",
     "main.6cda5ac6.js.map": "/static/js/main.6cda5ac6.js.map"
   },
-  "entrypoints": [
-    "static/css/main.6044c6f1.css",
-    "static/js/main.6cda5ac6.js"
-  ]
+  "entrypoints": ["static/css/main.6044c6f1.css", "static/js/main.6cda5ac6.js"]
 }

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Grid, Container, Grow, Paper, AppBar, TextField, Button } from '@material-ui/core';
+import {
+ Grid, Container, Grow, Paper, AppBar, TextField, Button 
+} from '@material-ui/core';
 import { useHistory, useLocation } from 'react-router-dom';
-import Form from '../Form/Form.js';
 import ChipInput from 'material-ui-chip-input';
+import Form from '../Form/Form.js';
 import Posts from '../Posts/Posts.js';
 import { getPosts, getPostsBySearch } from '../../actions/posts.js';
 import Pagination from '../Pagination';
@@ -12,10 +14,11 @@ import DestinationCard from '../Destination/DestinationCard/Destination.js';
 import CountryCard from '../Country/CountryCard/CountryCard.jsx';
 import Morocco from '../../Images/Morooco.jpg';
 import Hero from '../Hero/Hero.js';
+
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
-const Home = () => {
+function Home() {
   const classes = useStyles();
   const [currentId, setCurrentId] = useState(0);
   const [search, setSearch] = useState('');
@@ -66,14 +69,11 @@ const Home = () => {
                 </Grid>
               )}
             </Grid>
-            {/* <Grid item >
-      <Form  currentId={currentId} setCurrentId={setCurrentId} />
-    </Grid> */}
           </Grid>
         </Container>
       </Grow>
     </>
   );
-};
+}
 
 export default Home;

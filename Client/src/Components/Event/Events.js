@@ -9,17 +9,17 @@ import {
   Grid,
   Input,
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import EventCard from './Display/EventCard';
+import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import EventCard from './Display/EventCard';
 import { getEvents } from '../../actions/events';
 import useStyles from './styles.js';
 import Paginate from './Paginate';
-import { useLocation } from 'react-router-dom';
+
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
-const Events = () => {
+function Events() {
   const { events, isLoading } = useSelector((state) => state.events);
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -38,10 +38,11 @@ const Events = () => {
   return (
     <>
       {user && user.result.isAdmin ? (
-        <Link to={'/events/new'}>
+        <Link to="/events/new">
           <Button variant="outlined" color="primary" onClick={() => {}}>
             {' '}
-            Add a new Event{' '}
+            Add a new Event
+{' '}
           </Button>
         </Link>
       ) : null}
@@ -61,6 +62,6 @@ const Events = () => {
       </Grid>
     </>
   );
-};
+}
 
 export default Events;

@@ -3,8 +3,6 @@ import {
   LOGOUT,
   START_LOADING_USER,
   END_LOADING_USER,
-  BOOKMARK_RESOURCE,
-  CANCEL_BOOKMARK_RESOURCE,
   USER_INFROMATIONS,
 } from '../constants/actionTypes';
 
@@ -21,7 +19,12 @@ export default (state = { user: null, isLoading: false }, action) => {
       return { ...state, user: { ...action.payload.data } };
     case LOGOUT:
       localStorage.clear();
-      return { ...state, user: null, loading: false, errors: null };
+      return {
+        ...state,
+        user: null,
+        loading: false,
+        errors: null,
+      };
 
     case USER_INFROMATIONS: {
       return {

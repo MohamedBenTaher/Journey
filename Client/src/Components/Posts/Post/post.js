@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import useStyles from './styles.js';
 import {
   Card,
   CardActions,
@@ -15,9 +14,11 @@ import MoreHorizonIcon from '@material-ui/icons/MoreHoriz';
 import moment from 'moment';
 import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
 import { useDispatch } from 'react-redux';
-import { deletePost, likePost } from '../../../actions/posts.js';
 import { useHistory } from 'react-router-dom';
-const Post = ({ post, setCurrentId, small }) => {
+import { deletePost, likePost } from '../../../actions/posts.js';
+import useStyles from './styles.js';
+
+function Post({ post, setCurrentId, small }) {
   const user = JSON.parse(localStorage.getItem('profile'));
   const userId = user?.result?.googleId || user?.result?._id;
   console.log('userid', userId);
@@ -25,7 +26,7 @@ const Post = ({ post, setCurrentId, small }) => {
   const [likes, setLikes] = useState(post?.likedBy);
   const hasLikedPost = post.likedBy.find((like) => like === userId);
   const history = useHistory();
-  const Likes = () => {
+  function Likes() {
     if (likes.length > 0 && !small) {
       return likes.find((like) => like === userId) ? (
         <>
@@ -38,7 +39,10 @@ const Post = ({ post, setCurrentId, small }) => {
       ) : (
         <>
           <ThumbUpAltOutlined fontSize="small" />
-          &nbsp;{likes.length} {likes.length === 1 ? 'Like' : 'Likes'}
+          &nbsp;
+          {likes.length} 
+{' '}
+{likes.length === 1 ? 'Like' : 'Likes'}
         </>
       );
     }
@@ -49,7 +53,7 @@ const Post = ({ post, setCurrentId, small }) => {
         &nbsp;Like
       </>
     );
-  };
+  }
   const openPost = () => {
     history.push(`/stories/${post._id}`);
   };
@@ -136,5 +140,5 @@ const Post = ({ post, setCurrentId, small }) => {
       </CardActions>
     </Card>
   );
-};
+}
 export default Post;

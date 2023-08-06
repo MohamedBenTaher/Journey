@@ -1,4 +1,4 @@
-import * as api from '../api/index.js';
+import * as api from '../api/index';
 import {
   LIKE_COUNTRY,
   DISLIKE_COUNTRY,
@@ -12,9 +12,9 @@ import {
   DELETE_COUNTRY,
   BOOKMARK_COUNTRY,
   CANCEL_BOOKMARK_COUNTRY,
-} from '../constants/actionTypes.js';
+} from '../constants/actionTypes';
 
-//Action Creators
+// Action Creators
 export const getTopCountries = () => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_COUNTRIES });
@@ -36,7 +36,10 @@ export const getCountries = (page) => async (dispatch) => {
       data: { data, currentPage, numberOfPages },
     } = await api.fetchCountries(page);
     console.log('actions', data);
-    dispatch({ type: FETCH_COUNTRIES, payload: { data, currentPage, numberOfPages } });
+    dispatch({
+      type: FETCH_COUNTRIES,
+      payload: { data, currentPage, numberOfPages },
+    });
     dispatch({ type: END_LOADING_COUNTRIES });
   } catch (error) {
     console.log(error.message);

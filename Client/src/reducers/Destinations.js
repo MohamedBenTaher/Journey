@@ -8,16 +8,19 @@ import {
   FETCH_DESTINATION_BY_SEARCH,
   START_LOADING_DESTINATIONS,
   END_LOADING_DESTINATIONS,
-  COMMENT_DESTINATION,
   UPVOTE_DESTINATION,
   DOWNVOTE_DESTINATION,
   BOOKMARK_DESTINATION,
   CANCEL_BOOKMARK_DESTINATION,
   LIKE_DESTINATION,
-} from '../constants/actionTypes.js';
+} from '../constants/actionTypes';
 
 export default (
-  state = { isLoading: false, destinations: [], user: { savedDestinations: [] } },
+  state = {
+    isLoading: false,
+    destinations: [],
+    user: { savedDestinations: [] },
+  },
   action,
 ) => {
   switch (action.type) {
@@ -46,9 +49,7 @@ export default (
     case UPDATE_DESTINATION:
       return {
         ...state,
-        destinations: state.destinations.map((destination) =>
-          destination._id === action.payload._id ? action.payload : destination,
-        ),
+        destinations: state.destinations.map((destination) => (destination._id === action.payload._id ? action.payload : destination)),
       };
     case DELETE_DESTINATION:
       return {
@@ -61,42 +62,36 @@ export default (
     case DOWNVOTE_DESTINATION:
       return {
         ...state,
-        destinations: state.destinations.map((destination) =>
-          destination._id === action.payload._id ? action.payload : destination,
-        ),
+        destinations: state.destinations.map((destination) => (destination._id === action.payload._id ? action.payload : destination)),
       };
     case LIKE_DESTINATION:
       return {
         ...state,
-        destinations: state.destinations.map((destination) =>
-          destination._id === action.payload._id ? action.payload : destination,
-        ),
+        destinations: state.destinations.map((destination) => (destination._id === action.payload._id ? action.payload : destination)),
       };
     case BOOKMARK_DESTINATION:
       return {
         ...state,
-        destinations: state.destinations.map((destination) =>
-          destination._id === action.payload.id
+        destinations: state.destinations.map((destination) => (destination._id === action.payload.id
             ? {
                 ...destination,
-                bookmarkedBy: [...destination.bookmarkedBy, action.payload.userId],
+              bookmarkedBy: [...destination.bookmarkedBy, action.payload.userId],
               }
             : destination,
-        ),
+        )),
       };
     case CANCEL_BOOKMARK_DESTINATION:
       return {
         ...state,
-        destinations: state.destinations.map((destination) =>
-          destination._id === action.payload.id
+        destinations: state.destinations.map((destination) => (destination._id === action.payload.id
             ? {
-                ...destination,
+              ...destination,
                 bookmarkedBy: destination.bookmarkedBy.filter(
                   (userId) => userId !== action.payload.userId,
-                ),
+              ),
               }
             : destination,
-        ),
+        )),
       };
     default:
       return state;
