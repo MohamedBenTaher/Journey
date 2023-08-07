@@ -21,7 +21,7 @@ export const  getContinents= async(req,res) => {
         const startIndex=(Number(page)-1)*Limit;
         const total=await Continent.countDocuments({});
         const continents=await Continent.find().sort({_id:-1}).limit(Limit).skip(startIndex);
-        res.status(200).json({data:continents,currentPage:Number(page),NumberOfPages:Math.ceil(total/Limit)})
+        res.status(200).json({data:continents,currentPage:Number(page),numberOfPages:Math.ceil(total/Limit)})
     } catch (error) {
         res.status(404).json({message :error.essage})
     }

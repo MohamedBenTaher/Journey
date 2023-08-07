@@ -16,7 +16,7 @@ import ContinentForm from './Components/Continent/ContinentFrom/ContinentForm';
 import CountryLayout from './Components/Country/CountryLayout/CountryLayout';
 import CountryDetail from './Components/Country/CountryDetails/CountryDetails';
 import CountryForm from './Components/Country/CountryForm/CountryForm';
-import PostForm from './Components/Posts/PostForm/PostForm';
+// import PostForm from './Components/Posts/PostForm/PostForm';
 import LocationLayout from './Components/Location/LocationLayout/LocationLayout';
 import LocationFom from './Components/Location/LocationForm/LocationForm';
 import LocationDetails from './Components/Location/LocationDetails/LocationDetails';
@@ -53,7 +53,7 @@ function App() {
         </Route>
         <PrivateRoute path="/stories/new/:id?" exact user={user}>
           <NavbarSecondary />
-          <PostForm />
+          {/* <PostForm /> */}
         </PrivateRoute>
         <Route path="/stories/:id" exact>
           <NavbarSecondary />

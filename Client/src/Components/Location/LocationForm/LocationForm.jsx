@@ -27,7 +27,8 @@ import {
   updateLocation,
 } from "../../../actions/locations";
 import { getDestinations } from "../../../actions/destinations";
-import { locationTypes } from "../../../constants/locals";
+import  locationTypes  from "../../../constants/locals";
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     formControl: {

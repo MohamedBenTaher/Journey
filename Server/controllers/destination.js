@@ -51,7 +51,7 @@ export const  getDestinations= async(req,res) => {
 
         const destinations=await Destination.find().sort({_id:-1}).limit(Limit).skip(startIndex);
       
-        res.status(200).json({data:destinations,currentPage:Number(page),NumberOfPages:Math.ceil(total/Limit)})
+        res.status(200).json({data:destinations,currentPage:Number(page),numberOfPages:Math.ceil(total/Limit)})
     } catch (error) {
         res.status(404).json({message :error.essage})
     }

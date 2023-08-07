@@ -7,7 +7,7 @@ import {
   END_LOADING_DESTINATION_COMMENTS,
 } from '../constants/actionTypes';
 
-export default (state = { isLoading: true, comments: [] }, action) => {
+ const commentReducer=(state = { isLoading: true, comments: [] }, action) => {
   switch (action.type) {
     case START_LOADING_DESTINATION_COMMENTS:
       return { ...state, isLoading: true };
@@ -27,14 +27,17 @@ export default (state = { isLoading: true, comments: [] }, action) => {
       console.log('reducer update', state, action.payload);
       return {
         ...state,
-        comments: state.comments.map((comment) => comment._id === action.payload._id ? action.payload : comment,),
+        comments: state.comments.map((comment) => 
+        comment._id === action.payload._id ? action.payload : comment,
+        ),
       };
     case DELETE_DESTINATION_COMMENT:
       return {
         ...state,
-        comments: state.comments.filter((comment) => comment._id !== action.payload),
+        comments: state.comments.filter((comment) => comment._id !== action.payload)
       };
     default:
       return state;
   }
 };
+export default commentReducer;

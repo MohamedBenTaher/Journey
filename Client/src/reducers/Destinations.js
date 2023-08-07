@@ -33,7 +33,7 @@ export default (
         ...state,
         destinations: action.payload.data,
         currentPage: action.payload.currentPage,
-        NumberOfPages: action.payload.numrOfPages,
+        numberOfPages: action.payload.numrOfPages,
       };
     case FETCH_DESTINATIONS_BY_COUNTRY:
       return {
@@ -49,7 +49,10 @@ export default (
     case UPDATE_DESTINATION:
       return {
         ...state,
-        destinations: state.destinations.map((destination) => (destination._id === action.payload._id ? action.payload : destination)),
+        destinations: state.destinations.map((destination) => 
+        (
+          destination._id === action.payload._id ? action.payload : destination
+        )),
       };
     case DELETE_DESTINATION:
       return {
@@ -59,15 +62,36 @@ export default (
         ),
       };
     case UPVOTE_DESTINATION:
-    case DOWNVOTE_DESTINATION:
-      return {
+        return {
         ...state,
-        destinations: state.destinations.map((destination) => (destination._id === action.payload._id ? action.payload : destination)),
+        destinations: state.destinations.map((destination) => (destination._id === action.payload.id
+            ? {
+                ...destination,
+              upvotes: [...destination.bookmarkedBy, action.payload.userId],
+              }
+            : destination
+        )),
+      };
+    case DOWNVOTE_DESTINATION:
+       return {
+        ...state,
+        destinations: state.destinations.map((destination) => (destination._id === action.payload.id
+            ? {
+              ...destination,
+                bookmarkedBy: destination.upvotes.filter(
+                  (userId) => userId !== action.payload.userId,
+              ),
+              }
+            : destination
+        )),
       };
     case LIKE_DESTINATION:
       return {
         ...state,
-        destinations: state.destinations.map((destination) => (destination._id === action.payload._id ? action.payload : destination)),
+        destinations: state.destinations.map((destination) => 
+          (
+          destination._id === action.payload._id ? action.payload : destination
+          )),
       };
     case BOOKMARK_DESTINATION:
       return {
@@ -77,7 +101,7 @@ export default (
                 ...destination,
               bookmarkedBy: [...destination.bookmarkedBy, action.payload.userId],
               }
-            : destination,
+            : destination
         )),
       };
     case CANCEL_BOOKMARK_DESTINATION:
@@ -90,7 +114,7 @@ export default (
                   (userId) => userId !== action.payload.userId,
               ),
               }
-            : destination,
+            : destination
         )),
       };
     default:

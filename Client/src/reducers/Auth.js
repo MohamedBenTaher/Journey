@@ -6,7 +6,7 @@ import {
   USER_INFROMATIONS,
 } from '../constants/actionTypes';
 
-export default (state = { user: null, isLoading: false }, action) => {
+const authReducer= (state = { user: null, isLoading: false }, action) => {
   switch (action.type) {
     case START_LOADING_USER:
       return { ...state, isLoading: true };
@@ -36,3 +36,5 @@ export default (state = { user: null, isLoading: false }, action) => {
       return state;
   }
 };
+ export default authReducer;
+ 

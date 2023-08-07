@@ -33,7 +33,8 @@ API.interceptors.response.use(
 export const fetchPost = (id) => API.get(`/post/${id}`);
 export const fetchTopPosts = () => API.get('/post/top');
 export const fetchPosts = (page) => API.get(`/post?page=${page}`);
-export const createPost = (newPost) => API.post('/post', newPost, {
+export const createPost = (newPost) => API.post('/post', newPost, 
+  {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

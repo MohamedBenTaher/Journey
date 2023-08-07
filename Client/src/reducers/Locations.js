@@ -12,7 +12,7 @@ import {
   CANCEL_BOOKMARK_LOCATION,
 } from '../constants/actionTypes';
 
-export default (state = { isLoading: false, locations: [] }, action) => {
+const locationReducer = (state = { isLoading: false, locations: [] }, action) => {
   switch (action.type) {
     case START_LOADING_LOCATIONS:
       return { ...state, isLoading: true };
@@ -23,7 +23,7 @@ export default (state = { isLoading: false, locations: [] }, action) => {
         ...state,
         locations: action.payload.data,
         currentPage: action.payload.currentPage,
-        NumberOfPages: action.payload.numrOfPages,
+        numberOfPages: action.payload.numrOfPages,
       };
     case FETCH_LOCATION_BY_SEARCH:
       return {
@@ -77,7 +77,7 @@ export default (state = { isLoading: false, locations: [] }, action) => {
                 ...location,
                 bookmarkedBy: [...location.bookmarkedBy, action.payload.userId],
               }
-            : location,
+            : location
         )),
       };
     case CANCEL_BOOKMARK_LOCATION:
@@ -90,10 +90,11 @@ export default (state = { isLoading: false, locations: [] }, action) => {
                   (userId) => userId !== action.payload.userId,
               ),
             }
-            : location,
-        ),
+            : location
+        )),
       };
     default:
       return state;
   }
 };
+export default locationReducer

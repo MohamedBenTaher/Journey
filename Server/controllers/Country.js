@@ -22,7 +22,7 @@ export const  getCountries= async(req,res) => {
         const startIndex=(Number(page)-1)*Limit;
         const total=await Country.countDocuments({});
         const countries=await Country.find().sort({_id:-1}).limit(Limit).skip(startIndex).populate("continent");
-        res.status(200).json({data:countries,currentPage:Number(page),NumberOfPages:Math.ceil(total/Limit)})
+        res.status(200).json({data:countries,currentPage:Number(page),numberOfPages:Math.ceil(total/Limit)})
     } catch (error) {
         res.status(404).json({message :error.essage})
     }

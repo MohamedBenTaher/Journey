@@ -1,7 +1,8 @@
 import express from "express"
 import { getContinent,getTopContinents, getContinents,getContinentsBySearch, createContinent, updateContinent,deleteContinents } from "../controllers/Continent.js";
+import auth from "../Middleware/auth.js";
 const router = express.Router();
-import auth from '../Middleware/auth'
+
 
 
 router.get('/search', getContinentsBySearch);

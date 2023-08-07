@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
- Grid, Container, Grow, Paper, AppBar, TextField, Button 
+ Grid, Container, Grow
 } from '@material-ui/core';
 import { useHistory, useLocation } from 'react-router-dom';
-import ChipInput from 'material-ui-chip-input';
-import Form from '../Form/Form.js';
 import Posts from '../Posts/Posts.js';
-import { getPosts, getPostsBySearch } from '../../actions/posts.js';
+import { getPostsBySearch } from '../../actions/posts.js';
 import Pagination from '../Pagination';
 import useStyles from './styles.js';
-import DestinationCard from '../Destination/DestinationCard/Destination.js';
-import CountryCard from '../Country/CountryCard/CountryCard.jsx';
-import Morocco from '../../Images/Morooco.jpg';
 import Hero from '../Hero/Hero.js';
 
 function useQuery() {

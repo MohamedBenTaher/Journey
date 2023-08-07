@@ -24,7 +24,7 @@ export default (state = { isLoading: false, countries: [] }, action) => {
         ...state,
         countries: action.payload.data,
         currentPage: action.payload.currentPage,
-        NumberOfPages: action.payload.numrOfPages,
+        numberOfPages: action.payload.numrOfPages,
       };
     case FETCH_COUNTRY:
       return { ...state, country: action.payload };

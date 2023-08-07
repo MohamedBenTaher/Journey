@@ -9,7 +9,7 @@ import {
   END_LOADING_CONTINENTS,
 } from '../constants/actionTypes';
 
-export default (state = { isLoading: false, continents: [] }, action) => {
+ const continentReducer = (state = { isLoading: false, continents: [] }, action) => {
   switch (action.type) {
     case START_LOADING_CONTINENTS:
       return { ...state, isLoading: true };
@@ -33,7 +33,9 @@ export default (state = { isLoading: false, continents: [] }, action) => {
     case UPDATE_CONTINENT:
       return {
         ...state,
-        continents: state.continents.map((continent) => continent._id === action.payload._id ? action.payload : continent,),
+        continents: state.continents.map((continent) =>
+        continent._id === action.payload._id ? action.payload : continent,
+        )
       };
 
     case DELETE_CONTINENT:
@@ -45,3 +47,4 @@ export default (state = { isLoading: false, continents: [] }, action) => {
       return state;
   }
 };
+export default continentReducer;

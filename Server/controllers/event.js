@@ -113,7 +113,7 @@ export const  getEvents= async(req,res) => {
 
         const events=await Event.find().sort({_id:-1}).limit(Limit).skip(startIndex).populate('creator');
       
-        res.status(200).json({data:events,currentPage:Number(page),NumberOfPages:Math.ceil(total/Limit)})
+        res.status(200).json({data:events,currentPage:Number(page),numberOfPages:Math.ceil(total/Limit)})
     } catch (error) {
         res.status(404).json({message :error.essage})
     }

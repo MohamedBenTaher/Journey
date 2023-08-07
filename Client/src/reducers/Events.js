@@ -24,7 +24,7 @@ const EventReducer = (state = { isLoading: true, events: [] }, action) => {
         ...state,
         events: action.payload.data,
         currentPage: action.payload.currentPage,
-        NumberOfPages: action.payload.numrOfPages,
+        numberOfPages: action.payload.numrOfPages,
       };
     case FETCH_EVENT:
       return { ...state, event: action.payload };
@@ -51,15 +51,10 @@ const EventReducer = (state = { isLoading: true, events: [] }, action) => {
     case ATTEND_EVENT:
       return {
         ...state,
-        event: state.events.map((event) => event._id === action.payload._id ? action.payload : event,),
+        event: state.events.map((event) =>
+        event._id === action.payload._id ? action.payload : event,
+        ),
       };
-
-    // case LIKE:
-    //   return {...state,events:state.events.map((event) => {
-    //     if(event._id === action.payload._id)
-    //     {return action.payload}
-    //    return event;
-    // })};
     case FETCH_EVENT_BY_SEARCH:
       return { ...state, events: action.payload.data };
     case BOOKMARK_EVENT:

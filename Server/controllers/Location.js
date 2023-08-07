@@ -22,7 +22,7 @@ export const  getLocations= async(req,res) => {
         const startIndex=(Number(page)-1)*Limit;
         const total=await Location.countDocuments({});
         const locations=await Location.find().sort({_id:-1}).limit(Limit).skip(startIndex);
-        res.status(200).json({data:locations,currentPage:Number(page),NumberOfPages:Math.ceil(total/Limit)})
+        res.status(200).json({data:locations,currentPage:Number(page),numberOfPages:Math.ceil(total/Limit)})
     } catch (error) {
         res.status(404).json({message :error.essage})
     }
