@@ -7,7 +7,7 @@ import {
   END_LOADING_DESTINATION_COMMENTS,
 } from '../constants/actionTypes';
 
- const commentReducer=(state = { isLoading: true, comments: [] }, action) => {
+ const commentReducer = (state = { isLoading: true, comments: [] }, action) => {
   switch (action.type) {
     case START_LOADING_DESTINATION_COMMENTS:
       return { ...state, isLoading: true };

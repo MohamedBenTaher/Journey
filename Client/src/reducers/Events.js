@@ -13,12 +13,12 @@ import {
   CANCEL_BOOKMARK_EVENT,
 } from '../constants/actionTypes';
 
-const EventReducer = (state = { isLoading: true, events: [] }, action) => {
+const eventReducer = (state = { isLoadingEvents: true, events: [] }, action) => {
   switch (action.type) {
     case START_LOADING:
-      return { ...state, isLoading: true };
+      return { ...state, isLoadingEvents: true };
     case END_LOADING:
-      return { ...state, isLoading: false };
+      return { ...state, isLoadingEvents: false };
     case FETCH_EVENTS:
       return {
         ...state,
@@ -86,4 +86,4 @@ const EventReducer = (state = { isLoading: true, events: [] }, action) => {
   }
 };
 
-export default EventReducer;
+export default eventReducer;

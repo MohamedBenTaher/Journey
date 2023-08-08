@@ -13,12 +13,12 @@ import {
   BOOKMARK_POST,
 } from '../constants/actionTypes';
 
-const PostReducer = (state = { isLoading: true, posts: [] }, action) => {
+const PostReducer = (state = { isLoadingPosts: true, posts: [] }, action) => {
   switch (action.type) {
     case START_LOADING:
-      return { ...state, isLoading: true };
+      return { ...state, isLoadingPosts: true };
     case END_LOADING:
-      return { ...state, isLoading: false };
+      return { ...state, isLoadingPosts: false };
     case FETCH_ALL:
       return {
         ...state,

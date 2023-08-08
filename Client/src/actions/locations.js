@@ -13,6 +13,7 @@ import {
   FETCH_LOCATION,
   CANCEL_BOOKMARK_LOCATION,
   BOOKMARK_LOCATION,
+  LOCATION_FETCH_ERROR
 } from '../constants/actionTypes';
 
 export const getTopLocations = () => async (dispatch) => {
@@ -78,20 +79,21 @@ export const getLocationsByCountry = (id) => async (dispatch) => {
     console.log(error.message);
   }
 };
-
 export const getLocationsByDestination = (id) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_LOCATIONS });
-    const {
-      data: { data },
-    } = await api.fetchLocationsByDestination(id);
+    const response = await api.fetchLocationsByDestination(id);
+    console.log('my response',response.data)
+    const data = response.data;
     dispatch({ type: FETCH_LOCATION_BY_DESTINATION, payload: { data } });
+
     dispatch({ type: END_LOADING_LOCATIONS });
   } catch (error) {
+    dispatch({ type: END_LOADING_LOCATIONS });
+    dispatch({ type: LOCATION_FETCH_ERROR, payload: error.message });
     console.log(error.message);
   }
 };
-
 export const createLocation = (destination) => async (dispatch) => {
   try {
     const { data } = await api.createLocation(destination);

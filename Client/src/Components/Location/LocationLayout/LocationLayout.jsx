@@ -33,7 +33,7 @@ const LocationLayout = ({ setCurrentId }) => {
           <Grid container spacing={3} justifyContent="start">
             {locations?.map((location) => (
               <Grid key={location._id} item xs={12} sm={6} md={6} lg={4}>
-                <LocationCard location={location} setCurrentId={setCurrentId} />
+                <LocationCard item={location} setCurrentId={setCurrentId} />
               </Grid>
             ))}
           </Grid>

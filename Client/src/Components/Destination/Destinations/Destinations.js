@@ -35,7 +35,7 @@ function Destinations({ setCurrentId }) {
             {destinations?.map((destination) => (
               <Grid key={destination._id} item xs={12} sm={6} md={6} lg={4}>
                 <DestinationCard
-                  destination={destination}
+                  item={destination}
                   setCurrentId={setCurrentId}
                   userId={user?.result._id}
                 />

@@ -18,6 +18,9 @@ import {
   getCountry,
 } from "../../../actions/country";
 import { cancelBookmarCountry } from "../../../api";
+import CardCarousel from "../../CardCarousel/CardCarousel";
+import DestinationCard from "../../Destination/DestinationCard/Destination";
+import { getDestinationByCountry } from "../../../actions/destinations";
 const useStyles = makeStyles((theme) => ({
   coverImage: {
     height: 400,
@@ -74,6 +77,8 @@ const useStyles = makeStyles((theme) => ({
 
 const CountryDetails = () => {
   const { country, isLoading } = useSelector((state) => state.countries);
+  const {destinations}=useSelector((state)=>state.destinations)
+  console.log('my destinations in the country',destinations)
   const value = useSelector((state) => state);
   console.log("continent details", country, value);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -84,6 +89,7 @@ const CountryDetails = () => {
   const { id } = useParams();
   useEffect(() => {
     dispatch(getCountry(id));
+    dispatch(getDestinationByCountry(id))
   }, [dispatch, id]);
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("profile")));
@@ -165,6 +171,7 @@ const CountryDetails = () => {
             ))}
           </Grid>
         </div>
+        <CardCarousel CardComponent={DestinationCard} small={true} title={'Best cities to visit'} array={destinations}/>
       </CardContent>
     </Card>
   );

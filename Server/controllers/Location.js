@@ -309,9 +309,9 @@ export const deleteS3Image=async(req,res)=>{
 
 
 export const getLocationByDestination = async (req, res) => {
-    const { destinationId } = req.params;
+    const { id } = req.params;
     try {
-      const locations = await Location.find({ destination: destinationId });
+      const locations = await Location.find({ destination: id });
       return res.status(200).json({ locations });
     } catch (error) {
       console.error('Error getting locations by destination:', error);

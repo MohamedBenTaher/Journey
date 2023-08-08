@@ -15,9 +15,9 @@ import {
   LIKE_DESTINATION,
 } from '../constants/actionTypes';
 
-export default (
+const destinationReducer = (
   state = {
-    isLoading: false,
+    isLoadingDestinations: false,
     destinations: [],
     user: { savedDestinations: [] },
   },
@@ -25,9 +25,9 @@ export default (
 ) => {
   switch (action.type) {
     case START_LOADING_DESTINATIONS:
-      return { ...state, isLoading: true };
+      return { ...state, isLoadingDestinations: true };
     case END_LOADING_DESTINATIONS:
-      return { ...state, isLoading: false };
+      return { ...state, isLoadingDestinations: false };
     case FETCH_DESTINATIONS:
       return {
         ...state,
@@ -36,6 +36,7 @@ export default (
         numberOfPages: action.payload.numrOfPages,
       };
     case FETCH_DESTINATIONS_BY_COUNTRY:
+      console.log('in reducer',action.payload.data)
       return {
         ...state,
         destinations: action.payload.data,
@@ -121,3 +122,5 @@ export default (
       return state;
   }
 };
+
+export default destinationReducer;

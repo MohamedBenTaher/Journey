@@ -37,4 +37,3 @@ const authReducer= (state = { user: null, isLoading: false }, action) => {
   }
 };
  export default authReducer;
- 

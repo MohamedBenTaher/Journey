@@ -10,14 +10,15 @@ import {
   RATE_LOCATION,
   BOOKMARK_LOCATION,
   CANCEL_BOOKMARK_LOCATION,
+  FETCH_LOCATION_BY_DESTINATION,
 } from '../constants/actionTypes';
 
-const locationReducer = (state = { isLoading: false, locations: [] }, action) => {
+const locationReducer = (state = { isLoadingLocations: false, locations: [] }, action) => {
   switch (action.type) {
     case START_LOADING_LOCATIONS:
-      return { ...state, isLoading: true };
+      return { ...state, isLoadingLocations: true };
     case END_LOADING_LOCATIONS:
-      return { ...state, isLoading: false };
+      return { ...state, isLoadingLocations: false };
     case FETCH_LOCATIONS:
       return {
         ...state,
@@ -43,6 +44,8 @@ const locationReducer = (state = { isLoading: false, locations: [] }, action) =>
         ...state,
         locations: state.locations.map((location) => (location._id === action.payload._id ? action.payload : location)),
       };
+    case FETCH_LOCATION_BY_DESTINATION:
+      return { ...state, locations: action.payload };
 
     case DELETE_LOCATION:
       return {

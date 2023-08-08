@@ -147,7 +147,7 @@ const Profile = ({ id }) => {
                     likedLocations?.map((res) => {
                       return (
                         <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
-                          <LocationCard location={res} small />
+                          <LocationCard item={res} small />
                         </Grid>
                       );
                     })
@@ -163,7 +163,7 @@ const Profile = ({ id }) => {
                       return (
                         <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
                           <DestinationCard
-                            destination={res}
+                            item={res}
                             userId={user.user._id}
                             small
                           />
@@ -255,7 +255,7 @@ const Profile = ({ id }) => {
                     savedLocations?.map((res) => {
                       return (
                         <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
-                          <LocationCard location={res} small />
+                          <LocationCard item={res} small />
                         </Grid>
                       );
                     })
@@ -271,7 +271,7 @@ const Profile = ({ id }) => {
                       return (
                         <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
                           <DestinationCard
-                            destination={res}
+                            item={res}
                             userId={user.user._id}
                             small
                           />

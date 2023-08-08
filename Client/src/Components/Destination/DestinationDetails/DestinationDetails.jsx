@@ -6,12 +6,14 @@ import {
   Typography,
   Grid,
   IconButton,
+  Paper,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { useParams } from "react-router-dom";
+import Carousel from 'react-material-ui-carousel'
 import {
   bookmarkDestination,
   cancelBookmarkDestination,
@@ -20,6 +22,9 @@ import {
   upvoteDestination,
 } from "../../../actions/destinations";
 import Comments from "../../Comment/Comments";
+import { getLocationsByDestination } from "../../../actions/locations";
+import LocationCard from "../../Location/LocationCard/LocationCard";
+import CardCarousel from "../../CardCarousel/CardCarousel";
 
 const useStyles = makeStyles((theme) => ({
   coverImage: {
@@ -87,19 +92,19 @@ const DestinationDetails = () => {
   const { id } = useParams();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const userId = user?.result?._id;
-
   const dispatch = useDispatch();
+  const { locations }=useSelector((state)=>state.locations)
   const { destination, isLoading } = useSelector((state) => state.destinations);
   const [bookmarked, setBookmarked] = useState(false);
-
   useEffect(() => {
     dispatch(getDestination(id));
+    dispatch(getLocationsByDestination(id))
   }, [dispatch, id]);
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, []);
-
+  console.log('global state on render',useSelector((state)=>state))
   useEffect(() => {
     if (destination) {
       setBookmarked(destination.bookmarkedBy.includes(userId));
@@ -113,7 +118,7 @@ const DestinationDetails = () => {
   const handleDownvote = () => {
     dispatch(downvoteDestination(destination?._id, userId));
   };
-
+ console.log('my dest locations',locations)
   const handleBookmark = () => {
     if (bookmarked) {
       dispatch(cancelBookmarkDestination(destination?._id, userId));
@@ -211,6 +216,7 @@ const DestinationDetails = () => {
           </CardContent>
         </Card>
       )}
+     <CardCarousel array={locations?.data?.locations} CardComponent={LocationCard} small={true} title={'Best Locations'}/>
     </>
   );
 };

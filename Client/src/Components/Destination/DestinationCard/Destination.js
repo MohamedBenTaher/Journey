@@ -10,22 +10,22 @@ import image from '../../../Images/tokyo.jpg';
 import useStyles from './styles.js';
 import { likeDestination } from '../../../actions/destinations.js';
 
-function DestinationCard({ destination, userId, small }) {
+function DestinationCard({ item, userId, small }) {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(destination?.likedBy);
-  const lines = destination.description.split(',');
+  const [likes, setLikes] = useState(item?.likedBy);
+  const lines = item.description.split(',');
   const firstThreeLines = lines.slice(0, 2).join(' ,');
   return (
     <Card className={small ? classes.smallCard : classes.card}>
-      <CardMedia className={classes.media} image={destination.coverImage} />
+      <CardMedia className={classes.media} image={item.coverImage} />
       <CardContent className={classes.content}>
         {!small ? (
           <div className={classes.likeButton}>
             <IconButton
               className={classes.likeButton}
-              onClick={() => dispatch(likeDestination(destination._id, userId))}
+              onClick={() => dispatch(likeDestination(item._id, userId))}
               disabled={!userId || small}
             >
               {likes.find((like) => like === userId) ? (
@@ -38,13 +38,13 @@ function DestinationCard({ destination, userId, small }) {
           </div>
         ) : null}
         <Typography gutterBottom variant="h5" component="h2" className={classes.title}>
-          {destination.title}
+          {item.title}
         </Typography>
         <Typography variant="body2" component="p" className={classes.description}>
           {firstThreeLines}
           ...
         </Typography>
-        <Link to={`/destinations/${destination._id}`}>
+        <Link to={`/destinations/${item._id}`}>
           <Button className={classes.button}>Read More</Button>
         </Link>
       </CardContent>

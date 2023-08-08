@@ -17,7 +17,6 @@ import {
   CANCEL_BOOKMARK_DESTINATION,
 } from '../constants/actionTypes';
 
-// Action Creators
 export const getTopDestinations = () => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_DESTINATIONS });
@@ -76,10 +75,10 @@ export const getDestinationByCountry = (id) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_DESTINATIONS });
     console.log('id in action', id);
-    const {
-      data: { data },
-    } = await api.fetchDestinationByCountry(id);
-    console.log('searchedDseyinations', data);
+    const response = await api.fetchDestinationByCountry(id);
+    console.log('my country response',response.data)
+    const data = response.data;
+    console.log('searched Dsetinations', data);
     dispatch({ type: FETCH_DESTINATIONS_BY_COUNTRY, payload: { data } });
     dispatch({ type: END_LOADING_DESTINATIONS });
   } catch (error) {
