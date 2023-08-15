@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getLocations } from "../../../actions/locations.js";
 const Paginate = ({ page }) => {
-  console.log("posts rd");
   const { numberOfPages } = useSelector((state) => state.locations);
   const classes = useStyles();
   const dispatch = useDispatch();

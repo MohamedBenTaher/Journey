@@ -13,7 +13,7 @@ import {
   CANCEL_BOOKMARK_COUNTRY,
 } from '../constants/actionTypes';
 
-const countriesReducer = (state = { isLoadingCountries: false, countries: [] }, action) => {
+const countriesReducer = (state = { isLoadingCountries: true, countries: [] }, action) => {
   switch (action.type) {
     case START_LOADING_COUNTRIES:
       return { ...state, isLoadingCountries: true };

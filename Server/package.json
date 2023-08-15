@@ -10,7 +10,7 @@
     "build": "node dist/server/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
-    "prettier":"npx prettier --config .prettierrc  --write"
+    "prettier": "npx prettier --config .prettierrc  --write"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +24,7 @@
     "express-fileupload": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.29",
+    "socket.io": "^4.7.2",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

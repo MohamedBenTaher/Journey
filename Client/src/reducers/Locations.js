@@ -13,7 +13,7 @@ import {
   FETCH_LOCATION_BY_DESTINATION,
 } from '../constants/actionTypes';
 
-const locationReducer = (state = { isLoadingLocations: false, locations: [] }, action) => {
+const locationReducer = (state = { isLoadingLocations:true, locations: [] }, action) => {
   switch (action.type) {
     case START_LOADING_LOCATIONS:
       return { ...state, isLoadingLocations: true };

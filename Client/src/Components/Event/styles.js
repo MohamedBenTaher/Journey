@@ -5,4 +5,11 @@ export default makeStyles((theme) => ({
     width: '100%',
     padding: '3em',
   },
+    mainContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'start',
+    width: '100%',
+    padding: '2em',
+  },
 }));

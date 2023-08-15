@@ -9,7 +9,7 @@ import {
   END_LOADING_CONTINENTS,
 } from '../constants/actionTypes';
 
- const continentReducer = (state = { isLoadingContinents: false, continents: [] }, action) => {
+ const continentReducer = (state = { isLoadingContinents: true, continents: [] }, action) => {
   switch (action.type) {
     case START_LOADING_CONTINENTS:
       return { ...state, isLoadingContinents: true };
