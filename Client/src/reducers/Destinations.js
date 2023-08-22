@@ -17,7 +17,7 @@ import {
 
 const destinationReducer = (
   state = {
-    isLoadingDestinations: false,
+    isLoadingDestinations: true,
     destinations: [],
     user: { savedDestinations: [] },
   },

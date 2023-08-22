@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
-  Button,
   Card,
   CardContent,
   CardMedia,
   Typography,
   IconButton,
 } from "@material-ui/core";
-import Morocco from "../../../Images/Morooco.jpg";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import { useHistory } from "react-router-dom";
-import zIndex from "@material-ui/core/styles/zIndex";
 import { useDispatch } from "react-redux";
 import { likeCountry } from "../../../actions/country";
 const useStyles = makeStyles((theme) =>
@@ -90,16 +87,16 @@ const useStyles = makeStyles((theme) =>
   }),
 );
 
-const CountryCard = ({ country, userId, small }) => {
+const CountryCard = ({ item, userId, small }) => {
   const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(country?.likedBy || []);
-  console.log("my country", country);
+  const [likes, setLikes] = useState(item?.likedBy || []);
+  console.log("my item", item);
   const handleLike = () => {
     try {
-      dispatch(likeCountry(country?._id, userId));
+      dispatch(likeCountry(item?._id, userId));
       setLiked(!liked);
       setLikes((prevLikes) => {
         if (liked) {
@@ -113,11 +110,11 @@ const CountryCard = ({ country, userId, small }) => {
     }
   };
   useEffect(() => {
-    if (country) {
-      setLiked(country?.likedBy?.includes(userId));
-      setLikes(country?.likedBy || []);
+    if (item) {
+      setLiked(item?.likedBy?.includes(userId));
+      setLikes(item?.likedBy || []);
     }
-  }, [country, userId]);
+  }, [item, userId]);
   const Likes = () => {
     if (likes.length > 0 && !small) {
       return liked ? (
@@ -136,26 +133,30 @@ const CountryCard = ({ country, userId, small }) => {
       </>
     );
   };
-  console.log("country in card", country);
+  console.log("item in card", item);
   return (
     //to be added
 
     <Card className={small ? classes.smallCard : classes.card}>
       <CardMedia
-        image={country.coverImage}
-        alt={country?.name}
+        image={item.coverImage}
+        alt={item?.name}
         className={classes.backgroundImage}
-        onClick={() => history.push(`/countries/${country?._id}`)}
+        onClick={() => history.push(`/countries/${item?._id}`)}
       />
+      {
+        !small ?(
       <IconButton className={classes.likeButton} onClick={handleLike}>
         <Likes />
       </IconButton>
+        ):null
+      }
       <CardContent className={classes.content}>
         <Typography variant="h6" className={classes.title}>
-          {country?.title}
+          {item?.title}
         </Typography>
         <Typography variant="subtitle1" className={classes.subtitle}>
-          {country?.continent?.name}
+          {item?.continent?.name}
         </Typography>
       </CardContent>
     </Card>

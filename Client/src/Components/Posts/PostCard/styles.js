@@ -15,6 +15,21 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  profile:{
+   position: 'relative',
+    width: '100%',
+    height: 300,
+    margin: 20,
+    transition: 'all 0.5s',
+    borderRadius: '15px',
+    '&:hover': {
+      transform: 'scale(1.05)',
+      transition: 'all 0.5s',
+      '& $content': {
+        opacity: 1,
+      },
+    },
+  },
   smallCard: {
     position: 'relative',
     width: '100%',

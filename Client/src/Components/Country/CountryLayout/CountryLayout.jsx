@@ -34,7 +34,7 @@ const CountryLayout = ({ setCurrentId }) => {
           <Grid container spacing={3}>
             {countries?.map((country) => (
               <Grid key={country._id} item xs={12} sm={6} md={4} lg={3}>
-                <CountryCard country={country} userId={userId} />
+                <CountryCard item={country} userId={userId} />
               </Grid>
             ))}
           </Grid>

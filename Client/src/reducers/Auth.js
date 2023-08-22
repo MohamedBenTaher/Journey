@@ -6,7 +6,7 @@ import {
   USER_INFROMATIONS,
 } from '../constants/actionTypes';
 
-const authReducer= (state = { user: null, isLoading: true }, action) => {
+const authReducer= (state = { user: null, isLoading: true,isLooggedIn:false }, action) => {
   switch (action.type) {
     case START_LOADING_USER:
       return { ...state, isLoading: true };
@@ -16,7 +16,7 @@ const authReducer= (state = { user: null, isLoading: true }, action) => {
       localStorage.setItem('profile', JSON.stringify({ ...action?.payload?.data }));
       console.log('reached auth');
       console.log('payload', action?.payload?.data);
-      return { ...state, user: { ...action.payload.data } };
+      return { ...state, user: { ...action.payload.data },isLooggedIn:true };
     case LOGOUT:
       localStorage.clear();
       return {
@@ -24,6 +24,7 @@ const authReducer= (state = { user: null, isLoading: true }, action) => {
         user: null,
         loading: false,
         errors: null,
+        isLooggedIn:false
       };
 
     case USER_INFROMATIONS: {

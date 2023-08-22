@@ -15,10 +15,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../../actions/auth";
 import DestinationCard from "../../Destination/DestinationCard/Destination";
 import SavedEventCard from "../../Event/Saved/SavedEventCard";
-import Post from "../../Posts/Post/post";
 import LocationCard from "../../Location/LocationCard/LocationCard";
 import PostCard from "../../Posts/PostCard/PostCard";
 import CountryCard from "../../Country/CountryCard/CountryCard";
+import CardCarousel from "../../CardCarousel/CardCarousel";
+import { Skeleton } from "@mui/material";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -125,88 +127,129 @@ const Profile = ({ id }) => {
           {user?.user?.savedResources?.length > 0 ? (
             <>
               <TabPanel value={likedvalue} index={0}>
-                <Grid container spacing={3}>
-                  {likedPostMessages.length > 0 ? (
-                    likedPostMessages?.map((res) => {
-                      return (
-                        <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
-                          <PostCard post={res} small />
-                        </Grid>
-                      );
-                    })
+                    { !isLoading ?(
+                  likedPostMessages.length > 0 ? (
+                    <CardCarousel array={likedPostMessages} CardComponent={PostCard} small={true} profile={true} />
                   ) : (
                     <Typography variant="body2">
                       No Liked PostMessage
                     </Typography>
+                  )):(
+                  <Grid container spacing={3}>
+                      {Array.from(new Array(2)).map((item, index) => (
+                        <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                          <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
+                            <Skeleton variant="rounded" width={'100%'} height={300} />
+                            <Box sx={{ pt: 0.5 }}>
+                              <Skeleton />
+                              <Skeleton />
+                              <Skeleton width="60%" />
+                            </Box>
+                          </Box>
+                        </Grid>
+                      ))}
+                    </Grid>
                   )}
-                </Grid>
               </TabPanel>
               <TabPanel value={likedvalue} index={1}>
                 <Grid conatiner spacing={3}>
-                  {likedLocations.length > 0 ? (
-                    likedLocations?.map((res) => {
-                      return (
-                        <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
-                          <LocationCard item={res} small />
-                        </Grid>
-                      );
-                    })
+                  {!isLoading ?(
+                  likedLocations.length > 0 ? (
+                    <CardCarousel array={likedLocations} CardComponent={LocationCard} small={true} profile={true} />
                   ) : (
                     <Typography variant="body2">No Liked Locations</Typography>
+                  )):(
+                  <Grid container spacing={3}>
+                      {Array.from(new Array(2)).map((item, index) => (
+                        <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                          <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
+                            <Skeleton variant="rounded" width={'100%'} height={300} />
+                            <Box sx={{ pt: 0.5 }}>
+                              <Skeleton />
+                              <Skeleton />
+                              <Skeleton width="60%" />
+                            </Box>
+                          </Box>
+                        </Grid>
+                      ))}
+                    </Grid>
                   )}
                 </Grid>
               </TabPanel>
               <TabPanel value={likedvalue} index={2}>
-                <Grid container spacing={3}>
-                  {LikedCities.length > 0 ? (
-                    LikedCities.map((res) => {
-                      return (
-                        <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
-                          <DestinationCard
-                            item={res}
-                            userId={user.user._id}
-                            small
-                          />
-                        </Grid>
-                      );
-                    })
+                <Grid container spacing={3} sx={{width:'100%'}}>
+                  {!isLoading ?(
+                  LikedCities.length > 0 ? (
+                  <CardCarousel array={LikedCities} CardComponent={DestinationCard} small={true} profile={true} />
+
                   ) : (
                     <Typography variant="body2">No Liked Cities</Typography>
+                  )):(
+                        <Grid container spacing={3}>
+                      {Array.from(new Array(2)).map((item, index) => (
+                        <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                          <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
+                            <Skeleton variant="rounded" width={'100%'} height={300} />
+                            <Box sx={{ pt: 0.5 }}>
+                              <Skeleton />
+                              <Skeleton />
+                              <Skeleton width="60%" />
+                            </Box>
+                          </Box>
+                        </Grid>
+                      ))}
+                    </Grid>
                   )}
                 </Grid>
               </TabPanel>
               <TabPanel value={likedvalue} index={3}>
                 <Grid spacing={2} container>
-                  {likedCountries.length > 0 ? (
-                    likedCountries?.map((res) => {
-                      console.log("my res", res);
-                      return (
-                        <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
-                          <CountryCard
-                            country={res}
-                            userId={user?.user._id}
-                            small
-                          />
-                        </Grid>
-                      );
-                    })
+
+                  {!isLoading ?
+                  (likedCountries.length > 0 ? (
+                  <CardCarousel array={likedCountries} CardComponent={CountryCard} small={true} profile={true} />
                   ) : (
                     <Typography variant="body2">No Liked Countries</Typography>
+                  )):(
+                       <Grid container spacing={3}>
+                      {Array.from(new Array(2)).map((item, index) => (
+                        <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                          <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
+                            <Skeleton variant="rounded" width={'100%'} height={300} />
+                            <Box sx={{ pt: 0.5 }}>
+                              <Skeleton />
+                              <Skeleton />
+                              <Skeleton width="60%" />
+                            </Box>
+                          </Box>
+                        </Grid>
+                      ))}
+                    </Grid>
                   )}
                 </Grid>
               </TabPanel>
               <TabPanel value={likedvalue} index={4}>
                 <Grid container spacing={3}>
-                  {LikedEvents.length > 0 ? (
-                    LikedEvents?.map((res) => {
-                      return (
-                        <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
-                          <SavedEventCard event={res} />
-                        </Grid>
-                      );
-                    })
+                  { !isLoading ?(
+                  LikedEvents.length > 0 ? (
+                    <CardCarousel array={LikedEvents} CardComponent={SavedEventCard} small={true} profile={true} />
                   ) : (
                     <Typography variant="body2">No Liked Events</Typography>
+                  )):(
+                      <Grid container spacing={3}>
+                      {Array.from(new Array(2)).map((item, index) => (
+                        <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                          <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
+                            <Skeleton variant="rounded" width={'100%'} height={300} />
+                            <Box sx={{ pt: 0.5 }}>
+                              <Skeleton />
+                              <Skeleton />
+                              <Skeleton width="60%" />
+                            </Box>
+                          </Box>
+                        </Grid>
+                      ))}
+                    </Grid>
                   )}
                 </Grid>
               </TabPanel>
@@ -277,7 +320,6 @@ const Profile = ({ id }) => {
                           />
                         </Grid>
                       );
-                      return null; // Skip rendering if the resource name is not "PostMessage"
                     })
                   ) : (
                     <Typography variant="body2">No Saved Cities</Typography>
@@ -299,20 +341,20 @@ const Profile = ({ id }) => {
                               variant="body2"
                               component="p"
                             >
-                              {res.title} {/* Display the title */}
+                              {res.title} 
                             </Typography>
                             <Typography
                               variant="body2"
                               color="textSecondary"
                               component="p"
                             >
-                              {res.description} {/* Display the description */}
+                              {res.description}
                             </Typography>
                           </CardContent>
                         </Card>
                       );
                     }
-                    return null; // Skip rendering if the resource name is not "PostMessage"
+                    return null; 
                   })
                 ) : (
                   <Typography variant="body2">No Saved Countries</Typography>
@@ -324,10 +366,10 @@ const Profile = ({ id }) => {
                     savedEvents?.map((res) => {
                       return (
                         <Grid key={res._id} item xs={12} sm={6} md={4} lg={3}>
-                          <SavedEventCard event={res} />
+                          <SavedEventCard item={res} />
                         </Grid>
                       );
-                      return null; // Skip rendering if the resource name is not "PostMessage"
+                      return null; 
                     })
                   ) : (
                     <Typography variant="body2">No Saved Events</Typography>

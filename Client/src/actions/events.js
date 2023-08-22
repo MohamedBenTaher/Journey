@@ -61,13 +61,12 @@ export const getEventsBySearch = (searchQuery) => async (dispatch) => {
 
 export const createEvent = (event) => async (dispatch) => {
   try {
-    console.log(event);
     const { data } = await api.createEvent(event);
     dispatch({ type: START_LOADING });
-    dispatch({ type: CREATE_EVENT, payload: [data] });
+    dispatch({ type: CREATE_EVENT, payload: data });
     dispatch({ type: END_LOADING });
   } catch (error) {
-    console.log(error.message);
+    console.error('Error creating event:', error);
   }
 };
 
@@ -98,7 +97,7 @@ export const attendEvent = (id, userId) => async (dispatch) => {
 };
 export const cancelEvent = (id, userId) => async (dispatch) => {
   try {
-    const { data } = await api.attendEvent(id, userId);
+    const { data } = await api.cancelEvent(id, userId);
     dispatch({ type: CANCEL_EVENT, payload: data });
   } catch (error) {
     console.log(error.message);
