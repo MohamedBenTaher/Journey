@@ -132,13 +132,10 @@ const useStyles = makeStyles((theme) =>
 const ContinentForm = () => {
   const { id } = useParams();
   const { continent, isLoading } = useSelector((state) => state.continents);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const user = useSelector((state)=>state.auth.user)
   const userId = user.result._id;
   const classes = useStyles();
   const dispatch = useDispatch();
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("profile")));
-  }, []);
   useEffect(() => {
     if (id) {
       dispatch(getContinent(id));

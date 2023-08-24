@@ -13,7 +13,7 @@ function useQuery() {
 
 function Destinations({ setCurrentId }) {
   const { destinations, isLoadingDestinations  } = useSelector((state) => state.destinations);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const user = useSelector((state)=>state.auth.user)
   const value = useSelector((state) => state);
   console.log('my dests', destinations);
   console.log('my vals', value);

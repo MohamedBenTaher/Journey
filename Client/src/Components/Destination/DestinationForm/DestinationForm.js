@@ -128,14 +128,13 @@ const useStyles = makeStyles((theme) => createStyles({
 function DestinationForm() {
   const { id } = useParams();
   const { destination, isLoading } = useSelector((state) => state.destinations);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const user = useSelector((state)=>state.auth.user)
   const userId = user.result._id;
   const classes = useStyles();
   const countries = useSelector((state) => state.countries);
   console.log('countires', countries);
   const dispatch = useDispatch();
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem('profile')));
     dispatch(getCountries());
   }, []);
   useEffect(() => {

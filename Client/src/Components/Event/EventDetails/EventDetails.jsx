@@ -32,7 +32,7 @@ const EventDetails = ({}) => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { event, isLoading } = useSelector((state) => state.events);
-  const [user, setUser] = useState(localStorage.getItem("profile"));
+  const user = useSelector((state)=>state.auth.user)
   const userId = user?.result?._id;
   const userAttending = event?.attendants?.find(
     (item) => item === user?.result?._id,
@@ -43,9 +43,6 @@ const EventDetails = ({}) => {
       dispatch(getEvent(id));
     }
   }, [id, dispatch]);
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("profile")));
-  }, []);
   useEffect(() => {
     if (event) {
       console.log(

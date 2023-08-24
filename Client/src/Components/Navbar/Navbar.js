@@ -14,30 +14,35 @@ import {
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import decode from 'jwt-decode';
 import title from '../../Images/title.png';
 import memories from '../../Images/journey.png';
 import useStyles from './styles.js';
+import { signOut } from '../../actions/auth';
 
 function Navbar() {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const user=useSelector((state)=>state.auth.user)
   const [isOpen, setIsOpen] = useState(false);
   const classes = useStyles();
-  useEffect(() => {
-    const token = user?.token;
-    if (token) {
-      const decoded = decode(token);
-      if (decode.exp * 1000 < new Date().getTime()) dispatch({ type: 'LOGOUT' });
-    }
-    setUser(JSON.parse(localStorage.getItem('profile')));
-  }, [location]);
-  const Logout = () => {
-    dispatch({ type: 'LOGOUT' });
-    history.push('/');
+  // useEffect(() => {
+  //   const token = user?.token;
+  //   if (token) {
+  //     const decoded = decode(token);
+  //     if (decode.exp * 1000 < new Date().getTime()) dispatch({ type: 'LOGOUT' });
+  //   }
+  //   setUser(JSON.parse(localStorage.getItem('profile')));
+  // }, [location]);
+  // const Logout = () => {
+  //   dispatch({ type: 'LOGOUT' });
+  //   history.push('/');
+  //   setUser(null);
+  // };
+    const Logout = () => {
+   dispatch(signOut(history));
     setUser(null);
   };
   const theme = useTheme();
@@ -151,7 +156,7 @@ function Navbar() {
             <Typography className={classes.userName} variant="h6">
               {user?.result?.name}
             </Typography>
-            <Button variant="contained" className={classes.logout} onClick={Logout}>
+            <Button variant="contained" className={classes.logout} onClick={()=>Logout()}>
               Logout
             </Button>
           </div>

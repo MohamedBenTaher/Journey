@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
 const DestinationDetails = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const user = useSelector((state)=>state.auth.user)
   const userId = user?.result?._id;
   const dispatch = useDispatch();
   const { locations }=useSelector((state)=>state.locations)
@@ -100,10 +100,6 @@ const DestinationDetails = () => {
     dispatch(getDestination(id));
     dispatch(getLocationsByDestination(id))
   }, [dispatch, id]);
-
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("profile")));
-  }, []);
   console.log('global state on render',useSelector((state)=>state))
   useEffect(() => {
     if (destination) {

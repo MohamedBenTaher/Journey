@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-
+import { legacy_createStore as createStore} from 'redux'
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { createTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 import reducers from './reducers';
 import App from './App';
-
-const store = createStore(reducers, compose(applyMiddleware(thunk)));
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers,  composeEnhancers((applyMiddleware(thunk))));
 const theme = createTheme({
   typography: {
     fontFamily: ['Gilroy', 'sans-serif'].join(','),
@@ -48,12 +48,12 @@ const theme = createTheme({
 });
 
 ReactDOM.render(
+  <Provider store={store}>
   <ThemeProvider theme={theme}>
     <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
+        <App/>
     </BrowserRouter>
-  </ThemeProvider>,
+  </ThemeProvider>
+  </Provider>,
   document.getElementById('root'),
 );

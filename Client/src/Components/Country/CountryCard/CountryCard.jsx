@@ -18,8 +18,6 @@ const useStyles = makeStyles((theme) =>
       position: "relative",
       width: "100%",
       height: 400,
-      width: 300,
-      margin: 20,
       transition: "all 0.5s",
       borderRadius: "15px",
       "&:hover": {

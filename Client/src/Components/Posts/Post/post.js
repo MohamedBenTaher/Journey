@@ -13,13 +13,13 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizonIcon from '@material-ui/icons/MoreHoriz';
 import moment from 'moment';
 import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { deletePost, likePost } from '../../../actions/posts.js';
 import useStyles from './styles.js';
 
 function Post({ post, setCurrentId, small }) {
-  const user = JSON.parse(localStorage.getItem('profile'));
+  const user = useSelector((state)=>state.auth.user)
   const userId = user?.result?.googleId || user?.result?._id;
   console.log('userid', userId);
   console.log('post creator', post.creator);

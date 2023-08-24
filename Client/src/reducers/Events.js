@@ -9,6 +9,7 @@ import {
   END_LOADING,
   FETCH_EVENTS_BY_CREATOR,
   ATTEND_EVENT,
+  CANCEL_EVENT,
   BOOKMARK_EVENT,
   CANCEL_BOOKMARK_EVENT,
 } from '../constants/actionTypes';
@@ -55,6 +56,13 @@ const eventReducer = (state = { isLoadingEvents: true, events: [] }, action) => 
         event._id === action.payload._id ? action.payload : event,
         ),
       };
+      case CANCEL_EVENT:
+      return {
+        ...state,
+        event: state.events.map((event) =>
+        event._id !== action.payload._id ? action.payload : event,
+        ),
+      };
     case FETCH_EVENT_BY_SEARCH:
       return { ...state, events: action.payload.data };
     case BOOKMARK_EVENT:
@@ -81,6 +89,7 @@ const eventReducer = (state = { isLoadingEvents: true, events: [] }, action) => 
             : event
             )),
       };
+      
     default:
       return state;
   }

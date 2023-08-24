@@ -16,11 +16,9 @@ const CountryLayout = ({ setCurrentId }) => {
   const page = query.get("page") || 1;
   const searchQuery = query.get("searchQuery");
   const classes = useStyles();
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const user = useSelector((state)=>state.auth.user)
   const userId = user?.result?._id;
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("profile")));
-  }, []);
+
   if (isLoading && countries?.length === 0) {
     return <div>No Countries</div>;
   }

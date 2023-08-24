@@ -58,7 +58,7 @@ const Profile = ({ id }) => {
   const handleSaveChange = (event, newValue) => {
     setSavedValue(newValue);
   };
-  if (!user) return <div>test</div>;
+  if (!user && !isLoading) return <div>test</div>;
   const likedPostMessages = user?.user?.likedStories;
   const likedLocations = user?.user?.likedLocations;
   const likedCountries = user?.user?.likedCountries;

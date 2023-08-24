@@ -13,8 +13,8 @@ router.patch('/:id', auth, updateLocation)
 router.delete('/:id', auth, deleteLocation);
 router.patch('/:id/rate', auth, rateLocation)
 router.post('/image/delete/:id',auth,deleteS3Image)
-router.get('/destination/:id',auth,getLocationByDestination)
-router.get('/country/:id',auth,getLocationByCountry)
+router.get('/destination/:id',getLocationByDestination)
+router.get('/country/:id',getLocationByCountry)
 router.patch(`/:id/bookmark`,auth,bookmarkLocation)
 router.patch(`/:id/cancel`,auth, cancelBookmarkLocation)
 export default router;

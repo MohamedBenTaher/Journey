@@ -32,9 +32,15 @@ export const signup = (formData, history) => async (dispatch) => {
     console.log(error);
   }
 };
-export const signOut=()=>{
+export const signOut=(history)=>{
+  try {
   localStorage.removeItem('profile');
   dispatch({ type: LOGOUT });
+  history.push('/')
+  } catch (error) {
+    console.log(error);
+  }
+
 }
 export const getUser = (id) => async (dispatch) => {
   try {

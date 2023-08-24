@@ -35,7 +35,7 @@ import PostInfo from '../PostInfo/PostInfo';
 function PostDetails() {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
   console.log('state', posts);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const user = useSelector((state)=>state.auth.user)
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
@@ -49,7 +49,7 @@ function PostDetails() {
   useEffect(() => {
     if (post) {
       dispatch(getPostsBySearch({ search: 'none', tags: post?.tags?.join(',') }));
-      setUser(JSON.parse(localStorage.getItem('profile')));
+      
     }
   }, [post]);
   useEffect(() => {

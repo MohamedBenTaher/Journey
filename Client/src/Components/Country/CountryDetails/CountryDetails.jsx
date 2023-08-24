@@ -81,7 +81,7 @@ const CountryDetails = () => {
   console.log('my destinations in the country',destinations)
   const value = useSelector((state) => state);
   console.log("continent details", country, value);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const user = useSelector((state)=>state.auth.user)
   const classes = useStyles();
   const [bookmarked, setBookmarked] = useState(false);
   const userId = user?.result?._id;
@@ -91,9 +91,6 @@ const CountryDetails = () => {
     dispatch(getCountry(id));
     dispatch(getDestinationByCountry(id))
   }, [dispatch, id]);
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("profile")));
-  }, []);
   useEffect(() => {
     if (country) {
       setBookmarked(country.bookmarkedBy.includes(userId));

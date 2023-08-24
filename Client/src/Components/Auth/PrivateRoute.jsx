@@ -1,11 +1,11 @@
 import { Route, Redirect } from "react-router-dom";
 
-const PrivateRoute = ({ children, user, ...rest }) => {
+const PrivateRoute = ({ children, isAuthenticated, ...rest }) => {
   return (
     <Route
       {...rest}
       render={() => {
-        return user ? children : <Redirect to="/auth" />;
+        return isAuthenticated ? children : <Redirect to="/auth" />;
       }}
     />
   );

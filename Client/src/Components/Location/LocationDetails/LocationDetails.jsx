@@ -79,9 +79,7 @@ const useStyles = makeStyles((theme) => ({
 
 const LocationDetails = () => {
   const { location, isLoading } = useSelector((state) => state.locations);
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("profile")) || null,
-  );
+  const user = useSelector((state)=>state.auth.user)
   const classes = useStyles();
   const userId = user?.result?._id;
   const dispatch = useDispatch();
@@ -92,7 +90,6 @@ const LocationDetails = () => {
     console.log("my locations", location);
   }, [dispatch, id]);
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("profile")));
     console.log(user?.result._id);
   }, []);
 

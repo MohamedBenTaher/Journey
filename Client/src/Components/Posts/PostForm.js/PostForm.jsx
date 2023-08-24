@@ -33,7 +33,7 @@ const PostForm = () => {
   const post = useSelector((state) =>
     id ? state?.posts.posts?.find((p) => p._id === id) : null,
   );
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const user = useSelector((state)=>state.auth.user)
   const [structuredLocations, setStructuredLocations] = useState([]);
   const [postData, setPostData] = useState({
     title: "",
@@ -130,9 +130,6 @@ const PostForm = () => {
       }
     };
   }, [postData.selectedFile]);
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("profile")));
-  }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/*",

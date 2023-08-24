@@ -56,16 +56,13 @@ const ContinentDetails = () => {
   const { continent, isLoading } = useSelector((state) => state.continents);
   const value = useSelector((state) => state);
   console.log("continent details", continent, value);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const user = useSelector((state)=>state.auth.user)
   const classes = useStyles();
   const dispatch = useDispatch();
   const { id } = useParams();
   useEffect(() => {
     dispatch(getContinent(id));
   }, [dispatch, id]);
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("profile")));
-  }, []);
 
   return (
     <Card>

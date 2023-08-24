@@ -131,12 +131,12 @@ const CountryForm = () => {
   const { country, isLoading } = useSelector((state) => state.countries);
   const { continents } = useSelector((state) => state.continents);
   console.log("my continents", continents);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const user = useSelector((state)=>state.auth.user)
   const userId = user.result._id;
   const classes = useStyles();
   const dispatch = useDispatch();
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("profile")));
+    
     dispatch(getContinents());
   }, []);
   useEffect(() => {

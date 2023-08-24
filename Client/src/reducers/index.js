@@ -18,4 +18,6 @@ export default combineReducers({
   continents,
   countries,
   locations,
-},applyMiddleware(authMiddleware));
+},
+// applyMiddleware(authMiddleware)
+);

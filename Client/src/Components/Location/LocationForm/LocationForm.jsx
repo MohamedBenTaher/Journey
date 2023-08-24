@@ -132,7 +132,7 @@ const useStyles = makeStyles((theme) =>
 const LocationFom = () => {
   const { id } = useParams();
   const { location, isLoading } = useSelector((state) => state.locations);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const user = useSelector((state)=>state.auth.user)
   const userId = user.result._id;
   const classes = useStyles();
   const countries = useSelector((state) => state.countries);
@@ -140,7 +140,6 @@ const LocationFom = () => {
   console.log("countires", countries);
   const dispatch = useDispatch();
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("profile")));
     dispatch(getCountries());
     dispatch(getDestinations());
   }, []);
