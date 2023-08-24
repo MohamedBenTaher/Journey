@@ -14,7 +14,6 @@ import {
     case END_LOADING_DESTINATION_COMMENTS:
       return { ...state, isLoading: false };
     case FETCH_DESTINATION_COMMENT:
-      console.log('reducer', state, action.payload);
       return {
         ...state,
         comments: action.payload,
@@ -24,7 +23,6 @@ import {
       return { ...state, comments: [...state.comments, action.payload] };
 
     case UPDATE_DESTINATION_COMMENT:
-      console.log('reducer update', state, action.payload);
       return {
         ...state,
         comments: state.comments.map((comment) => 

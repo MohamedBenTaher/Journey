@@ -36,7 +36,7 @@ function Event() {
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
   const [image, setImage] = useState({});
-  const user = JSON.parse(localStorage.getItem('profile'));
+  const user =useSelector((state)=>state.auth.user)
   const { event, isLoading } = useSelector((state) => state.events);
   const validationSchema = yup.object({
     email: yup
@@ -66,7 +66,6 @@ function Event() {
     // validationSchema: validationSchema,
     onSubmit: (values) => {
       dispatch(createEvent(values));
-      console.log(values);
     },
   });
   useEffect(() => {
@@ -74,7 +73,7 @@ function Event() {
       dispatch(getEvent(id));
     }
   }, [id, dispatch]);
-  console.log('events', event);
+
   if (!user) return;
   return (
     <div className={classes.container}>
@@ -116,7 +115,6 @@ function Event() {
           //   alert(JSON.stringify(values, null, 2));
           //   setSubmitting(false);
           // }, 400);
-          console.log('submitting');
           const formData = new FormData();
           formData.append('title', values.title);
           formData.append('description', values.description);
@@ -136,8 +134,6 @@ function Event() {
           } else {
             dispatch(createEvent(formData));
           }
-
-          console.log(values);
         }}
       >
         {({
@@ -258,7 +254,6 @@ function Event() {
                   variant="outlined"
                   value={values.tags}
                   onAdd={(chip) => {
-                    console.log(values.tags);
                     setFieldValue('tags', [...values.tags, chip]);
                   }}
                   onDelete={(chip, index) => {

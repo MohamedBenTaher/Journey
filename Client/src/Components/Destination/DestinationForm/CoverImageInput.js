@@ -62,7 +62,6 @@ function CoverImageInput({ field, form: { setFieldValue, values } }) {
     accept: 'image/*',
     multiple: true,
     onDrop: (acceptedFiles) => {
-      console.log('accepted cover', acceptedFiles);
       setFieldValue(field.name, acceptedFiles);
     },
   });

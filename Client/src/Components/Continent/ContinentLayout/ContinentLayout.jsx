@@ -12,7 +12,6 @@ function useQuery() {
 
 const ContinentLayout = ({ setCurrentId }) => {
   const { continents, isLoading } = useSelector((state) => state.continents);
-  console.log("my continents", continents);
   const query = useQuery();
   const page = query.get("page") || 1;
   const searchQuery = query.get("searchQuery");
@@ -21,7 +20,6 @@ const ContinentLayout = ({ setCurrentId }) => {
   if (isLoading && continents.length === 0) {
     return <div>No Contitnents</div>;
   }
-  console.log("test");
   return (
     <>
       <div className={classes.mainContainer}>

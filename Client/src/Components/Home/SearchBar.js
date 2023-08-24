@@ -31,9 +31,7 @@ function SearchBar() {
   };
   const searchPost = () => {
     if (search.trim() || tags.length > 0) {
-      console.log('values', search.trim(), tags);
       dispatch(getPostsBySearch({ search, tags: tags.join(','), season }));
-      console.log('tags', tags);
       history.push(
         `/stories/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}&season=${
           season || 'none'

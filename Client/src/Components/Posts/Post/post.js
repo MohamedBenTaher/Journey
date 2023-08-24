@@ -20,9 +20,8 @@ import useStyles from './styles.js';
 
 function Post({ post, setCurrentId, small }) {
   const user = useSelector((state)=>state.auth.user)
-  const userId = user?.result?.googleId || user?.result?._id;
-  console.log('userid', userId);
-  console.log('post creator', post.creator);
+  console.log('user',user)
+  const userId = user?.result?.googleId || user?.user?._id;
   const [likes, setLikes] = useState(post?.likedBy);
   const hasLikedPost = post.likedBy.find((like) => like === userId);
   const history = useHistory();

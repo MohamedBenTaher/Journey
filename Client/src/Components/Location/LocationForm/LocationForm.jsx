@@ -133,11 +133,10 @@ const LocationFom = () => {
   const { id } = useParams();
   const { location, isLoading } = useSelector((state) => state.locations);
   const user = useSelector((state)=>state.auth.user)
-  const userId = user.result._id;
+  const userId = user.user._id;
   const classes = useStyles();
   const countries = useSelector((state) => state.countries);
   const destinations = useSelector((state) => state.destinations);
-  console.log("countires", countries);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCountries());
@@ -148,13 +147,11 @@ const LocationFom = () => {
       dispatch(getLocation(id));
     }
   }, [id, dispatch]);
-  console.log("my myLocation", location);
   const handleSubmit = async (
     values,
     { setSubmitting, setFieldValue, resetForm },
   ) => {
     setSubmitting(true);
-    console.log(values);
 
     const formData = new FormData();
     formData.append("title", values.title);
@@ -383,7 +380,6 @@ const LocationFom = () => {
                   variant="outlined"
                   value={values.tags}
                   onAdd={(chip) => {
-                    console.log(values.tags);
                     setFieldValue("tags", [...values.tags, chip]);
                   }}
                   onDelete={(chip, index) => {
@@ -413,7 +409,6 @@ const LocationFom = () => {
                           onClick={async (e) => {
                             e.preventDefault();
                             if (location && typeof image === "string") {
-                              console.log("reached deletion");
                               await deleteS3Image(location?._id, image).then(
                                 () => {
                                   console.log("image deleted successfully");

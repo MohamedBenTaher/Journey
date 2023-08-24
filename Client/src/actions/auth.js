@@ -34,7 +34,7 @@ export const signup = (formData, history) => async (dispatch) => {
 };
 export const signOut=(history)=>{
   try {
-  localStorage.removeItem('profile');
+  localStorage.removeItem('token');
   dispatch({ type: LOGOUT });
   history.push('/')
   } catch (error) {

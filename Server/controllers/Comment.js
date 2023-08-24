@@ -25,7 +25,6 @@ export const commentEntity=async (req,res)=>{
     try {
     const { id }=req.params;
     const {userId,entityType,content}=req.body.body
-    console.log('my req',userId,entityType,content)
     if(!mongoose.Types.ObjectId.isValid(req.userId))return res.json({mesage:'Unauthenticated'})
     if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No ${entityType} with id: ${id}`);
     const createdComment=new Comment({entity:{type:entityType,entityId:id},user:userId,content:content,createdAt:new Date()})
@@ -44,7 +43,6 @@ export const updateCommentEntity=async (req,res)=>{
     try {
         const {id}=req.params
         const {content,userId}=req.body
-        console.log('content req',content,userId,id)
         if(!userId ) return res.json({mesage:'Unauthenticated'})
         if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No Object with id: ${id}`);
         const comment =await Comment.findById(id)

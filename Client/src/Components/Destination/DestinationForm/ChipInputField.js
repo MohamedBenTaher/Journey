@@ -7,7 +7,6 @@ function ChipInputField({ label, ...props }) {
   console.log(field, helpers);
   const handleAddChip = (chip) => {
     const { tags } = field.value;
-    console.log('field value', field.value.tags, chip);
     helpers.setValue('tags', [...tags, chip]);
   };
 

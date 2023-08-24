@@ -89,9 +89,6 @@ const LocationDetails = () => {
     dispatch(getLocation(id));
     console.log("my locations", location);
   }, [dispatch, id]);
-  useEffect(() => {
-    console.log(user?.result._id);
-  }, []);
 
   useEffect(() => {
     if (location) {

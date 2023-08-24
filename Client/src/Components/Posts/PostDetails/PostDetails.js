@@ -34,7 +34,6 @@ import PostInfo from '../PostInfo/PostInfo';
 
 function PostDetails() {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
-  console.log('state', posts);
   const user = useSelector((state)=>state.auth.user)
   const dispatch = useDispatch();
   const history = useHistory();
@@ -45,7 +44,6 @@ function PostDetails() {
   useEffect(() => {
     dispatch(getPost(id));
   }, [id]);
-  console.log('my post', post);
   useEffect(() => {
     if (post) {
       dispatch(getPostsBySearch({ search: 'none', tags: post?.tags?.join(',') }));
@@ -58,12 +56,7 @@ function PostDetails() {
     }
   }, [post, userId]);
   if (!post) return null;
-  console.log('rendered post ', post);
-  console.log('post file', post.selectedFile);
-
   const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
-  console.log('recommendedPosts', recommendedPosts);
-
   const handleBookmark = () => {
     if (bookmarked) {
       dispatch(cancelBookmarkPost(post?._id, userId));
@@ -81,10 +74,6 @@ function PostDetails() {
   }
 
   const openPost = (_id) => history.push(`/stories/${_id}`);
-  console.log('my current user', user);
-
-  const found = user?.result?.savedResources.find((res) => res.resourceId === post._id);
-  console.log('found resource', found, user?.result?.savedResources);
   return (
     <>
       <div className={classes.card}>

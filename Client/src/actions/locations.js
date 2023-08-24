@@ -83,7 +83,6 @@ export const getLocationsByDestination = (id) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_LOCATIONS });
     const response = await api.fetchLocationsByDestination(id);
-    console.log('my response',response.data)
     const data = response.data;
     dispatch({ type: FETCH_LOCATION_BY_DESTINATION, payload: { data } });
 

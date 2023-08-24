@@ -5,7 +5,7 @@ const authMiddleware = (store) => (next) => (action) => {
   // Handle API response here
   if (action.error && action.payload.response.status === UNAUTHORIZED) {
     console.log('unauthorized user action')
-    store.dispatch(signOut());
+    // store.dispatch(signOut());
   }
 
   return next(action);

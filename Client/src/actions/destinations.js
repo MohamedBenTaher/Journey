@@ -32,12 +32,10 @@ export const getTopDestinations = () => async (dispatch) => {
 };
 export const getDestinations = (page) => async (dispatch) => {
   try {
-    console.log('called action');
     dispatch({ type: START_LOADING_DESTINATIONS });
     const {
       data: { data, currentPage, numberOfPages },
     } = await api.fetchDestinatons(page);
-    console.log('actions', data);
     dispatch({
       type: FETCH_DESTINATIONS,
       payload: { data, currentPage, numberOfPages },
@@ -74,11 +72,8 @@ export const getDestinationssBySearch = (searchQuery) => async (dispatch) => {
 export const getDestinationByCountry = (id) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING_DESTINATIONS });
-    console.log('id in action', id);
     const response = await api.fetchDestinationByCountry(id);
-    console.log('my country response',response.data)
     const data = response.data;
-    console.log('searched Dsetinations', data);
     dispatch({ type: FETCH_DESTINATIONS_BY_COUNTRY, payload: { data } });
     dispatch({ type: END_LOADING_DESTINATIONS });
   } catch (error) {
@@ -118,7 +113,6 @@ export const deleteDestination = (id) => async (dispatch) => {
 export const upvoteDestination = (destinationId, userId) => async (dispatch) => {
   try {
     const { data } = await api.upVoteDestination(destinationId, userId);
-    console.log('after upvote ', data);
     dispatch({ type: UPVOTE_DESTINATION, payload: data });
   } catch (error) {
     console.log(error.message);
@@ -127,7 +121,6 @@ export const upvoteDestination = (destinationId, userId) => async (dispatch) => 
 export const downvoteDestination = (destinationId, userId) => async (dispatch) => {
   try {
     const { data } = await api.downVoteDestination(destinationId, userId);
-    console.log('after downvote ', data);
     dispatch({ type: DOWNVOTE_DESTINATION, payload: data });
   } catch (error) {
     console.log(error.message);
@@ -136,7 +129,6 @@ export const downvoteDestination = (destinationId, userId) => async (dispatch) =
 export const likeDestination = (destinationId, userId) => async (dispatch) => {
   try {
     const { data } = await api.likeDestination(destinationId, userId);
-    console.log('after downvote ', data);
     dispatch({ type: LIKE_DESTINATION, payload: data });
   } catch (error) {
     console.log(error.message);
@@ -145,7 +137,6 @@ export const likeDestination = (destinationId, userId) => async (dispatch) => {
 export const bookmarkDestination = (id, userId) => async (dispatch) => {
   try {
     const { data } = await api.bookmarkDestination(id, userId);
-    console.log('after post bookmark ', data);
     dispatch({ type: BOOKMARK_DESTINATION, payload: data });
   } catch (error) {
     console.log(error.message);
@@ -154,7 +145,6 @@ export const bookmarkDestination = (id, userId) => async (dispatch) => {
 export const cancelBookmarkDestination = (id, userId) => async (dispatch) => {
   try {
     const { data } = await api.cancelBookmarkDestination(id, userId);
-    console.log('after post bookmark ', data);
     dispatch({ type: CANCEL_BOOKMARK_DESTINATION, payload: data });
   } catch (error) {
     console.log(error.message);

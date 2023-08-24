@@ -141,7 +141,6 @@ const ContinentForm = () => {
       dispatch(getContinent(id));
     }
   }, [id, dispatch]);
-  console.log("my continent", continent);
   const handleSubmit = async (
     values,
     { setSubmitting, setFieldValue, resetForm },
@@ -202,7 +201,6 @@ const ContinentForm = () => {
           tags: Yup.array(),
         })}
         onSubmit={(values, { setSubmitting, setFieldValue, resetForm }) => {
-          console.log("reached submission");
           console.log("continent", values);
           handleSubmit(values, { setSubmitting, setFieldValue, resetForm });
           setSubmitting(false);

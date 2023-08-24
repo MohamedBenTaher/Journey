@@ -48,7 +48,6 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
     const {
       data: { data },
     } = await api.fetchPostsBySearch(searchQuery);
-    console.log('searchedPosts', data);
     dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
     dispatch({ type: END_LOADING });
   } catch (error) {
@@ -105,7 +104,6 @@ export const commentPost = (value, id) => async (dispatch) => {
 export const bookmarkPost = (id, userId) => async (dispatch) => {
   try {
     const { data } = await api.bookmarkPost(id, userId);
-    console.log('after post bookmark ', data);
     dispatch({ type: BOOKMARK_POST, payload: data });
   } catch (error) {
     console.log(error.message);
@@ -114,7 +112,6 @@ export const bookmarkPost = (id, userId) => async (dispatch) => {
 export const cancelBookmarkPost = (id, userId) => async (dispatch) => {
   try {
     const { data } = await api.cancelBookmarkPost(id, userId);
-    console.log('after post bookmark ', data);
     dispatch({ type: CANCEL_BOOKMARK_POST, payload: data });
   } catch (error) {
     console.log(error.message);

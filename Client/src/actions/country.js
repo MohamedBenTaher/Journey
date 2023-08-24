@@ -30,12 +30,10 @@ export const getTopCountries = () => async (dispatch) => {
 };
 export const getCountries = (page) => async (dispatch) => {
   try {
-    console.log('called action');
     dispatch({ type: START_LOADING_COUNTRIES });
     const {
       data: { data, currentPage, numberOfPages },
     } = await api.fetchCountries(page);
-    console.log('actions', data);
     dispatch({
       type: FETCH_COUNTRIES,
       payload: { data, currentPage, numberOfPages },

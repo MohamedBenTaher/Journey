@@ -94,4 +94,15 @@ export default makeStyles((theme) => ({
     fontWeight: 'bold',
     color: 'white',
   },
+  profileAvatar: {
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    width: '400px',
+    alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      width: 'auto',
+      marginTop: 20,
+      justifyContent: 'center',
+    },
+  },
 }));

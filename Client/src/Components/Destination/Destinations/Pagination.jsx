@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDestinations } from "../../../actions/destinations.js";
 
 const Paginate = ({ page }) => {
-  console.log("rendered");
+
   const { numberOfPages } = useSelector((state) => state.destinations);
   const classes = useStyles();
   const dispatch = useDispatch();

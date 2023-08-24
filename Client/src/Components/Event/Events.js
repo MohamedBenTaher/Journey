@@ -30,7 +30,7 @@ function Events() {
   console.log(typeof events, events);
   return (
     <Grid container className={classes.mainContainer}>
-      {user && user.result.isAdmin ? (
+      {user && user.user.isAdmin ? (
         <Link to="/events/new">
           <Button variant="outlined" color="primary" onClick={() => {}}>
             {' '}

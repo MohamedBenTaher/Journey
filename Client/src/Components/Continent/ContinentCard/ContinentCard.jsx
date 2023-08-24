@@ -75,7 +75,6 @@ const ContinentCard = (continent) => {
   const history = useHistory();
   const classes = useStyles();
   const [liked, setLiked] = useState(false);
-  console.log("contient car", continent);
   return (
     <Card className={classes.card}>
       <CardMedia

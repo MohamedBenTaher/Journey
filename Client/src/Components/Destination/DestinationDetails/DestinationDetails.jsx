@@ -100,7 +100,6 @@ const DestinationDetails = () => {
     dispatch(getDestination(id));
     dispatch(getLocationsByDestination(id))
   }, [dispatch, id]);
-  console.log('global state on render',useSelector((state)=>state))
   useEffect(() => {
     if (destination) {
       setBookmarked(destination.bookmarkedBy.includes(userId));
@@ -114,7 +113,6 @@ const DestinationDetails = () => {
   const handleDownvote = () => {
     dispatch(downvoteDestination(destination?._id, userId));
   };
- console.log('my dest locations',locations)
   const handleBookmark = () => {
     if (bookmarked) {
       dispatch(cancelBookmarkDestination(destination?._id, userId));

@@ -25,28 +25,26 @@ import EventDetails from './Components/Event/EventDetails/EventDetails';
 import Profile from './Components/User/Profile/Profile';
 import NavbarSecondary from './Components/Navbar/NavbarSecondary';
 import PrivateRoute from './Components/Auth/PrivateRoute';
-import { signOut, signin } from './actions/auth';
+import { signOut, signin ,getUser} from './actions/auth';
 import { checkTokenValidity } from './utlis/auth';
 import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 
 const  App = () => {
-  console.log(useSelector)
   const user = useSelector((state) => state.auth.user);
   const isLoggedIn=useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
+  const history=useHistory()
   const { token } = useSelector((state) => state.auth);
-  console.log('my token in APP.js',token)
   useEffect(() => {
     if (token) {
       checkTokenValidity(token)
         .then((userData) => {
-          console.log('tokn is valid')
-          dispatch(signin({ user:userData, token }));
+          dispatch(getUser(userData.id));
         })
         .catch(() => {
-           console.log('tokn is invalid')
-          dispatch(signOut());
+          dispatch(signOut(history));
         });
     }
   }, [dispatch, token]);

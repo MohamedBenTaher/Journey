@@ -129,10 +129,9 @@ function DestinationForm() {
   const { id } = useParams();
   const { destination, isLoading } = useSelector((state) => state.destinations);
   const user = useSelector((state)=>state.auth.user)
-  const userId = user.result._id;
+  const userId = user.user._id;
   const classes = useStyles();
   const countries = useSelector((state) => state.countries);
-  console.log('countires', countries);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCountries());
@@ -142,7 +141,6 @@ function DestinationForm() {
       dispatch(getDestination(id));
     }
   }, [id, dispatch]);
-  console.log('my destination', destination);
   const handleSubmit = async (values, { setSubmitting, setFieldValue, resetForm }) => {
     setSubmitting(true);
     console.log(values);
@@ -341,7 +339,6 @@ function DestinationForm() {
                           onClick={async (e) => {
                             e.preventDefault();
                             if (destination && typeof image === 'string') {
-                              console.log('reached deletion');
                               await deleteS3Image(destination?._id, image).then(() => {
                                 console.log('image deleted successfully');
                               });

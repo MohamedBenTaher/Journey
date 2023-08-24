@@ -47,23 +47,12 @@ const PostForm = () => {
   });
 
   const locations = useSelector((state) => state.locations);
-  console.log("fetched", locations);
   const countries = useSelector((state) => state.countries);
-  console.log("feteched countires", countries);
   const destinations = useSelector((state) => state.destinations);
-  console.log("fetched", destinations);
-  const handleCountryChange = (e) => {
-    setPostData({ ...postData, country: e.target.value });
-  };
-  const handleCityChange = (e) => {
-    console.log("city", e.target.value);
-    setPostData({ ...postData, city: e.target.value });
-  };
   const userId = user?.result?._id;
   const classes = useStyles();
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("data", postData, postData.country);
     const formData = new FormData();
     formData.append("title", postData.title);
     formData.append("message", postData.message);
@@ -117,12 +106,6 @@ const PostForm = () => {
     );
   }
 
-  const onDrop = (acceptedFiles) => {
-    const file = acceptedFiles[0];
-    console.log("uploaded file", base64String);
-    setPostData({ ...postData, selectedFile: file });
-  };
-
   useEffect(() => {
     return () => {
       if (postData.selectedFile) {
@@ -135,9 +118,7 @@ const PostForm = () => {
     accept: "image/*",
     multiple: true,
     onDrop: (acceptedFiles) => {
-      console.log("accepted cover", acceptedFiles);
       setPostData({ ...postData, selectedFile: acceptedFiles });
-      console.log(postData);
     },
   });
 

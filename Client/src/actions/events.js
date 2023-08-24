@@ -51,7 +51,6 @@ export const getEventsBySearch = (searchQuery) => async (dispatch) => {
     const {
       data: { data },
     } = await api.fetchPostsBySearch(searchQuery);
-    console.log('searchedEvents', data);
     dispatch({ type: FETCH_EVENT_BY_SEARCH, payload: { data } });
     dispatch({ type: END_LOADING });
   } catch (error) {
@@ -115,7 +114,6 @@ export const commentEvent = (value, id) => async (dispatch) => {
 export const bookmarkEvent = (id, userId) => async (dispatch) => {
   try {
     const { data } = await api.bookmarkEvent(id, userId);
-    console.log('after post bookmark ', data);
     dispatch({ type: BOOKMARK_EVENT, payload: data });
   } catch (error) {
     console.log(error.message);
@@ -124,7 +122,6 @@ export const bookmarkEvent = (id, userId) => async (dispatch) => {
 export const cancelBookmarkEvent = (id, userId) => async (dispatch) => {
   try {
     const { data } = await api.cancelBookmarkEvent(id, userId);
-    console.log('after post bookmark ', data);
     dispatch({ type: CANCEL_BOOKMARK_EVENT, payload: data });
   } catch (error) {
     console.log(error.message);
@@ -133,7 +130,6 @@ export const cancelBookmarkEvent = (id, userId) => async (dispatch) => {
 export const likeEvent = (id, userId) => async (dispatch) => {
   try {
     const { data } = await api.likeEvent(id, userId);
-    console.log('after event like ', data);
     dispatch({ type: LIKE_EVENT, payload: data });
   } catch (error) {
     console.log(error.message);

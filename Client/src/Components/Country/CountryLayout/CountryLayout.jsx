@@ -22,7 +22,6 @@ const CountryLayout = ({ setCurrentId }) => {
   if (isLoading && countries?.length === 0) {
     return <div>No Countries</div>;
   }
-  console.log("test");
   return (
     <>
       <div className={classes.mainContainer}>

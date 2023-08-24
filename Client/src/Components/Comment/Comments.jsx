@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
 const Comments = ({ entityId, entityType, user }) => {
   const classes = useStyles();
   const { comments, isLoading } = useSelector((state) => state.comments);
-  console.log("my state", comments);
   const dispatch = useDispatch();
   const [edit, setEdit] = useState([]);
   const userId = user?.result?._id;
@@ -54,7 +53,6 @@ const Comments = ({ entityId, entityType, user }) => {
     }
   };
   const handleSubmitEditComment = (values) => {
-    console.log("values", values);
     if (userId && entityId && values.commenttoupdate) {
       dispatch(updateMyComment(values.id, userId, values.commenttoupdate))
         .then(() => {

@@ -15,8 +15,6 @@ function Destinations({ setCurrentId }) {
   const { destinations, isLoadingDestinations  } = useSelector((state) => state.destinations);
   const user = useSelector((state)=>state.auth.user)
   const value = useSelector((state) => state);
-  console.log('my dests', destinations);
-  console.log('my vals', value);
   const query = useQuery();
   const page = query.get('page') || 1;
   const searchQuery = query.get('searchQuery');
@@ -51,7 +49,7 @@ function Destinations({ setCurrentId }) {
                 <DestinationCard
                   item={destination}
                   setCurrentId={setCurrentId}
-                  userId={user?.result._id}
+                  userId={user?.user._id}
                 />
               </Grid>
             ))}

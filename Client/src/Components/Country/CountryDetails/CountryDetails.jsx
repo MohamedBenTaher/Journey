@@ -78,9 +78,7 @@ const useStyles = makeStyles((theme) => ({
 const CountryDetails = () => {
   const { country, isLoading } = useSelector((state) => state.countries);
   const {destinations}=useSelector((state)=>state.destinations)
-  console.log('my destinations in the country',destinations)
   const value = useSelector((state) => state);
-  console.log("continent details", country, value);
   const user = useSelector((state)=>state.auth.user)
   const classes = useStyles();
   const [bookmarked, setBookmarked] = useState(false);

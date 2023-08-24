@@ -55,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
 const ContinentDetails = () => {
   const { continent, isLoading } = useSelector((state) => state.continents);
   const value = useSelector((state) => state);
-  console.log("continent details", continent, value);
   const user = useSelector((state)=>state.auth.user)
   const classes = useStyles();
   const dispatch = useDispatch();

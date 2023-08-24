@@ -91,7 +91,6 @@ const CountryCard = ({ item, userId, small }) => {
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(item?.likedBy || []);
-  console.log("my item", item);
   const handleLike = () => {
     try {
       dispatch(likeCountry(item?._id, userId));

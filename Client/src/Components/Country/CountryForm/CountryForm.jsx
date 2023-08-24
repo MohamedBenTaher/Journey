@@ -130,9 +130,8 @@ const CountryForm = () => {
   const { id } = useParams();
   const { country, isLoading } = useSelector((state) => state.countries);
   const { continents } = useSelector((state) => state.continents);
-  console.log("my continents", continents);
   const user = useSelector((state)=>state.auth.user)
-  const userId = user.result._id;
+  const userId = user.user._id;
   const classes = useStyles();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -144,7 +143,6 @@ const CountryForm = () => {
       dispatch(getCountry(id));
     }
   }, [id, dispatch]);
-  console.log("my country", country);
   const handleSubmit = async (
     values,
     { setSubmitting, setFieldValue, resetForm },
@@ -358,7 +356,6 @@ const CountryForm = () => {
                           onClick={async (e) => {
                             e.preventDefault();
                             if (country && typeof image === "string") {
-                              console.log("reached deletion");
                               await deleteS3Image(country._id, image).then(
                                 () => {
                                   console.log("image deleted successfully");

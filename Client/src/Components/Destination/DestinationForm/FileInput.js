@@ -63,7 +63,6 @@ function FileInput({ field, form: { setFieldValue, values } }) {
     multiple: true,
     onDrop: (acceptedFiles) => {
       const filesArray = [...values[field.name], ...acceptedFiles];
-      console.log('accepted files', filesArray);
       setFieldValue(field.name, filesArray);
     },
   });

@@ -6,13 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getContinents } from "../../../actions/continent.js";
 
 const Paginate = ({ page }) => {
-  console.log("rendered");
   const dispatch = useDispatch();
   const { numberOfPages } = useSelector((state) => state.continents);
   const classes = useStyles();
 
   useEffect(() => {
-    console.log("useEffect called");
     if (page) {
       dispatch(getContinents(page));
     }

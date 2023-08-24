@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Typography, TextField, Button } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './styles';
 import { commentPost } from '../../../actions/posts';
 
@@ -9,7 +9,7 @@ function ComentSection({ post }) {
   const dispatch = useDispatch();
   const [comments, setComments] = useState(post?.comments);
   const [comment, setComment] = useState('');
-  const user = JSON.parse(localStorage.getItem('profile'));
+  const user = useSelector((state)=>state.auth.user)
   const commentsRef = useRef();
   const handleClick = async () => {
     const finalComment = `${user?.result?.name} : ${comment}`;
@@ -17,9 +17,7 @@ function ComentSection({ post }) {
     setComments(newComments);
     setComment('');
     commentsRef.current.scrollIntoView({ behavior: 'smooth' });
-    console.log('clicked');
   };
-  console.log('commentSection');
   return (
     <div>
       <div className={classes.commentsOuterContainer}>

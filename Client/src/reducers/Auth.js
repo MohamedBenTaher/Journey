@@ -6,7 +6,7 @@ import {
   USER_INFROMATIONS,
 } from '../constants/actionTypes';
 
-const authReducer= (state = { user: null, isLoading: true,isLoggedIn:false,token: localStorage.getItem('profile')?.token || null, }, action) => {
+const authReducer= (state = { user: null, isLoading: true,isLoggedIn:false,token: localStorage.getItem('token')|| null, }, action) => {
   switch (action.type) {
     case START_LOADING_USER:
       return { ...state, isLoading: true };
@@ -15,8 +15,6 @@ const authReducer= (state = { user: null, isLoading: true,isLoggedIn:false,token
     case AUTH:
       localStorage.setItem('profile', JSON.stringify({ ...action?.payload?.data }));
       localStorage.setItem('token', action.payload.data.token);
-      console.log('reached auth');
-      console.log('payload', action?.payload?.data);
       return { ...state, user: { ...action.payload.data },isLoggedIn:true,token:action?.payload?.data?.token };
     case LOGOUT:
       localStorage.clear();
@@ -33,6 +31,7 @@ const authReducer= (state = { user: null, isLoading: true,isLoggedIn:false,token
       return {
         ...state,
         user: { ...action.payload.data },
+        isLoggedIn:true,
       };
     }
     default:

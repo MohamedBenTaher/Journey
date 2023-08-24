@@ -20,12 +20,13 @@ import title from '../../Images/title.png';
 import memories from '../../Images/journey.png';
 import useStyles from './styles.js';
 import { signOut } from '../../actions/auth';
+import { Skeleton } from '@mui/material';
 
 function Navbar() {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const user=useSelector((state)=>state.auth.user)
+  const {user,isLoading}=useSelector((state)=>state.auth)
   const [isOpen, setIsOpen] = useState(false);
   const classes = useStyles();
   // useEffect(() => {
@@ -143,23 +144,31 @@ function Navbar() {
         </>
       )}
       <Toolbar className={classes.toolbar}>
-        {user ? (
-          <div className={classes.profile}>
+        {!user && isLoading ? (
+         <div className={classes.profile}>
+         <Skeleton variant="circular" width={50} height={50} />
+         <Skeleton variant="text" width={'100%'}/>
+         </div>
+        ) : user &&!isLoading ?(
+           <div className={classes.profile}>
+            <Link to="/user-profile" className={classes.profileAvatar}>
             <Avatar
               className={classes.purple}
-              alt={user?.result?.name}
-              src={user?.result?.imageUrl}
+              alt={user?.user?.name}
+              src={user?.user?.imageUrl}
             >
-              {user?.result?.name.charAt(0)}
+              {user?.user?.name.charAt(0)}
             </Avatar>
             <Typography className={classes.userName} variant="h6">
-              {user?.result?.name}
+              {user?.user?.name}
             </Typography>
+            </Link>
             <Button variant="contained" className={classes.logout} onClick={()=>Logout()}>
               Logout
             </Button>
           </div>
-        ) : (
+        ) :
+        (
           <Button component={Link} to="/auth" variant="contained" color="primary">
             Sign-In
           </Button>
