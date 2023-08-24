@@ -43,7 +43,6 @@ function Navbar() {
   // };
     const Logout = () => {
    dispatch(signOut(history));
-    setUser(null);
   };
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));

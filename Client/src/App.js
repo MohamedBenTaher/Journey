@@ -26,32 +26,32 @@ import Profile from './Components/User/Profile/Profile';
 import NavbarSecondary from './Components/Navbar/NavbarSecondary';
 import PrivateRoute from './Components/Auth/PrivateRoute';
 import { signOut, signin } from './actions/auth';
+import { checkTokenValidity } from './utlis/auth';
+import { useEffect } from 'react';
 
 
 const  App = () => {
   console.log(useSelector)
   const user = useSelector((state) => state.auth.user);
   const isLoggedIn=useSelector((state) => state.auth.isLoggedIn);
-  console.log('user state',user,isLoggedIn)
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
-
+  console.log('my token in APP.js',token)
   useEffect(() => {
     if (token) {
-      // Check if the token is still valid
       checkTokenValidity(token)
         .then((userData) => {
-          // If the token is valid, log in the user
-          dispatch(login({ user: userData, token }));
+          console.log('tokn is valid')
+          dispatch(signin({ user:userData, token }));
         })
         .catch(() => {
-          // If the token is invalid, log the user out
+           console.log('tokn is invalid')
           dispatch(signOut());
         });
     }
   }, [dispatch, token]);
 
-  // Render your application components
+
 
   return (
     <CssBaseline>

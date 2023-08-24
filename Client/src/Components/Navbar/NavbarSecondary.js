@@ -46,7 +46,6 @@ function NavbarSecondary() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const Logout = () => {
    dispatch(signOut(history));
-    setUser(null);
   };
   return (
     <AppBar className={classes.appBar} position="static">
