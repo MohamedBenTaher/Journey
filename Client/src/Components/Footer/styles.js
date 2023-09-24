@@ -20,6 +20,7 @@ export default makeStyles((theme) => ({
     backgroundColor: '#1CA0E3',
     alignItems: 'center',
     padding: '5rem',
+    // minHeight: '100vh',
   },
   title: {
     fontWeight: '900',
@@ -64,4 +65,5 @@ export default makeStyles((theme) => ({
   gutterText: {
     color: 'white',
   },
+  
 }));

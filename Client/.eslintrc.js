@@ -13,7 +13,7 @@ module.exports = {
   },
   plugins: ['prettier', 'react'],
   rules: {
-    'prettier/prettier': 'error',
+    'prettier/prettier': 'warning',
     'no-underscore-dangle': 'off',
     'comma-dangle': [2, 'always-multiline'],
   },

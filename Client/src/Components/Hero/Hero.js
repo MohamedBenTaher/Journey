@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState,useEffect} from 'react';
 import {
   Grid,
   Container,
@@ -9,18 +9,59 @@ import {
 import Navbar from '../Navbar/Navbar';
 import useStyles from './styles.js';
 import SearchBar from '../Home/SearchBar';
-
+import axios from 'axios';
+import BgImage from '../../assets/images/bg-image.png'
 function Hero() {
   const classes = useStyles();
+  const [backgroundImage, setBackgroundImage] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+   useEffect(() => {
+    // Function to fetch a random image from Unsplash
+    const fetchRandomImage = async () => {
+  
+        const response = await axios.get(
+          'https://api.unsplash.com/photos/random',
+          {
+            params: {
+              client_id: '0nlqCJ4DGMwDJizUMB9iQdSdXmfk5dNx97AkNESzSv0', // Replace with your Unsplash API key
+              orientation: 'landscape', // Adjust orientation as needed
+            },
+          }
+        );
+
+        // Set the fetched image URL as the background
+        setBackgroundImage(response.data.urls.regular);
+        setIsLoading(false);
+        if(!backgroundImage){
+        setBackgroundImage(BgImage);
+        console.error('Error fetching image from Unsplash:', error);
+        }
+      
+    };
+    fetchRandomImage();
+
+    const interval = setInterval(fetchRandomImage, 500000000);
+
+    return () => clearInterval(interval);
+  }, []);
   return (
     <>
-      <Paper className={classes.heroContainer} maxWidth={false} disableGutters>
+      <header className={classes.heroContainer} maxWidth={false} disableGutters  style={{
+          margin: 0,
+          padding: 0,
+          height: '100vh',
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          transition: 'opacity 0.5s ease-in-out',
+          opacity: isLoading ? 0 : 1, 
+        }}>
         <Container>
           <Navbar />
           <Grid container className={classes.content}>
             <Grid item>
               <Typography variant="h2" className={classes.title}>
-                Explore the Beauty of Journey
+                Explore the beauty of the journey
               </Typography>
               <Grid>
                 <Typography variant="subtitle1" className={classes.subtitle}>
@@ -34,7 +75,7 @@ function Hero() {
             <SearchBar />
           </Grid>
         </Container>
-      </Paper>
+      </header>
       <Container className={classes.Devider} maxWidth={false} disableGutters>
         <Grid
           container

@@ -48,7 +48,7 @@ function NavbarSecondary() {
    dispatch(signOut(history));
   };
   return (
-    <AppBar className={classes.appBar} position="static">
+    <AppBar className={classes.appBar} position="static" elevation={0}>
       <Grid className={classes.brandContainer}>
         <Link to="/" style={{ textDecoration: 'none' }}>
           <Typography variant="h2" className={classes.title}>

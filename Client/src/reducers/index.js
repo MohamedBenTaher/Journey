@@ -19,5 +19,5 @@ export default combineReducers({
   countries,
   locations,
 },
-// applyMiddleware(authMiddleware)
+applyMiddleware(authMiddleware)
 );

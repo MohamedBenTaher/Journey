@@ -6,7 +6,7 @@ import {
   USER_INFROMATIONS,
 } from '../constants/actionTypes';
 
-const authReducer= (state = { user: null, isLoading: true,isLoggedIn:false,token: localStorage.getItem('token')|| null, }, action) => {
+const authReducer= (state = { user: null, isLoading: false,isLoggedIn:false,token: localStorage.getItem('token')|| null, }, action) => {
   switch (action.type) {
     case START_LOADING_USER:
       return { ...state, isLoading: true };

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import React, { useEffect, useState } from 'react';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import {
   TextField,
   Button,
@@ -9,25 +9,21 @@ import {
   MenuItem,
   Grid,
   Typography,
-} from "@material-ui/core";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import AddRounded from "@material-ui/icons/AddRounded";
-import FileInput from "../../Destination/DestinationForm/FileInput";
-import "./styles";
-import CoverImageInput from "../../Destination/DestinationForm/CoverImageInput";
-import ChipInput from "material-ui-chip-input";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteS3Image } from "../../../api";
-import { getCountries } from "../../../actions/country";
-import {
-  createLocation,
-  getLocation,
-  updateLocation,
-} from "../../../actions/locations";
-import { getDestinations } from "../../../actions/destinations";
-import  locationTypes  from "../../../constants/locals";
+} from '@material-ui/core';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
+import AddRounded from '@material-ui/icons/AddRounded';
+import FileInput from '../../Destination/DestinationForm/FileInput';
+import './styles';
+import CoverImageInput from '../../Destination/DestinationForm/CoverImageInput';
+import ChipInput from 'material-ui-chip-input';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteS3Image } from '../../../api';
+import { getCountries } from '../../../actions/country';
+import { createLocation, getLocation, updateLocation } from '../../../actions/locations';
+import { getDestinations } from '../../../actions/destinations';
+import locationTypes from '../../../constants/locals';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -40,9 +36,9 @@ const useStyles = makeStyles((theme) =>
     heading: {
       marginTop: theme.spacing(2),
       marginBottom: theme.spacing(2),
-      color: "black",
-      fontWeight: "bold",
-      fontSize: "20px",
+      color: 'black',
+      fontWeight: 'bold',
+      fontSize: '20px',
     },
     form: {
       marginTop: theme.spacing(2),
@@ -53,15 +49,15 @@ const useStyles = makeStyles((theme) =>
       paddingBottom: 15,
     },
     input: {
-      display: "none",
+      display: 'none',
     },
     previewContainer: {
-      display: "flex",
-      alignItems: "center",
+      display: 'flex',
+      alignItems: 'center',
       marginBottom: theme.spacing(1),
     },
     previewImage: {
-      width: "100%",
+      width: '100%',
       maxWidth: 200,
       marginRight: theme.spacing(1),
     },
@@ -70,61 +66,61 @@ const useStyles = makeStyles((theme) =>
     },
     dropzone: {
       height: 150,
-      border: "2px dashed #ccc",
+      border: '2px dashed #ccc',
       borderRadius: 5,
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      cursor: "pointer",
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      cursor: 'pointer',
     },
     preview: {
-      display: "flex",
-      flexWrap: "wrap",
+      display: 'flex',
+      flexWrap: 'wrap',
       marginTop: theme.spacing(1),
     },
     imageWrapper: {
-      position: "relative",
+      position: 'relative',
       width: 200,
       height: 200,
       margin: theme.spacing(1),
     },
     coverImage: {
-      width: "100%",
-      height: "100%",
-      objectFit: "cover", // crop the image to fill the container
-      objectPosition: "center",
-      borderRadius: "16px",
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover', // crop the image to fill the container
+      objectPosition: 'center',
+      borderRadius: '16px',
     },
     coverImageWrapper: {
-      position: "relative",
-      width: "100%",
-      height: "200px",
+      position: 'relative',
+      width: '100%',
+      height: '200px',
       margin: theme.spacing(1),
     },
     image: {
-      width: "100%",
-      height: "100%",
-      objectFit: "cover", // crop the image to fill the container
-      objectPosition: "center",
-      borderRadius: "16px",
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover', // crop the image to fill the container
+      objectPosition: 'center',
+      borderRadius: '16px',
     },
     removeButton: {
-      position: "absolute",
+      position: 'absolute',
       top: -5,
       right: -5,
-      color: "#fff",
-      backgroundColor: "#000",
-      borderRadius: "50%",
+      color: '#fff',
+      backgroundColor: '#000',
+      borderRadius: '50%',
       width: 20,
       height: 20,
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      cursor: "pointer",
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      cursor: 'pointer',
     },
     InputLabel: {
-      marginBottom: "1em",
-      marginTop: "1em",
+      marginBottom: '1em',
+      marginTop: '1em',
     },
   }),
 );
@@ -132,7 +128,7 @@ const useStyles = makeStyles((theme) =>
 const LocationFom = () => {
   const { id } = useParams();
   const { location, isLoading } = useSelector((state) => state.locations);
-  const user = useSelector((state)=>state.auth.user)
+  const user = useSelector((state) => state.auth.user);
   const userId = user.user._id;
   const classes = useStyles();
   const countries = useSelector((state) => state.countries);
@@ -147,25 +143,22 @@ const LocationFom = () => {
       dispatch(getLocation(id));
     }
   }, [id, dispatch]);
-  const handleSubmit = async (
-    values,
-    { setSubmitting, setFieldValue, resetForm },
-  ) => {
+  const handleSubmit = async (values, { setSubmitting, setFieldValue, resetForm }) => {
     setSubmitting(true);
 
     const formData = new FormData();
-    formData.append("title", values.title);
-    formData.append("description", values.description);
-    formData.append("country", values.country);
-    formData.append("destination", values.destination);
-    formData.append("type", values.type);
-    formData.append("user", user?.result?._id);
-    formData.append("coverImage", values.coverImage[0]);
+    formData.append('title', values.title);
+    formData.append('description', values.description);
+    formData.append('country', values.country);
+    formData.append('destination', values.destination);
+    formData.append('type', values.type);
+    formData.append('user', user?.result?._id);
+    formData.append('coverImage', values.coverImage[0]);
     values.images.forEach((image) => {
-      formData.append("images", image);
+      formData.append('images', image);
     });
     values.tags.forEach((tag) => {
-      formData.append("tags", tag);
+      formData.append('tags', tag);
     });
     if (location) {
       dispatch(updateLocation(location?._id, formData));
@@ -183,18 +176,18 @@ const LocationFom = () => {
   return (
     <>
       <Typography variant="h2" className={classes.heading}>
-        {!location ? "Add a new Location" : "Update this Location"}
+        {!location ? 'Add a new Location' : 'Update this Location'}
       </Typography>
       <Formik
         enableReinitialize
         initialValues={{
-          title: location ? location?.title : "",
-          description: location ? location?.description : "",
-          destination: location ? location.destination : "",
-          country: location ? location?.country : "",
-          type: location ? location?.type : "",
+          title: location ? location?.title : '',
+          description: location ? location?.description : '',
+          destination: location ? location.destination : '',
+          country: location ? location?.country : '',
+          type: location ? location?.type : '',
           creator: location ? user?.result?._id : location?.creator,
-          coverImage: location ? location?.coverImage : "",
+          coverImage: location ? location?.coverImage : '',
           images: location ? location?.images : [],
           tags: location ? location?.tags : [],
         }}
@@ -212,8 +205,7 @@ const LocationFom = () => {
         onSubmit={(values, { setSubmitting, setFieldValue, resetForm }) => {
           handleSubmit(values, { setSubmitting, setFieldValue, resetForm });
           setSubmitting(false);
-        }}
-      >
+        }}>
         {({
           values,
           errors,
@@ -243,18 +235,14 @@ const LocationFom = () => {
                         className={classes.removeButton}
                         onClick={async (e) => {
                           e.preventDefault();
-                          if (
-                            location?.coverImage &&
-                            typeof values.coverImage === "string"
-                          ) {
+                          if (location?.coverImage && typeof values.coverImage === 'string') {
                             const deleteImage = await deleteS3Image(
                               location?._id,
                               values.coverImage,
                             );
                           }
-                          setFieldValue("coverImage", "");
-                        }}
-                      >
+                          setFieldValue('coverImage', '');
+                        }}>
                         <Typography variant="caption">x</Typography>
                       </div>
                     </div>
@@ -263,14 +251,8 @@ const LocationFom = () => {
               </Grid>
               {!values.coverImage && (
                 <Grid item xs={12}>
-                  <InputLabel className={classes.InputLabel}>
-                    Cover Image
-                  </InputLabel>
-                  <Field
-                    name="coverImage"
-                    fullWidth
-                    component={CoverImageInput}
-                  />
+                  <InputLabel className={classes.InputLabel}>Cover Image</InputLabel>
+                  <Field name="coverImage" fullWidth component={CoverImageInput} />
                 </Grid>
               )}
               <Grid item xs={12}>
@@ -293,7 +275,7 @@ const LocationFom = () => {
                   fullWidth
                   InputProps={{
                     style: {
-                      minHeight: "100px",
+                      minHeight: '100px',
                     },
                   }}
                   as={TextField}
@@ -311,19 +293,12 @@ const LocationFom = () => {
                     onBlur={handleBlur}
                     variant="outlined"
                     onChange={handleChange}
-                    value={values.type}
-                  >
+                    value={values.type}>
                     {locationTypes.map((location) => {
-                      return (
-                        <MenuItem value={location.value}>
-                          {location.name}
-                        </MenuItem>
-                      );
+                      return <MenuItem value={location.value}>{location.name}</MenuItem>;
                     })}
                   </Field>
-                  {touched.country && Boolean(errors.type) && (
-                    <div>{errors.type}</div>
-                  )}
+                  {touched.country && Boolean(errors.type) && <div>{errors.type}</div>}
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
@@ -336,17 +311,12 @@ const LocationFom = () => {
                     onBlur={handleBlur}
                     variant="outlined"
                     onChange={handleChange}
-                    value={values.country}
-                  >
+                    value={values.country}>
                     {countries?.countries?.map((country) => {
-                      return (
-                        <MenuItem value={country._id}>{country.title}</MenuItem>
-                      );
+                      return <MenuItem value={country._id}>{country.title}</MenuItem>;
                     })}
                   </Field>
-                  {touched.country && Boolean(errors.country) && (
-                    <div>{errors.country}</div>
-                  )}
+                  {touched.country && Boolean(errors.country) && <div>{errors.country}</div>}
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
@@ -359,14 +329,9 @@ const LocationFom = () => {
                     onBlur={handleBlur}
                     variant="outlined"
                     onChange={handleChange}
-                    value={values.destination}
-                  >
+                    value={values.destination}>
                     {destinations?.destinations?.map((destination) => {
-                      return (
-                        <MenuItem value={destination._id}>
-                          {destination.title}
-                        </MenuItem>
-                      );
+                      return <MenuItem value={destination._id}>{destination.title}</MenuItem>;
                     })}
                   </Field>
                   {touched.destination && Boolean(errors.destination) && (
@@ -380,12 +345,12 @@ const LocationFom = () => {
                   variant="outlined"
                   value={values.tags}
                   onAdd={(chip) => {
-                    setFieldValue("tags", [...values.tags, chip]);
+                    setFieldValue('tags', [...values.tags, chip]);
                   }}
                   onDelete={(chip, index) => {
                     const newTags = [...values.tags];
                     newTags.splice(index, 1);
-                    setFieldValue("tags", newTags);
+                    setFieldValue('tags', newTags);
                   }}
                   fullWidth
                 />
@@ -408,19 +373,16 @@ const LocationFom = () => {
                           className={classes.removeButton}
                           onClick={async (e) => {
                             e.preventDefault();
-                            if (location && typeof image === "string") {
-                              await deleteS3Image(location?._id, image).then(
-                                () => {
-                                  console.log("image deleted successfully");
-                                },
-                              );
+                            if (location && typeof image === 'string') {
+                              await deleteS3Image(location?._id, image).then(() => {
+                                console.log('image deleted successfully');
+                              });
                             }
                             setFieldValue(
-                              "images",
+                              'images',
                               values.images?.filter((_, i) => i !== index),
                             );
-                          }}
-                        >
+                          }}>
                           <Typography variant="caption">x</Typography>
                         </div>
                       </div>
@@ -431,13 +393,9 @@ const LocationFom = () => {
 
               {values.images?.length < 5 ? (
                 <Grid item xs={12}>
-                  <InputLabel className={classes.InputLabel}>
-                    location Images
-                  </InputLabel>
+                  <InputLabel className={classes.InputLabel}>location Images</InputLabel>
                   <Field name="images" fullWidth component={FileInput} />
-                  {touched.images && errors.images && (
-                    <div className="error">{errors.images}</div>
-                  )}
+                  {touched.images && errors.images && <div className="error">{errors.images}</div>}
                 </Grid>
               ) : null}
 
@@ -448,8 +406,7 @@ const LocationFom = () => {
                   variant="contained"
                   color="primary"
                   disabled={isSubmitting}
-                  className={classes.submitButton}
-                >
+                  className={classes.submitButton}>
                   <AddRounded />
                   Add your location
                 </Button>

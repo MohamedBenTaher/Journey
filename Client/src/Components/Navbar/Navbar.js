@@ -15,10 +15,8 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import decode from 'jwt-decode';
-import title from '../../Images/title.png';
-import memories from '../../Images/journey.png';
-import useStyles from './styles.js';
+import logo from '../../assets/images/logo.png';
+import useStyles from './styles';
 import { signOut } from '../../actions/auth';
 import { Skeleton } from '@mui/material';
 
@@ -26,7 +24,7 @@ function Navbar() {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const {user,isLoading}=useSelector((state)=>state.auth)
+  const { user, isLoading } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
   const classes = useStyles();
   // useEffect(() => {
@@ -42,8 +40,8 @@ function Navbar() {
   //   history.push('/');
   //   setUser(null);
   // };
-    const Logout = () => {
-   dispatch(signOut(history));
+  const Logout = () => {
+    dispatch(signOut(history));
   };
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -51,15 +49,10 @@ function Navbar() {
     <AppBar
       className={classes.appBar}
       position="static"
-      style={{ background: 'transparent', boxShadow: 'none' }}
-    >
+      style={{ background: 'transparent', boxShadow: 'none' }}>
       <Grid className={classes.brandContainer}>
-        <Link to="/">
-          {/* <img className={classes.image} src={memories} alt="Journey" height="60" /> */}
-          <Typography variant="h2" className={classes.title}>
-            Journey
-          </Typography>
-          {/* <img  src={title} alt="Journey" height="50"/> */}
+        <Link to="/" style={{ width: 'auto', height: 'auto' }}>
+          <img className={classes.image} src={logo} alt="Journey" height={36} />
         </Link>
         {isMobile && (
           <>
@@ -67,8 +60,7 @@ function Navbar() {
               anchor="right"
               className={classes.Drawer}
               open={isOpen}
-              onClose={() => setIsOpen(false)}
-            >
+              onClose={() => setIsOpen(false)}>
               <Box className={classes.Drawer}>
                 <Link to="/" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
                   <Typography>Home</Typography>
@@ -76,9 +68,8 @@ function Navbar() {
                 <Link
                   to="/destinations"
                   className={classes.linksDrawer}
-                  onClick={() => setIsOpen(false)}
-                >
-                  <Typography>Top Destinations</Typography>
+                  onClick={() => setIsOpen(false)}>
+                  <Typography className={classes.navbarText}>Top Destinations</Typography>
                 </Link>
                 <Link to="/events" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
                   <Typography>Upcoming Events</Typography>
@@ -86,22 +77,19 @@ function Navbar() {
                 <Link
                   to="/countries"
                   className={classes.linksDrawer}
-                  onClick={() => setIsOpen(false)}
-                >
+                  onClick={() => setIsOpen(false)}>
                   <Typography>Countries</Typography>
                 </Link>
                 <Link
                   to="/locations"
                   className={classes.linksDrawer}
-                  onClick={() => setIsOpen(false)}
-                >
+                  onClick={() => setIsOpen(false)}>
                   <Typography>Top Locations</Typography>
                 </Link>
                 <Link
                   to="/continents"
                   className={classes.linksDrawer}
-                  onClick={() => setIsOpen(false)}
-                >
+                  onClick={() => setIsOpen(false)}>
                   <Typography>Continents</Typography>
                 </Link>
                 <Link to="/" className={classes.linksDrawer}>
@@ -125,51 +113,64 @@ function Navbar() {
         )}
       </Grid>
       {!isMobile && (
-        <>
-          <Link to="/" className={classes.links}>
-            <Typography variant="p">Explore</Typography>
-          </Link>
-          <Link to="/destinations" className={classes.links}>
-            <Typography variant="p">Top Destinations</Typography>
-          </Link>
-          <Link to="/locations" className={classes.links}>
-            <Typography variant="p">Top Locations</Typography>
-          </Link>
-          <Link to="/countries" className={classes.links}>
-            <Typography variant="p">Countries</Typography>
-          </Link>
-          <Link to="/events" className={classes.links}>
-            <Typography variant="p">Upcoming events</Typography>
-          </Link>
-        </>
+        <Grid
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          container
+          spacing={4}
+          direction="row">
+          <Grid item>
+            <Link to="/" className={classes.links}>
+              <Typography variant="p">Explore</Typography>
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link to="/destinations" className={classes.links}>
+              <Typography variant="p">Top Destinations</Typography>
+            </Link>
+          </Grid>
+          <Grid item>
+            {' '}
+            <Link to="/locations" className={classes.links}>
+              <Typography variant="p">Top Locations</Typography>
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link to="/countries" className={classes.links}>
+              <Typography variant="p">Countries</Typography>
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link to="/events" className={classes.links}>
+              <Typography variant="p">Upcoming events</Typography>
+            </Link>
+          </Grid>
+        </Grid>
       )}
       <Toolbar className={classes.toolbar}>
         {!user && isLoading ? (
-         <div className={classes.profile}>
-         <Skeleton variant="circular" width={50} height={50} />
-         <Skeleton variant="text" width={'100%'}/>
-         </div>
-        ) : user &&!isLoading ?(
-           <div className={classes.profile}>
+          <div className={classes.profile}>
+            <Skeleton variant="text" width={'30%'} />
+            <Skeleton variant="circular" width={48} height={48} />
+          </div>
+        ) : user && !isLoading ? (
+          <div className={classes.profile}>
             <Link to="/user-profile" className={classes.profileAvatar}>
-            <Avatar
-              className={classes.purple}
-              alt={user?.user?.name}
-              src={user?.user?.imageUrl}
-            >
-              {user?.user?.name.charAt(0)}
-            </Avatar>
-            <Typography className={classes.userName} variant="h6">
-              {user?.user?.name}
-            </Typography>
+              <Avatar className={classes.purple} alt={user?.user?.name} src={user?.user?.imageUrl}>
+                {user?.user?.name.charAt(0)}
+              </Avatar>
+              <Typography className={classes.userName} variant="h6">
+                {user?.user?.name}
+              </Typography>
             </Link>
-            <Button variant="contained" className={classes.logout} onClick={()=>Logout()}>
+            <Button variant="contained" className={classes.logout} onClick={() => Logout()}>
               Logout
             </Button>
           </div>
-        ) :
-        (
-          <Button component={Link} to="/auth" variant="contained" color="primary">
+        ) : (
+          <Button component={Link} to="/auth" variant="contained" color="primary" style={{whiteSpace: 'nowrap'}}>
             Sign-In
           </Button>
         )}

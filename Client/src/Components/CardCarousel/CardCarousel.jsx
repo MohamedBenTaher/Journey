@@ -4,7 +4,6 @@ import Carousel from 'react-material-ui-carousel';
 import useStyles from './styles';
 import { Skeleton } from '@mui/material';
 
-
 const CardCarousel = ({ array, CardComponent, small, title, profile }) => {
   const classes = useStyles();
   const sliderItems = array?.length > 3 ? 3 : array?.length;
@@ -15,19 +14,24 @@ const CardCarousel = ({ array, CardComponent, small, title, profile }) => {
         <Card raised className={classes.banner} key={i.toString()}>
           <Grid container spacing={3} className={classes.bannerGrid} xs={12}>
             {array?.slice(i, i + sliderItems).map((item, index) => (
-              <Grid item key={index} lg={4} sm={4} xs={4} md={4} sx={{margin:'1em'}}>
+              <Grid item key={index} lg={4} sm={4} xs={4} md={4} sx={{ margin: '1em' }}>
                 <CardComponent item={item} small={small} profile={profile} />
               </Grid>
             ))}
           </Grid>
-        </Card>
+        </Card>,
       );
     }
   }
   return (
     <Box container className={classes.paper}>
-      {title ?(<Typography variant='h2'>{title}</Typography>):null}
-      <Carousel animation="slide" autoPlay={false} cycleNavigation timeout={300} sx={{ boxShadow: 'none'}} >
+      {title ? <Typography variant="h2">{title}</Typography> : null}
+      <Carousel
+        animation="slide"
+        autoPlay={false}
+        cycleNavigation
+        timeout={300}
+        sx={{ boxShadow: 'none' }}>
         {items}
       </Carousel>
     </Box>

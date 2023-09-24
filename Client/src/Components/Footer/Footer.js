@@ -9,7 +9,8 @@ import useStyles from './styles.js';
 function Footer() {
   const classes = useStyles();
   return (
-    <Container className={classes.container} maxWidth={false} disableGutters>
+    
+    <footer className={classes.container}>
       <Grid container className={classes.content}>
         <Grid item xs={12} md={12} lg={6} className={classes.Brand}>
           <img src={memories} alt="Journey" className={classes.image} />
@@ -102,7 +103,8 @@ function Footer() {
         <Typography className={classes.gutterText}>copyright@2022</Typography>
         {/* </Grid> */}
       </Grid>
-    </Container>
+    </footer>
+ 
   );
 }
 

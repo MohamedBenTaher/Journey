@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Box,
   Typography,
@@ -9,17 +9,17 @@ import {
   Divider,
   TextField,
   Button,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { Formik, Form, Field } from "formik";
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Formik, Form, Field } from 'formik';
 import {
   getDestinationComments,
   createComment,
   updateMyComment,
   deleteComment,
-} from "../../actions/comments.js";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import DeleteIcon from "@mui/icons-material/Delete";
+} from '../../actions/comments.js';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import DeleteIcon from '@mui/icons-material/Delete';
 const useStyles = makeStyles((theme) => ({
   commentsContainer: {
     marginTop: theme.spacing(4),
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   actionButton: {
-    width: "10%",
+    width: '10%',
   },
 }));
 
@@ -56,13 +56,11 @@ const Comments = ({ entityId, entityType, user }) => {
     if (userId && entityId && values.commenttoupdate) {
       dispatch(updateMyComment(values.id, userId, values.commenttoupdate))
         .then(() => {
-          // Update the state with the updated comments
           dispatch(getDestinationComments(entityId, entityType));
-          // Reset the edit state for all comments
           setEdit(new Array(comments.length).fill(false));
         })
         .catch((error) => {
-          console.log("Error updating comment:", error.message);
+          console.log('Error updating comment:', error.message);
         });
     }
   };
@@ -108,9 +106,7 @@ const Comments = ({ entityId, entityType, user }) => {
                           <Button onClick={() => handleEdit(index)}>
                             <ModeEditIcon className={classes.actionButton} />
                           </Button>
-                          <Button
-                            onClick={() => handleDeleteComment(comment?._id)}
-                          >
+                          <Button onClick={() => handleDeleteComment(comment?._id)}>
                             <DeleteIcon className={classes.actionButton} />
                           </Button>
                         </>
@@ -123,8 +119,7 @@ const Comments = ({ entityId, entityType, user }) => {
                         commenttoupdate: comment.content,
                         id: comment._id,
                       }}
-                      onSubmit={handleSubmitEditComment}
-                    >
+                      onSubmit={handleSubmitEditComment}>
                       {({ handleSubmit }) => (
                         <Form>
                           <Field
@@ -142,8 +137,7 @@ const Comments = ({ entityId, entityType, user }) => {
                             variant="contained"
                             color="primary"
                             onClick={handleSubmit}
-                            className={classes.addCommentButton}
-                          >
+                            className={classes.addCommentButton}>
                             Edit Comment
                           </Button>
                           <Button
@@ -151,8 +145,7 @@ const Comments = ({ entityId, entityType, user }) => {
                             variant="contained"
                             color="primary"
                             onClick={() => handleCancelEdit(index)}
-                            className={classes.addCommentButton}
-                          >
+                            className={classes.addCommentButton}>
                             Cancel Edit
                           </Button>
                         </Form>
@@ -165,7 +158,7 @@ const Comments = ({ entityId, entityType, user }) => {
             ))}
           </List>
           {user && (
-            <Formik initialValues={{ comment: "" }} onSubmit={handleAddComment}>
+            <Formik initialValues={{ comment: '' }} onSubmit={handleAddComment}>
               {({ handleSubmit }) => (
                 <Form>
                   <Field
@@ -183,8 +176,7 @@ const Comments = ({ entityId, entityType, user }) => {
                     variant="contained"
                     color="primary"
                     onClick={handleSubmit}
-                    className={classes.addCommentButton}
-                  >
+                    className={classes.addCommentButton}>
                     Add Comment
                   </Button>
                 </Form>

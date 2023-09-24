@@ -4,7 +4,6 @@ import { deepPurple } from '@material-ui/core/colors';
 export default makeStyles((theme) => ({
   appBar: {
     borderRadius: 15,
-    margin: '30px 0',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -22,24 +21,23 @@ export default makeStyles((theme) => ({
   },
   image: {
     marginLeft: '10px',
-    marginTop: '5px',
   },
   toolbar: {
     display: 'flex',
     justifyContent: 'flex-end',
-    width: '400px',
+    width: 'auto',
     [theme.breakpoints.down('sm')]: {
       width: 'auto',
     },
   },
   profile: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'end',
     width: '400px',
     alignItems: 'center',
     [theme.breakpoints.down('sm')]: {
       width: 'auto',
-      marginTop: 20,
+      // marginTop: 20,
       justifyContent: 'center',
     },
   },
@@ -63,9 +61,11 @@ export default makeStyles((theme) => ({
   links: {
     textDecoration: 'none',
     color: 'white',
+    opacity:0.7,
     '&:hover': {
       // textDecoration: "underline blue ",
-      borderBottom: '2px solid #3F95EC',
+      // borderBottom: '2px solid #3F95EC',
+      opacity:1
     },
   },
   Drawer: {
@@ -97,12 +97,20 @@ export default makeStyles((theme) => ({
   profileAvatar: {
     display: 'flex',
     justifyContent: 'space-evenly',
-    width: '400px',
+    width: 'auto',
     alignItems: 'center',
+    backgroundColor:'red',
     [theme.breakpoints.down('sm')]: {
       width: 'auto',
       marginTop: 20,
       justifyContent: 'center',
     },
+    navbarText:{
+      fontSize: '20px',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      lineHeight: '20px'
+    },
+
   },
 }));

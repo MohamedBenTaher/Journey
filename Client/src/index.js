@@ -14,14 +14,14 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducers,  composeEnhancers((applyMiddleware(thunk))));
 const theme = createTheme({
   typography: {
-    fontFamily: ['Gilroy', 'sans-serif'].join(','),
+    fontFamily: ['Poppins', 'sans-serif'].join(','),
   },
   palette: {
     primary: {
-      main: '#3F95EC', // Sky Blue
+      main: '#7B61FF', // Sky Blue
     },
     secondary: {
-      main: '#FFC107', // Amber
+      main: '#FFFFFF', // Amber
     },
     success: {
       main: '#8BC34A', // Lime Green
@@ -30,7 +30,7 @@ const theme = createTheme({
       default: '#FFFFFF', // White
     },
     text: {
-      primary: '#333333', // Dark Gray
+      primary: '#c161414', // Dark Gray
     },
     error: {
       main: '#FF5722', // Deep Orange

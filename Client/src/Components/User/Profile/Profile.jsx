@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import useStyles from "./styles";
+import React, { useEffect } from 'react';
+import useStyles from './styles';
 import {
   Typography,
   Avatar,
@@ -10,16 +10,16 @@ import {
   CardContent,
   Tab,
   Tabs,
-} from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../../actions/auth";
-import DestinationCard from "../../Destination/DestinationCard/Destination";
-import SavedEventCard from "../../Event/Saved/SavedEventCard";
-import LocationCard from "../../Location/LocationCard/LocationCard";
-import PostCard from "../../Posts/PostCard/PostCard";
-import CountryCard from "../../Country/CountryCard/CountryCard";
-import CardCarousel from "../../CardCarousel/CardCarousel";
-import { Skeleton } from "@mui/material";
+} from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from '../../../actions/auth';
+import DestinationCard from '../../Destination/DestinationCard/Destination';
+import SavedEventCard from '../../Event/Saved/SavedEventCard';
+import LocationCard from '../../Location/LocationCard/LocationCard';
+import PostCard from '../../Posts/PostCard/PostCard';
+import CountryCard from '../../Country/CountryCard/CountryCard';
+import CardCarousel from '../../CardCarousel/CardCarousel';
+import { Skeleton } from '@mui/material';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -30,8 +30,7 @@ function TabPanel(props) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
+      {...other}>
       {value === index && (
         <Box sx={{ p: 3 }}>
           <Typography>{children}</Typography>
@@ -68,7 +67,7 @@ const Profile = ({ id }) => {
   const savedCities = user?.user?.savedCities;
   const savedEvents = user?.user?.savedEvents;
   console.log(
-    "my likes",
+    'my likes',
     likedPostMessages,
     likedLocations,
     likedCountries,
@@ -80,11 +79,7 @@ const Profile = ({ id }) => {
       <Paper className={classes.root} elevation={3}>
         <Grid container spacing={2} alignItems="center">
           <Grid item>
-            <Avatar
-              className={classes.avatar}
-              src={user?.user?.avatar}
-              alt={user?.user?.name}
-            />
+            <Avatar className={classes.avatar} src={user?.user?.avatar} alt={user?.user?.name} />
           </Grid>
           <Grid item>
             <Typography variant="h6">{user?.user?.name}</Typography>
@@ -111,11 +106,10 @@ const Profile = ({ id }) => {
             onChange={handleLikeChange}
             aria-label="basic tabs example"
             className={classes.tabs}
-            variant={"fullWidth"}
+            variant={'fullWidth'}
             TabIndicatorProps={{
-              style: { backgroundColor: "#1CA0E3" }, // Change this color to the desired underline color
-            }}
-          >
+              style: { backgroundColor: '#1CA0E3' }, // Change this color to the desired underline color
+            }}>
             <Tab label="Stories" />
             <Tab label="Locations" />
             <Tab label="Cities" />
@@ -125,39 +119,49 @@ const Profile = ({ id }) => {
           {likedPostMessages?.length > 0 ? (
             <>
               <TabPanel value={likedvalue} index={0}>
-                    { !isLoading ?(
+                {!isLoading ? (
                   likedPostMessages.length > 0 ? (
-                    <CardCarousel array={likedPostMessages} CardComponent={PostCard} small={true} profile={true} />
+                    <CardCarousel
+                      array={likedPostMessages}
+                      CardComponent={PostCard}
+                      small={true}
+                      profile={true}
+                    />
                   ) : (
-                    <Typography variant="body2">
-                      No Liked PostMessage
-                    </Typography>
-                  )):(
+                    <Typography variant="body2">No Liked PostMessage</Typography>
+                  )
+                ) : (
                   <Grid container spacing={3}>
-                      {Array.from(new Array(2)).map((item, index) => (
-                        <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                          <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
-                            <Skeleton variant="rounded" width={'100%'} height={300} />
-                            <Box sx={{ pt: 0.5 }}>
-                              <Skeleton />
-                              <Skeleton />
-                              <Skeleton width="60%" />
-                            </Box>
+                    {Array.from(new Array(2)).map((item, index) => (
+                      <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                        <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
+                          <Skeleton variant="rounded" width={'100%'} height={300} />
+                          <Box sx={{ pt: 0.5 }}>
+                            <Skeleton />
+                            <Skeleton />
+                            <Skeleton width="60%" />
                           </Box>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  )}
+                        </Box>
+                      </Grid>
+                    ))}
+                  </Grid>
+                )}
               </TabPanel>
               <TabPanel value={likedvalue} index={1}>
                 <Grid conatiner spacing={3}>
-                  {!isLoading ?(
-                  likedLocations.length > 0 ? (
-                    <CardCarousel array={likedLocations} CardComponent={LocationCard} small={true} profile={true} />
+                  {!isLoading ? (
+                    likedLocations.length > 0 ? (
+                      <CardCarousel
+                        array={likedLocations}
+                        CardComponent={LocationCard}
+                        small={true}
+                        profile={true}
+                      />
+                    ) : (
+                      <Typography variant="body2">No Liked Locations</Typography>
+                    )
                   ) : (
-                    <Typography variant="body2">No Liked Locations</Typography>
-                  )):(
-                  <Grid container spacing={3}>
+                    <Grid container spacing={3}>
                       {Array.from(new Array(2)).map((item, index) => (
                         <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                           <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
@@ -175,15 +179,20 @@ const Profile = ({ id }) => {
                 </Grid>
               </TabPanel>
               <TabPanel value={likedvalue} index={2}>
-                <Grid container spacing={3} sx={{width:'100%'}}>
-                  {!isLoading ?(
-                  LikedCities.length > 0 ? (
-                  <CardCarousel array={LikedCities} CardComponent={DestinationCard} small={true} profile={true} />
-
+                <Grid container spacing={3} sx={{ width: '100%' }}>
+                  {!isLoading ? (
+                    LikedCities.length > 0 ? (
+                      <CardCarousel
+                        array={LikedCities}
+                        CardComponent={DestinationCard}
+                        small={true}
+                        profile={true}
+                      />
+                    ) : (
+                      <Typography variant="body2">No Liked Cities</Typography>
+                    )
                   ) : (
-                    <Typography variant="body2">No Liked Cities</Typography>
-                  )):(
-                        <Grid container spacing={3}>
+                    <Grid container spacing={3}>
                       {Array.from(new Array(2)).map((item, index) => (
                         <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                           <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
@@ -202,14 +211,19 @@ const Profile = ({ id }) => {
               </TabPanel>
               <TabPanel value={likedvalue} index={3}>
                 <Grid spacing={2} container>
-
-                  {!isLoading ?
-                  (likedCountries.length > 0 ? (
-                  <CardCarousel array={likedCountries} CardComponent={CountryCard} small={true} profile={true} />
+                  {!isLoading ? (
+                    likedCountries.length > 0 ? (
+                      <CardCarousel
+                        array={likedCountries}
+                        CardComponent={CountryCard}
+                        small={true}
+                        profile={true}
+                      />
+                    ) : (
+                      <Typography variant="body2">No Liked Countries</Typography>
+                    )
                   ) : (
-                    <Typography variant="body2">No Liked Countries</Typography>
-                  )):(
-                       <Grid container spacing={3}>
+                    <Grid container spacing={3}>
                       {Array.from(new Array(2)).map((item, index) => (
                         <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                           <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
@@ -228,13 +242,19 @@ const Profile = ({ id }) => {
               </TabPanel>
               <TabPanel value={likedvalue} index={4}>
                 <Grid container spacing={3}>
-                  { !isLoading ?(
-                  LikedEvents.length > 0 ? (
-                    <CardCarousel array={LikedEvents} CardComponent={SavedEventCard} small={true} profile={true} />
+                  {!isLoading ? (
+                    LikedEvents.length > 0 ? (
+                      <CardCarousel
+                        array={LikedEvents}
+                        CardComponent={SavedEventCard}
+                        small={true}
+                        profile={true}
+                      />
+                    ) : (
+                      <Typography variant="body2">No Liked Events</Typography>
+                    )
                   ) : (
-                    <Typography variant="body2">No Liked Events</Typography>
-                  )):(
-                      <Grid container spacing={3}>
+                    <Grid container spacing={3}>
                       {Array.from(new Array(2)).map((item, index) => (
                         <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                           <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
@@ -260,11 +280,10 @@ const Profile = ({ id }) => {
             value={savedValue}
             onChange={handleSaveChange}
             aria-label="basic tabs example"
-            variant={"fullWidth"}
+            variant={'fullWidth'}
             TabIndicatorProps={{
-              style: { backgroundColor: "#1CA0E3" }, // Change this color to the desired underline color
-            }}
-          >
+              style: { backgroundColor: '#1CA0E3' }, // Change this color to the desired underline color
+            }}>
             <Tab label="Stories" />
             <Tab label="Locations" />
             <Tab label="Cities" />
@@ -274,65 +293,78 @@ const Profile = ({ id }) => {
           {savedLocations?.length > 0 ? (
             <>
               <TabPanel value={savedValue} index={0}>
-                  { !isLoading ?(
+                {!isLoading ? (
                   savedLocations.length > 0 ? (
-                    <CardCarousel array={savedLocations} CardComponent={LocationCard} small={true} profile={true} />
+                    <CardCarousel
+                      array={savedLocations}
+                      CardComponent={LocationCard}
+                      small={true}
+                      profile={true}
+                    />
                   ) : (
-                    <Typography variant="body2">
-                      No saved Locations
-                    </Typography>
-                  )):(
+                    <Typography variant="body2">No saved Locations</Typography>
+                  )
+                ) : (
                   <Grid container spacing={3}>
-                      {Array.from(new Array(2)).map((item, index) => (
-                        <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                          <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
-                            <Skeleton variant="rounded" width={'100%'} height={300} />
-                            <Box sx={{ pt: 0.5 }}>
-                              <Skeleton />
-                              <Skeleton />
-                              <Skeleton width="60%" />
-                            </Box>
+                    {Array.from(new Array(2)).map((item, index) => (
+                      <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                        <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
+                          <Skeleton variant="rounded" width={'100%'} height={300} />
+                          <Box sx={{ pt: 0.5 }}>
+                            <Skeleton />
+                            <Skeleton />
+                            <Skeleton width="60%" />
                           </Box>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  )}
+                        </Box>
+                      </Grid>
+                    ))}
+                  </Grid>
+                )}
               </TabPanel>
               <TabPanel value={savedValue} index={1}>
-                { !isLoading ?(
+                {!isLoading ? (
                   savedPostMessages.length > 0 ? (
-                    <CardCarousel array={savedPostMessages} CardComponent={PostCard} small={true} profile={true} />
+                    <CardCarousel
+                      array={savedPostMessages}
+                      CardComponent={PostCard}
+                      small={true}
+                      profile={true}
+                    />
                   ) : (
-                    <Typography variant="body2">
-                      No Saved Posts
-                    </Typography>
-                  )):(
+                    <Typography variant="body2">No Saved Posts</Typography>
+                  )
+                ) : (
                   <Grid container spacing={3}>
-                      {Array.from(new Array(2)).map((item, index) => (
-                        <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                          <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
-                            <Skeleton variant="rounded" width={'100%'} height={300} />
-                            <Box sx={{ pt: 0.5 }}>
-                              <Skeleton />
-                              <Skeleton />
-                              <Skeleton width="60%" />
-                            </Box>
+                    {Array.from(new Array(2)).map((item, index) => (
+                      <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                        <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
+                          <Skeleton variant="rounded" width={'100%'} height={300} />
+                          <Box sx={{ pt: 0.5 }}>
+                            <Skeleton />
+                            <Skeleton />
+                            <Skeleton width="60%" />
                           </Box>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  )}
+                        </Box>
+                      </Grid>
+                    ))}
+                  </Grid>
+                )}
               </TabPanel>
               <TabPanel value={savedValue} index={2}>
-               <Grid container spacing={3} sx={{width:'100%'}}>
-                  {!isLoading ?(
-                  savedCities.length > 0 ? (
-                  <CardCarousel array={savedCities} CardComponent={DestinationCard} small={true} profile={true} />
-
+                <Grid container spacing={3} sx={{ width: '100%' }}>
+                  {!isLoading ? (
+                    savedCities.length > 0 ? (
+                      <CardCarousel
+                        array={savedCities}
+                        CardComponent={DestinationCard}
+                        small={true}
+                        profile={true}
+                      />
+                    ) : (
+                      <Typography variant="body2">No saved Cities</Typography>
+                    )
                   ) : (
-                    <Typography variant="body2">No saved Cities</Typography>
-                  )):(
-                        <Grid container spacing={3}>
+                    <Grid container spacing={3}>
                       {Array.from(new Array(2)).map((item, index) => (
                         <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                           <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
@@ -350,15 +382,20 @@ const Profile = ({ id }) => {
                 </Grid>
               </TabPanel>
               <TabPanel value={savedValue} index={3}>
-                      <Grid spacing={2} container>
-
-                  {!isLoading ?
-                  (savedCountries.length > 0 ? (
-                  <CardCarousel array={savedCountries} CardComponent={CountryCard} small={true} profile={true} />
+                <Grid spacing={2} container>
+                  {!isLoading ? (
+                    savedCountries.length > 0 ? (
+                      <CardCarousel
+                        array={savedCountries}
+                        CardComponent={CountryCard}
+                        small={true}
+                        profile={true}
+                      />
+                    ) : (
+                      <Typography variant="body2">No Liked Countries</Typography>
+                    )
                   ) : (
-                    <Typography variant="body2">No Liked Countries</Typography>
-                  )):(
-                       <Grid container spacing={3}>
+                    <Grid container spacing={3}>
                       {Array.from(new Array(2)).map((item, index) => (
                         <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                           <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
@@ -377,13 +414,19 @@ const Profile = ({ id }) => {
               </TabPanel>
               <TabPanel value={savedValue} index={4}>
                 <Grid container spacing={3}>
-                  { !isLoading ?(
-                  savedEvents.length > 0 ? (
-                    <CardCarousel array={savedEvents} CardComponent={SavedEventCard} small={true} profile={true} />
+                  {!isLoading ? (
+                    savedEvents.length > 0 ? (
+                      <CardCarousel
+                        array={savedEvents}
+                        CardComponent={SavedEventCard}
+                        small={true}
+                        profile={true}
+                      />
+                    ) : (
+                      <Typography variant="body2">No Saved Events</Typography>
+                    )
                   ) : (
-                    <Typography variant="body2">No Saved Events</Typography>
-                  )):(
-                      <Grid container spacing={3}>
+                    <Grid container spacing={3}>
                       {Array.from(new Array(2)).map((item, index) => (
                         <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                           <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
