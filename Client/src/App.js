@@ -25,8 +25,7 @@ import EventDetails from './Components/Event/EventDetails/EventDetails';
 import Profile from './Components/User/Profile/Profile';
 import NavbarSecondary from './Components/Navbar/NavbarSecondary';
 import PrivateRoute from './Components/Auth/PrivateRoute';
-import { signOut, signin ,getUser} from './actions/auth';
-import { checkTokenValidity } from './utlis/auth';
+import {authCheck} from './actions/auth';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
@@ -34,32 +33,24 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 const  App = () => {
   const user = useSelector((state) => state.auth.user);
   const isLoggedIn=useSelector((state) => state.auth.isLoggedIn);
+  const state=useSelector((state) => state.auth.isLoggedIn);
+  console.log('my ayth',state)
   const dispatch = useDispatch();
   const history=useHistory()
   const { token } = useSelector((state) => state.auth);
-  useEffect(() => {
-    if (token) {
-      checkTokenValidity(token)
-        .then((userData) => {
-          dispatch(getUser(userData.id));
-        })
-        .catch(() => {
-          dispatch(signOut(history));
-        });
-    }
-  }, [dispatch, token]);
+useEffect(() => {
+  console.log('called useEffect')
+  authCheck(token)
+}, [dispatch, token]);
 
 
-
+ if(isLoggedIn==undefined) return ;
   return (
     <CssBaseline>
       <Switch>
         <Route path="/" exact component={() => <Redirect to="/stories" />} />
         <Route path="/stories" exact component={Home} />
-      </Switch>
-
-      <Switch>
-        <PrivateRoute path="/events/new/:id?" exact user={user}>
+        <PrivateRoute path="/events/new/:id?" exact user={user} isLoggedIn={isLoggedIn}>
           <NavbarSecondary />
           <EventForm />
         </PrivateRoute>
@@ -67,7 +58,7 @@ const  App = () => {
           <NavbarSecondary />
           <Events />
         </Route>
-        <Route path="/events/:id" exact>
+        <Route path="/events/:id"  isLoggedIn={user} exact>
           <NavbarSecondary />
           <EventDetails />
         </Route>
@@ -91,7 +82,7 @@ const  App = () => {
           <NavbarSecondary />
           <Destinations />
         </Route>
-        <PrivateRoute path="/destinations/new/:id?" exact user={user}>
+        <PrivateRoute path="/destinations/new/:id?" isLoggedIn={isLoggedIn} exact user={user}>
           <NavbarSecondary />
           <DestinationForm />
         </PrivateRoute>
@@ -103,7 +94,7 @@ const  App = () => {
           <NavbarSecondary />
           <LocationLayout />
         </Route>
-        <PrivateRoute path="/locations/new/:id?" exact user={user}>
+        <PrivateRoute path="/locations/new/:id?" isLoggedIn={isLoggedIn} exact user={user}>
           <NavbarSecondary />
           <LocationFom />
         </PrivateRoute>
@@ -115,7 +106,7 @@ const  App = () => {
           <NavbarSecondary />
           <ContinentLayout />
         </Route>
-        <PrivateRoute path="/continents/new/:id?" exact user={user}>
+        <PrivateRoute path="/continents/new/:id?" isLoggedIn={isLoggedIn} exact user={user}>
           <NavbarSecondary />
           <ContinentForm />
         </PrivateRoute>
@@ -127,10 +118,10 @@ const  App = () => {
           <NavbarSecondary />
           <CountryLayout />
         </Route>
-        <Route path="/countries/new/:id?" exact>
+        <PrivateRoute path="/countries/new/:id?" exact isLoggedIn={isLoggedIn} >
           <NavbarSecondary />
           <CountryForm />
-        </Route>
+        </PrivateRoute>
         <Route path="/countries/:id" exact>
           <NavbarSecondary />
           <CountryDetail />
@@ -139,7 +130,7 @@ const  App = () => {
           {!user ? <Auth /> : <Redirect to="/stories" />}
         </Route>
         <Route element={<PrivateRoute />}>
-          <PrivateRoute path="/user-profile" exact isAuthenticated={isLoggedIn}>
+          <PrivateRoute path="/user-profile" exact isLoggedIn={isLoggedIn}>
             <NavbarSecondary />
             <Profile id={user?.result?._id} />
           </PrivateRoute>
