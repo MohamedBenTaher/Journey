@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   AppBar,
   Avatar,
   Button,
-  Toolbar,
   Typography,
   Drawer,
   IconButton,
@@ -15,9 +14,7 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import decode from 'jwt-decode';
-import title from '../../Images/title.png';
-import memories from '../../Images/journey.png';
+import logoDark from '../../assets/images/logoDark.png';
 import useStyles from './secondaryStyles.js';
 import { signOut } from '../../actions/auth';
 
@@ -25,35 +22,20 @@ function NavbarSecondary() {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const user=useSelector((state)=>state.auth.user)
+  const user = useSelector((state) => state.auth.user);
   const [isOpen, setIsOpen] = useState(false);
   const classes = useStyles();
-  // useEffect(() => {
-  //   const token = user?.token;
-  //   if (token) {
-  //     const decoded = decode(token);
-  //     if (decode.exp * 1000 < new Date().getTime()) dispatch({ type: 'LOGOUT' });
-  //   }
-  //   setUser(JSON.parse(localStorage.getItem('profile')));
-  // }, [location]);
-  // const Logout = () => {
-  //   dispatch({ type: 'LOGOUT' });
-  //   history.push('/');
-  //   setUser(null);
-  // };
-
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const Logout = () => {
-   dispatch(signOut(history));
+    dispatch(signOut());
+    history.push("/")
   };
   return (
     <AppBar className={classes.appBar} position="static" elevation={0}>
       <Grid className={classes.brandContainer}>
-        <Link to="/" style={{ textDecoration: 'none' }}>
-          <Typography variant="h2" className={classes.title}>
-            Journey
-          </Typography>
+        <Link to="/" style={{ width: 'auto', height: 'auto' }}>
+          <img className={classes.image} src={logoDark} alt="Journey" height={36} />
         </Link>
         {isMobile && (
           <>
@@ -61,8 +43,7 @@ function NavbarSecondary() {
               anchor="right"
               className={classes.Drawer}
               open={isOpen}
-              onClose={() => setIsOpen(false)}
-            >
+              onClose={() => setIsOpen(false)}>
               <Box className={classes.Drawer}>
                 <Link to="/" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
                   <Typography>Home</Typography>
@@ -70,8 +51,7 @@ function NavbarSecondary() {
                 <Link
                   to="/destinations"
                   className={classes.linksDrawer}
-                  onClick={() => setIsOpen(false)}
-                >
+                  onClick={() => setIsOpen(false)}>
                   <Typography>Top Destinations</Typography>
                 </Link>
                 <Link to="/events" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
@@ -80,22 +60,19 @@ function NavbarSecondary() {
                 <Link
                   to="/countries"
                   className={classes.linksDrawer}
-                  onClick={() => setIsOpen(false)}
-                >
+                  onClick={() => setIsOpen(false)}>
                   <Typography>Countries</Typography>
                 </Link>
                 <Link
                   to="/locations"
                   className={classes.linksDrawer}
-                  onClick={() => setIsOpen(false)}
-                >
+                  onClick={() => setIsOpen(false)}>
                   <Typography>Top Locations</Typography>
                 </Link>
                 <Link
                   to="/continents"
                   className={classes.linksDrawer}
-                  onClick={() => setIsOpen(false)}
-                >
+                  onClick={() => setIsOpen(false)}>
                   <Typography>Continents</Typography>
                 </Link>
               </Box>
@@ -113,52 +90,65 @@ function NavbarSecondary() {
         )}
       </Grid>
       {!isMobile && (
-        <>
-          <Link to="/" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-            <Typography>Home</Typography>
-          </Link>
-          <Link to="/destinations" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-            <Typography>Top Destinations</Typography>
-          </Link>
-          <Link to="/events" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-            <Typography>Upcoming Events</Typography>
-          </Link>
-          <Link to="/countries" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-            <Typography>Countries</Typography>
-          </Link>
-          <Link to="/locations" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-            <Typography>Top Locations</Typography>
-          </Link>
-          <Link to="/continents" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-            <Typography>Continents</Typography>
-          </Link>
-        </>
+        <Grid
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '80%',
+          }}
+          container
+          spacing={4}
+          direction="row">
+          <Grid item>
+            <Link to="/" className={classes.linksDrawer}>
+              <Typography variant="p">Explore</Typography>
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link to="/destinations" className={classes.linksDrawer}>
+              <Typography variant="p">Top Destinations</Typography>
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link to="/locations" className={classes.linksDrawer}>
+              <Typography variant="p">Top Locations</Typography>
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link to="/countries" className={classes.linksDrawer}>
+              <Typography variant="p">Countries</Typography>
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link to="/events" className={classes.linksDrawer}>
+              <Typography variant="p">Upcoming events</Typography>
+            </Link>
+          </Grid>
+        </Grid>
       )}
-      <Toolbar className={classes.toolbar}>
+      <Grid className={classes.toolbar}>
         {user ? (
           <div className={classes.profile}>
             <Link to="/user-profile" className={classes.profileAvatar}>
-              <Avatar
-                className={classes.purple}
-                alt={user?.user?.name}
-                src={user?.user?.imageUrl}
-              >
+              <Avatar className={classes.purple} alt={user?.user?.name} src={user?.user?.imageUrl}>
                 {user?.user?.name?.charAt(0)}
               </Avatar>
               <Typography className={classes.userName} variant="h6">
-                {user?.user?.name}
+                {user?.result?.name}
               </Typography>
             </Link>
-            <Button variant="contained" className={classes.logout} onClick={()=>Logout()}>
+            <Button variant="contained" color="primary" className={classes.logout} onClick={()=>Logout()}>
               Logout
             </Button>
           </div>
         ) : (
-          <Button component={Link} to="/auth" variant="contained" color="primary">
-            Sign-In
-          </Button>
+          <Link to="/auth/">
+            <Button variant="contained" color="primary">
+              Sign-In
+            </Button>
+          </Link>
         )}
-      </Toolbar>
+      </Grid>
       <IconButton />
     </AppBar>
   );

@@ -6,7 +6,7 @@ import auth from '../Middleware/auth.js'
 
 router.get('/search', getDestinationsBySearch);
 router.get('/', getDestinations);
-router.get('/top', getTopDestinations);
+router.get('/popular', getTopDestinations);
 router.get('/:id', getDestination);
 router.post('/', auth, createDestination);
 router.patch('/:id', auth, updateDestination)

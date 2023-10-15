@@ -3,12 +3,11 @@ import { deepPurple } from '@material-ui/core/colors';
 
 export default makeStyles((theme) => ({
   appBar: {
-    borderRadius: 15,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '10px 0px',
+    // padding: '10px 0px',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
     },
@@ -62,10 +61,10 @@ export default makeStyles((theme) => ({
     textDecoration: 'none',
     color: 'white',
     opacity:0.7,
+    transition: 'font-size 0.2s',
     '&:hover': {
-      // textDecoration: "underline blue ",
-      // borderBottom: '2px solid #3F95EC',
-      opacity:1
+      opacity:1,
+      fontSize: '1.1em',
     },
   },
   Drawer: {
@@ -79,9 +78,10 @@ export default makeStyles((theme) => ({
   linksDrawer: {
     textDecoration: 'none',
     color: 'black',
+    transition: 'font-size 0.2s',
     '&:hover': {
-      borderBottom: '2px solid #3F95EC',
-      // textDecoration: "underline blue ",
+      opacity:1,
+      fontSize: '1.1em',
     },
   },
   navLinks: {
@@ -99,7 +99,7 @@ export default makeStyles((theme) => ({
     justifyContent: 'space-evenly',
     width: 'auto',
     alignItems: 'center',
-    backgroundColor:'red',
+    backgroundColor:'transparent',
     [theme.breakpoints.down('sm')]: {
       width: 'auto',
       marginTop: 20,

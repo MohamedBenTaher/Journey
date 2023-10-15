@@ -5,15 +5,17 @@ import s3 from '../awsConfig.js'
 import { v4 as uuidv4 } from 'uuid';
 import User from "../Models/user.js";
 
-export const  getTopDestinations= async(req,res) => {
-    try {
-        const destinations=await Destination.find().sort((a,b)=>(a.upvotes-a.downvotes)>(b.upvotes-b.downvotes)).limit(10);
-      
-        res.status(200).json({data:destinations})
-    } catch (error) {
-        res.status(404).json({message :error.essage})
-    }
+
+
+export const getTopDestinations = async (req, res) => {
+  try {
+    const destinations = await Destination.find().limit(6).populate("country");
+    res.status(200).json({ data: destinations });
+  } catch (error) {
+    res.status(404).json({ message: error.message }); // Fix the typo here
+  }
 }
+
 export const likeDestination = async (req, res) => {
   const { id } = req.params;
   const {userId} = req.body;

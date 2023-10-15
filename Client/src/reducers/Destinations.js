@@ -12,6 +12,7 @@ import {
   DOWNVOTE_DESTINATION,
   BOOKMARK_DESTINATION,
   CANCEL_BOOKMARK_DESTINATION,
+  FETCH_POPULAR_DESTINATIONS,
   LIKE_DESTINATION,
 } from '../constants/actionTypes';
 
@@ -43,7 +44,10 @@ const destinationReducer = (
       };
     case FETCH_DESTINATION:
       return { ...state, destination: action.payload };
-    case FETCH_DESTINATION_BY_SEARCH:
+    case FETCH_POPULAR_DESTINATIONS:
+      console.log('Reducer Received Data:', action.payload);
+      return { ...state, destinations: action.payload };
+    case FETCH_DESTINATION_BY_SEARCH :
       return { ...state, destinations: action.payload.data };
     case CREATE_DESTINATION:
       return { ...state, destinations: action.payload };

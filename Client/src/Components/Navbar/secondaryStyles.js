@@ -1,13 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { deepPurple } from '@material-ui/core/colors';
 
 export default makeStyles((theme) => ({
   appBar: {
     // borderRadius: 15,
-
+    backgroundColor:'red',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     backgroundColor: 'transparent',
     padding: '10px 0px',
@@ -15,6 +14,10 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
     },
+  },
+  image: {
+    marginLeft: '10px',
+    marginRight:'10px',
   },
   heading: {
     color: theme.palette.primary.main,
@@ -28,8 +31,8 @@ export default makeStyles((theme) => ({
   },
   toolbar: {
     display: 'flex',
-    justifyContent: 'flex-end',
-    width: '400px',
+    justifyContent: 'center',
+    width: 'auto',
     [theme.breakpoints.down('sm')]: {
       width: 'auto',
     },
@@ -57,17 +60,14 @@ export default makeStyles((theme) => ({
   brandContainer: {
     display: 'flex',
     alignItems: 'center',
-  },
-  purple: {
-    color: theme.palette.getContrastText(deepPurple[500]),
-    backgroundColor: deepPurple[500],
+    marginInline:16,
   },
   links: {
     textDecoration: 'none',
     color: 'black',
+    transition: 'font-size 0.2s',
     '&:hover': {
-      // textDecoration: "underline blue ",
-      borderBottom: '2px solid #3F95EC',
+     fontSize: '1.1em',
     },
   },
   Drawer: {
@@ -81,9 +81,9 @@ export default makeStyles((theme) => ({
   linksDrawer: {
     textDecoration: 'none',
     color: 'black',
+     transition: 'font-size 0.2s',
     '&:hover': {
-      borderBottom: '2px solid #3F95EC',
-      // textDecoration: "underline blue ",
+      fontSize: '1.1em',
     },
   },
   navLinks: {
