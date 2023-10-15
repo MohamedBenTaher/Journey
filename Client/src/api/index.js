@@ -70,7 +70,6 @@ export const bookmarkEvent = (id, userId) => API.patch(`/event/${id}/bookmark`, 
 export const cancelBookmarkEvent = (id, userId) => API.patch(`/event/${id}/cancel`, { userId });
 
 /*= ==========================Destinations========================================= */
-export const fetchTopDestinations = () => API.get('/destination/top');
 export const fetchDestinatons = (page) => API.get(`/destination?page=${page}`);
 export const fetchDestination = (id) => API.get(`/destination/${id}`);
 export const createDestionation = (newDestination) => API.post('/destination', newDestination, {
@@ -92,6 +91,7 @@ export const fetchDestinationsBySearch = (searchQuery) => API.get(
     }&season=${searchQuery.season}`,
   );
 export const fetchDestinationByCountry = (id) => API.get(`/destination/country/${id}`);
+export const fetchTopDestinations=()=>API.get(`/destination/popular`)
 export const likeDestination = (id, userId) => API.patch(`/destination/${id}/like`, { userId });
 export const bookmarkDestination = (id, userId) => API.patch(`destination/${id}/bookmark`, { userId });
 export const cancelBookmarkDestination = (id, userId) => API.patch(`destination/${id}/cancel`, { userId });
