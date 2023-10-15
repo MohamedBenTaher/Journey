@@ -45,6 +45,9 @@ const theme = createTheme({
   subtleShade: {
     main: '#E0E0E0', // Light Gray
   },
+  body:{
+    main:'#161414',
+  }
 });
 
 ReactDOM.render(

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import React, { useEffect } from 'react';
 import {
   TextField,
   Button,
@@ -9,133 +8,29 @@ import {
   MenuItem,
   Grid,
   Typography,
-} from "@material-ui/core";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import AddRounded from "@material-ui/icons/AddRounded";
-import FileInput from "../../Destination/DestinationForm/FileInput";
-import "./styles";
-import CoverImageInput from "../../Destination/DestinationForm/CoverImageInput";
-
-import ChipInput from "material-ui-chip-input";
-import { useParams } from "react-router-dom";
-import {
-  createCountry,
-  getCountry,
-  updateCountry,
-} from "../../../actions/country.js";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteS3Image } from "../../../api";
-import { getContinents } from "../../../actions/continent";
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    formControl: {
-      minWidth: 120,
-    },
-    submitButton: {
-      marginTop: theme.spacing(2),
-    },
-    heading: {
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2),
-      color: "black",
-      fontWeight: "bold",
-      fontSize: "20px",
-    },
-    form: {
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2),
-    },
-    Select: {
-      paddingLeft: 12,
-    },
-    input: {
-      display: "none",
-    },
-    previewContainer: {
-      display: "flex",
-      alignItems: "center",
-      marginBottom: theme.spacing(1),
-    },
-    previewImage: {
-      width: "100%",
-      maxWidth: 200,
-      marginRight: theme.spacing(1),
-    },
-    addButton: {
-      marginTop: theme.spacing(1),
-    },
-    dropzone: {
-      height: 150,
-      border: "2px dashed #ccc",
-      borderRadius: 5,
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      cursor: "pointer",
-    },
-    preview: {
-      display: "flex",
-      flexWrap: "wrap",
-      marginTop: theme.spacing(1),
-    },
-    imageWrapper: {
-      position: "relative",
-      width: 200,
-      height: 200,
-      margin: theme.spacing(1),
-    },
-    coverImage: {
-      width: "100%",
-      height: "100%",
-      objectFit: "cover", // crop the image to fill the container
-      objectPosition: "center",
-      borderRadius: "16px",
-    },
-    coverImageWrapper: {
-      position: "relative",
-      width: "100%",
-      height: "200px",
-      margin: theme.spacing(1),
-    },
-    image: {
-      width: "100%",
-      height: "100%",
-      objectFit: "cover", // crop the image to fill the container
-      objectPosition: "center",
-      borderRadius: "16px",
-    },
-    removeButton: {
-      position: "absolute",
-      top: -5,
-      right: -5,
-      color: "#fff",
-      backgroundColor: "#000",
-      borderRadius: "50%",
-      width: 20,
-      height: 20,
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      cursor: "pointer",
-    },
-    InputLabel: {
-      marginBottom: "1em",
-      marginTop: "1em",
-    },
-  }),
-);
+} from '@material-ui/core';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
+import AddRounded from '@material-ui/icons/AddRounded';
+import FileInput from '../../Destination/DestinationForm/FileInput';
+import './styles';
+import CoverImageInput from '../../Destination/DestinationForm/CoverImageInput';
+import useStyles from './styles';
+import ChipInput from 'material-ui-chip-input';
+import { useParams } from 'react-router-dom';
+import { createCountry, getCountry, updateCountry } from '../../../actions/country.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteS3Image } from '../../../api';
+import { getContinents } from '../../../actions/continent';
 
 const CountryForm = () => {
   const { id } = useParams();
   const { country, isLoading } = useSelector((state) => state.countries);
   const { continents } = useSelector((state) => state.continents);
-  const user = useSelector((state)=>state.auth.user)
-  const userId = user.user._id;
+  const user = useSelector((state) => state.auth.user);
   const classes = useStyles();
   const dispatch = useDispatch();
   useEffect(() => {
-    
     dispatch(getContinents());
   }, []);
   useEffect(() => {
@@ -143,24 +38,21 @@ const CountryForm = () => {
       dispatch(getCountry(id));
     }
   }, [id, dispatch]);
-  const handleSubmit = async (
-    values,
-    { setSubmitting, setFieldValue, resetForm },
-  ) => {
+  const handleSubmit = async (values, { setSubmitting, setFieldValue, resetForm }) => {
     setSubmitting(true);
     console.log(values);
 
     const formData = new FormData();
-    formData.append("title", values.title);
-    formData.append("description", values.description);
-    formData.append("continent", values.continent);
-    formData.append("user", user?.result?._id);
-    formData.append("coverImage", values.coverImage[0]); // Assuming only one file is selected
+    formData.append('title', values.title);
+    formData.append('description', values.description);
+    formData.append('continent', values.continent);
+    formData.append('user', user?.result?._id);
+    formData.append('coverImage', values.coverImage[0]); // Assuming only one file is selected
     values.images.forEach((image) => {
-      formData.append("images", image);
+      formData.append('images', image);
     });
     values.tags.forEach((tag) => {
-      formData.append("tags", tag);
+      formData.append('tags', tag);
     });
     if (country) {
       dispatch(updateCountry(country?._id, formData));
@@ -173,22 +65,22 @@ const CountryForm = () => {
   };
 
   if (!user) {
-    return; // `user` is null in the first render
+    return;
   }
 
   return (
     <>
       <Typography variant="h2" className={classes.heading}>
-        {!country ? "Add a new country" : "Update this country"}
+        {!country ? 'Add a new country' : 'Update this country'}
       </Typography>
       <Formik
         enableReinitialize
         initialValues={{
-          title: country ? country?.title : "",
-          description: country ? country?.description : "",
-          continent: country ? country?.country : "",
+          title: country ? country?.title : '',
+          description: country ? country?.description : '',
+          continent: country ? country?.country : '',
           user: country ? user?.result?._id : country?.user,
-          coverImage: country ? country?.coverImage : "",
+          coverImage: country ? country?.coverImage : '',
           images: country ? country?.images : [],
           tags: country ? country?.tags : [],
         }}
@@ -206,8 +98,7 @@ const CountryForm = () => {
         onSubmit={(values, { setSubmitting, setFieldValue, resetForm }) => {
           handleSubmit(values, { setSubmitting, setFieldValue, resetForm });
           setSubmitting(false);
-        }}
-      >
+        }}>
         {({
           values,
           errors,
@@ -237,18 +128,14 @@ const CountryForm = () => {
                         className={classes.removeButton}
                         onClick={async (e) => {
                           e.preventDefault();
-                          if (
-                            country?.coverImage &&
-                            typeof values.coverImage === "string"
-                          ) {
+                          if (country?.coverImage && typeof values.coverImage === 'string') {
                             const deleteImage = await deleteS3Image(
                               country?._id,
                               values.coverImage,
                             );
                           }
-                          setFieldValue("coverImage", "");
-                        }}
-                      >
+                          setFieldValue('coverImage', '');
+                        }}>
                         <Typography variant="caption">x</Typography>
                       </div>
                     </div>
@@ -257,14 +144,8 @@ const CountryForm = () => {
               </Grid>
               {!values.coverImage && (
                 <Grid item xs={12}>
-                  <InputLabel className={classes.InputLabel}>
-                    Cover Image
-                  </InputLabel>
-                  <Field
-                    name="coverImage"
-                    fullWidth
-                    component={CoverImageInput}
-                  />
+                  <InputLabel className={classes.InputLabel}>Cover Image</InputLabel>
+                  <Field name="coverImage" fullWidth component={CoverImageInput} />
                 </Grid>
               )}
 
@@ -288,7 +169,7 @@ const CountryForm = () => {
                   fullWidth
                   InputProps={{
                     style: {
-                      minHeight: "100px",
+                      minHeight: '100px',
                     },
                   }}
                   as={TextField}
@@ -306,18 +187,13 @@ const CountryForm = () => {
                     onBlur={handleBlur}
                     variant="outlined"
                     onChange={handleChange}
-                    value={values.continent}
-                  >
+                    value={values.continent}>
                     {continents &&
                       continents?.map((continent) => (
-                        <MenuItem value={continent?._id}>
-                          {continent.name}
-                        </MenuItem>
+                        <MenuItem value={continent?._id}>{continent.name}</MenuItem>
                       ))}
                   </Field>
-                  {touched.type && Boolean(errors.type) && (
-                    <div>{errors.type}</div>
-                  )}
+                  {touched.type && Boolean(errors.type) && <div>{errors.type}</div>}
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
@@ -327,12 +203,12 @@ const CountryForm = () => {
                   value={values.tags}
                   onAdd={(chip) => {
                     console.log(values.tags);
-                    setFieldValue("tags", [...values.tags, chip]);
+                    setFieldValue('tags', [...values.tags, chip]);
                   }}
                   onDelete={(chip, index) => {
                     const newTags = [...values.tags];
                     newTags.splice(index, 1);
-                    setFieldValue("tags", newTags);
+                    setFieldValue('tags', newTags);
                   }}
                   fullWidth
                 />
@@ -355,19 +231,16 @@ const CountryForm = () => {
                           className={classes.removeButton}
                           onClick={async (e) => {
                             e.preventDefault();
-                            if (country && typeof image === "string") {
-                              await deleteS3Image(country._id, image).then(
-                                () => {
-                                  console.log("image deleted successfully");
-                                },
-                              );
+                            if (country && typeof image === 'string') {
+                              await deleteS3Image(country._id, image).then(() => {
+                                console.log('image deleted successfully');
+                              });
                             }
                             setFieldValue(
-                              "images",
+                              'images',
                               values.images?.filter((_, i) => i !== index),
                             );
-                          }}
-                        >
+                          }}>
                           <Typography variant="caption">x</Typography>
                         </div>
                       </div>
@@ -378,13 +251,9 @@ const CountryForm = () => {
 
               {values.images?.length < 5 ? (
                 <Grid item xs={12}>
-                  <InputLabel className={classes.InputLabel}>
-                    Country Images
-                  </InputLabel>
+                  <InputLabel className={classes.InputLabel}>Country Images</InputLabel>
                   <Field name="images" fullWidth component={FileInput} />
-                  {touched.images && errors.images && (
-                    <div className="error">{errors.images}</div>
-                  )}
+                  {touched.images && errors.images && <div className="error">{errors.images}</div>}
                 </Grid>
               ) : null}
 
@@ -395,8 +264,7 @@ const CountryForm = () => {
                   variant="contained"
                   color="primary"
                   disabled={isSubmitting}
-                  className={classes.submitButton}
-                >
+                  className={classes.submitButton}>
                   <AddRounded />
                   Add your country
                 </Button>
