@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   AppBar,
   Avatar,
@@ -23,25 +23,13 @@ import { Skeleton } from '@mui/material';
 function Navbar() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
   const { user, isLoading } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
   const classes = useStyles();
-  // useEffect(() => {
-  //   const token = user?.token;
-  //   if (token) {
-  //     const decoded = decode(token);
-  //     if (decode.exp * 1000 < new Date().getTime()) dispatch({ type: 'LOGOUT' });
-  //   }
-  //   setUser(JSON.parse(localStorage.getItem('profile')));
-  // }, [location]);
-  // const Logout = () => {
-  //   dispatch({ type: 'LOGOUT' });
-  //   history.push('/');
-  //   setUser(null);
-  // };
+
   const Logout = () => {
-    dispatch(signOut(history));
+    dispatch(signOut());
+    history.push("/")
   };
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));

@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import Navbar from '../Navbar/Navbar';
 import useStyles from './styles.js';
-import SearchBar from '../Home/SearchBar';
+import SearchBar from '../SearchBar/SearchBar';
 import axios from 'axios';
 import BgImage from '../../assets/images/bg-image.png'
 function Hero() {
@@ -34,7 +34,7 @@ function Hero() {
         setIsLoading(false);
         if(!backgroundImage){
         setBackgroundImage(BgImage);
-        console.error('Error fetching image from Unsplash:', error);
+        console.error('Error fetching image from Unsplash',response.error);
         }
       
     };
@@ -47,16 +47,12 @@ function Hero() {
   return (
     <>
       <header className={classes.heroContainer} maxWidth={false} disableGutters  style={{
-          margin: 0,
-          padding: 0,
-          height: '100vh',
+    
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          transition: 'opacity 0.5s ease-in-out',
           opacity: isLoading ? 0 : 1, 
         }}>
-        <Container>
           <Navbar />
           <Grid container className={classes.content}>
             <Grid item>
@@ -74,9 +70,8 @@ function Hero() {
           <Grid item container className={classes.SearchBar}>
             <SearchBar />
           </Grid>
-        </Container>
       </header>
-      <Container className={classes.Devider} maxWidth={false} disableGutters>
+      {/* <Container className={classes.Devider} maxWidth={false} disableGutters>
         <Grid
           container
           direction={{
@@ -108,7 +103,7 @@ function Hero() {
             </Grid>
           </Grid>
         </Grid>
-      </Container>
+      </Container> */}
     </>
   );
 }

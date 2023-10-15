@@ -129,7 +129,7 @@ function DestinationForm() {
   const { id } = useParams();
   const { destination, isLoading } = useSelector((state) => state.destinations);
   const user = useSelector((state)=>state.auth.user)
-  const userId = user.user._id;
+  const userId = user?.user?._id;
   const classes = useStyles();
   const countries = useSelector((state) => state.countries);
   const dispatch = useDispatch();
@@ -175,7 +175,7 @@ function DestinationForm() {
   return (
     <>
       <Typography variant="h2" className={classes.heading}>
-        {destination ? 'Add a new destination' : 'Update this destioanion'}
+        {!destination ? 'Add a new destination' : 'Update this destioanion'}
       </Typography>
       <Formik
         enableReinitialize

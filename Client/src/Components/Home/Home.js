@@ -9,6 +9,7 @@ import { getPostsBySearch } from '../../actions/posts.js';
 import Pagination from '../Pagination';
 import useStyles from './styles.js';
 import Hero from '../Hero/Hero.js';
+import PopularDestinations from '../Destination/PopularDestinations/PopularDestinations.jsx';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -21,7 +22,6 @@ function Home() {
 
   const query = useQuery();
   const history = useHistory();
-  const dispatch = useDispatch();
   const page = query.get('page') || 1;
   const searchQuery = query.get('searchQuery');
   const handleAdd = (tag) => {
@@ -45,10 +45,9 @@ function Home() {
     }
   };
   return (
-    <>
+    <div style={{display:'flex', flexDirection:'column'}}>
       <Hero />
-      <Grow in>
-        <Container maxWidth="xl">
+      
           <Grid
             className={classes.gridContainer}
             container
@@ -56,6 +55,7 @@ function Home() {
             alignItems="stretch"
             spacing={3}
           >
+            {/* <Grow in>
             <Grid item xs={12} sm={12} md={12}>
               <Posts setCurrentId={setCurrentId} />
               {!searchQuery && !tags.length && (
@@ -64,10 +64,11 @@ function Home() {
                 </Grid>
               )}
             </Grid>
+            </Grow> */}
+            <PopularDestinations/>
           </Grid>
-        </Container>
-      </Grow>
-    </>
+     
+    </div>
   );
 }
 

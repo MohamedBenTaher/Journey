@@ -129,7 +129,7 @@ const LocationFom = () => {
   const { id } = useParams();
   const { location, isLoading } = useSelector((state) => state.locations);
   const user = useSelector((state) => state.auth.user);
-  const userId = user.user._id;
+  const userId = user?.user?._id;
   const classes = useStyles();
   const countries = useSelector((state) => state.countries);
   const destinations = useSelector((state) => state.destinations);

@@ -1,11 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-    },
-  },
+  // root: {
+  //   '& .MuiTextField-root': {
+  //     margin: theme.spacing(1),
+  //   },
+  // },
   link: {
     textDecoration: 'none',
     fontSize: '18px',
@@ -55,7 +55,7 @@ export default makeStyles((theme) => ({
   Divider: {
     backgroundColor: 'white',
     color: 'white',
-    width: '1200x',
+    width: '100%',
   },
   gutter: {
     alignItems: 'center',

@@ -18,8 +18,19 @@ export default makeStyles((theme) => ({
   },
   gridContainer: {
     [theme.breakpoints.down('xs')]: {
-      flexDirection: 'column-reverse',
+      flexDirection: 'column',
+      alignItems:'center',
+      justifyContent:'center',
+      width:'100%',
     },
+    padding:5,
+    marginTop:25,
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'center',
+    alignSelf:'center',
+    width:'100%',
+    // backgroundColor:'red'
   },
   search: {
     alignItems: 'center',

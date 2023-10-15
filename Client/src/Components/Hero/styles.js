@@ -1,17 +1,31 @@
 import { makeStyles } from '@material-ui/core/styles';
 import hero12 from '../../Images/hero.jpg';
-
-export default makeStyles(() => ({
-  heroContainer: {
-    margin: 0,
-    padding: 0,
-    height: '100vh',
-    backgroundImage: `url(${hero12})`,
-    backgroundSize: 'cover',
-    height: '100%',
-    width: '100%',
-    backgroundRepeat: 'no-repeat',
+import BgImage from '../../assets/images/bg-image.png'
+export default makeStyles((theme) => ({
+heroContainer: {
+  margin: 0,
+  padding: '1.25em',
+  height: '100vh',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  transition: 'opacity 0.5s ease-in-out',
+  marginBottom: '1.25em',
+  borderBottomRightRadius: '1em',
+  borderBottomLeftRadius: '1em',
+  display: 'flex',
+  flexDirection: 'column',
+  columnGap: '2em',
+  rowGap: '4em',
+  [theme.breakpoints.down('xs')]: {
+    marginBottom: '30em',
   },
+  [theme.breakpoints.down('md')]: {
+    marginBottom: '30em',
+  },
+  [theme.breakpoints.up('md')]: {
+    marginBottom: 'initial',
+  },
+},
   title: {
     color: 'white',
     fontWeight: 700,
@@ -25,6 +39,9 @@ export default makeStyles(() => ({
   },
   SearchBar: {
     zIndex: 99,
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'center'
   },
   content: {
     height: '40vh',
@@ -40,7 +57,7 @@ export default makeStyles(() => ({
     fontWeight: 'bold',
   },
   body: {
-    padding: '1%',
+    padding: '10%',
     borderLeft: '2vh solid #3F95EC',
   },
   firstTitle: {
