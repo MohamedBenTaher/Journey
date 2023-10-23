@@ -32,7 +32,7 @@ function Destinations({ setCurrentId }) {
         { user?.result?.isAdmin && (
               <Grid container spacing={3} justifyContent="start">
                 <Grid item>
-                  <Link to="/countries/new/">
+                  <Link to="/destinations/new/">
                     <Button variant="contained" color="primary">
                       New Destination
                     </Button>

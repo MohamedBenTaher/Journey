@@ -3,6 +3,7 @@ import {
   CREATE_LOCATION,
   FETCH_LOCATION,
   FETCH_LOCATIONS,
+  FETCH_POPULAR_LOCATIONS,
   DELETE_LOCATION,
   FETCH_LOCATION_BY_SEARCH,
   START_LOADING_LOCATIONS,
@@ -26,8 +27,13 @@ const locationReducer = (state = { isLoadingLocations:true, locations: [] }, act
         currentPage: action.payload.currentPage,
         numberOfPages: action.payload.numrOfPages,
       };
-    case FETCH_LOCATION_BY_SEARCH:
+    case FETCH_LOCATION_BY_SEARCH :
       return {
+        ...state,
+        locations: action.payload.data,
+      };
+    case FETCH_POPULAR_LOCATIONS:
+     return {
         ...state,
         locations: action.payload.data,
       };

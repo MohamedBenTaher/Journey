@@ -32,7 +32,7 @@ export default makeStyles((theme) => ({
   profile: {
     display: 'flex',
     justifyContent: 'end',
-    width: '400px',
+    width: 'auto',
     alignItems: 'center',
     [theme.breakpoints.down('sm')]: {
       width: 'auto',
@@ -68,8 +68,8 @@ export default makeStyles((theme) => ({
     },
   },
   Drawer: {
-    width: '30vh',
-    height: '80vh',
+    width: '40vh',
+    height: '100%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -78,10 +78,11 @@ export default makeStyles((theme) => ({
   linksDrawer: {
     textDecoration: 'none',
     color: 'black',
+    fontSize:'1.3em',
     transition: 'font-size 0.2s',
     '&:hover': {
       opacity:1,
-      fontSize: '1.1em',
+      fontSize: '1.5em',
     },
   },
   navLinks: {

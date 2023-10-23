@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -7,98 +7,98 @@ import {
   Grid,
   IconButton,
   Paper,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch, useSelector } from "react-redux";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import { useParams } from "react-router-dom";
-import Carousel from 'react-material-ui-carousel'
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import { useParams } from 'react-router-dom';
+import Carousel from 'react-material-ui-carousel';
 import {
   bookmarkDestination,
   cancelBookmarkDestination,
   downvoteDestination,
   getDestination,
   upvoteDestination,
-} from "../../../actions/destinations";
-import Comments from "../../Comment/Comments";
-import { getLocationsByDestination } from "../../../actions/locations";
-import LocationCard from "../../Location/LocationCard/LocationCard";
-import CardCarousel from "../../CardCarousel/CardCarousel";
+} from '../../../actions/destinations';
+import Comments from '../../Comment/Comments';
+import { getLocationsByDestination } from '../../../actions/locations';
+import LocationCard from '../../Location/LocationCard/LocationCard';
+import CardCarousel from '../../CardCarousel/CardCarousel';
 
 const useStyles = makeStyles((theme) => ({
   coverImage: {
     height: 700,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    position: "relative",
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    position: 'relative',
   },
   title: {
     marginTop: theme.spacing(2),
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   description: {
     marginTop: theme.spacing(2),
-    textAlign: "justify",
+    textAlign: 'justify',
   },
   voteSection: {
     marginTop: theme.spacing(2),
-    width: "50%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-evenly",
+    width: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
   voteButton: {
     marginRight: theme.spacing(1),
-    backgroundColor: "#f5f5f5",
+    backgroundColor: '#f5f5f5',
     padding: theme.spacing(1),
     borderRadius: theme.spacing(1),
-    cursor: "pointer",
+    cursor: 'pointer',
   },
   voteCount: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   majorImage: {
-    height: "100%",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    borderRadius: "8px",
-    [theme.breakpoints.down("sm")]: {
-      height: "300px",
-      width: "99%",
+    height: '100%',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    borderRadius: '8px',
+    [theme.breakpoints.down('sm')]: {
+      height: '300px',
+      width: '99%',
     },
   },
   image: {
-    height: "200px",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    borderRadius: "8px",
+    height: '200px',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    borderRadius: '8px',
   },
   otherImages: {
-    backgroundSize: "cover",
-    backgroundPosition: "center",
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
   },
   saveDestination: {
-    position: "absolute",
+    position: 'absolute',
     top: theme.spacing(1),
     right: theme.spacing(1),
     zIndex: 1,
-    color: "white",
+    color: 'white',
   },
 }));
 
 const DestinationDetails = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const user = useSelector((state)=>state.auth.user)
+  const user = useSelector((state) => state.auth.user);
   const userId = user?.result?._id;
   const dispatch = useDispatch();
-  const { locations }=useSelector((state)=>state.locations)
+  const { locations } = useSelector((state) => state.locations);
   const { destination, isLoading } = useSelector((state) => state.destinations);
   const [bookmarked, setBookmarked] = useState(false);
   useEffect(() => {
     dispatch(getDestination(id));
-    dispatch(getLocationsByDestination(id))
+    dispatch(getLocationsByDestination(id));
   }, [dispatch, id]);
   useEffect(() => {
     if (destination) {
@@ -125,19 +125,11 @@ const DestinationDetails = () => {
   return (
     <>
       <CardMedia className={classes.coverImage} image={destination?.coverImage}>
-        <IconButton
-          className={classes.saveDestination}
-          onClick={handleBookmark}
-          disabled={!user}
-        >
+        <IconButton className={classes.saveDestination} onClick={handleBookmark} disabled={!user}>
           {bookmarked ? (
-            <BookmarkIcon
-              style={{ color: "white", fontSize: 32, zIndex: 99 }}
-            />
+            <BookmarkIcon style={{ color: 'white', fontSize: 32, zIndex: 99 }} />
           ) : (
-            <BookmarkBorderIcon
-              style={{ color: "white", fontSize: 32, zIndex: 99 }}
-            />
+            <BookmarkBorderIcon style={{ color: 'white', fontSize: 32, zIndex: 99 }} />
           )}
         </IconButton>
       </CardMedia>
@@ -167,12 +159,12 @@ const DestinationDetails = () => {
           </Typography>
         </div>
         <div className={classes.description}>
-          {destination?.description.split("\n").map((paragraph, index) => (
+          {destination?.description.split('\n').map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
           ))}
         </div>
         <div className={classes.imagesSection}>
-          <Grid container spacing={2} direction={{ lg: "row" }}>
+          <Grid container spacing={2} direction={{ lg: 'row' }}>
             {destination?.images?.length > 0 && (
               <Grid item xs={12} md={6} lg={6}>
                 <div
@@ -189,14 +181,10 @@ const DestinationDetails = () => {
               md={6}
               lg={6}
               spacing={2}
-              direction={{ xs: "column", md: "column", lg: "row" }}
-            >
+              direction={{ xs: 'column', md: 'column', lg: 'row' }}>
               {destination?.images?.slice(1, 6).map((image, index) => (
                 <Grid key={index} item xs={12} sm={12} md={3} lg={6}>
-                  <div
-                    className={classes.image}
-                    style={{ backgroundImage: `url(${image})` }}
-                  />
+                  <div className={classes.image} style={{ backgroundImage: `url(${image})` }} />
                 </Grid>
               ))}
             </Grid>
@@ -210,7 +198,14 @@ const DestinationDetails = () => {
           </CardContent>
         </Card>
       )}
-     <CardCarousel array={locations?.data?.locations} CardComponent={LocationCard} small={true} title={'Best Locations'}/>
+      {locations?.data?.locations > 0 && (
+        <CardCarousel
+          array={locations?.data?.locations}
+          CardComponent={LocationCard}
+          small={true}
+          title={'Best Locations'}
+        />
+      )}
     </>
   );
 };

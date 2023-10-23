@@ -13,17 +13,19 @@ import {
   FETCH_LOCATION,
   CANCEL_BOOKMARK_LOCATION,
   BOOKMARK_LOCATION,
-  LOCATION_FETCH_ERROR
+  LOCATION_FETCH_ERROR,
+  FETCH_POPULAR_LOCATIONS,
 } from '../constants/actionTypes';
 
 export const getTopLocations = () => async (dispatch) => {
   try {
+    console.log('called top locations')
     dispatch({ type: START_LOADING_LOCATIONS });
     const {
       data: { data },
     } = await api.fetchTopLocations();
-
-    dispatch({ type: FETCH_LOCATIONS, payload: { data } });
+    console.log('fetched locations',data)
+    dispatch({ type: FETCH_POPULAR_LOCATIONS, payload: { data } });
     dispatch({ type: END_LOADING_LOCATIONS });
   } catch (error) {
     console.log(error.message);

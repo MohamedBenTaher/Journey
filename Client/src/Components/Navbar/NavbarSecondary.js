@@ -15,6 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import logoDark from '../../assets/images/logoDark.png';
+import logo from '../../assets/images/logo.png';
 import useStyles from './secondaryStyles.js';
 import { signOut } from '../../actions/auth';
 
@@ -29,7 +30,7 @@ function NavbarSecondary() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const Logout = () => {
     dispatch(signOut());
-    history.push("/")
+    history.push('/');
   };
   return (
     <AppBar className={classes.appBar} position="static" elevation={0}>
@@ -44,36 +45,40 @@ function NavbarSecondary() {
               className={classes.Drawer}
               open={isOpen}
               onClose={() => setIsOpen(false)}>
+             
               <Box className={classes.Drawer}>
+               <Link to="/" style={{ width: 'auto', height: 'auto' }}>
+                <img className={classes.image} src={logoDark} alt="Journey" height={36} />
+              </Link>
                 <Link to="/" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-                  <Typography>Home</Typography>
+                  Home
                 </Link>
                 <Link
                   to="/destinations"
                   className={classes.linksDrawer}
                   onClick={() => setIsOpen(false)}>
-                  <Typography>Top Destinations</Typography>
+                  Top Destinations
                 </Link>
                 <Link to="/events" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-                  <Typography>Upcoming Events</Typography>
+                  Upcoming Events
                 </Link>
                 <Link
                   to="/countries"
                   className={classes.linksDrawer}
                   onClick={() => setIsOpen(false)}>
-                  <Typography>Countries</Typography>
+                  Countries
                 </Link>
                 <Link
                   to="/locations"
                   className={classes.linksDrawer}
                   onClick={() => setIsOpen(false)}>
-                  <Typography>Top Locations</Typography>
+                  Top Locations
                 </Link>
                 <Link
                   to="/continents"
                   className={classes.linksDrawer}
                   onClick={() => setIsOpen(false)}>
-                  <Typography>Continents</Typography>
+                  Continents
                 </Link>
               </Box>
             </Drawer>
@@ -137,7 +142,11 @@ function NavbarSecondary() {
                 {user?.result?.name}
               </Typography>
             </Link>
-            <Button variant="contained" color="primary" className={classes.logout} onClick={()=>Logout()}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.logout}
+              onClick={() => Logout()}>
               Logout
             </Button>
           </div>

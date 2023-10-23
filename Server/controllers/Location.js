@@ -9,7 +9,7 @@ import User from "../Models/user.js";
 
 export const  getTopLocations= async(req,res) => {
     try {
-        const locations=await Location.find().limit(10);
+        const locations=await Location.find().limit(4).populate("country").populate("destination");
         res.status(200).json({data:locations})
     } catch (error) {
         res.status(404).json({message :error.essage})

@@ -16,6 +16,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import logo from '../../assets/images/logo.png';
+import logoDark from '../../assets/images/logoDark.png';
 import useStyles from './styles';
 import { signOut } from '../../actions/auth';
 import { Skeleton } from '@mui/material';
@@ -29,7 +30,7 @@ function Navbar() {
 
   const Logout = () => {
     dispatch(signOut());
-    history.push("/")
+    history.push('/');
   };
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -50,41 +51,44 @@ function Navbar() {
               open={isOpen}
               onClose={() => setIsOpen(false)}>
               <Box className={classes.Drawer}>
+                <Link to="/" style={{ width: 'auto', height: 'auto' }}>
+                  <img className={classes.image} src={logoDark} alt="Journey" height={36} />
+                </Link>
                 <Link to="/" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-                  <Typography>Home</Typography>
+                  Home
                 </Link>
                 <Link
                   to="/destinations"
                   className={classes.linksDrawer}
                   onClick={() => setIsOpen(false)}>
-                  <Typography className={classes.navbarText}>Top Destinations</Typography>
+                  Top Destinations
                 </Link>
                 <Link to="/events" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-                  <Typography>Upcoming Events</Typography>
+                  Upcoming Events
                 </Link>
                 <Link
                   to="/countries"
                   className={classes.linksDrawer}
                   onClick={() => setIsOpen(false)}>
-                  <Typography>Countries</Typography>
+                  Countries
                 </Link>
                 <Link
                   to="/locations"
                   className={classes.linksDrawer}
                   onClick={() => setIsOpen(false)}>
-                  <Typography>Top Locations</Typography>
+                  Top Locations
                 </Link>
                 <Link
                   to="/continents"
                   className={classes.linksDrawer}
                   onClick={() => setIsOpen(false)}>
-                  <Typography>Continents</Typography>
+                  Continents
                 </Link>
                 <Link to="/" className={classes.linksDrawer}>
-                  <Typography>Blog</Typography>
+                  Blog
                 </Link>
                 <Link to="/" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
-                  <Typography>About us</Typography>
+                  About us
                 </Link>
               </Box>
             </Drawer>
@@ -158,7 +162,12 @@ function Navbar() {
             </Button>
           </div>
         ) : (
-          <Button component={Link} to="/auth" variant="contained" color="primary" style={{whiteSpace: 'nowrap'}}>
+          <Button
+            component={Link}
+            to="/auth"
+            variant="contained"
+            color="primary"
+            style={{ whiteSpace: 'nowrap' }}>
             Sign-In
           </Button>
         )}

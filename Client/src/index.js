@@ -21,7 +21,7 @@ const theme = createTheme({
       main: '#7B61FF', // Sky Blue
     },
     secondary: {
-      main: '#FFFFFF', // Amber
+      main: '#F6F4FF', // Amber
     },
     success: {
       main: '#8BC34A', // Lime Green

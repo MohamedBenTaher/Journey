@@ -71,8 +71,8 @@ export default makeStyles((theme) => ({
     },
   },
   Drawer: {
-    width: '30vh',
-    height: '40vh',
+    width: '40vh',
+    height: '100%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -81,9 +81,11 @@ export default makeStyles((theme) => ({
   linksDrawer: {
     textDecoration: 'none',
     color: 'black',
-     transition: 'font-size 0.2s',
+    fontSize:'1.3em',
+    transition: 'font-size 0.2s',
     '&:hover': {
-      fontSize: '1.1em',
+      opacity:1,
+      fontSize: '1.5em',
     },
   },
   navLinks: {

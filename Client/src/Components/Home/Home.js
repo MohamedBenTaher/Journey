@@ -10,6 +10,7 @@ import Pagination from '../Pagination';
 import useStyles from './styles.js';
 import Hero from '../Hero/Hero.js';
 import PopularDestinations from '../Destination/PopularDestinations/PopularDestinations.jsx';
+import PopularLocations from '../Location/PopularLocations/PopularLocations.jsx';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -66,6 +67,7 @@ function Home() {
             </Grid>
             </Grow> */}
             <PopularDestinations/>
+            <PopularLocations/>
           </Grid>
      
     </div>

@@ -29,35 +29,35 @@ function PopularDestinations({ setCurrentId }) {
   console.log('test');
   return (
     <Grid container className={classes.root}>
-      <Typography className={classes.Title}>Popular Destiantions</Typography>
-      <>
-        <div className={classes.mainContainer}>
-          {isLoadingDestinations ? (
-            <Grid container spacing={3}>
-              {Array.from(new Array(3)).map((item, index) => (
-                <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                  <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
-                    <Skeleton variant="rounded" width={'100%'} height={300} />
-                    <Box sx={{ pt: 0.5 }}>
-                      <Skeleton />
-                      <Skeleton />
-                      <Skeleton width="60%" />
-                    </Box>
+      <Grid style={{ alignSelf: 'start', padding: '3em' }} spacing={3}>
+        <Typography className={classes.Title}>Popular Destiantions</Typography>
+      </Grid>
+      <div className={classes.mainContainer}>
+        {isLoadingDestinations ? (
+          <Grid container spacing={3}>
+            {Array.from(new Array(3)).map((item, index) => (
+              <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
+                  <Skeleton variant="rounded" width={'100%'} height={300} />
+                  <Box sx={{ pt: 0.5 }}>
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton width="60%" />
                   </Box>
-                </Grid>
-              ))}
-            </Grid>
-          ) : (
-            <Grid container spacing={3} justifyContent="center" className={classes.Container}>
-              {destinations?.map((destination) => (
-                <Grid key={destination._id} item xs={12} sm={6} md={2} lg={2}>
-                  <PopularDestinationCard item={destination} setCurrentId={setCurrentId} />
-                </Grid>
-              ))}
-            </Grid>
-          )}
-        </div>
-      </>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+        ) : (
+          <Grid container spacing={3} justifyContent="center" className={classes.Container}>
+            {destinations?.map((destination) => (
+              <Grid key={destination._id} item xs={12} sm={6} md={2} lg={2}>
+                <PopularDestinationCard item={destination} setCurrentId={setCurrentId} />
+              </Grid>
+            ))}
+          </Grid>
+        )}
+      </div>
     </Grid>
   );
 }

@@ -1,20 +1,15 @@
-import { Rating } from "@mui/material";
-import React from "react";
+import { Rating } from '@mui/material';
+import React from 'react';
 
-const RatingComponent = ({
-  field,
-  form: { setFieldValue },
-  handleSubmit,
-  userId,
-  id,
-  avgRating,
-}) => {
+const RatingComponent = ({ field, form = {}, handleSubmit, userId, id, avgRating, readOnly }) => {
   return (
     <Rating
       name="simple-controlled"
-      value={field.value}
+      value={readOnly ? avgRating : field.value}
+      style={{color:'red'}}
+      disabled={readOnly}
       onChange={(event, newValue) => {
-        setFieldValue(field.name, newValue);
+        form?.setFieldValue(field.name, newValue);
         handleSubmit(newValue);
       }}
     />

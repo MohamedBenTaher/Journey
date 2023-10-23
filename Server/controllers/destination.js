@@ -12,7 +12,7 @@ export const getTopDestinations = async (req, res) => {
     const destinations = await Destination.find().limit(6).populate("country");
     res.status(200).json({ data: destinations });
   } catch (error) {
-    res.status(404).json({ message: error.message }); // Fix the typo here
+    res.status(404).json({ message: error.message });
   }
 }
 

@@ -5,8 +5,16 @@ export default makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'start',
+    flexDirection:'column',
     width: '100%',
-    padding: '2em',
+  },
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'left',
+    flexDirection:'column',
+    width: '100%',
+    padding:'3em'
   },
   Container:{
     display: 'flex',
@@ -26,12 +34,13 @@ export default makeStyles((theme) => ({
   ul: {
     justifyContent: 'space-around',
   },
-  Title:{
-    color:  '#161414',
-    fontFamily: 'Poppins',
-    fontSize: '32px',
-    fontstyle: 'normal',
-    fontWeight: '600',
-    lineHeight: '48px',
-  }
+  Title: {
+  color: '#161414',
+  fontFamily: 'Poppins',
+  fontSize: '32px',
+  fontstyle: 'normal',
+  fontWeight: '600',
+  lineHeight: '48px',
+  textAlign: 'left', // Add this line to align the text to the left
+}
 }));

@@ -33,10 +33,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 const  App = () => {
   const user = useSelector((state) => state.auth.user);
   const isLoggedIn=useSelector((state) => state.auth.isLoggedIn);
-  const state=useSelector((state) => state.auth.isLoggedIn);
-  console.log('my ayth',state)
   const dispatch = useDispatch();
-  const history=useHistory()
   const { token } = useSelector((state) => state.auth);
 useEffect(() => {
   console.log('called useEffect')
