@@ -5,20 +5,21 @@ import {
   DELETE_EVENT,
   FETCH_EVENT,
   FETCH_EVENT_BY_SEARCH,
-  START_LOADING,
-  END_LOADING,
+  START_LOADING_EVENTS,
+  END_LOADING_EVENTS,
   FETCH_EVENTS_BY_CREATOR,
   ATTEND_EVENT,
   CANCEL_EVENT,
   BOOKMARK_EVENT,
   CANCEL_BOOKMARK_EVENT,
+  FETCH_TOP_EVENTS
 } from '../constants/actionTypes';
 
 const eventReducer = (state = { isLoadingEvents: true, events: [] }, action) => {
   switch (action.type) {
-    case START_LOADING:
+    case START_LOADING_EVENTS:
       return { ...state, isLoadingEvents: true };
-    case END_LOADING:
+    case END_LOADING_EVENTS:
       return { ...state, isLoadingEvents: false };
     case FETCH_EVENTS:
       return {
@@ -29,7 +30,8 @@ const eventReducer = (state = { isLoadingEvents: true, events: [] }, action) => 
       };
     case FETCH_EVENT:
       return { ...state, event: action.payload };
-
+    case FETCH_TOP_EVENTS:
+      return { ...state, events: action.payload.data };
     case FETCH_EVENTS_BY_CREATOR:
       return { ...state, events: action.payload.data };
     case CREATE_EVENT:

@@ -3,18 +3,31 @@ import s3 from '../awsConfig.js'
 import { v4 as uuidv4 } from 'uuid';
 import User from "../Models/user.js";
 import PostMessage from "../Models/PostMessage.js";
+import Comment from '../Models/Comment.js'; 
 
-export const  getTopPosts= async(req,res) => {
-    PostMessage.find()
-    .sort({ likes: -1 })
-    .exec(function(err, posts) {
-      if (err) {
-        res.status(500).json({ error: err.message });
-      } else {
-        res.json(posts);
-      }
-    });
-}
+export const getTopPosts = async (req, res) => {
+  try {
+    const posts = await PostMessage.find()
+      .populate('creator')
+      .sort({ likes: -1 })
+      .limit(2)
+      .exec();
+
+    const postsWithComments = await Promise.all(
+      posts.map(async (post) => {
+        const comments = await Comment.find({
+          entity: { type: 'PostMessage', entityId: post._id },
+        }).populate('user'); 
+        return { ...post.toObject(), comments };
+      })
+    );
+
+    res.json(postsWithComments);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 export const  getPosts= async(req,res) => {
     const {page}=req.query;
     try {

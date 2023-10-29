@@ -7,6 +7,7 @@ export const LIKE = 'LIKE';
 export const START_LOADING = 'START_LOADING';
 export const END_LOADING = 'END_LOADING';
 export const FETCH_POST = 'FETCH_POST';
+export const FETCH_TOP_POSTS='FETCH_TOP_POSTS';
 export const COMMENT = 'COMMENT';
 export const FETCH_BY_CREATOR = 'FETCH_BY_CREATOR';
 
@@ -18,6 +19,7 @@ export const END_LOADING_USER = 'END_LOADING_USER';
 export const AUTH_CHECK = 'AUTH_CHECK';
 
 export const FETCH_EVENTS = 'FETCH_EVENTS';
+export const FETCH_TOP_EVENTS='FETCH_TOP_EVENTS';
 export const FETCH_EVENT_BY_SEARCH = 'FETCH_EVENTS_BY_SEARCH';
 export const FETCH_EVENTS_BY_CREATOR = 'FETCH_EVENTS_BY_CREATOR';
 export const START_LOADING_EVENTS = 'START_LOADING_EVENTS';

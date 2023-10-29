@@ -11,6 +11,8 @@ import useStyles from './styles.js';
 import Hero from '../Hero/Hero.js';
 import PopularDestinations from '../Destination/PopularDestinations/PopularDestinations.jsx';
 import PopularLocations from '../Location/PopularLocations/PopularLocations.jsx';
+import PopularPosts from '../Posts/PopularPosts/PopularPosts.jsx';
+import PopularEvents from '../Event/PopularEvents.jsx/PopularEvents.jsx';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -68,6 +70,8 @@ function Home() {
             </Grow> */}
             <PopularDestinations/>
             <PopularLocations/>
+            <PopularPosts/>
+            <PopularEvents/>
           </Grid>
      
     </div>

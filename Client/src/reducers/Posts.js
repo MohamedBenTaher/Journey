@@ -11,6 +11,7 @@ import {
   FETCH_BY_CREATOR,
   CANCEL_BOOKMARK_POST,
   BOOKMARK_POST,
+  FETCH_TOP_POSTS,
 } from '../constants/actionTypes';
 
 const PostReducer = (state = { isLoadingPosts: true, posts: [] }, action) => {
@@ -25,6 +26,11 @@ const PostReducer = (state = { isLoadingPosts: true, posts: [] }, action) => {
         posts: action.payload.data,
         currentPage: action.payload.currentPage,
         numberOfPages: action.payload.numrOfPages,
+      };
+      case FETCH_TOP_POSTS:
+      return {
+        ...state,
+        posts: action.payload.data,
       };
     case FETCH_POST:
       return { ...state, post: action.payload };
@@ -51,23 +57,12 @@ const PostReducer = (state = { isLoadingPosts: true, posts: [] }, action) => {
         ...state,
         posts: state.posts.map((post) => (post._id === action.payload._id ? action.payload : post)),
       };
-
-    case LIKE:
-      return {
-        ...state,
-        posts: state.posts.map((post) => {
-          if (post._id === action.payload._id) {
-            return action.payload;
-          }
-          return post;
-        }),
-      };
     case FETCH_BY_SEARCH:
       return { ...state, posts: action.payload.data };
     case BOOKMARK_POST:
       return {
         ...state,
-        posts: state.destinations.map((post) => {
+        posts: state.posts.map((post) => {
           if (post._id === action.payload._id) {
             return action.payload;
           }

@@ -6,7 +6,7 @@ const RatingComponent = ({ field, form = {}, handleSubmit, userId, id, avgRating
     <Rating
       name="simple-controlled"
       value={readOnly ? avgRating : field.value}
-      style={{color:'red'}}
+      // style={{color:'red'}}
       disabled={readOnly}
       onChange={(event, newValue) => {
         form?.setFieldValue(field.name, newValue);

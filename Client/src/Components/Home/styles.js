@@ -23,7 +23,7 @@ export default makeStyles((theme) => ({
       justifyContent:'center',
       width:'100%',
     },
-    padding:5,
+    padding:20,
     marginTop:25,
     display:'flex',
     alignItems:'center',

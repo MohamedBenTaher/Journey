@@ -30,15 +30,17 @@ function Events() {
   console.log(typeof events, events);
   return (
     <Grid container className={classes.mainContainer}>
-      {user && user?.user?.isAdmin ? (
-        <Link to="/events/new">
-          <Button variant="outlined" color="primary" onClick={() => {}}>
-            {' '}
-            Add a new Event
-            {' '}
-          </Button>
-        </Link>
-      ) : null}
+       {user?.result?.isAdmin && (
+            <Grid container spacing={3} justifyContent="start">
+              <Grid item>
+                <Link to="/events/new/">
+                  <Button variant="contained" color="primary">
+                    New Location
+                  </Button>
+                </Link>
+              </Grid>
+            </Grid>
+          )}
       {
         isLoadingEvents ?(
          <Grid container sx={{width:'100%',padding:'3em'}} spacing={3} >
