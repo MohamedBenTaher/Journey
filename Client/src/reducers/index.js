@@ -9,15 +9,16 @@ import continents from './Continents';
 import locations from './Locations';
 import authMiddleware from '../middleware/authMiddleware';
 
-export default combineReducers({
-  posts,
-  auth,
-  events,
-  destinations,
-  comments,
-  continents,
-  countries,
-  locations,
-},
-applyMiddleware(authMiddleware)
+export default combineReducers(
+  {
+    posts,
+    auth,
+    events,
+    destinations,
+    comments,
+    continents,
+    countries,
+    locations,
+  },
+  applyMiddleware(authMiddleware),
 );

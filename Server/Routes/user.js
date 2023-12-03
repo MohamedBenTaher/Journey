@@ -1,14 +1,12 @@
 import express from "express"
-import {getUser, signin,signup} from "../controllers/user.js";
-import { bookmarkResource, cancelBookmarkResource } from "../controllers/general.js";
+import {getUser, signin,signupCustomer,signupOrganizer} from "../controllers/user.js";
 import auth from "../Middleware/auth.js";
 
 const router= express.Router();
 
 
 router.post('/signin',signin);
-router.post('/signup',signup);
+router.post('/customer/signup',signupCustomer);
+router.post('/organizer/signup',signupOrganizer);
 router.get('/me/:id',auth,getUser)
-router.patch(`/:id/bookmark`,auth, bookmarkResource)
-router.patch(`/:id/cancel`,auth, cancelBookmarkResource)
 export default router;

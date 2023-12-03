@@ -17,10 +17,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { deletePost, likePost } from '../../../actions/posts.js';
 import useStyles from './styles.js';
+import PropTypes from 'prop-types';
 
 function Post({ post, setCurrentId, small }) {
-  const user = useSelector((state)=>state.auth.user)
-  console.log('user',user)
+  const user = useSelector((state) => state.auth.user);
+  console.log('user', user);
   const userId = user?.result?.googleId || user?.user?._id;
   const [likes, setLikes] = useState(post?.likedBy);
   const hasLikedPost = post.likedBy.find((like) => like === userId);
@@ -39,9 +40,7 @@ function Post({ post, setCurrentId, small }) {
         <>
           <ThumbUpAltOutlined fontSize="small" />
           &nbsp;
-          {likes.length} 
-{' '}
-{likes.length === 1 ? 'Like' : 'Likes'}
+          {likes.length} {likes.length === 1 ? 'Like' : 'Likes'}
         </>
       );
     }
@@ -77,8 +76,7 @@ function Post({ post, setCurrentId, small }) {
           <Button
             style={{ color: 'white' }}
             size="small"
-            onClick={() => history.push(`/stories/new/${post._id}`)}
-          >
+            onClick={() => history.push(`/stories/new/${post._id}`)}>
             <MoreHorizonIcon fontSize="medium" />
           </Button>
         </div>
@@ -117,8 +115,7 @@ function Post({ post, setCurrentId, small }) {
             size="small"
             onClick={() => {
               dispatch(deletePost(post._id));
-            }}
-          >
+            }}>
             <DeleteIcon />
             Delete
           </Button>
@@ -131,8 +128,7 @@ function Post({ post, setCurrentId, small }) {
               history.push(`/stories/${post._id}`);
             }}
             variant="contained"
-            className={classes.bookingButton}
-          >
+            className={classes.bookingButton}>
             Read post
           </Button>
         ) : null}
@@ -141,3 +137,23 @@ function Post({ post, setCurrentId, small }) {
   );
 }
 export default Post;
+
+Post.propTypes = {
+  post: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    creator: PropTypes.string.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+    likedBy: PropTypes.arrayOf(PropTypes.string).isRequired,
+    createdAt: PropTypes.string.isRequired,
+    selectedFile: PropTypes.string.isRequired,
+  }).isRequired,
+  setCurrentId: PropTypes.func.isRequired,
+  small: PropTypes.bool,
+};
+
+Post.defaultProps = {
+  small: false,
+};

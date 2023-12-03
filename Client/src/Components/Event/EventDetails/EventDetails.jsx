@@ -1,42 +1,33 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import {
   attendEvent,
   bookmarkEvent,
   cancelBookmarkEvent,
   cancelEvent,
   getEvent,
-} from "../../../actions/events";
-import useStyles from "./styles.js";
-import {
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  Typography,
-  IconButton,
-} from "@material-ui/core";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import PlaceIcon from "@mui/icons-material/Place";
-import TagIcon from "@mui/icons-material/Tag";
-import PercentIcon from "@mui/icons-material/Percent";
-import BackpackIcon from "@mui/icons-material/Backpack";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import moment from "moment/moment";
+} from '../../../actions/events';
+import useStyles from './styles.js';
+import { Button, Card, CardContent, Grid, Typography, IconButton } from '@material-ui/core';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import PlaceIcon from '@mui/icons-material/Place';
+import TagIcon from '@mui/icons-material/Tag';
+import PercentIcon from '@mui/icons-material/Percent';
+import BackpackIcon from '@mui/icons-material/Backpack';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import moment from 'moment/moment';
 const EventDetails = ({}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { id } = useParams();
   const { event, isLoading } = useSelector((state) => state.events);
-  const user = useSelector((state)=>state.auth.user)
+  const user = useSelector((state) => state.auth.user);
   const userId = user?.result?._id;
-  const userAttending = event?.attendants?.find(
-    (item) => item === user?.result?._id,
-  );
+  const userAttending = event?.attendants?.find((item) => item === user?.result?._id);
   const [bookmarked, setBookmarked] = useState(false);
   useEffect(() => {
     if (id) {
@@ -46,7 +37,7 @@ const EventDetails = ({}) => {
   useEffect(() => {
     if (event) {
       console.log(
-        "containing event",
+        'containing event',
         event.bookmarkedBy,
         userId,
         event.bookmarkedBy.includes(userId),
@@ -73,26 +64,14 @@ const EventDetails = ({}) => {
     <>
       <Card className={classes.card}>
         <div className={classes.imageSection}>
-          <IconButton
-            className={classes.saveEvent}
-            onClick={handleBookmark}
-            disabled={!user}
-          >
+          <IconButton className={classes.saveEvent} onClick={handleBookmark} disabled={!user}>
             {bookmarked ? (
-              <BookmarkIcon
-                style={{ color: "white", fontSize: 32, zIndex: 99 }}
-              />
+              <BookmarkIcon style={{ color: 'white', fontSize: 32, zIndex: 99 }} />
             ) : (
-              <BookmarkBorderIcon
-                style={{ color: "white", fontSize: 32, zIndex: 99 }}
-              />
+              <BookmarkBorderIcon style={{ color: 'white', fontSize: 32, zIndex: 99 }} />
             )}
           </IconButton>
-          <img
-            src={event?.coverImage}
-            alt="Event Cover"
-            className={classes.coverImage}
-          />
+          <img src={event?.coverImage} alt="Event Cover" className={classes.coverImage} />
         </div>
         <CardContent className={classes.content}>
           <Typography variant="h5" component="h2" className={classes.title}>
@@ -109,7 +88,7 @@ const EventDetails = ({}) => {
                   Start Date:
                 </Typography>
                 <Typography variant="body1">
-                  {moment(event?.startDate).format("MMMM Do YYYY, h:mm:ss a")}
+                  {moment(event?.startDate).format('MMMM Do YYYY, h:mm:ss a')}
                 </Typography>
               </div>
               <div className={classes.infoItem}>
@@ -118,7 +97,7 @@ const EventDetails = ({}) => {
                   End Date:
                 </Typography>
                 <Typography variant="body1">
-                  {moment(event?.endDate).format("MMMM Do YYYY, h:mm:ss a")}
+                  {moment(event?.endDate).format('MMMM Do YYYY, h:mm:ss a')}
                 </Typography>
               </div>
               <div className={classes.infoItem}>
@@ -152,9 +131,7 @@ const EventDetails = ({}) => {
                 <Typography variant="subtitle1" color="textSecondary">
                   Tags:
                 </Typography>
-                <Typography variant="body1">
-                  {event?.tags?.join(", ")}
-                </Typography>
+                <Typography variant="body1">{event?.tags?.join(', ')}</Typography>
               </div>
               <div className={classes.infoItem}>
                 <PeopleAltIcon />
@@ -179,11 +156,8 @@ const EventDetails = ({}) => {
               </div>
             </Grid>
           </Grid>
-          <Button
-            onClick={() => (userAttending ? cancelBooking() : handleBooking())}
-            fullWidth
-          >
-            {userAttending ? "Book Now" : "Cancel booking"}
+          <Button onClick={() => (userAttending ? cancelBooking() : handleBooking())} fullWidth>
+            {userAttending ? 'Book Now' : 'Cancel booking'}
           </Button>
         </CardContent>
       </Card>

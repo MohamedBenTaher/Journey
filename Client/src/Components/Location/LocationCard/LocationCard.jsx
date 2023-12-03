@@ -1,8 +1,8 @@
 import { Card, CardMedia, CardContent, Typography, Button } from '@material-ui/core';
 import React from 'react';
 import useStyles from './styles.js';
-import image from '../../../Images/tokyo.jpg';
 import { Link } from 'react-router-dom/cjs/react-router-dom.js';
+import PropTypes from 'prop-types';
 const LocationCard = ({ item, small }) => {
   const classes = useStyles();
   const lines = item.description.split(',');
@@ -23,6 +23,15 @@ const LocationCard = ({ item, small }) => {
       </CardContent>
     </Card>
   );
+};
+LocationCard.propTypes = {
+  item: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    coverImage: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+  }).isRequired,
+  small: PropTypes.bool,
 };
 
 export default LocationCard;

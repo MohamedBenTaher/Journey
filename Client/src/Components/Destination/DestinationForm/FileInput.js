@@ -1,9 +1,9 @@
+import React from 'react';
 import { useDropzone } from 'react-dropzone';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
+import PropTypes from 'prop-types';
 import './styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -71,9 +71,19 @@ function FileInput({ field, form: { setFieldValue, values } }) {
     <Paper>
       <div {...getRootProps()} className={classes.dropzone}>
         <input {...getInputProps()} />
-        <Typography>Drag 'n' drop your photos here, or click to select photos</Typography>
+        <Typography>Drag &apos;n&apos; drop your photos here, or click to select photos</Typography>
       </div>
     </Paper>
   );
 }
+FileInput.propTypes = {
+  field: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+  form: PropTypes.shape({
+    setFieldValue: PropTypes.func.isRequired,
+    values: PropTypes.object.isRequired,
+  }).isRequired,
+};
+
 export default FileInput;

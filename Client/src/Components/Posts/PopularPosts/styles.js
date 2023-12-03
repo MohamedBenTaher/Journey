@@ -18,7 +18,7 @@ export default makeStyles((theme) => ({
   Container: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent:  'space-evenly', // Change 'space-evenly' to 'flex-start'
+    justifyContent: 'space-evenly', // Change 'space-evenly' to 'flex-start'
     width: '100%',
   },
   smMargin: {

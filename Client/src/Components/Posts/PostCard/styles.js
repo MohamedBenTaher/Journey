@@ -15,8 +15,8 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-  profile:{
-   position: 'relative',
+  profile: {
+    position: 'relative',
     width: '100%',
     height: 300,
     margin: 20,

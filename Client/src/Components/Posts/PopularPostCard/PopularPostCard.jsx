@@ -10,10 +10,11 @@ import LocationIcon from '../../../assets/icons/LocationIcon';
 import Comments from '../../../assets/icons/Comments';
 import Person from '../../../assets/icons/Person';
 import CalendarSmall from '../../../assets/icons/CalendarSmall';
+import PropTypes from 'prop-types';
 function PopularPostCard({ item, userId, small }) {
   const classes = useStyles();
   const history = useHistory();
-
+  console.log('my item', item);
   const timeSinceCreation = formatDistanceToNow(new Date(item.createdAt), { addSuffix: true });
 
   return (
@@ -36,9 +37,9 @@ function PopularPostCard({ item, userId, small }) {
           </div>
           <div className={classes.footerItem}>
             <Person />
-            <Typography variant="body2" color="textSecondary" className={classes.footerText}>
+            {/* <Typography variant="body2" color="textSecondary" className={classes.footerText}>
               {item.creator.name}
-            </Typography>
+            </Typography> */}
           </div>
           <div className={classes.footerItem}>
             <Comments />
@@ -51,5 +52,17 @@ function PopularPostCard({ item, userId, small }) {
     </Card>
   );
 }
-
+PopularPostCard.propTypes = {
+  item: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    selectedFile: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    comments: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }).isRequired,
+  userId: PropTypes.string.isRequired,
+  small: PropTypes.bool,
+};
 export default PopularPostCard;

@@ -1,6 +1,7 @@
 import React from 'react';
 import useStyles from './styles.js';
 import { Typography } from '@material-ui/core';
+import PropTypes from 'prop-types';
 const SearchInput = ({ value, label, name, placeholder, type, onChange, Icon }) => {
   const classes = useStyles();
   return (
@@ -23,6 +24,15 @@ const SearchInput = ({ value, label, name, placeholder, type, onChange, Icon }) 
       </div>
     </div>
   );
+};
+SearchInput.propTypes = {
+  value: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  type: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  Icon: PropTypes.elementType,
 };
 
 export default SearchInput;

@@ -3,13 +3,14 @@ import { Typography, TextField, Button } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './styles';
 import { commentPost } from '../../../actions/posts';
+import PropTypes from 'prop-types';
 
 function ComentSection({ post }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [comments, setComments] = useState(post?.comments);
   const [comment, setComment] = useState('');
-  const user = useSelector((state)=>state.auth.user)
+  const user = useSelector((state) => state.auth.user);
   const commentsRef = useRef();
   const handleClick = async () => {
     const finalComment = `${user?.result?.name} : ${comment}`;
@@ -27,10 +28,7 @@ function ComentSection({ post }) {
           </Typography>
           {comments?.map((c, i) => (
             <Typography key={i} gutterBottom variant="subtitle1">
-              <strong> 
-{' '}
-{c.split(': ')[0]}
-</strong>
+              <strong> {c.split(': ')[0]}</strong>
               {c.split(': ')[1]}
             </Typography>
           ))}
@@ -57,8 +55,7 @@ function ComentSection({ post }) {
               fullWidth
               disabled={!comment}
               variant="contained"
-              onClick={handleClick}
-            >
+              onClick={handleClick}>
               Comment
             </Button>
           </div>
@@ -67,5 +64,11 @@ function ComentSection({ post }) {
     </div>
   );
 }
+ComentSection.propTypes = {
+  post: PropTypes.object,
+};
+ComentSection.defaultProps = {
+  post: {},
+};
 
 export default ComentSection;

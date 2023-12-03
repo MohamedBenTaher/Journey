@@ -1,10 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
- paper: {
+  paper: {
     width: '100%', // Take full width
     padding: theme.spacing(2),
-    boxShadow: 'none'
+    boxShadow: 'none',
   },
   banner: {
     padding: theme.spacing(2),

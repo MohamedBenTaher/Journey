@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import User from "../Models/user.js";
 import PostMessage from "../Models/PostMessage.js";
 import Comment from '../Models/Comment.js'; 
-
+import { getUserTypeById } from "../utils/helpers.js";
 export const getTopPosts = async (req, res) => {
   try {
     const posts = await PostMessage.find()
@@ -12,7 +12,7 @@ export const getTopPosts = async (req, res) => {
       .sort({ likes: -1 })
       .limit(2)
       .exec();
-
+    console.log('post',posts)
     const postsWithComments = await Promise.all(
       posts.map(async (post) => {
         const comments = await Comment.find({
@@ -45,6 +45,7 @@ export const  getPost= async(req,res) => {
     try {
 
         const post=await PostMessage.findById(id).populate('creator').populate('country').populate('destination');
+        console.log('post',post)
         res.status(200).json(post);
     } catch (error) {
         res.status(404).json({message :error.essage})
@@ -143,11 +144,13 @@ export const bookmarkPost = async (req, res) => {
       if (!resource) {
         return res.status(404).json({ message: 'Resource not found' });
       }
-
-      const user = await User.findById(userId);
+       const user = await getUserTypeById(userId);
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
+      if (user.userType !== 'Customer') {
+            return res.status(403).json({ message: 'Only customers can like posts' });
+        }
 
       if (user.savedStories.includes(id)) {
         return res.status(400).json({ message: 'Resource already bookmarked' });
@@ -172,10 +175,13 @@ export const bookmarkPost = async (req, res) => {
       if (!resource) {
         return res.status(404).json({ message: 'Post not found' });
       }
-      const user = await User.findById(userId);
+      const user = await getUserTypeById(userId);
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
+      if (user.userType !== 'Customer') {
+            return res.status(403).json({ message: 'Only customers can like posts' });
+        }
       if (!user.savedStories.includes(id)) {
         return res.status(400).json({ message: 'Post not bookmarked' });
       }
@@ -198,10 +204,13 @@ export const bookmarkPost = async (req, res) => {
       if (!resource) {
         return res.status(404).json({ message: 'Resource not found' });
       }
-      const user = await User.findById(userId);
+      const user = await getUserTypeById(userId);
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
+      if (user.userType !== 'Customer') {
+            return res.status(403).json({ message: 'Only customers can like posts' });
+        }
       if (user.likedStories.includes(id)) {
 
         user.likedStories.filter((id)=>id==id);

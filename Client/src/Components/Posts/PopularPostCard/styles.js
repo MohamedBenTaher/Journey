@@ -41,17 +41,17 @@ const useStyles = makeStyles((theme) => ({
     flexBasis: '50%',
     height: '380px',
     // rowGap: '16px',
-    flexGrow:1,
+    flexGrow: 1,
     padding: '2px',
     paddingLeft: '12px',
-    backgroundColor:'transparent'
+    backgroundColor: 'transparent',
   },
   contentFooter: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width:'100%'
+    width: '100%',
   },
   footerText: {
     fontSize: '12px',
@@ -60,13 +60,13 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '0em',
     textAlign: 'left',
   },
-  footerItem:{
-    display:'flex',
-    flexDirection:'row',
-    alignItems:'center',
-    justifyContent:'start',
-    columnGap:'5px'
-},
+  footerItem: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'start',
+    columnGap: '5px',
+  },
   textContainer: {
     padding: theme.spacing(0, 2),
   },

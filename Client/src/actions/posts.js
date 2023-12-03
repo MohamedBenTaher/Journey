@@ -13,7 +13,7 @@ import {
   FETCH_BY_CREATOR,
   BOOKMARK_POST,
   CANCEL_BOOKMARK_POST,
-  FETCH_TOP_POSTS
+  FETCH_TOP_POSTS,
 } from '../constants/actionTypes';
 
 export const getPosts = (page) => async (dispatch) => {
@@ -47,7 +47,7 @@ export const getTopPosts = () => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
     const { data } = await api.fetchTopPosts();
-    dispatch({ type: FETCH_TOP_POSTS, payload: {data} });
+    dispatch({ type: FETCH_TOP_POSTS, payload: { data } });
     dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error.message);

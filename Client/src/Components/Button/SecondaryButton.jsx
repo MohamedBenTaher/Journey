@@ -1,6 +1,6 @@
 import { Button, Typography } from '@material-ui/core';
 import React from 'react';
-
+import { PropTypes } from 'prop-types';
 const SecondaryButton = ({ content, icon }) => {
   const IconComponent = icon;
   return (
@@ -21,6 +21,10 @@ const SecondaryButton = ({ content, icon }) => {
       <IconComponent />
     </Button>
   );
+};
+SecondaryButton.propTypes = {
+  content: PropTypes.string.isRequired,
+  icon: PropTypes.element.isRequired,
 };
 
 export default SecondaryButton;

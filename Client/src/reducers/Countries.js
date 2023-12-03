@@ -38,7 +38,8 @@ const countriesReducer = (state = { isLoadingCountries: true, countries: [] }, a
       return {
         ...state,
         countries: state.countries.map((country) =>
-          (country._id === action.payload._id ? action.payload : country),),
+          country._id === action.payload._id ? action.payload : country,
+        ),
       };
 
     case DELETE_COUNTRY:
@@ -51,19 +52,20 @@ const countriesReducer = (state = { isLoadingCountries: true, countries: [] }, a
       return {
         ...state,
         destinations: state.countries.map((country) =>
-          (country._id === action.payload._id ? action.payload : country),),
+          country._id === action.payload._id ? action.payload : country,
+        ),
       };
     case DISLIKE_COUNTRY:
       return {
         ...state,
         destinations: state.destinations.map((destination) =>
           destination._id === action.payload._id
-          ? {
-            ...destination,
+            ? {
+                ...destination,
                 upvotes: [...action.payload.upvotes],
-            downvotes: [...action.payload.downvotes],
+                downvotes: [...action.payload.downvotes],
               }
-          : destination,
+            : destination,
         ),
       };
     case BOOKMARK_COUNTRY:
@@ -71,11 +73,11 @@ const countriesReducer = (state = { isLoadingCountries: true, countries: [] }, a
         ...state,
         countries: state.countries.map((country) =>
           country._id === action.payload.id
-          ? {
-            ...country,
-            bookmarkedBy: [...country.bookmarkedBy, action.payload.userId],
-          }
-          : country,
+            ? {
+                ...country,
+                bookmarkedBy: [...country.bookmarkedBy, action.payload.userId],
+              }
+            : country,
         ),
       };
     case CANCEL_BOOKMARK_COUNTRY:
@@ -83,13 +85,13 @@ const countriesReducer = (state = { isLoadingCountries: true, countries: [] }, a
         ...state,
         countries: state.destinations.map((country) =>
           country._id === action.payload.id
-          ? {
+            ? {
                 ...country,
-            bookmarkedBy: country.bookmarkedBy.filter(
-              (userId) => userId !== action.payload.userId,
-            ),
+                bookmarkedBy: country.bookmarkedBy.filter(
+                  (userId) => userId !== action.payload.userId,
+                ),
               }
-          : country,
+            : country,
         ),
       };
     default:
@@ -97,4 +99,3 @@ const countriesReducer = (state = { isLoadingCountries: true, countries: [] }, a
   }
 };
 export default countriesReducer;
-

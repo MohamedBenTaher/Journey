@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Button,
   Typography,
@@ -7,21 +7,23 @@ import {
   IconButton,
   useMediaQuery,
   useTheme,
-} from "@material-ui/core";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import { Link } from "react-router-dom";
-import useStyles from "./styles";
-import { likeEvent } from "../../../actions/events";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
-import { useDispatch } from "react-redux";
+} from '@material-ui/core';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import { Link } from 'react-router-dom';
+import useStyles from './styles';
+import { likeEvent } from '../../../actions/events';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
+import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+
 const EventCard = ({ event, userId, small }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [likes, setLikes] = useState(event?.likedBy);
   const [liked, setLiked] = useState(false);
   const dispatch = useDispatch();
@@ -52,23 +54,17 @@ const EventCard = ({ event, userId, small }) => {
     if (likes.length > 0 && !small) {
       return liked ? (
         <>
-          <FavoriteOutlinedIcon
-            style={{ color: !isMobile ? "black" : "white" }}
-          />
+          <FavoriteOutlinedIcon style={{ color: !isMobile ? 'black' : 'white' }} />
         </>
       ) : (
         <>
-          <FavoriteBorderOutlinedIcon
-            style={{ color: !isMobile ? "black" : "white" }}
-          />
+          <FavoriteBorderOutlinedIcon style={{ color: !isMobile ? 'black' : 'white' }} />
         </>
       );
     }
     return (
       <>
-        <FavoriteBorderOutlinedIcon
-          style={{ color: !isMobile ? "black" : "white" }}
-        />
+        <FavoriteBorderOutlinedIcon style={{ color: !isMobile ? 'black' : 'white' }} />
       </>
     );
   };
@@ -76,17 +72,12 @@ const EventCard = ({ event, userId, small }) => {
     <Card className={classes.card}>
       <Grid container direction="row">
         <Grid item xs={12} lg={4}>
-          <CardMedia
-            component="img"
-            alt="Event Thumbnail"
-            image={event?.coverImage}
-          />
+          <CardMedia component="img" alt="Event Thumbnail" image={event?.coverImage} />
           <div className={classes.likeButton}>
             <IconButton
               className={classes.likeButton}
               onClick={handleLike}
-              disabled={!userId || small}
-            >
+              disabled={!userId || small}>
               <Likes />
             </IconButton>
           </div>
@@ -102,8 +93,7 @@ const EventCard = ({ event, userId, small }) => {
                   {event?.description}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Placed Left :
-                  {event?.numberOfPlaces - event?.attendants.length}
+                  Placed Left :{event?.numberOfPlaces - event?.attendants.length}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   Event fee:{event?.eventFee}
@@ -116,11 +106,7 @@ const EventCard = ({ event, userId, small }) => {
             <Grid>
               <CardActions item lg={6}>
                 <Button size="small">Share</Button>
-                <Button
-                  component={Link}
-                  to={`/events/${event?._id}`}
-                  size="small"
-                >
+                <Button component={Link} to={`/events/${event?._id}`} size="small">
                   Learn More
                 </Button>
               </CardActions>
@@ -131,5 +117,21 @@ const EventCard = ({ event, userId, small }) => {
     </Card>
   );
 };
-
+EventCard.propTypes = {
+  event: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    coverImage: PropTypes.string.isRequired,
+    numberOfPlaces: PropTypes.number.isRequired,
+    eventFee: PropTypes.number.isRequired,
+    creator: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    likedBy: PropTypes.arrayOf(PropTypes.string),
+    attendants: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
+  userId: PropTypes.string,
+  small: PropTypes.bool,
+};
 export default EventCard;

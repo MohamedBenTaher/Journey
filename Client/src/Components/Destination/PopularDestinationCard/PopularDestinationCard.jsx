@@ -1,12 +1,9 @@
-import { Card, CardMedia, CardContent, Typography, Button, IconButton } from '@material-ui/core';
-import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom/cjs/react-router-dom.js';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
-import { useDispatch } from 'react-redux';
-import image from '../../../Images/tokyo.jpg';
+import { Card, CardMedia, CardContent, Typography } from '@material-ui/core';
+import React from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.js';
 import useStyles from './styles.js';
 import { likeDestination } from '../../../actions/destinations.js';
+import PropTypes from 'prop-types';
 
 function PopularDestinationCard({ item, userId, small }) {
   const history = useHistory();
@@ -24,5 +21,17 @@ function PopularDestinationCard({ item, userId, small }) {
     </Card>
   );
 }
+PopularDestinationCard.propTypes = {
+  item: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    coverImage: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    country: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  userId: PropTypes.string.isRequired,
+  small: PropTypes.bool,
+};
 
 export default PopularDestinationCard;

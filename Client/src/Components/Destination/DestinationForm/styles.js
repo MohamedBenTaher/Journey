@@ -5,6 +5,23 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     marginTop: theme.spacing(2),
   },
+  chip: {
+    '& .MuiChip-root': {
+      backgroundColor: 'violet',
+      color: 'violet',
+    },
+    '& .MuiChip-deleteIcon': {
+      color: 'white',
+    },
+    '&& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'violet',
+      color: 'violet',
+    },
+    '&& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'violet',
+      color: 'violet',
+    },
+  },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',

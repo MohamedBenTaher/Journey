@@ -4,7 +4,7 @@ import useStyles from './styles.js';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDestinations } from '../../../actions/destinations.js';
-
+import PropTypes from 'prop-types';
 const Paginate = ({ page }) => {
   const { numberOfPages } = useSelector((state) => state.destinations);
   const classes = useStyles();
@@ -24,5 +24,8 @@ const Paginate = ({ page }) => {
       )}
     />
   );
+};
+Paginate.propTypes = {
+  page: PropTypes.number,
 };
 export default Paginate;

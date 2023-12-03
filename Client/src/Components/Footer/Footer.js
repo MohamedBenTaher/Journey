@@ -1,6 +1,4 @@
-import {
- Grid, Container, List, ListItem, Typography, Divider 
-} from '@material-ui/core';
+import { Grid, Container, List, ListItem, Typography, Divider } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import memories from '../../Images/journey.png';
@@ -9,15 +7,14 @@ import useStyles from './styles.js';
 function Footer() {
   const classes = useStyles();
   return (
-    
     <footer className={classes.container}>
       <Grid container className={classes.content}>
         <Grid item xs={12} md={12} lg={6} className={classes.Brand}>
           <img src={memories} alt="Journey" className={classes.image} />
           <Typography variant="body1" className={classes.text}>
-            Travelling is not always about running away from things, sometimes it's about running to
-            what you truly want,here at journey we offer a great touring guide experience, with a
-            large and supportive community
+            Travelling is not always about running away from things, sometimes it&apos;s about
+            running to what you truly want,here at journey we offer a great touring guide
+            experience, with a large and supportive community
           </Typography>
         </Grid>
         <Grid item container xs={12} md={12} lg={6} className={classes.links}>
@@ -104,7 +101,6 @@ function Footer() {
         {/* </Grid> */}
       </Grid>
     </footer>
- 
   );
 }
 

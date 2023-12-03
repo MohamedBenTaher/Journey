@@ -1,0 +1,85 @@
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  header: {
+    width: '100%',
+    height: '30vh',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+    backgroundColor: '#dad9de',
+  },
+  profileTop: {
+    width: '100%',
+    height: '30vh',
+    display: 'flex',
+    alignItems: 'start',
+    justifyContent: 'start',
+    flexDirection: 'row',
+    position: 'relative',
+  },
+  avatar: {
+    width: theme.spacing(16),
+    height: theme.spacing(16),
+    position: 'absolute',
+    left: '8%',
+    top: '-10%',
+    border: 'solid',
+    borderColor: 'white',
+    borderWidth: '0.2em',
+  },
+  title: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'end',
+    flexDirection: 'row',
+    flexBasis: '70%',
+    columnGap: '1em',
+    flexGrow: 1,
+    backgroundColor: 'red',
+    padding: '1em',
+  },
+  stat: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+    flexBasis: '30%',
+    flexGrow: 1,
+    padding: '1em',
+    textAlign: 'center',
+    margin: '1em',
+    botfrtRadius: '0.5em',
+    fontSize: '1.5em',
+    backgroundColor: 'red',
+    height: '3em',
+  },
+  name: {
+    display: 'flex',
+    alignItems: 'start',
+    justifyContent: 'start',
+    flexDirection: 'column',
+  },
+  avatarContainer: {
+    display: 'flex',
+    flexBasis: '30%',
+    alignItems: 'center',
+    justifyContent: 'end',
+    flexDirection: 'row',
+    padding: '1em',
+  },
+  userInfo: {
+    marginTop: theme.spacing(2),
+  },
+  infoItem: {
+    marginBottom: theme.spacing(1),
+  },
+  tabs: {
+    width: '100%',
+  },
+}));
+export default useStyles;

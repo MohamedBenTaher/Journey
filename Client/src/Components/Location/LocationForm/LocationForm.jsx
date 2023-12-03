@@ -295,7 +295,11 @@ const LocationFom = () => {
                     onChange={handleChange}
                     value={values.type}>
                     {locationTypes.map((location) => {
-                      return <MenuItem value={location.value}>{location.name}</MenuItem>;
+                      return (
+                        <MenuItem value={location.value} key={location.name}>
+                          {location.name}
+                        </MenuItem>
+                      );
                     })}
                   </Field>
                   {touched.country && Boolean(errors.type) && <div>{errors.type}</div>}
@@ -313,7 +317,11 @@ const LocationFom = () => {
                     onChange={handleChange}
                     value={values.country}>
                     {countries?.countries?.map((country) => {
-                      return <MenuItem value={country._id}>{country.title}</MenuItem>;
+                      return (
+                        <MenuItem value={country._id} key={country._id}>
+                          {country.title}
+                        </MenuItem>
+                      );
                     })}
                   </Field>
                   {touched.country && Boolean(errors.country) && <div>{errors.country}</div>}
@@ -331,7 +339,11 @@ const LocationFom = () => {
                     onChange={handleChange}
                     value={values.destination}>
                     {destinations?.destinations?.map((destination) => {
-                      return <MenuItem value={destination._id}>{destination.title}</MenuItem>;
+                      return (
+                        <MenuItem value={destination._id} key={destination._id}>
+                          {destination.title}
+                        </MenuItem>
+                      );
                     })}
                   </Field>
                   {touched.destination && Boolean(errors.destination) && (

@@ -11,33 +11,27 @@ import {
 } from '@material-ui/core';
 import React, { useState, Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
- Formik, Form, Field, ErrorMessage, useFormik 
-} from 'formik';
+import { Formik, Form, Field, ErrorMessage, useFormik } from 'formik';
 import * as yup from 'yup';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import ChipInput from 'material-ui-chip-input';
-import IconButton from '@mui/material/IconButton';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min.js';
 import { createEvent, getEvent, updateEvent } from '../../../actions/events';
-
 import { deleteS3Image } from '../../../api/index.js';
 import useStyles from './styles.js';
 import CoverImageInput from '../../Destination/DestinationForm/CoverImageInput.js';
+import { useHistory, useParams } from 'react-router-dom';
 
 function Event() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const { id } = useParams();
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
   const [image, setImage] = useState({});
-  const user =useSelector((state)=>state.auth.user)
+  const user = useSelector((state) => state.auth.user);
   const { event, isLoading } = useSelector((state) => state.events);
+  const history = useHistory();
   const validationSchema = yup.object({
     email: yup
       .string('Enter your email')
@@ -66,6 +60,7 @@ function Event() {
     // validationSchema: validationSchema,
     onSubmit: (values) => {
       dispatch(createEvent(values));
+      history.push('/events');
     },
   });
   useEffect(() => {
@@ -134,8 +129,7 @@ function Event() {
           } else {
             dispatch(createEvent(formData));
           }
-        }}
-      >
+        }}>
         {({
           values,
           errors,
@@ -285,8 +279,7 @@ function Event() {
                             const deleteImage = await deleteS3Image(event?._id, values.coverImage);
                           }
                           setFieldValue('coverImage', '');
-                        }}
-                      >
+                        }}>
                         <Typography variant="caption">x</Typography>
                       </div>
                     </div>
@@ -305,8 +298,7 @@ function Event() {
                   fullWidth
                   type="submit"
                   //  disabled={isSubmitting}
-                  variant="contained"
-                >
+                  variant="contained">
                   Submit
                 </Button>
               </Grid>

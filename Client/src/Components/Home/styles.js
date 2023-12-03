@@ -19,17 +19,17 @@ export default makeStyles((theme) => ({
   gridContainer: {
     [theme.breakpoints.down('xs')]: {
       flexDirection: 'column',
-      alignItems:'center',
-      justifyContent:'center',
-      width:'100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%',
     },
-    padding:20,
-    marginTop:25,
-    display:'flex',
-    alignItems:'center',
-    justifyContent:'center',
-    alignSelf:'center',
-    width:'100%',
+    padding: 20,
+    marginTop: 25,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: '100%',
     // backgroundColor:'red'
   },
   search: {

@@ -5,18 +5,18 @@ export default makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'start',
-    flexDirection:'column',
+    flexDirection: 'column',
     width: '100%',
   },
   root: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'left',
-    flexDirection:'column',
+    flexDirection: 'column',
     width: '100%',
-    padding:'3em'
+    padding: '3em',
   },
-  Container:{
+  Container: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'start',
@@ -35,12 +35,12 @@ export default makeStyles((theme) => ({
     justifyContent: 'space-around',
   },
   Title: {
-  color: '#161414',
-  fontFamily: 'Poppins',
-  fontSize: '32px',
-  fontstyle: 'normal',
-  fontWeight: '600',
-  lineHeight: '48px',
-  textAlign: 'left', // Add this line to align the text to the left
-}
+    color: '#161414',
+    fontFamily: 'Poppins',
+    fontSize: '32px',
+    fontstyle: 'normal',
+    fontWeight: '600',
+    lineHeight: '48px',
+    textAlign: 'left', // Add this line to align the text to the left
+  },
 }));

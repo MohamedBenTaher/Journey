@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
   appBar: {
     // borderRadius: 15,
-    backgroundColor:'red',
+    backgroundColor: 'red',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
@@ -17,7 +17,7 @@ export default makeStyles((theme) => ({
   },
   image: {
     marginLeft: '10px',
-    marginRight:'10px',
+    marginRight: '10px',
   },
   heading: {
     color: theme.palette.primary.main,
@@ -60,14 +60,14 @@ export default makeStyles((theme) => ({
   brandContainer: {
     display: 'flex',
     alignItems: 'center',
-    marginInline:16,
+    marginInline: 16,
   },
   links: {
     textDecoration: 'none',
     color: 'black',
     transition: 'font-size 0.2s',
     '&:hover': {
-     fontSize: '1.1em',
+      fontSize: '1.1em',
     },
   },
   Drawer: {
@@ -81,17 +81,22 @@ export default makeStyles((theme) => ({
   linksDrawer: {
     textDecoration: 'none',
     color: 'black',
-    fontSize:'1.3em',
+    fontSize: '1.3em',
     transition: 'font-size 0.2s',
     '&:hover': {
-      opacity:1,
+      opacity: 1,
       fontSize: '1.5em',
     },
   },
   navLinks: {
-    backgroundColor: 'red',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
+    textDecoration: 'none',
+    color: 'black',
+    fontSize: '1em',
+    transition: 'font-size 0.2s',
+    '&:hover': {
+      opacity: 1,
+      fontSize: '1.2em',
+    },
   },
   title: {
     textDecoration: 'none',

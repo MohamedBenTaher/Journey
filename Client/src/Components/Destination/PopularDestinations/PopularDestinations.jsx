@@ -6,6 +6,8 @@ import useStyles from './styles.js';
 import PopularDestinationCard from '../PopularDestinationCard/PopularDestinationCard.jsx';
 import { Skeleton } from '@mui/material';
 import { getTopDestinations } from '../../../actions/destinations.js';
+import PropTypes from 'prop-types';
+
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
@@ -13,9 +15,7 @@ function useQuery() {
 function PopularDestinations({ setCurrentId }) {
   const { destinations, isLoadingDestinations } = useSelector((state) => state.destinations);
   console.log('Received  in compoenent :', destinations);
-  const user = useSelector((state) => state.auth.user);
   const value = useSelector((state) => state);
-  const query = useQuery();
   const dispatch = useDispatch();
   console.log('recieved ', destinations, value);
   const classes = useStyles();
@@ -61,5 +61,9 @@ function PopularDestinations({ setCurrentId }) {
     </Grid>
   );
 }
+
+PopularDestinations.propTypes = {
+  setCurrentId: PropTypes.func,
+};
 
 export default PopularDestinations;

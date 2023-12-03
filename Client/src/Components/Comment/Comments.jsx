@@ -20,6 +20,7 @@ import {
 } from '../../actions/comments.js';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { PropTypes } from 'prop-types';
 const useStyles = makeStyles((theme) => ({
   commentsContainer: {
     marginTop: theme.spacing(4),
@@ -187,6 +188,12 @@ const Comments = ({ entityId, entityType, user }) => {
       )}
     </Box>
   );
+};
+
+Comments.propTypes = {
+  entityId: PropTypes.string.isRequired,
+  entityType: PropTypes.string.isRequired,
+  user: PropTypes.object,
 };
 
 export default Comments;

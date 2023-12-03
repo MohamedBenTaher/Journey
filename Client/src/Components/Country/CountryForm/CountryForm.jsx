@@ -190,7 +190,9 @@ const CountryForm = () => {
                     value={values.continent}>
                     {continents &&
                       continents?.map((continent) => (
-                        <MenuItem value={continent?._id}>{continent.name}</MenuItem>
+                        <MenuItem value={continent?._id} key={continent?._id}>
+                          {continent.name}
+                        </MenuItem>
                       ))}
                   </Field>
                   {touched.type && Boolean(errors.type) && <div>{errors.type}</div>}

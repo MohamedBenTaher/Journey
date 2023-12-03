@@ -8,6 +8,7 @@ import PopularLocationsCard from '../PopularLocationsCard/PopularLocationsCard.j
 import { getTopLocations } from '../../../actions/locations.js';
 import SecondaryButton from '../../Button/SecondaryButton.jsx';
 import ArrowRight from '../../../assets/icons/ArrowRight.jsx';
+import PropTypes from 'prop-types';
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
@@ -65,7 +66,11 @@ function PopularLocations({ setCurrentId }) {
           <div className={classes.Container}>
             {locations?.map((location) => (
               // <Grid key={location._id} item xs={12} sm={6} md={2} lg={2}>
-              <PopularLocationsCard item={location} setCurrentId={setCurrentId} />
+              <PopularLocationsCard
+                item={location}
+                setCurrentId={setCurrentId}
+                key={location._id}
+              />
               // </Grid>
             ))}
           </div>
@@ -74,5 +79,8 @@ function PopularLocations({ setCurrentId }) {
     </Grid>
   );
 }
+PopularLocations.propTypes = {
+  setCurrentId: PropTypes.func,
+};
 
 export default PopularLocations;

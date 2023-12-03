@@ -8,24 +8,20 @@ import { getTopEvents } from '../../../actions/events.js';
 import SecondaryButton from '../../Button/SecondaryButton.jsx';
 import ArrowRight from '../../../assets/icons/ArrowRight.jsx';
 import PopularEventCard from '../PopularEventCard/PopularEventCard.jsx';
+import PropTypes from 'prop-types';
+
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
 function PopularEvents({ setCurrentId }) {
   const { events, isLoadingEvents } = useSelector((state) => state.events);
-  console.log('Received  in compoenent :', events);
-  const user = useSelector((state) => state.auth.user);
-  const value = useSelector((state) => state);
-  const query = useQuery();
   const dispatch = useDispatch();
-  console.log('recieved events in component ', events, value);
   const classes = useStyles();
   useEffect(() => {
     dispatch(getTopEvents());
   }, []);
 
-  console.log('COMPONENT EVNETS', events);
   if (!isLoadingEvents && !events?.length) {
     return <div>No Events</div>;
   }
@@ -64,7 +60,7 @@ function PopularEvents({ setCurrentId }) {
         ) : (
           <div className={classes.Container}>
             {events?.map((event) => (
-              <PopularEventCard item={event} setCurrentId={setCurrentId} />
+              <PopularEventCard item={event} setCurrentId={setCurrentId} key={event?._id} />
             ))}
           </div>
         )}
@@ -72,5 +68,7 @@ function PopularEvents({ setCurrentId }) {
     </Grid>
   );
 }
-
+PopularEvents.propTypes = {
+  setCurrentId: PropTypes.func,
+};
 export default PopularEvents;

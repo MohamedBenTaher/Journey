@@ -9,7 +9,7 @@ import { getTopLocations } from '../../../actions/locations.js';
 import SecondaryButton from '../../Button/SecondaryButton.jsx';
 import ArrowRight from '../../../assets/icons/ArrowRight.jsx';
 import { getTopPosts } from '../../../actions/posts.js';
-
+import PropTypes from 'prop-types';
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
@@ -65,7 +65,7 @@ function PopularPosts({ setCurrentId }) {
         ) : (
           <div className={classes.Container}>
             {posts?.map((post) => (
-              <PopularPostCard item={post} setCurrentId={setCurrentId} />
+              <PopularPostCard item={post} setCurrentId={setCurrentId} key={post._id} />
             ))}
           </div>
         )}
@@ -73,5 +73,8 @@ function PopularPosts({ setCurrentId }) {
     </Grid>
   );
 }
+PopularPosts.propTypes = {
+  setCurrentId: PropTypes.func.isRequired,
+};
 
 export default PopularPosts;

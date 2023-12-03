@@ -4,10 +4,10 @@ import {
   END_LOADING_USER,
   USER_INFROMATIONS,
   LOGOUT,
-  AUTH_CHECK
+  AUTH_CHECK,
 } from '../constants/actionTypes.js';
 import * as api from '../api/index.js';
-import {checkTokenValidity} from '../utlis/auth.js'
+import { checkTokenValidity } from '../utlis/auth.js';
 export const signin = (formData, history) => async (dispatch) => {
   try {
     const { data } = await api.signIn(formData);
@@ -21,50 +21,57 @@ export const signin = (formData, history) => async (dispatch) => {
     console.log(error);
   }
 };
-export const authCheck=(token)=>async (dispatch)=>{
-  console.log('called authcheck')
+export const authCheck = (token) => async (dispatch) => {
+  console.log('called authcheck');
   if (token) {
-    console.log('called with token')
+    console.log('called with token');
     dispatch({ type: START_LOADING_USER });
     dispatch({ type: AUTH_CHECK });
     checkTokenValidity(token)
       .then((userData) => {
-        console.log('called token valid')
+        console.log('called token valid');
         dispatch({ type: `${AUTH_CHECK}_SUCCESS`, payload: userData });
       })
       .catch(() => {
-         console.log('called token failed')
-         dispatch(signOut(history));
+        console.log('called token failed');
+        dispatch(signOut(history));
       })
       .finally(() => {
-        console.log('called token ended loadinf')
+        console.log('called token ended loadinf');
         dispatch({ type: END_LOADING_USER });
       });
   } else {
-     console.log('called with no token')
+    console.log('called with no token');
     dispatch({ type: 'SET_LOADING', payload: false });
   }
-}
-export const signup = (formData, history) => async (dispatch) => {
+};
+export const signUpCustomer = (formData, history) => async (dispatch) => {
   try {
-    const { data } = await api.signUp(formData);
+    const { data } = await api.signUpCustomer(formData);
     dispatch({ type: START_LOADING_USER });
     dispatch({ type: AUTH, payload: { data } });
     dispatch({ type: END_LOADING_USER });
-    // log in the user
-    // history.push('/');
   } catch (error) {
     console.log(error);
   }
 };
-export const signOut=()=>async (dispatch)=>{
+export const signupOrganizer = (formData, history) => async (dispatch) => {
   try {
-  dispatch({ type: LOGOUT });
+    const { data } = await api.signupOrganizer(formData);
+    dispatch({ type: START_LOADING_USER });
+    dispatch({ type: AUTH, payload: { data } });
+    dispatch({ type: END_LOADING_USER });
   } catch (error) {
     console.log(error);
   }
-
-}
+};
+export const signOut = () => async (dispatch) => {
+  try {
+    dispatch({ type: LOGOUT });
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const getUser = (id) => async (dispatch) => {
   try {
     const { data } = await api.getUser(id);

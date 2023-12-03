@@ -6,7 +6,7 @@ import useStyles from './styles';
 import Paginate from './Paginates';
 import CountryCard from '../CountryCard/CountryCard';
 import { Skeleton } from '@mui/material';
-
+import PropTypes from 'prop-types';
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
@@ -73,6 +73,9 @@ const CountryLayout = ({ setCurrentId }) => {
       </Grid>
     </>
   );
+};
+CountryLayout.propTypes = {
+  setCurrentId: PropTypes.func.isRequired,
 };
 
 export default CountryLayout;

@@ -27,7 +27,7 @@ const PostReducer = (state = { isLoadingPosts: true, posts: [] }, action) => {
         currentPage: action.payload.currentPage,
         numberOfPages: action.payload.numrOfPages,
       };
-      case FETCH_TOP_POSTS:
+    case FETCH_TOP_POSTS:
       return {
         ...state,
         posts: action.payload.data,
@@ -73,15 +73,15 @@ const PostReducer = (state = { isLoadingPosts: true, posts: [] }, action) => {
       return {
         ...state,
         posts: state.posts.map((post) =>
-         (post._id === action.payload.id
+          post._id === action.payload.id
             ? {
-            ...post,
-            bookmarkedBy: post.bookmarkedBy.filter(
-              (userId) => userId !== action.payload.userId,
-              ),
-          }
-          : post
-        )),
+                ...post,
+                bookmarkedBy: post.bookmarkedBy.filter(
+                  (userId) => userId !== action.payload.userId,
+                ),
+              }
+            : post,
+        ),
       };
     default:
       return state;

@@ -3,7 +3,7 @@ import { Paper, Grid, Card, Container, Box, Typography } from '@material-ui/core
 import Carousel from 'react-material-ui-carousel';
 import useStyles from './styles';
 import { Skeleton } from '@mui/material';
-
+import { PropTypes } from 'prop-types';
 const CardCarousel = ({ array, CardComponent, small, title, profile }) => {
   const classes = useStyles();
   const sliderItems = array?.length > 3 ? 3 : array?.length;
@@ -37,5 +37,16 @@ const CardCarousel = ({ array, CardComponent, small, title, profile }) => {
     </Box>
   );
 };
-
+CardCarousel.propTypes = {
+  array: PropTypes.array.isRequired,
+  CardComponent: PropTypes.element.isRequired,
+  small: PropTypes.bool,
+  title: PropTypes.string,
+  profile: PropTypes.bool,
+};
+CardCarousel.defaultProps = {
+  small: false,
+  title: '',
+  profile: false,
+};
 export default CardCarousel;

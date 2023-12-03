@@ -32,6 +32,8 @@ function NavbarSecondary() {
     dispatch(signOut());
     history.push('/');
   };
+  const redirectUrl = user?.result?.userType == 'Organizer' ? '/organizer' : '/user';
+  console.log('redirectUrl', redirectUrl);
   return (
     <AppBar className={classes.appBar} position="static" elevation={0}>
       <Grid className={classes.brandContainer}>
@@ -45,11 +47,10 @@ function NavbarSecondary() {
               className={classes.Drawer}
               open={isOpen}
               onClose={() => setIsOpen(false)}>
-             
               <Box className={classes.Drawer}>
-               <Link to="/" style={{ width: 'auto', height: 'auto' }}>
-                <img className={classes.image} src={logoDark} alt="Journey" height={36} />
-              </Link>
+                <Link to="/" style={{ width: 'auto', height: 'auto' }}>
+                  <img className={classes.image} src={logoDark} alt="Journey" height={36} />
+                </Link>
                 <Link to="/" className={classes.linksDrawer} onClick={() => setIsOpen(false)}>
                   Home
                 </Link>
@@ -105,27 +106,27 @@ function NavbarSecondary() {
           spacing={4}
           direction="row">
           <Grid item>
-            <Link to="/" className={classes.linksDrawer}>
+            <Link to="/" className={classes.navLinks}>
               <Typography variant="p">Explore</Typography>
             </Link>
           </Grid>
           <Grid item>
-            <Link to="/destinations" className={classes.linksDrawer}>
+            <Link to="/destinations" className={classes.navLinks}>
               <Typography variant="p">Top Destinations</Typography>
             </Link>
           </Grid>
           <Grid item>
-            <Link to="/locations" className={classes.linksDrawer}>
+            <Link to="/locations" className={classes.navLinks}>
               <Typography variant="p">Top Locations</Typography>
             </Link>
           </Grid>
           <Grid item>
-            <Link to="/countries" className={classes.linksDrawer}>
+            <Link to="/countries" className={classes.navLinks}>
               <Typography variant="p">Countries</Typography>
             </Link>
           </Grid>
           <Grid item>
-            <Link to="/events" className={classes.linksDrawer}>
+            <Link to="/events" className={classes.navLinks}>
               <Typography variant="p">Upcoming events</Typography>
             </Link>
           </Grid>
@@ -134,7 +135,7 @@ function NavbarSecondary() {
       <Grid className={classes.toolbar}>
         {user ? (
           <div className={classes.profile}>
-            <Link to="/user-profile" className={classes.profileAvatar}>
+            <Link to={redirectUrl} className={classes.profileAvatar}>
               <Avatar className={classes.purple} alt={user?.user?.name} src={user?.user?.imageUrl}>
                 {user?.user?.name?.charAt(0)}
               </Avatar>

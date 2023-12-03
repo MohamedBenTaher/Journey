@@ -16,17 +16,17 @@ import {
   BOOKMARK_DESTINATION,
   CANCEL_BOOKMARK_DESTINATION,
 } from '../constants/actionTypes';
-export const FETCH_POPULAR_DESTINATIONS='FETCH_POPULAR_DESTINATIONS';
+export const FETCH_POPULAR_DESTINATIONS = 'FETCH_POPULAR_DESTINATIONS';
 
 export const getTopDestinations = () => async (dispatch) => {
   try {
-    dispatch({ type: START_LOADING_DESTINATIONS })
-    
+    dispatch({ type: START_LOADING_DESTINATIONS });
+
     const {
       data: { data },
     } = await api.fetchTopDestinations();
-    console.log('action data',data)
-    dispatch({ type: FETCH_POPULAR_DESTINATIONS ,payload: data});
+    console.log('action data', data);
+    dispatch({ type: FETCH_POPULAR_DESTINATIONS, payload: data });
     dispatch({ type: END_LOADING_DESTINATIONS });
   } catch (error) {
     console.log(error.message);

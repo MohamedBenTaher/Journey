@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
-import { Pagination, PaginationItem } from "@material-ui/lab";
-import useStyles from "./styles.js";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getCountries } from "../../../actions/country.js";
+import React, { useEffect } from 'react';
+import { Pagination, PaginationItem } from '@material-ui/lab';
+import useStyles from './styles.js';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCountries } from '../../../actions/country.js';
+import PropTypes from 'prop-types';
 
 const Paginate = ({ page }) => {
-  console.log("rendered");
+  console.log('rendered');
   const { numberOfPages } = useSelector((state) => state.countries);
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -21,13 +22,12 @@ const Paginate = ({ page }) => {
       variant="outlined"
       color="primary"
       renderItem={(item) => (
-        <PaginationItem
-          {...item}
-          component={Link}
-          to={`/countries?page=${item.page}`}
-        />
+        <PaginationItem {...item} component={Link} to={`/countries?page=${item.page}`} />
       )}
     />
   );
+};
+Paginate.propTypes = {
+  page: PropTypes.number,
 };
 export default Paginate;

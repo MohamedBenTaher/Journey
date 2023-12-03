@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {
- Grid, Container, Grow
-} from '@material-ui/core';
+import { Grid, Container, Grow } from '@material-ui/core';
 import { useHistory, useLocation } from 'react-router-dom';
 import Posts from '../Posts/Posts.js';
 import { getPostsBySearch } from '../../actions/posts.js';
@@ -48,17 +46,16 @@ function Home() {
     }
   };
   return (
-    <div style={{display:'flex', flexDirection:'column'}}>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
       <Hero />
-      
-          <Grid
-            className={classes.gridContainer}
-            container
-            justifyContent="space-between"
-            alignItems="stretch"
-            spacing={3}
-          >
-            {/* <Grow in>
+
+      <Grid
+        className={classes.gridContainer}
+        container
+        justifyContent="space-between"
+        alignItems="stretch"
+        spacing={3}>
+        {/* <Grow in>
             <Grid item xs={12} sm={12} md={12}>
               <Posts setCurrentId={setCurrentId} />
               {!searchQuery && !tags.length && (
@@ -68,12 +65,11 @@ function Home() {
               )}
             </Grid>
             </Grow> */}
-            <PopularDestinations/>
-            <PopularLocations/>
-            <PopularPosts/>
-            <PopularEvents/>
-          </Grid>
-     
+        <PopularDestinations />
+        <PopularLocations />
+        <PopularPosts />
+        <PopularEvents />
+      </Grid>
     </div>
   );
 }

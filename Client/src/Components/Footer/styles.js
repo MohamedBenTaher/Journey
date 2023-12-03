@@ -1,11 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
-  // root: {
-  //   '& .MuiTextField-root': {
-  //     margin: theme.spacing(1),
-  //   },
-  // },
   link: {
     textDecoration: 'none',
     fontSize: '18px',
@@ -65,5 +60,4 @@ export default makeStyles((theme) => ({
   gutterText: {
     color: 'white',
   },
-  
 }));

@@ -37,7 +37,7 @@ const destinationReducer = (
         numberOfPages: action.payload.numrOfPages,
       };
     case FETCH_DESTINATIONS_BY_COUNTRY:
-      console.log('in reducer',action.payload.data)
+      console.log('in reducer', action.payload.data);
       return {
         ...state,
         destinations: action.payload.data,
@@ -47,17 +47,16 @@ const destinationReducer = (
     case FETCH_POPULAR_DESTINATIONS:
       console.log('Reducer Received Data:', action.payload);
       return { ...state, destinations: action.payload };
-    case FETCH_DESTINATION_BY_SEARCH :
+    case FETCH_DESTINATION_BY_SEARCH:
       return { ...state, destinations: action.payload.data };
     case CREATE_DESTINATION:
       return { ...state, destinations: action.payload };
     case UPDATE_DESTINATION:
       return {
         ...state,
-        destinations: state.destinations.map((destination) => 
-        (
-          destination._id === action.payload._id ? action.payload : destination
-        )),
+        destinations: state.destinations.map((destination) =>
+          destination._id === action.payload._id ? action.payload : destination,
+        ),
       };
     case DELETE_DESTINATION:
       return {
@@ -67,60 +66,63 @@ const destinationReducer = (
         ),
       };
     case UPVOTE_DESTINATION:
-        return {
+      return {
         ...state,
-        destinations: state.destinations.map((destination) => (destination._id === action.payload.id
+        destinations: state.destinations.map((destination) =>
+          destination._id === action.payload.id
             ? {
                 ...destination,
-              upvotes: [...destination.bookmarkedBy, action.payload.userId],
+                upvotes: [...destination.bookmarkedBy, action.payload.userId],
               }
-            : destination
-        )),
+            : destination,
+        ),
       };
     case DOWNVOTE_DESTINATION:
-       return {
+      return {
         ...state,
-        destinations: state.destinations.map((destination) => (destination._id === action.payload.id
+        destinations: state.destinations.map((destination) =>
+          destination._id === action.payload.id
             ? {
-              ...destination,
+                ...destination,
                 bookmarkedBy: destination.upvotes.filter(
                   (userId) => userId !== action.payload.userId,
-              ),
+                ),
               }
-            : destination
-        )),
+            : destination,
+        ),
       };
     case LIKE_DESTINATION:
       return {
         ...state,
-        destinations: state.destinations.map((destination) => 
-          (
-          destination._id === action.payload._id ? action.payload : destination
-          )),
+        destinations: state.destinations.map((destination) =>
+          destination._id === action.payload._id ? action.payload : destination,
+        ),
       };
     case BOOKMARK_DESTINATION:
       return {
         ...state,
-        destinations: state.destinations.map((destination) => (destination._id === action.payload.id
+        destinations: state.destinations.map((destination) =>
+          destination._id === action.payload.id
             ? {
                 ...destination,
-              bookmarkedBy: [...destination.bookmarkedBy, action.payload.userId],
+                bookmarkedBy: [...destination.bookmarkedBy, action.payload.userId],
               }
-            : destination
-        )),
+            : destination,
+        ),
       };
     case CANCEL_BOOKMARK_DESTINATION:
       return {
         ...state,
-        destinations: state.destinations.map((destination) => (destination._id === action.payload.id
+        destinations: state.destinations.map((destination) =>
+          destination._id === action.payload.id
             ? {
-              ...destination,
+                ...destination,
                 bookmarkedBy: destination.bookmarkedBy.filter(
                   (userId) => userId !== action.payload.userId,
-              ),
+                ),
               }
-            : destination
-        )),
+            : destination,
+        ),
       };
     default:
       return state;

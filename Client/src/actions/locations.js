@@ -19,12 +19,12 @@ import {
 
 export const getTopLocations = () => async (dispatch) => {
   try {
-    console.log('called top locations')
+    console.log('called top locations');
     dispatch({ type: START_LOADING_LOCATIONS });
     const {
       data: { data },
     } = await api.fetchTopLocations();
-    console.log('fetched locations',data)
+    console.log('fetched locations', data);
     dispatch({ type: FETCH_POPULAR_LOCATIONS, payload: { data } });
     dispatch({ type: END_LOADING_LOCATIONS });
   } catch (error) {

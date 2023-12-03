@@ -27,7 +27,8 @@ import {
 import { deleteS3Image } from '../../../api';
 import { getCountries } from '../../../actions/country';
 
-const useStyles = makeStyles((theme) => createStyles({
+const useStyles = makeStyles((theme) =>
+  createStyles({
     formControl: {
       minWidth: 120,
     },
@@ -123,12 +124,13 @@ const useStyles = makeStyles((theme) => createStyles({
       marginBottom: '1em',
       marginTop: '1em',
     },
-  }));
+  }),
+);
 
 function DestinationForm() {
   const { id } = useParams();
   const { destination, isLoading } = useSelector((state) => state.destinations);
-  const user = useSelector((state)=>state.auth.user)
+  const user = useSelector((state) => state.auth.user);
   const userId = user?.user?._id;
   const classes = useStyles();
   const countries = useSelector((state) => state.countries);
@@ -203,8 +205,7 @@ function DestinationForm() {
         onSubmit={(values, { setSubmitting, setFieldValue, resetForm }) => {
           handleSubmit(values, { setSubmitting, setFieldValue, resetForm });
           setSubmitting(false);
-        }}
-      >
+        }}>
         {({
           values,
           errors,
@@ -241,8 +242,7 @@ function DestinationForm() {
                             );
                           }
                           setFieldValue('coverImage', '');
-                        }}
-                      >
+                        }}>
                         <Typography variant="caption">x</Typography>
                       </div>
                     </div>
@@ -294,10 +294,11 @@ function DestinationForm() {
                     onBlur={handleBlur}
                     variant="outlined"
                     onChange={handleChange}
-                    value={values.country}
-                  >
+                    value={values.country}>
                     {countries?.countries?.map((country) => (
-                      <MenuItem value={country._id}>{country.title}</MenuItem>
+                      <MenuItem value={country._id} key={country._id}>
+                        {country.title}
+                      </MenuItem>
                     ))}
                   </Field>
                   {touched.type && Boolean(errors.type) && <div>{errors.type}</div>}
@@ -347,8 +348,7 @@ function DestinationForm() {
                               'images',
                               values.images?.filter((_, i) => i !== index),
                             );
-                          }}
-                        >
+                          }}>
                           <Typography variant="caption">x</Typography>
                         </div>
                       </div>
@@ -372,8 +372,7 @@ function DestinationForm() {
                   variant="contained"
                   color="primary"
                   disabled={isSubmitting}
-                  className={classes.submitButton}
-                >
+                  className={classes.submitButton}>
                   <AddRounded />
                   Add your destination
                 </Button>

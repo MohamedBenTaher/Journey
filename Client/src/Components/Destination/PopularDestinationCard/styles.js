@@ -1,17 +1,16 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-
   smallCard: {
     height: 250,
     width: '200px',
     borderRadius: '15px',
-    boxShadow:'none',
+    boxShadow: 'none',
     transition: 'all 0.5s',
-    backgroundColor:'transparent',
-    display:'flex',
-    alignItems:'center',
-    flexDirection:'column',
+    backgroundColor: 'transparent',
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
     '&:hover': {
       transform: 'scale(1.05)',
       '& $content': {
@@ -28,19 +27,19 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     width: '200px',
-    height: '70%',  
+    height: '70%',
     borderRadius: '15px',
     // backgroundSize: 'cover',
     // backgroundPosition: 'center',
     filter: 'brightness(70%)',
   },
   content: {
-    textAlign:'start',
-    display:'flex',
-    flexDirection:'column',
-    alignItems:'start',
-    justifyContent:'start',
-    padding:'2px',
+    textAlign: 'start',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'start',
+    justifyContent: 'start',
+    padding: '2px',
     // position: 'absolute',
     // bottom: 0,
     // left: '50%',
@@ -58,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '16px',
     fontStyle: 'normal',
     fontWeight: 500,
-    lineHeight: '24px'
+    lineHeight: '24px',
   },
 }));
 export default useStyles;

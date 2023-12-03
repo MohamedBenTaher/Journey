@@ -34,6 +34,8 @@ function Navbar() {
   };
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const redirectUrl = user?.result?.userType == 'Organizer' ? '/organizer' : '/user';
+  console.log('redirectUrl', redirectUrl);
   return (
     <AppBar
       className={classes.appBar}
@@ -149,7 +151,7 @@ function Navbar() {
           </div>
         ) : user && !isLoading ? (
           <div className={classes.profile}>
-            <Link to="/user-profile" className={classes.profileAvatar}>
+            <Link to={redirectUrl} className={classes.profileAvatar}>
               <Avatar className={classes.purple} alt={user?.user?.name} src={user?.user?.imageUrl}>
                 {user?.user?.name.charAt(0)}
               </Avatar>

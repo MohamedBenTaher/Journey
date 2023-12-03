@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
     width: '100%',
     padding: '3em',
   },
-    mainContainer: {
+  mainContainer: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'start',

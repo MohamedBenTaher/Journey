@@ -1,17 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  Grid,
-  Container,
-  Grow,
-  AppBar,
-  TextField,
-  Button,
-  MenuItem,
-  Select,
-} from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import { useHistory, useLocation } from 'react-router-dom';
-import ChipInput from 'material-ui-chip-input';
+import { MuiChipsInput } from 'mui-chips-input';
 import { getPostsBySearch } from '../../actions/posts';
 import useStyles from './styles.js';
 import SearchInput from '../Inputs/SearchInput';
@@ -20,14 +11,13 @@ import Activities from '../../assets/icons/Activities';
 import LocationPin from '../../assets/icons/LocationPin';
 import Guests from '../../assets/icons/Guests';
 import SearchIcoon from '../../assets/icons/SearchIcon';
-
+import PropTypes from 'prop-types';
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
 function SearchBar() {
   const classes = useStyles();
-  const [currentId, setCurrentId] = useState(0);
   const [search, setSearch] = useState('');
   const [tags, setTags] = useState([]);
   const [season, setSeason] = useState([]);
@@ -88,12 +78,12 @@ function SearchBar() {
           search,
           tags: tags.join(','),
           season,
-        })
+        }),
       );
       history.push(
         `/stories/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}&season=${
           season || 'none'
-        }`
+        }`,
       );
     } else {
       history.push('/stories');
@@ -107,7 +97,7 @@ function SearchBar() {
   };
 
   return (
-<Grid container spacing={2} className={classes.appBarSearch}>
+    <Grid container spacing={2} className={classes.appBarSearch}>
       <Grid item className={classes.Inputs}>
         {items.map((item, index) => (
           <SearchInput
@@ -126,9 +116,8 @@ function SearchBar() {
           className={classes.searchButton}
           variant="contained"
           color="primary"
-          fullWidth
-        >
-          <SearchIcoon  />
+          fullWidth>
+          <SearchIcoon />
         </Button>
       </Grid>
     </Grid>

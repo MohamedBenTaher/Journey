@@ -1,14 +1,10 @@
-import { Card, CardMedia, CardContent, Typography, Button, IconButton } from '@material-ui/core';
-import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom/cjs/react-router-dom.js';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
-import { useDispatch } from 'react-redux';
-import image from '../../../Images/tokyo.jpg';
+import React from 'react';
+import { Card, CardMedia, CardContent, Typography } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import useStyles from './styles.js';
-import { likeDestination } from '../../../actions/destinations.js';
-import RatingComponent from '../../Rating/RatingComponent';
 import LocationIcon from '../../../assets/icons/LocationIcon';
+import PropTypes from 'prop-types';
+
 function PopularEventCard({ item, userId, small }) {
   const classes = useStyles();
   const history = useHistory();
@@ -37,12 +33,28 @@ function PopularEventCard({ item, userId, small }) {
               height: '2em',
             }}>
             <LocationIcon />
-            <Typography className={classes.description}>{item.description}</Typography>
+            <Typography>{item.startDate}</Typography>
+            <Typography>{item.eventFee}</Typography>
+            <Typography>{item.numberOfPlaces}</Typography>
+            <Typography>{item.numberOfPlaces - item.attendants.length}</Typography>
           </div>
         </div>
       </CardContent>
     </Card>
   );
 }
+PopularEventCard.propTypes = {
+  item: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    coverImage: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    startDate: PropTypes.string.isRequired,
+    eventFee: PropTypes.string.isRequired,
+    numberOfPlaces: PropTypes.number.isRequired,
+    attendants: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }).isRequired,
+  userId: PropTypes.string.isRequired,
+  small: PropTypes.bool,
+};
 
 export default PopularEventCard;

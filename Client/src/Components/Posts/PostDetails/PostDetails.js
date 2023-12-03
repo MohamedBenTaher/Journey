@@ -6,7 +6,6 @@ import {
   Divider,
   Card,
   CardContent,
-  Chip,
   IconButton,
 } from '@material-ui/core/';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,10 +18,7 @@ import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { Grid } from '@mui/material';
-import ComentSection from './ComentSection';
 import Comments from '../../Comment/Comments';
-
-import { bookmarkResource, cancelBookmarkResource } from '../../../actions/auth';
 import useStyles from './styles';
 import {
   bookmarkPost,
@@ -34,7 +30,7 @@ import PostInfo from '../PostInfo/PostInfo';
 
 function PostDetails() {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
-  const user = useSelector((state)=>state.auth.user)
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
@@ -47,7 +43,6 @@ function PostDetails() {
   useEffect(() => {
     if (post) {
       dispatch(getPostsBySearch({ search: 'none', tags: post?.tags?.join(',') }));
-      
     }
   }, [post]);
   useEffect(() => {
@@ -85,19 +80,13 @@ function PostDetails() {
             {post.duration > 0 && (
               <div className={classes.info}>
                 <AccessTimeIcon />
-                {post.duration}
-{' '}
-days
-</div>
+                {post.duration} days
+              </div>
             )}
             <div className={classes.info}>
               {post?.destination?.name && post?.country.title ? (
                 <>
-                  <LocationOnIcon /> 
-{' '}
-{post?.destination?.name}, 
-{' '}
-{post?.country?.title}
+                  <LocationOnIcon /> {post?.destination?.name}, {post?.country?.title}
                 </>
               ) : post?.destination?.name ? (
                 <>
@@ -106,19 +95,15 @@ days
                 </>
               ) : post?.country?.title ? (
                 <>
-                  <LocationOnIcon /> 
-{' '}
-{post?.country?.title}
+                  <LocationOnIcon /> {post?.country?.title}
                 </>
               ) : null}
             </div>
             {post.cost > 0 && (
               <div className={classes.info}>
                 <AttachMoneyIcon />
-                {post.cost}
-{' '}
-$
-</div>
+                {post.cost} $
+              </div>
             )}
 
             <Typography
@@ -126,8 +111,7 @@ $
               variant="h6"
               color="textSecondary"
               component="h3"
-              className={classes.tags}
-            >
+              className={classes.tags}>
               <LocalOfferOutlinedIcon />
               {post?.tags?.map((tag, index) => (
                 <div key={index} style={{ marginLeft: 10 }}>
@@ -184,32 +168,30 @@ $
           </Typography>
           <Divider />
           <div className={classes.recommendedPosts}>
-            {recommendedPosts.map(({
- title, name, message, likedBy, selectedFile, _id 
-}) => (
+            {recommendedPosts.map(({ title, name, message, likedBy, selectedFile, _id }) => (
               <div
-    style={{ margin: '20px', cursor: 'pointer' }}
-    onClick={() => openPost(_id)}
-    key={_id}>
-    <Typography gutterBottom variant="h6">
+                style={{ margin: '20px', cursor: 'pointer' }}
+                onClick={() => openPost(_id)}
+                key={_id}>
+                <Typography gutterBottom variant="h6">
                   {title}
                 </Typography>
-    <Typography gutterBottom variant="subtitle2">
+                <Typography gutterBottom variant="subtitle2">
                   {name}
                 </Typography>
-    <Typography gutterBottom variant="subtitle2">
+                <Typography gutterBottom variant="subtitle2">
                   {message.split('\n').map((paragraph, index) => (
-        <p key={index} style={{ textAlign: 'justify' }}>
+                    <p key={index} style={{ textAlign: 'justify' }}>
                       {paragraph}
                     </p>
-      ))}
+                  ))}
                   <br />
                 </Typography>
-    <Typography gutterBottom variant="subtitle1">
+                <Typography gutterBottom variant="subtitle1">
                   Likes: {likedBy?.length}
                 </Typography>
-    <img src={selectedFile} width="200px" />
-  </div>
+                <img src={selectedFile} width="200px" />
+              </div>
             ))}
           </div>
         </div>

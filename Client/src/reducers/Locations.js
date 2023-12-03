@@ -14,7 +14,7 @@ import {
   FETCH_LOCATION_BY_DESTINATION,
 } from '../constants/actionTypes';
 
-const locationReducer = (state = { isLoadingLocations:true, locations: [] }, action) => {
+const locationReducer = (state = { isLoadingLocations: true, locations: [] }, action) => {
   switch (action.type) {
     case START_LOADING_LOCATIONS:
       return { ...state, isLoadingLocations: true };
@@ -27,13 +27,13 @@ const locationReducer = (state = { isLoadingLocations:true, locations: [] }, act
         currentPage: action.payload.currentPage,
         numberOfPages: action.payload.numrOfPages,
       };
-    case FETCH_LOCATION_BY_SEARCH :
+    case FETCH_LOCATION_BY_SEARCH:
       return {
         ...state,
         locations: action.payload.data,
       };
     case FETCH_POPULAR_LOCATIONS:
-     return {
+      return {
         ...state,
         locations: action.payload.data,
       };
@@ -48,7 +48,9 @@ const locationReducer = (state = { isLoadingLocations:true, locations: [] }, act
     case UPDATE_LOCATION:
       return {
         ...state,
-        locations: state.locations.map((location) => (location._id === action.payload._id ? action.payload : location)),
+        locations: state.locations.map((location) =>
+          location._id === action.payload._id ? action.payload : location,
+        ),
       };
     case FETCH_LOCATION_BY_DESTINATION:
       return { ...state, locations: action.payload };
@@ -81,29 +83,31 @@ const locationReducer = (state = { isLoadingLocations:true, locations: [] }, act
     case BOOKMARK_LOCATION:
       return {
         ...state,
-        locations: state.locations.map((location) => (location._id === action.payload.id
+        locations: state.locations.map((location) =>
+          location._id === action.payload.id
             ? {
                 ...location,
                 bookmarkedBy: [...location.bookmarkedBy, action.payload.userId],
               }
-            : location
-        )),
+            : location,
+        ),
       };
     case CANCEL_BOOKMARK_LOCATION:
       return {
         ...state,
-        locations: state.locations.map((location) => (location._id === action.payload.id
+        locations: state.locations.map((location) =>
+          location._id === action.payload.id
             ? {
-              ...location,
+                ...location,
                 bookmarkedBy: location.bookmarkedBy.filter(
                   (userId) => userId !== action.payload.userId,
-              ),
-            }
-            : location
-        )),
+                ),
+              }
+            : location,
+        ),
       };
     default:
       return state;
   }
 };
-export default locationReducer
+export default locationReducer;

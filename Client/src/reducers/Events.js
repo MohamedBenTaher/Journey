@@ -12,7 +12,7 @@ import {
   CANCEL_EVENT,
   BOOKMARK_EVENT,
   CANCEL_BOOKMARK_EVENT,
-  FETCH_TOP_EVENTS
+  FETCH_TOP_EVENTS,
 } from '../constants/actionTypes';
 
 const eventReducer = (state = { isLoadingEvents: true, events: [] }, action) => {
@@ -55,14 +55,14 @@ const eventReducer = (state = { isLoadingEvents: true, events: [] }, action) => 
       return {
         ...state,
         event: state.events.map((event) =>
-        event._id === action.payload._id ? action.payload : event,
+          event._id === action.payload._id ? action.payload : event,
         ),
       };
-      case CANCEL_EVENT:
+    case CANCEL_EVENT:
       return {
         ...state,
         event: state.events.map((event) =>
-        event._id !== action.payload._id ? action.payload : event,
+          event._id !== action.payload._id ? action.payload : event,
         ),
       };
     case FETCH_EVENT_BY_SEARCH:
@@ -70,28 +70,30 @@ const eventReducer = (state = { isLoadingEvents: true, events: [] }, action) => 
     case BOOKMARK_EVENT:
       return {
         ...state,
-        events: state.events.map((event) => (event._id === action.payload.id
+        events: state.events.map((event) =>
+          event._id === action.payload.id
             ? {
-              ...event,
-              bookmarkedBy: [...event.bookmarkedBy, action.payload.userId],
+                ...event,
+                bookmarkedBy: [...event.bookmarkedBy, action.payload.userId],
               }
-            : event
-            )),
+            : event,
+        ),
       };
     case CANCEL_BOOKMARK_EVENT:
       return {
         ...state,
-        events: state.events.map((event) => (event._id === action.payload.id
+        events: state.events.map((event) =>
+          event._id === action.payload.id
             ? {
                 ...event,
-              bookmarkedBy: event.bookmarkedBy.filter(
-                (userId) => userId !== action.payload.userId,
+                bookmarkedBy: event.bookmarkedBy.filter(
+                  (userId) => userId !== action.payload.userId,
                 ),
               }
-            : event
-            )),
+            : event,
+        ),
       };
-      
+
     default:
       return state;
   }

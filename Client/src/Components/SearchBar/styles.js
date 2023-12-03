@@ -3,28 +3,28 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
   appBarSearch: {
     borderRadius: 4,
-    height:'auto',
-    width:'95%',
+    height: 'auto',
+    width: '95%',
     display: 'flex',
     flexDirection: 'row',
-    padding:'12px',
+    padding: '12px',
     alignItems: 'center',
-    alignSelf:'center',
+    alignSelf: 'center',
     backgroundColor: 'white !important',
-    justifyContent:'space-evenly',
-    boxShadow:' 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-    marginBlock:'100px'
+    justifyContent: 'space-evenly',
+    boxShadow: ' 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+    marginBlock: '100px',
   },
-  Inputs:{
-    display:'flex',
-    flexDirection:'row',
-    flexBasis:'90%',
-    
-      [theme.breakpoints.down('xs')]: {
+  Inputs: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexBasis: '90%',
+
+    [theme.breakpoints.down('xs')]: {
       flexDirection: 'column',
     },
-     [theme.breakpoints.down('sm')]: {
-      flexWrap:'wrap'
+    [theme.breakpoints.down('sm')]: {
+      flexWrap: 'wrap',
     },
   },
   pagination: {
@@ -45,8 +45,8 @@ export default makeStyles((theme) => ({
     backgroundColor: 'primary',
     fontWeight: 'bold',
     color: 'white',
-    width:'100%',
-    borderRadius:'18px',
+    width: '100%',
+    borderRadius: '18px',
     gap: '8px',
     padding: '18px',
     height: '3.2rem',
@@ -54,24 +54,23 @@ export default makeStyles((theme) => ({
       color: 'gray',
       backgroundColor: 'lightblue',
     },
-   
   },
-  buttonContainer:{
-  [theme.breakpoints.down('sm')]: {
-        width:'auto',
+  buttonContainer: {
+    [theme.breakpoints.down('sm')]: {
+      width: 'auto',
     },
-     [theme.breakpoints.down('md')]: {
-        width:'100%',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
     },
   },
-  searchBarContainer:{
+  searchBarContainer: {
     borderRadius: 4,
-    height:'auto',
-    width:'100%',
+    height: 'auto',
+    width: '100%',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor:'red',
+    backgroundColor: 'red',
     justifyContent: 'space-evenly',
-  }
+  },
 }));

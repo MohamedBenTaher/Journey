@@ -1,24 +1,23 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-
-smallCard: {
-  height: 'auto',
-  width: '316px',
-  borderRadius: '15px',
-  boxShadow: 'none',
-  transition: 'all 0.5s',
-  backgroundColor: 'transparent',
-  display: 'flex',
-  flexDirection: 'column',
-  flexWrap: 'wrap', // Allow content to wrap
-  '&:hover': {
-    transform: 'scale(1.02)',
-    '& $content': {
-      opacity: 1,
+  smallCard: {
+    height: 'auto',
+    width: '316px',
+    borderRadius: '15px',
+    boxShadow: 'none',
+    transition: 'all 0.5s',
+    backgroundColor: 'transparent',
+    display: 'flex',
+    flexDirection: 'column',
+    flexWrap: 'wrap', // Allow content to wrap
+    '&:hover': {
+      transform: 'scale(1.02)',
+      '& $content': {
+        opacity: 1,
+      },
     },
   },
-},
   description: {
     color: '#979797',
     fontSize: '14px',
@@ -28,20 +27,20 @@ smallCard: {
   },
   media: {
     width: '100%',
-    height: '380px',  
+    height: '380px',
     borderRadius: '15px',
     // backgroundSize: 'cover',
     // backgroundPosition: 'center',
     filter: 'brightness(70%)',
   },
   content: {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'start',
-  justifyContent: 'flex-start', // Align content to the left
-  padding: '2px',
-  width: '100%', // Take full width
-},
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'start',
+    justifyContent: 'flex-start', // Align content to the left
+    padding: '2px',
+    width: '100%', // Take full width
+  },
   textContainer: {
     padding: theme.spacing(0, 2),
   },
@@ -55,6 +54,6 @@ smallCard: {
     textOverflow: 'ellipsis', // Add ellipsis (...) if the text overflows
     overflow: 'hidden', // Hide the overflow text
     maxHeight: '48px', // Adjust the max height as needed
-    }
+  },
 }));
 export default useStyles;

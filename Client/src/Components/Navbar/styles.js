@@ -60,10 +60,10 @@ export default makeStyles((theme) => ({
   links: {
     textDecoration: 'none',
     color: 'white',
-    opacity:0.7,
+    opacity: 0.7,
     transition: 'font-size 0.2s',
     '&:hover': {
-      opacity:1,
+      opacity: 1,
       fontSize: '1.1em',
     },
   },
@@ -78,10 +78,10 @@ export default makeStyles((theme) => ({
   linksDrawer: {
     textDecoration: 'none',
     color: 'black',
-    fontSize:'1.3em',
+    fontSize: '1.3em',
     transition: 'font-size 0.2s',
     '&:hover': {
-      opacity:1,
+      opacity: 1,
       fontSize: '1.5em',
     },
   },
@@ -100,18 +100,17 @@ export default makeStyles((theme) => ({
     justifyContent: 'space-evenly',
     width: 'auto',
     alignItems: 'center',
-    backgroundColor:'transparent',
+    backgroundColor: 'transparent',
     [theme.breakpoints.down('sm')]: {
       width: 'auto',
       marginTop: 20,
       justifyContent: 'center',
     },
-    navbarText:{
+    navbarText: {
       fontSize: '20px',
       fontStyle: 'normal',
       fontWeight: 400,
-      lineHeight: '20px'
+      lineHeight: '20px',
     },
-
   },
 }));

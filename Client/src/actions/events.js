@@ -14,7 +14,8 @@ import {
   BOOKMARK_EVENT,
   CANCEL_BOOKMARK_EVENT,
   LIKE_EVENT,
-  FETCH_TOP_EVENTS
+  FETCH_TOP_EVENTS,
+  FETCH_EVENTS_BY_CREATOR,
 } from '../constants/actionTypes';
 
 // Action Creators
@@ -41,10 +42,10 @@ export const getTopEvents = () => async (dispatch) => {
     const {
       data: { data },
     } = await api.fetchTopEevents();
-    console.log('fetch events',data)
+    console.log('fetch events', data);
     dispatch({
       type: FETCH_TOP_EVENTS,
-      payload: { data},
+      payload: { data },
     });
     dispatch({ type: END_LOADING_EVENTS });
   } catch (error) {
@@ -69,6 +70,18 @@ export const getEventsBySearch = (searchQuery) => async (dispatch) => {
       data: { data },
     } = await api.fetchPostsBySearch(searchQuery);
     dispatch({ type: FETCH_EVENT_BY_SEARCH, payload: { data } });
+    dispatch({ type: END_LOADING_EVENTS });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+export const getEventsByCreator = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: START_LOADING_EVENTS });
+    const {
+      data: { data },
+    } = await api.fetchEventsByCreator(id);
+    dispatch({ type: FETCH_EVENTS_BY_CREATOR, payload: { data } });
     dispatch({ type: END_LOADING_EVENTS });
   } catch (error) {
     console.log(error.message);

@@ -33,8 +33,8 @@ function ChipInputField({ label, ...props }) {
         }}
       />
       <Box>
-        {field.value.tags
-          && field?.value.tags?.map((tag) => (
+        {field.value.tags &&
+          field?.value.tags?.map((tag) => (
             <Chip
               key={tag}
               label={tag}
@@ -48,4 +48,9 @@ function ChipInputField({ label, ...props }) {
     </Box>
   );
 }
+ChipInputField.propTypes = {
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+};
+
 export default ChipInputField;

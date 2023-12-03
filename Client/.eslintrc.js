@@ -3,7 +3,12 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ['plugin:react/recommended', 'airbnb',"plugin:react/jsx-runtime"],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+  extends: ['plugin:react/recommended'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,

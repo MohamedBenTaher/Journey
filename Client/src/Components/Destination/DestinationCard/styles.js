@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   smallCard: {
-
     width: '100%',
     height: 300,
     margin: 20,
