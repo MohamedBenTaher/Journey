@@ -119,13 +119,6 @@ function UserSignIn() {
             </Form>
           )}
         </Formik>
-        <Grid container justifyContent="flex-end">
-          <Grid item>
-            <Button onClick={() => history.push('/signin')}>
-              Don&apos;t Have An Account ? Sign Up
-            </Button>
-          </Grid>
-        </Grid>
       </Paper>
     </Container>
   );

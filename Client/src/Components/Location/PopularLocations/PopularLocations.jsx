@@ -18,7 +18,6 @@ function PopularLocations({ setCurrentId }) {
   console.log('Received  in compoenent :', locations);
   const user = useSelector((state) => state.auth.user);
   const value = useSelector((state) => state);
-  const query = useQuery();
   const dispatch = useDispatch();
   console.log('recieved locations in component ', locations, value);
   const classes = useStyles();
@@ -29,7 +28,7 @@ function PopularLocations({ setCurrentId }) {
   if (!isLoadingLocations && !locations?.length) {
     return <div>No Locations</div>;
   }
-  console.log('test');
+
   return (
     <Grid container className={classes.root}>
       <Grid
@@ -46,22 +45,31 @@ function PopularLocations({ setCurrentId }) {
         <Typography className={classes.Title}>Hotels and Restaurants</Typography>
         <SecondaryButton content={'View all'} icon={ArrowRight} />
       </Grid>
-      <div className={classes.mainContainer}>
+      <div className={classes.Container}>
         {isLoadingLocations ? (
-          <Grid container spacing={4}>
-            {Array.from(new Array(3)).map((item, index) => (
-              <Grid item key={index}>
-                <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
-                  <Skeleton variant="rounded" width={'100%'} height={300} />
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              columnGap: '2em',
+              padding: '3em',
+            }}>
+            {Array.from(new Array(4)).map((item, index) => (
+              <Grid item key={index} style={{ width: '100%' }}>
+                <Box style={{ width: '100%' }}>
+                  <Skeleton variant="rounded" width={'70%'} height={350} />
                   <Box sx={{ pt: 0.5 }}>
                     <Skeleton />
                     <Skeleton />
-                    <Skeleton width="60%" />
+                    <Skeleton width="40%" />
                   </Box>
                 </Box>
               </Grid>
             ))}
-          </Grid>
+          </div>
         ) : (
           <div className={classes.Container}>
             {locations?.map((location) => (

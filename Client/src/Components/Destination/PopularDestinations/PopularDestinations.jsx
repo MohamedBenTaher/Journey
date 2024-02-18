@@ -35,14 +35,14 @@ function PopularDestinations({ setCurrentId }) {
       <div className={classes.mainContainer}>
         {isLoadingDestinations ? (
           <Grid container spacing={3}>
-            {Array.from(new Array(3)).map((item, index) => (
+            {Array.from(new Array(6)).map((item, index) => (
               <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
-                  <Skeleton variant="rounded" width={'100%'} height={300} />
+                <Box sx={{ width: '100%', my: 5 }}>
+                  <Skeleton variant="rounded" width={'40%'} height={100} />
                   <Box sx={{ pt: 0.5 }}>
                     <Skeleton />
                     <Skeleton />
-                    <Skeleton width="60%" />
+                    <Skeleton width="20%" />
                   </Box>
                 </Box>
               </Grid>

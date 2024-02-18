@@ -7,6 +7,7 @@ import comments from './Comments';
 import countries from './Countries';
 import continents from './Continents';
 import locations from './Locations';
+import alert from './Alert';
 import authMiddleware from '../middleware/authMiddleware';
 
 export default combineReducers(
@@ -19,6 +20,7 @@ export default combineReducers(
     continents,
     countries,
     locations,
+    alert,
   },
   applyMiddleware(authMiddleware),
 );

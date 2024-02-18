@@ -4,7 +4,7 @@ import CustomerSignUpForm from './Customer/UserSignUp';
 import OrganizerSignUpForm from './Organizer/OrganizerSignUp';
 import { Button, Grid, Box } from '@material-ui/core';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
-
+import logoDark from '../../assets/images/logoDark.png';
 function Auth() {
   const [formToShow, setFormToShow] = useState('signIn');
   const handleFormSwitch = (formName) => {
@@ -17,8 +17,8 @@ function Auth() {
   };
 
   return (
-    <div>
-      <h1>Auth</h1>
+    <div style={{ padding: '2em' }}>
+      <img src={logoDark} alt="2rism" height={36} />
       <Box display="flex" justifyContent="center">
         {formToShow !== 'signIn' ? (
           <ToggleButtonGroup
@@ -40,10 +40,20 @@ function Auth() {
         {forms[formToShow]}
       </Grid>
 
-      <Grid container justifyContent="flex-end">
+      <Grid
+        container
+        justifyContent="center"
+        style={{
+          marginTop: '4em',
+        }}>
         <Grid item>
-          <Button onClick={() => setFormToShow('customerSignUp')}>
-            Don&apos;t Have An Account ? Sign Up
+          <Button
+            onClick={() =>
+              formToShow === 'signIn' ? setFormToShow('customerSignUp') : setFormToShow('signIn')
+            }>
+            {formToShow === 'signIn'
+              ? "Don't Have An Account ? Sign Up"
+              : 'Already Have An Account ? Sign In'}
           </Button>
         </Grid>
       </Grid>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CssBaseline } from '@material-ui/core';
+import { CssBaseline, Typography } from '@material-ui/core';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Home from './Components/Home/Home';
@@ -28,12 +28,17 @@ import PrivateRoute from './Components/Auth/PrivateRoute';
 import { authCheck } from './actions/auth';
 import { useEffect } from 'react';
 import OrganizerProfile from './Components/Organizer/Profile/Profile';
-
+import Alert from '@mui/material/Alert';
+import { hideAlert } from './actions/alert';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 const App = () => {
   const user = useSelector((state) => state.auth.user);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
+  const alert = useSelector((state) => state.alert);
   const { token } = useSelector((state) => state.auth);
+  console.log('alert', alert);
   useEffect(() => {
     console.log('called useEffect');
     authCheck(token);
@@ -42,6 +47,42 @@ const App = () => {
   if (isLoggedIn == undefined) return;
   return (
     <CssBaseline>
+      <div style={{ zIndex: 9999 }}>
+        {alert?.message && (
+          <Alert
+            style={
+              alert?.message
+                ? {
+                    position: 'fixed',
+                    top: '0',
+                    zIndex: 9999,
+                    width: '100%',
+                    height: '5%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                  }
+                : { display: 'none' }
+            }
+            severity={alert?.alertType}
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  dispatch(hideAlert());
+                }}>
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }>
+            <Typography variant="body1" align="center">
+              {alert?.message}
+            </Typography>
+          </Alert>
+        )}
+      </div>
       <Switch>
         <Route path="/" exact component={() => <Redirect to="/stories" />} />
         <Route path="/stories" exact component={Home} />
