@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Grid, Box, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import useStyles from './styles.js';
 import { Skeleton } from '@mui/material';
 import PopularPostCard from '../PopularPostCard/PopularPostCard.jsx';
@@ -44,14 +44,29 @@ function PopularPosts({ setCurrentId }) {
         }}
         spacing={3}>
         <Typography className={classes.Title}>Travel Tips and Advice</Typography>
-        <SecondaryButton content={'View all'} icon={ArrowRight} />
+        <Link to="/stories" style={{ textDecoration: 'none' }}>
+          <SecondaryButton content={'View all'} icon={ArrowRight} />
+        </Link>
       </Grid>
       <div className={classes.mainContainer}>
         {isLoadingPosts ? (
-          <Grid container spacing={4}>
-            {Array.from(new Array(3)).map((item, index) => (
-              <Grid item key={index}>
-                <Box sx={{ width: '100%', marginRight: 0.5, my: 5 }}>
+          <Grid
+            container
+            spacing={4}
+            style={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+            }}>
+            {Array.from(new Array(2)).map((item, index) => (
+              <div
+                key={index}
+                style={{
+                  width: '50%',
+                }}>
+                <Box sx={{ marginRight: 0.5, my: 5, width: '50%' }}>
                   <Skeleton variant="rounded" width={'100%'} height={300} />
                   <Box sx={{ pt: 0.5 }}>
                     <Skeleton />
@@ -59,7 +74,7 @@ function PopularPosts({ setCurrentId }) {
                     <Skeleton width="60%" />
                   </Box>
                 </Box>
-              </Grid>
+              </div>
             ))}
           </Grid>
         ) : (

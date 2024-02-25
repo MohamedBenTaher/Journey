@@ -74,7 +74,6 @@ function Footer() {
           flexDirection: 'row',
           justifyContent: 'start',
           alignItems: 'start',
-          // width: '100%',
           flexWrap: 'no-wrap',
           background: '#F9F9F9',
         }}>
@@ -362,7 +361,7 @@ function Footer() {
                 dispatch(
                   showAlert(
                     'Email has been submitted,welcome to the 2rism newsletter !',
-                    'warning',
+                    'success',
                   ),
                 );
               }}>

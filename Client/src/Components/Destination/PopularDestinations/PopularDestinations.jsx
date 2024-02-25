@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { Grid, Box, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import useStyles from './styles.js';
 import PopularDestinationCard from '../PopularDestinationCard/PopularDestinationCard.jsx';
 import { Skeleton } from '@mui/material';
 import { getTopDestinations } from '../../../actions/destinations.js';
 import PropTypes from 'prop-types';
+import SecondaryButton from '../../Button/SecondaryButton.jsx';
+import ArrowRight from '../../../assets/icons/ArrowRight.jsx';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -29,8 +31,24 @@ function PopularDestinations({ setCurrentId }) {
   console.log('test');
   return (
     <Grid container className={classes.root}>
-      <Grid style={{ alignSelf: 'start', padding: '3em' }} spacing={3}>
-        <Typography className={classes.Title}>Popular Destiantions</Typography>
+      <Grid
+        style={{
+          alignSelf: 'start',
+          paddingTop: '3em',
+          paddingBottom: '3em',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          width: '100%',
+        }}
+        spacing={3}>
+        <Grid style={{ alignSelf: 'start' }} spacing={3}>
+          <Typography className={classes.Title}>Popular Destiantions</Typography>
+        </Grid>
+        <Link to="/destinations" style={{ textDecoration: 'none' }}>
+          <SecondaryButton content={'View all'} icon={ArrowRight} />
+        </Link>
       </Grid>
       <div className={classes.mainContainer}>
         {isLoadingDestinations ? (

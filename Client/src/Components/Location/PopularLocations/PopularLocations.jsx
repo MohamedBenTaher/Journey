@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Grid, Box, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import useStyles from './styles.js';
 import { Skeleton } from '@mui/material';
 import PopularLocationsCard from '../PopularLocationsCard/PopularLocationsCard.jsx';
@@ -43,7 +43,9 @@ function PopularLocations({ setCurrentId }) {
         }}
         spacing={3}>
         <Typography className={classes.Title}>Hotels and Restaurants</Typography>
-        <SecondaryButton content={'View all'} icon={ArrowRight} />
+        <Link to="/locations" style={{ textDecoration: 'none' }}>
+          <SecondaryButton content={'View all'} icon={ArrowRight} />
+        </Link>
       </Grid>
       <div className={classes.Container}>
         {isLoadingLocations ? (

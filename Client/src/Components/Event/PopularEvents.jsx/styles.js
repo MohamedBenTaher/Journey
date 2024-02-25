@@ -17,7 +17,7 @@ export default makeStyles((theme) => ({
   },
   Container: {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'start',
     justifyContent: 'space-evenly',
     width: '100%',
   },

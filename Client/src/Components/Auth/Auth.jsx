@@ -5,6 +5,8 @@ import OrganizerSignUpForm from './Organizer/OrganizerSignUp';
 import { Button, Grid, Box } from '@material-ui/core';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import logoDark from '../../assets/images/logoDark.png';
+import { Link } from 'react-router-dom';
+
 function Auth() {
   const [formToShow, setFormToShow] = useState('signIn');
   const handleFormSwitch = (formName) => {
@@ -18,7 +20,9 @@ function Auth() {
 
   return (
     <div style={{ padding: '2em' }}>
-      <img src={logoDark} alt="2rism" height={36} />
+      <Link to="/" style={{ width: 'auto', height: 'auto' }}>
+        <img src={logoDark} alt="Journey" height={36} />
+      </Link>
       <Box display="flex" justifyContent="center">
         {formToShow !== 'signIn' ? (
           <ToggleButtonGroup

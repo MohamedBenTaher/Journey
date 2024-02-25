@@ -3,8 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   smallCard: {
     height: 'auto',
-    width: '316px',
+    width: '380px',
     borderRadius: '15px',
+    gap: '1em',
     boxShadow: 'none',
     transition: 'all 0.5s',
     backgroundColor: 'transparent',
@@ -26,18 +27,22 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '20px',
   },
   media: {
-    width: '100%',
-    height: '380px',
+    width: '380px',
+    height: '450px',
     borderRadius: '15px',
     // backgroundSize: 'cover',
     // backgroundPosition: 'center',
     filter: 'brightness(70%)',
+    '&:hover': {
+      filter: 'brightness(85%)',
+    },
   },
   content: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'start',
-    justifyContent: 'flex-start', // Align content to the left
+    justifyContent: 'flex-start',
+    gap: '2em', // Align content to the left
     padding: '2px',
     width: '100%', // Take full width
   },

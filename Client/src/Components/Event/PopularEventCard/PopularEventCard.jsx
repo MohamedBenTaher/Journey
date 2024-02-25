@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import useStyles from './styles.js';
 import LocationIcon from '../../../assets/icons/LocationIcon';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+import Calendar from '../../../assets/icons/Calendar.jsx';
 
 function PopularEventCard({ item, userId, small }) {
   const classes = useStyles();
@@ -12,16 +14,25 @@ function PopularEventCard({ item, userId, small }) {
   return (
     <Card className={classes.smallCard} onClick={() => history.push(`/events/${item._id}`)}>
       <CardMedia className={classes.media} image={item.coverImage} />
-      <CardContent className={classes.content} style={{ height: '30%' }}>
-        <Typography gutterBottom className={classes.title}>
-          {item.title}
-        </Typography>
+      <CardContent className={classes.content}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'start',
+            justifyContent: 'start',
+            // gap: '1em',
+            width: '100%',
+          }}>
+          <Typography gutterBottom className={classes.title}>
+            {item.title}
+          </Typography>
+        </div>
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             flexDirection: 'row',
-            justifyContent: 'space-between',
             width: '100%',
           }}>
           <div
@@ -30,13 +41,44 @@ function PopularEventCard({ item, userId, small }) {
               alignItems: 'center',
               justifyContent: 'space-evenly',
               flexDirection: 'row',
-              height: '2em',
+              width: '100%',
             }}>
-            <LocationIcon />
-            <Typography>{item.startDate}</Typography>
-            <Typography>{item.eventFee}</Typography>
-            <Typography>{item.numberOfPlaces}</Typography>
-            <Typography>{item.numberOfPlaces - item.attendants.length}</Typography>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'start',
+                alignItems: 'center',
+                width: '100%',
+              }}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  width: '100%',
+                  padding: '0.5em',
+                }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    width: '100%',
+                  }}>
+                  <Typography variant="body2">
+                    {moment(item.startDate).format('DD, MMMM')}
+                  </Typography>
+
+                  <Typography variant="body2">
+                    from <strong>{item.eventFee}$ </strong>per adult{' '}
+                  </Typography>
+                </div>
+                <Typography style={{ textAlign: 'center' }}>
+                  <strong>{item.numberOfPlaces - item.attendants.length}</strong> Left
+                </Typography>
+              </div>
+            </div>
           </div>
         </div>
       </CardContent>
